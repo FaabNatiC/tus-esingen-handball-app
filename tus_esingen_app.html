@@ -265,19 +265,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <button class="sptbtn on" onclick="switchPlan2('t2',this)">⭐ Teamspielplan</button>
           <button class="sptbtn" onclick="switchPlan2('l2',this)">Liga-Spielplan</button>
         </div>
-        <div id="t2" class="game-wrap"></div>
-        <div id="l2" style="display:none;" class="game-wrap">
-          <div class="sp-sub-hdr">Alle Ligaspiele</div>
-          <div id="liga-games"></div>
+        <div id="t2">
+          <div id="hbnet-spielplan" style="padding:0 16px 16px;">
+            <div style="padding:20px 0;text-align:center;color:#aaa;font-size:13px;">Spielplan wird geladen...</div>
+          </div>
+        </div>
+        <div id="l2" style="display:none;">
+          <div id="hbnet-liga" style="padding:0 16px 16px;">
+            <div style="padding:20px 0;text-align:center;color:#aaa;font-size:13px;">Liga-Spielplan wird geladen...</div>
+          </div>
         </div>
       </div>
-      <div id="tabelle-tab" style="display:none;">
-        <div class="metrics">
-          <div class="kmet"><div class="kmval">3.</div><div class="kmlbl">Platz</div></div>
-          <div class="kmet"><div class="kmval">38</div><div class="kmlbl">Punkte</div></div>
-          <div class="kmet"><div class="kmval">+22</div><div class="kmlbl">Tordiff.</div></div>
-          <div class="kmet"><div class="kmval">19:5</div><div class="kmlbl">S : N</div></div>
+           <div id="tabelle-tab" style="display:none;">
+        <div id="hbnet-tabelle" style="padding:0 16px 16px;">
+          <div style="padding:20px 0;text-align:center;color:#aaa;font-size:13px;">Tabelle wird geladen...</div>
         </div>
+      </div>
         <div class="liga-wrap">
           <table class="liga-tbl">
             <thead><tr><th>#</th><th>Verein</th><th>Sp</th><th>Pkt</th></tr></thead>
@@ -663,6 +666,11 @@ function openTeam(teamId) {
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   document.getElementById('page-teamdetail').classList.add('active');
   showMainChrome(false);
+  // Reset handball.net widget flags for new team
+  hbSpielplanLoaded = false;
+  hbLigaLoaded = false;
+  hbTabelleLoaded = false;
+
   document.getElementById('scrollArea').scrollTop = 0;
 }
 
@@ -674,6 +682,43 @@ function closeTeam() {
   showMainChrome(true);
 }
 
+var hbScriptLoaded = false;
+var hbSpielplanLoaded = false;
+var hbLigaLoaded = false;
+var hbTabelleLoaded = false;
+
+function loadHbScript(cb) {
+  if (hbScriptLoaded) { cb(); return; }
+  var s = document.createElement('script');
+  s.src = 'https://www.handball.net/widgets/embed/v1.js';
+  s.async = true;
+  s.onload = function() { hbScriptLoaded = true; setTimeout(cb, 200); };
+  s.onerror = function() { console.warn('handball.net nicht erreichbar'); };
+  document.head.appendChild(s);
+}
+
+function loadHbWidget(type) {
+  if (currentTeamId !== '1herren') return;
+  loadHbScript(function() {
+    if (typeof _hb === 'undefined') return;
+    if (type === 'spielplan' && !hbSpielplanLoaded) {
+      hbSpielplanLoaded = true;
+      document.getElementById('hbnet-spielplan').innerHTML = '<div id="hb-sp-container"></div>';
+      _hb({ widget: 'spielplan', teamId: 'handball4all.hamburg.1260656', container: 'hb-sp-container' });
+    }
+    if (type === 'liga' && !hbLigaLoaded) {
+      hbLigaLoaded = true;
+      document.getElementById('hbnet-liga').innerHTML = '<div id="hb-lg-container"></div>';
+      _hb({ widget: 'spielplan', tournamentId: 'handball4all.hamburg.m-ol-100_hhv', container: 'hb-lg-container' });
+    }
+    if (type === 'tabelle' && !hbTabelleLoaded) {
+      hbTabelleLoaded = true;
+      document.getElementById('hbnet-tabelle').innerHTML = '<div id="hb-tb-container"></div>';
+      _hb({ widget: 'tabelle', teamId: 'handball4all.hamburg.1260656', container: 'hb-tb-container' });
+    }
+  });
+}
+
 function switchDTab(tabId, btn) {
   ['team-tab','kader-tab','spielplan-tab','tabelle-tab'].forEach(function(id){
     document.getElementById(id).style.display = 'none';
@@ -681,6 +726,8 @@ function switchDTab(tabId, btn) {
   document.getElementById(tabId).style.display = 'block';
   document.querySelectorAll('.dtab').forEach(function(b){ b.classList.remove('on'); });
   btn.classList.add('on');
+  if (tabId === 'spielplan-tab') loadHbWidget('spielplan');
+  if (tabId === 'tabelle-tab') loadHbWidget('tabelle');
 }
 
 function switchPlan2(type, btn) {
@@ -688,6 +735,7 @@ function switchPlan2(type, btn) {
   document.querySelectorAll('#spielplan-tab .sptbtn').forEach(function(b){ b.classList.remove('on'); });
   document.getElementById(type).style.display = 'block';
   btn.classList.add('on');
+  if (type === 'l2') loadHbWidget('liga');
 }
 
 // =============================================
@@ -795,21 +843,12 @@ function closeMenu() {
 // =============================================
 var FALLBACK_DATA = null; // wird unten gesetzt
 
-// =============================================
-// START – Daten direkt initialisieren
-// =============================================
-(function() {
-  try {
-    initApp(CLUB_DATA);
-  } catch(e) {
-    console.error('Fehler beim Laden:', e);
-  }
-})();
 </script>
 
 <script>
 // =============================================
 // CLUB_DATA – HIER INHALTE BEARBEITEN
+// Alle Texte, News, Spielpläne etc. hier pflegen
 // =============================================
 var CLUB_DATA = {
   "club": {
@@ -1133,6 +1172,11 @@ var CLUB_DATA = {
     }
   ]
 };
+
+// =============================================
+// START – nach CLUB_DATA definieren!
+// =============================================
+initApp(CLUB_DATA);
 </script>
 </body>
 </html>

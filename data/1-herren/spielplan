@@ -1,0 +1,32 @@
+{
+  "aktualisiert": "27.04.2026",
+  "mannschaft": "1. Herren",
+  "liga": "Männer Oberliga Hamburg",
+  "saison": "2025/26",
+  "spiele": [
+    { "datum": "2026-04-25T17:00:00", "heim": "TSV Uetersen",         "gast": "TuS Esingen",          "toreHeim": 30, "toreGast": 27, "halle": "Seminarstraße, Uetersen",        "status": "finished" },
+    { "datum": "2026-04-18T17:00:00", "heim": "TuS Esingen",          "gast": "TSV Ellerbek 2",        "toreHeim": 39, "toreGast": 37, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2026-04-12T17:30:00", "heim": "Ahrensburger TSV",     "gast": "TuS Esingen",          "toreHeim": 0,  "toreGast": 0,  "halle": "Heimgarten, Ahrensburg",         "status": "finished", "hinweis": "WG – Wertung gegen Gast (nicht angetreten)" },
+    { "datum": "2026-03-28T17:00:00", "heim": "TuS Esingen",          "gast": "FC St. Pauli",          "toreHeim": 30, "toreGast": 32, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2026-03-22T18:00:00", "heim": "HSG Elbvororte",       "gast": "TuS Esingen",          "toreHeim": 31, "toreGast": 30, "halle": "Blankenese, Hamburg",            "status": "finished" },
+    { "datum": "2026-03-14T17:00:00", "heim": "TuS Esingen",          "gast": "HT Norderstedt 2",     "toreHeim": 33, "toreGast": 21, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2026-03-10T19:30:00", "heim": "TuS Esingen",          "gast": "TSV Uetersen",         "toreHeim": 33, "toreGast": 32, "halle": "Esingen alt, Tornesch",          "status": "finished" },
+    { "datum": "2026-03-07T16:00:00", "heim": "1. HC Quickborn",      "gast": "TuS Esingen",          "toreHeim": 25, "toreGast": 30, "halle": "Comenius-Sporthalle, Quickborn", "status": "finished" },
+    { "datum": "2026-02-21T17:00:00", "heim": "TuS Esingen",          "gast": "TH Eilbeck",           "toreHeim": 29, "toreGast": 20, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2026-02-14T18:00:00", "heim": "SG Hamburg-Nord 2",    "gast": "TuS Esingen",          "toreHeim": 34, "toreGast": 30, "halle": "Tegelsberg, Hamburg",            "status": "finished" },
+    { "datum": "2026-02-07T20:00:00", "heim": "Rellinger TV 2",       "gast": "TuS Esingen",          "toreHeim": 27, "toreGast": 36, "halle": "Egenbüttel, Rellingen",          "status": "finished" },
+    { "datum": "2026-01-31T17:00:00", "heim": "TuS Esingen",          "gast": "TV Fischbek",          "toreHeim": 27, "toreGast": 25, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2026-01-24T18:00:00", "heim": "HG Hamburg-Barmbek 2", "gast": "TuS Esingen",          "toreHeim": 28, "toreGast": 26, "halle": "Langenfort, Hamburg",            "status": "finished" },
+    { "datum": "2025-12-13T16:00:00", "heim": "TSV Ellerbek 2",       "gast": "TuS Esingen",          "toreHeim": 24, "toreGast": 20, "halle": "Ellerbek, Ellerbek",             "status": "finished" },
+    { "datum": "2025-12-06T17:00:00", "heim": "TuS Esingen",          "gast": "Ahrensburger TSV",     "toreHeim": 22, "toreGast": 29, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2025-11-30T18:00:00", "heim": "FC St. Pauli",         "gast": "TuS Esingen",          "toreHeim": 32, "toreGast": 33, "halle": "Budapester Straße, Hamburg",     "status": "finished" },
+    { "datum": "2025-11-22T17:00:00", "heim": "TuS Esingen",          "gast": "HSG Elbvororte",       "toreHeim": 31, "toreGast": 21, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2025-11-16T14:00:00", "heim": "HT Norderstedt 2",     "gast": "TuS Esingen",          "toreHeim": 28, "toreGast": 28, "halle": "Schulzentrum Süd 2, Norderstedt","status": "finished" },
+    { "datum": "2025-11-08T19:00:00", "heim": "TuS Esingen",          "gast": "1. HC Quickborn",      "toreHeim": 25, "toreGast": 18, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2025-11-01T20:00:00", "heim": "TH Eilbeck",           "gast": "TuS Esingen",          "toreHeim": 32, "toreGast": 29, "halle": "Steinhauerdamm, Hamburg",        "status": "finished" },
+    { "datum": "2025-10-11T17:00:00", "heim": "TuS Esingen",          "gast": "SG Hamburg-Nord 2",    "toreHeim": 29, "toreGast": 22, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2025-10-04T17:00:00", "heim": "TuS Esingen",          "gast": "Rellinger TV 2",       "toreHeim": 33, "toreGast": 19, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2025-09-27T18:30:00", "heim": "TV Fischbek",          "gast": "TuS Esingen",          "toreHeim": 28, "toreGast": 26, "halle": "Süderelbe, Hamburg",             "status": "finished" },
+    { "datum": "2025-09-19T20:30:00", "heim": "TuS Esingen",          "gast": "HG Hamburg-Barmbek 2", "toreHeim": 25, "toreGast": 24, "halle": "Esingen neu, Tornesch",          "status": "finished" }
+  ]
+}

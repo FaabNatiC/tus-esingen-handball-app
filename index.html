@@ -618,6 +618,9 @@ let currentTeam = '1-herren';
 // ── Daten von GitHub laden ──────────────────────────────────────────────────
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
+// Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
+window.LOGOS_MAP = window.LOGOS_MAP || {};
+
 async function ladeAllesDaten(teamId) {
   teamId = teamId || currentTeam;
   currentTeam = teamId;
@@ -631,6 +634,13 @@ async function ladeAllesDaten(teamId) {
     const kader    = await kaderRes.json();
     const tabelle  = await tabelleRes.json();
     const spielplan= await spielplanRes.json();
+
+    // Logos aus der Tabelle in globale Map übernehmen, damit Spielplan sie nutzen kann
+    if(tabelle.tabelle) {
+      tabelle.tabelle.forEach(function(t){
+        if(t.verein && t.logo) window.LOGOS_MAP[t.verein] = t.logo;
+      });
+    }
 
     renderKader(kader);
     renderTabelle(tabelle);
@@ -776,6 +786,12 @@ function renderSpielplan(data) {
     data.spiele.forEach(function(s){
       if(s.heimLogo && !LOGOS[s.heim]) LOGOS[s.heim] = s.heimLogo;
       if(s.gastLogo && !LOGOS[s.gast]) LOGOS[s.gast] = s.gastLogo;
+    });
+  }
+  // Globale Logo-Map (von ladeAllesDaten aus tabelle.json befüllt) hinzufügen
+  if(window.LOGOS_MAP) {
+    Object.keys(window.LOGOS_MAP).forEach(function(k){
+      if(!LOGOS[k]) LOGOS[k] = window.LOGOS_MAP[k];
     });
   }
 

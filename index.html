@@ -681,7 +681,11 @@ async function ladeAllesDaten(teamId) {
 function nav(p,btn){
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
   document.getElementById('p-'+p).classList.add('active');
-  document.querySelectorAll('.bt').forEach(function(b){b.classList.remove('on');b.style.background='transparent';
+  document.querySelectorAll('.bt').forEach(function(b){b.classList.remove('on');b.style.background='transparent';b.querySelector('.bt-lb').style.color='rgba(255,255,255,0.4)';});
+  btn.classList.add('on');btn.style.background='white';btn.querySelector('.bt-lb').style.color='#1a1a1a';
+  document.getElementById('scroll').scrollTop=0;
+  showMain(true);
+}
 
 
 // ── Kader rendern ──────────────────────────────────────────────────────────
@@ -835,11 +839,7 @@ if(document.readyState === 'loading') {
 } else {
   ladeAllesDaten();
 }
-b.querySelector('.bt-lb').style.color='rgba(255,255,255,0.4)';});
-  btn.classList.add('on');btn.style.background='white';btn.querySelector('.bt-lb').style.color='#1a1a1a';
-  document.getElementById('scroll').scrollTop=0;
-  showMain(true);
-}
+
 function showMain(v){
   document.getElementById('main-hdr').style.display=v?'flex':'none';
   document.getElementById('bnav').style.display=v?'flex':'none';

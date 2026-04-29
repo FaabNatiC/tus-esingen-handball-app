@@ -652,12 +652,6 @@ const TEAMS = {
 };
 let currentTeam = '1-herren';
 
-// Navigation
-function nav(p,btn){
-  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
-  document.getElementById('p-'+p).classList.add('active');
-  document.querySelectorAll('.bt').forEach(function(b){b.classList.remove('on');b.style.background='transparent';
-
 // ── Daten von GitHub laden ──────────────────────────────────────────────────
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
@@ -682,6 +676,13 @@ async function ladeAllesDaten(teamId) {
     console.warn("⚠️ Daten konnten nicht geladen werden:", e);
   }
 }
+
+// Navigation
+function nav(p,btn){
+  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('p-'+p).classList.add('active');
+  document.querySelectorAll('.bt').forEach(function(b){b.classList.remove('on');b.style.background='transparent';
+
 
 // ── Kader rendern ──────────────────────────────────────────────────────────
 function renderKader(data) {

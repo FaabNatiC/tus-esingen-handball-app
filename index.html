@@ -683,8 +683,10 @@ function renderKader(data) {
 
   // Stats aktualisieren
   const alter_avg = (spieler.reduce((s,p)=>s+p.alter,0)/spieler.length).toFixed(1);
-  document.getElementById('kader-anzahl').textContent = spieler.length;
-  document.getElementById('kader-alter').textContent = alter_avg;
+  const elAnzahl = document.getElementById('kader-anzahl');
+  const elAlter = document.getElementById('kader-alter');
+  if(elAnzahl) elAnzahl.textContent = spieler.length;
+  if(elAlter) elAlter.textContent = alter_avg;
 
   // Trainer rendern
   const rolleStyle = {

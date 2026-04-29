@@ -816,7 +816,12 @@ function renderSpielplan(data) {
 }
 
 // App starten
-document.addEventListener('DOMContentLoaded', ladeAllesDaten);
+// Starte Laden sobald DOM bereit ist
+if(document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', ladeAllesDaten);
+} else {
+  ladeAllesDaten();
+}
 b.querySelector('.bt-lb').style.color='rgba(255,255,255,0.4)';});
   btn.classList.add('on');btn.style.background='white';btn.querySelector('.bt-lb').style.color='#1a1a1a';
   document.getElementById('scroll').scrollTop=0;

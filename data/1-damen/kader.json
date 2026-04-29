@@ -1,0 +1,19 @@
+{
+  "aktualisiert": "29.04.2026",
+  "team": "1. Damen",
+  "trainer": [
+    {
+      "name": "Yannick Hellmich",
+      "rolle": "Trainer",
+      "alter": 31
+    }
+  ],
+  "spieler": [
+    {
+      "nummer": 1,
+      "name": "Vorname Nachname",
+      "position": "Torwart",
+      "alter": 20
+    }
+  ]
+}

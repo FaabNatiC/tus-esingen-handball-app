@@ -27,6 +27,7 @@
     { "name": "Eik Meybohm",          "nummer": 94, "position": "Rückraum",   "alter": 26, "seitJahr": 2021 },
     { "name": "Julian Babecki",       "nummer": 99, "position": "Rückraum",   "alter": 26, "seitJahr": 2022 },
     { "name": "Matti Theophile",      "nummer": 19, "position": "Kreisläufer","alter": 21, "seitJahr": 2021 },
-    { "name": "Pascal Reith",         "nummer": 21, "position": "Kreisläufer","alter": 26, "seitJahr": 2019 }
+    { "name": "Pascal Reith",         "nummer": 21, "position": "Kreisläufer","alter": 26, "seitJahr": 2019 },
+    { "name": "Tom Cabelström",       "nummer": 13, "position": "Rückraum",   "alter": 21, "seitJahr": 2026 }
   ]
 }

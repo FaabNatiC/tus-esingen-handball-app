@@ -3,17 +3,17 @@
   "liga": "Frauen Landesliga Gruppe 1",
   "saison": "2025/26",
   "tabelle": [
-    { "platz": 1,  "verein": "Eimsbütteler TV 3",          "logo": "de003244-de5b-47c2-929c-7e105d5ead12.png", "spiele": 22, "siege": 16, "niederlagen": 6,  "diff": "+89",  "punkte": 32 },
-    { "platz": 2,  "verein": "Barmstedter MTV",            "logo": "a58c7406-6584-4889-ac15-657e81f572d9.png", "spiele": 22, "siege": 15, "niederlagen": 6,  "diff": "+71",  "punkte": 31 },
-    { "platz": 3,  "verein": "TuS Esingen",                "logo": "393a7d27-9c4e-48d7-9ece-19ba9fe48dd2.jpeg","spiele": 22, "siege": 14, "niederlagen": 7,  "diff": "+102", "punkte": 29, "highlight": true },
-    { "platz": 4,  "verein": "HSV/Hamm 02 2",              "logo": "59befc01-f41e-499e-8ac5-80ca027c95bc.png", "spiele": 22, "siege": 14, "niederlagen": 8,  "diff": "+32",  "punkte": 28 },
-    { "platz": 5,  "verein": "HL Buchholz08-Rosengarten 3","logo": "dd5801cd-69af-42ad-a6d4-7df723414641.jpeg","spiele": 22, "siege": 12, "niederlagen": 9,  "diff": "+27",  "punkte": 25 },
-    { "platz": 6,  "verein": "Grün-Weiss Eimsbüttel",      "logo": "eb6506cd-4a4a-44ab-8c88-139f299e5b1c.jpeg","spiele": 22, "siege": 12, "niederlagen": 9,  "diff": "+17",  "punkte": 25 },
-    { "platz": 7,  "verein": "1. HC Quickborn",            "logo": "4753f2b2-10e2-44e4-b7d0-7f6a917f5d68.png", "spiele": 22, "siege": 11, "niederlagen": 11, "diff": "-2",   "punkte": 22 },
-    { "platz": 8,  "verein": "SG Hamburg-Nord 2",          "logo": "563ea85e-12e3-4842-92be-23b5c1f2be09.png", "spiele": 22, "siege": 10, "niederlagen": 12, "diff": "-38",  "punkte": 20 },
-    { "platz": 9,  "verein": "HSG Elbvororte",             "logo": "0203fd65-c79f-4d04-ae12-714e633ec6d1.png", "spiele": 22, "siege": 9,  "niederlagen": 12, "diff": "-6",   "punkte": 19 },
-    { "platz": 10, "verein": "HTS/BW96 Handball",          "logo": "4e51a71d-06c3-4982-9a5d-3ef7542976e4.png", "spiele": 22, "siege": 7,  "niederlagen": 15, "diff": "-52",  "punkte": 14 },
-    { "platz": 11, "verein": "Elmshorner HT",              "logo": "c62fb52c-93e8-43bf-ae05-45f670f511c0.png", "spiele": 22, "siege": 5,  "niederlagen": 17, "diff": "-113", "punkte": 10 },
-    { "platz": 12, "verein": "SG Altona 2",                "logo": "5d2eac4d-e2ff-4d66-a613-e71f72587d34.png", "spiele": 22, "siege": 4,  "niederlagen": 17, "diff": "-127", "punkte": 9  }
+    { "platz": 1,  "verein": "Eimsbütteler TV 3",           "logo": "de003244-de5b-47c2-929c-7e105d5ead12.png", "spiele": 22, "siege": 16, "niederlagen": 6,  "diff": "+89",  "punkte": 32 },
+    { "platz": 2,  "verein": "Barmstedter MTV",             "logo": "a58c7406-6584-4889-ac15-657e81f572d9.png", "spiele": 22, "siege": 15, "niederlagen": 6,  "diff": "+71",  "punkte": 31 },
+    { "platz": 3,  "verein": "TuS Esingen",                 "logo": "393a7d27-9c4e-48d7-9ece-19ba9fe48dd2.jpeg","spiele": 22, "siege": 14, "niederlagen": 7,  "diff": "+102", "punkte": 29, "highlight": true },
+    { "platz": 4,  "verein": "HSV/Hamm 02 2",               "logo": "59befc01-f41e-499e-8ac5-80ca027c95bc.png", "spiele": 22, "siege": 14, "niederlagen": 8,  "diff": "+32",  "punkte": 28 },
+    { "platz": 5,  "verein": "HL Buchholz08-Rosengarten 3", "logo": "dd5801cd-69af-42ad-a6d4-7df723414641.jpeg","spiele": 22, "siege": 12, "niederlagen": 9,  "diff": "+27",  "punkte": 25 },
+    { "platz": 6,  "verein": "Grün-Weiss Eimsbüttel",       "logo": "eb6506cd-4a4a-44ab-8c88-139f299e5b1c.jpeg","spiele": 22, "siege": 12, "niederlagen": 9,  "diff": "+17",  "punkte": 25 },
+    { "platz": 7,  "verein": "1. HC Quickborn",             "logo": "4753f2b2-10e2-44e4-b7d0-7f6a917f5d68.png", "spiele": 22, "siege": 11, "niederlagen": 11, "diff": "-2",   "punkte": 22 },
+    { "platz": 8,  "verein": "SG Hamburg-Nord 2",           "logo": "563ea85e-12e3-4842-92be-23b5c1f2be09.png", "spiele": 22, "siege": 10, "niederlagen": 12, "diff": "-38",  "punkte": 20 },
+    { "platz": 9,  "verein": "HSG Elbvororte",              "logo": "0203fd65-c79f-4d04-ae12-714e633ec6d1.png", "spiele": 22, "siege": 9,  "niederlagen": 12, "diff": "-6",   "punkte": 19 },
+    { "platz": 10, "verein": "HTS/BW96 Handball",           "logo": "4e51a71d-06c3-4982-9a5d-3ef7542976e4.png", "spiele": 22, "siege": 7,  "niederlagen": 15, "diff": "-52",  "punkte": 14 },
+    { "platz": 11, "verein": "Elmshorner HT",               "logo": "c62fb52c-93e8-43bf-ae05-45f670f511c0.png", "spiele": 22, "siege": 5,  "niederlagen": 17, "diff": "-113", "punkte": 10 },
+    { "platz": 12, "verein": "SG Altona 2",                 "logo": "5d2eac4d-e2ff-4d66-a613-e71f72587d34.png", "spiele": 22, "siege": 4,  "niederlagen": 17, "diff": "-127", "punkte": 9  }
   ]
 }

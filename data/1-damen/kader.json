@@ -1,19 +1,11 @@
 {
   "aktualisiert": "29.04.2026",
-  "team": "1. Damen",
+  "mannschaft": "1. Damen",
+  "liga": "Frauen Landesliga Gruppe 1",
   "trainer": [
-    {
-      "name": "Yannick Hellmich",
-      "rolle": "Trainer",
-      "alter": 31
-    }
+    { "name": "Yannick Hellmich", "rolle": "Trainer", "alter": 31 }
   ],
   "spieler": [
-    {
-      "nummer": 1,
-      "name": "Vorname Nachname",
-      "position": "Torwart",
-      "alter": 20
-    }
+    { "name": "Vorname Nachname", "nummer": 1, "position": "Torwart", "alter": 20, "seitJahr": 2024 }
   ]
 }

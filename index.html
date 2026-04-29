@@ -835,7 +835,7 @@ function renderSpielplan(data) {
 // App starten
 // Starte Laden sobald DOM bereit ist
 if(document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', ladeAllesDaten);
+  document.addEventListener('DOMContentLoaded', function(){ ladeAllesDaten(); });
 } else {
   ladeAllesDaten();
 }

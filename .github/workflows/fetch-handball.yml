@@ -27,6 +27,6 @@ jobs:
         run: |
           git config user.name "handball-bot"
           git config user.email "bot@tus-esingen.de"
-          git add data/1-herren/spielplan.json data/1-herren/tabelle.json
+          git add data/1-herren/ data/1-damen/
           git diff --staged --quiet || git commit -m "Daten aktualisiert: $(date '+%d.%m.%Y %H:%M')"
           git push

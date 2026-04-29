@@ -781,7 +781,7 @@ function renderSpielplan(data) {
 
   function logo(name) {
     const f = LOGOS[name];
-    return f ? `<img src="${LOGO_BASE}${f}" class="tlogo">` : `<div class="tlogo" style="background:#eee;border-radius:50%;"></div>`;
+    return f ? `<img src="${LOGO_BASE}${f}" class="tlogo" style="width:26px;height:26px;">` : `<div class="tlogo" style="width:26px;height:26px;background:#eee;"></div>`;
   }
 
   function formatDatum(iso) {

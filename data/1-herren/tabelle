@@ -1,1 +1,20 @@
-
+{
+  "aktualisiert": "26.04.2026",
+  "liga": "Männer Oberliga Hamburg",
+  "saison": "2025/26",
+  "tabelle": [
+    { "platz": 1,  "verein": "Ahrensburger TSV",    "logo": "c80e1fdf-cef0-4b88-8fd3-694bbb36b5c0.png", "spiele": 24, "siege": 19, "niederlagen": 4,  "diff": "+90",  "punkte": 39 },
+    { "platz": 2,  "verein": "FC St. Pauli",         "logo": "a89c96ad-e3cb-4ff3-ac57-68b93410a180.png", "spiele": 24, "siege": 19, "niederlagen": 5,  "diff": "+129", "punkte": 38 },
+    { "platz": 3,  "verein": "TV Fischbek",          "logo": "13692373-7425-412f-badb-68299c2807fe.png", "spiele": 24, "siege": 16, "niederlagen": 8,  "diff": "+61",  "punkte": 32 },
+    { "platz": 4,  "verein": "TSV Ellerbek 2",       "logo": "a47f1a43-c6c0-4bb6-bc02-98f4d6fc1ac2.jpeg","spiele": 24, "siege": 15, "niederlagen": 8,  "diff": "+9",   "punkte": 31 },
+    { "platz": 5,  "verein": "HSG Elbvororte",       "logo": "0203fd65-c79f-4d04-ae12-714e633ec6d1.png", "spiele": 24, "siege": 14, "niederlagen": 10, "diff": "+31",  "punkte": 28 },
+    { "platz": 6,  "verein": "TuS Esingen",          "logo": "393a7d27-9c4e-48d7-9ece-19ba9fe48dd2.jpeg","spiele": 24, "siege": 13, "niederlagen": 10, "diff": "+52",  "punkte": 27, "highlight": true },
+    { "platz": 7,  "verein": "TH Eilbeck",           "logo": "16115105-2de9-4262-9c9e-a93f0ace6204.jpeg","spiele": 24, "siege": 13, "niederlagen": 11, "diff": "+21",  "punkte": 26 },
+    { "platz": 8,  "verein": "HT Norderstedt 2",     "logo": "97305f78-0260-429f-9034-9b04eeaee29c.jpeg","spiele": 24, "siege": 11, "niederlagen": 13, "diff": "-24",  "punkte": 22 },
+    { "platz": 9,  "verein": "TSV Uetersen",         "logo": "d0a597b3-488f-436b-8b59-ea0134bcdcea.png", "spiele": 24, "siege": 9,  "niederlagen": 14, "diff": "-42",  "punkte": 19 },
+    { "platz": 10, "verein": "SG Hamburg-Nord 2",    "logo": "563ea85e-12e3-4842-92be-23b5c1f2be09.png", "spiele": 24, "siege": 8,  "niederlagen": 15, "diff": "-26",  "punkte": 17 },
+    { "platz": 11, "verein": "1. HC Quickborn",      "logo": "4753f2b2-10e2-44e4-b7d0-7f6a917f5d68.png", "spiele": 24, "siege": 7,  "niederlagen": 17, "diff": "-95",  "punkte": 14 },
+    { "platz": 12, "verein": "HG Hamburg-Barmbek 2", "logo": "5af9351c-f15d-4daa-9a59-907fdee5e195.jpeg","spiele": 24, "siege": 6,  "niederlagen": 18, "diff": "-66",  "punkte": 12 },
+    { "platz": 13, "verein": "Rellinger TV 2",       "logo": "cf47be18-afa7-4f1b-8350-50729da7d834.png", "spiele": 24, "siege": 3,  "niederlagen": 20, "diff": "-140", "punkte": 7  }
+  ]
+}

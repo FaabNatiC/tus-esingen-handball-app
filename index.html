@@ -658,11 +658,12 @@ const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handba
 async function ladeAllesDaten(teamId) {
   teamId = teamId || currentTeam;
   currentTeam = teamId;
+  const cb = '?_=' + Date.now();  // Cache-Buster
   try {
     const [kaderRes, tabelleRes, spielplanRes] = await Promise.all([
-      fetch(BASE_URL + "/data/" + teamId + "/kader.json"),
-      fetch(BASE_URL + "/data/" + teamId + "/tabelle.json"),
-      fetch(BASE_URL + "/data/" + teamId + "/spielplan.json")
+      fetch(BASE_URL + "/data/" + teamId + "/kader.json" + cb),
+      fetch(BASE_URL + "/data/" + teamId + "/tabelle.json" + cb),
+      fetch(BASE_URL + "/data/" + teamId + "/spielplan.json" + cb)
     ]);
     const kader    = await kaderRes.json();
     const tabelle  = await tabelleRes.json();
@@ -773,6 +774,7 @@ function renderTabelle(data) {
 function renderSpielplan(data) {
   const LOGO_BASE = "https://www.handball.net/files/clubs/logos/";
   const LOGOS = {
+    // Männer Oberliga
     "TuS Esingen":          "393a7d27-9c4e-48d7-9ece-19ba9fe48dd2.jpeg",
     "Ahrensburger TSV":     "c80e1fdf-cef0-4b88-8fd3-694bbb36b5c0.png",
     "FC St. Pauli":         "a89c96ad-e3cb-4ff3-ac57-68b93410a180.png",
@@ -788,6 +790,19 @@ function renderSpielplan(data) {
     "Rellinger TV 2":       "cf47be18-afa7-4f1b-8350-50729da7d834.png",
     "HSG Pinnau":           "1d9bf8d8-2ba2-4e41-987e-6d83ea8e9f87.png"
   };
+
+  // Logos aus den Daten ergänzen (für alle Mannschaften)
+  if(data.tabelle) {
+    data.tabelle.forEach(function(t){
+      if(t.verein && t.logo && !LOGOS[t.verein]) LOGOS[t.verein] = t.logo;
+    });
+  }
+  if(data.spiele) {
+    data.spiele.forEach(function(s){
+      if(s.heimLogo && !LOGOS[s.heim]) LOGOS[s.heim] = s.heimLogo;
+      if(s.gastLogo && !LOGOS[s.gast]) LOGOS[s.gast] = s.gastLogo;
+    });
+  }
 
   function logo(name) {
     const f = LOGOS[name];
@@ -813,9 +828,10 @@ function renderSpielplan(data) {
     const verloren  = heim_esingen ? s.toreHeim < s.toreGast : s.toreGast < s.toreHeim;
     const cardClass = s.status === "finished" ? (gewonnen ? "gc rw" : (verloren ? "gc rl" : "gc rd")) : "gc";
     const hinweis = s.hinweis ? `<div class="ghint">${s.hinweis}</div>` : '';
+    const ligaLabel = data.liga || 'Liga';
     return `
       <div class="${cardClass}">
-        <div class="gh"><span class="lb">Männer Oberliga (100)</span><span>${formatDatum(s.datum)}</span></div>
+        <div class="gh"><span class="lb">${ligaLabel}</span><span>${formatDatum(s.datum)}</span></div>
         <div class="gts">
           <div class="gt">${logo(s.heim)}<span>${s.heim}</span></div>
           ${ergebnis}

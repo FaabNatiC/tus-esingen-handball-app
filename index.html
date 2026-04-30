@@ -472,30 +472,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="nl"><div class="kader-nr" style="width:42px;height:42px;border-radius:50%;background:#1a1a1a;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;">TO</div><div><div class="nl-t">Timo Okun</div><div class="nl-d">35 Jahre</div><span style="background:#f0f0f0;color:#444;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;margin-top:4px;display:inline-block;">Spielertrainer</span></div></div>
     <div class="nl"><div class="kader-nr" style="width:42px;height:42px;border-radius:50%;background:#1a1a1a;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;">MG</div><div><div class="nl-t">Michel Göttsche</div><div class="nl-d">23 Jahre</div><span style="background:#E8F4F0;color:#1A7A5E;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;margin-top:4px;display:inline-block;">Physiotherapeut</span></div></div></div>
     <div class="sec">Trainingszeiten</div>
-    <div class="tz-row" style="border-bottom:1px solid #f0f0f0;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:0;padding:14px 16px;">
-      <div style="padding-top:0;align-self:center;"><div class="tz-tag" style="background:#555;color:white;font-size:11px;font-weight:700;padding:4px 0;border-radius:20px;text-align:center;width:36px;">Mo</div></div>
-      <div>
-        <div style="font-size:13px;font-weight:600;color:#1a1a1a;line-height:1.3;margin-bottom:2px;">19:00 – 20:30 Uhr</div>
-        <div style="font-size:12px;color:#666;line-height:1.3;">Individualtraining</div>
-      </div>
-      <div class="tz-loc" onclick="navToHallen()" style="display:inline-flex;align-items:center;gap:4px;background:#f0f0f0;border:1px solid #d0d0d0;border-radius:8px;padding:3px 8px;font-size:10px;color:#1a1a1a;font-weight:600;cursor:pointer;white-space:nowrap;margin-left:10px;">📍 Neue KGST Halle ›</div>
-    </div>
-    <div class="tz-row" style="border-bottom:1px solid #f0f0f0;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:0;padding:14px 16px;">
-      <div style="padding-top:0;align-self:center;"><div class="tz-tag" style="background:#555;color:white;font-size:11px;font-weight:700;padding:4px 0;border-radius:20px;text-align:center;width:36px;">Di</div></div>
-      <div>
-        <div style="font-size:13px;font-weight:600;color:#1a1a1a;line-height:1.3;margin-bottom:2px;">19:00 – 20:30 Uhr</div>
-        <div style="font-size:12px;color:#666;line-height:1.3;">Hallentraining</div>
-      </div>
-      <div class="tz-loc" onclick="navToHallen()" style="display:inline-flex;align-items:center;gap:4px;background:#f0f0f0;border:1px solid #d0d0d0;border-radius:8px;padding:3px 8px;font-size:10px;color:#1a1a1a;font-weight:600;cursor:pointer;white-space:nowrap;margin-left:10px;">📍 Neue KGST Halle ›</div>
-    </div>
-    <div class="tz-row" style="display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:0;padding:14px 16px;">
-      <div style="padding-top:0;align-self:center;"><div class="tz-tag" style="background:#555;color:white;font-size:11px;font-weight:700;padding:4px 0;border-radius:20px;text-align:center;width:36px;">Do</div></div>
-      <div>
-        <div style="font-size:13px;font-weight:600;color:#1a1a1a;line-height:1.3;margin-bottom:2px;">19:30 – 22:00 Uhr</div>
-        <div style="font-size:12px;color:#666;line-height:1.3;">Athletik + Hallentraining</div>
-      </div>
-      <div class="tz-loc" onclick="navToHallen()" style="display:inline-flex;align-items:center;gap:4px;background:#f0f0f0;border:1px solid #d0d0d0;border-radius:8px;padding:3px 8px;font-size:10px;color:#1a1a1a;font-weight:600;cursor:pointer;white-space:nowrap;margin-left:10px;">📍 Neue KGST Halle ›</div>
-    </div>
+    <div id="trainingszeiten-list"></div>
     <div class="sec">Partner</div>
     <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;">
 
@@ -655,6 +632,20 @@ async function ladeAllesDaten(teamId) {
     renderKader(kader);
     renderTabelle(tabelle);
     renderSpielplan(spielplan);
+
+    // Trainingszeiten separat & fehlertolerant laden
+    try {
+      const trainingRes = await fetch(BASE_URL + "/data/" + teamId + "/training.json" + cb);
+      if(trainingRes.ok) {
+        const training = await trainingRes.json();
+        renderTraining(training);
+      } else {
+        renderTraining(null);
+      }
+    } catch(e) {
+      renderTraining(null);
+    }
+
     console.log("✅ Daten geladen (" + teamId + "):", kader.aktualisiert);
   } catch(e) {
     console.warn("⚠️ Daten konnten nicht geladen werden:", e);
@@ -671,6 +662,40 @@ function nav(p,btn){
   showMain(true);
 }
 
+
+// ── Trainingszeiten rendern ────────────────────────────────────────────────
+const HALLEN = {
+  "neue-kgst": "Neue KGST Halle",
+  "alte-kgst": "Alte KGST Halle",
+  "sportplatz": "Sportplatz"
+};
+
+function renderTraining(data) {
+  const el = document.getElementById('trainingszeiten-list');
+  if(!el) return;
+  const zeiten = (data && data.trainingszeiten) || [];
+  if(zeiten.length === 0) {
+    el.innerHTML = '<div style="padding:20px 16px;color:#999;text-align:center;font-size:13px;">Trainingszeiten folgen in Kürze.</div>';
+    return;
+  }
+  el.innerHTML = zeiten.map(function(t, i){
+    const isLast = i === zeiten.length - 1;
+    const border = isLast ? '' : 'border-bottom:1px solid #f0f0f0;';
+    const ortName = HALLEN[t.ort] || t.ort || '';
+    const ortHtml = ortName
+      ? `<div class="tz-loc" onclick="navToHallen()" style="display:inline-flex;align-items:center;gap:4px;background:#f0f0f0;border:1px solid #d0d0d0;border-radius:8px;padding:3px 8px;font-size:10px;color:#1a1a1a;font-weight:600;cursor:pointer;white-space:nowrap;margin-left:10px;">📍 ${ortName} ›</div>`
+      : '';
+    return `
+      <div class="tz-row" style="${border}display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:0;padding:14px 16px;">
+        <div style="padding-top:0;align-self:center;"><div class="tz-tag" style="background:#555;color:white;font-size:11px;font-weight:700;padding:4px 0;border-radius:20px;text-align:center;width:36px;">${t.tag}</div></div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#1a1a1a;line-height:1.3;margin-bottom:2px;">${t.von} – ${t.bis} Uhr</div>
+          <div style="font-size:12px;color:#666;line-height:1.3;">${t.art}</div>
+        </div>
+        ${ortHtml}
+      </div>`;
+  }).join('');
+}
 
 // ── Kader rendern ──────────────────────────────────────────────────────────
 function renderKader(data) {

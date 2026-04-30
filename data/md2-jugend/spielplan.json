@@ -1,1 +1,20 @@
-
+{
+  "aktualisiert": "27.04.2026",
+  "mannschaft": "TuS Esingen 2",
+  "liga": "männliche Jugend D Kreisliga Gruppe 1 (466)",
+  "saison": "2025/26",
+  "spiele": [
+    { "datum": "2026-04-26T11:00:00", "heim": "TuS Esingen 2",       "gast": "Barmstedter MTV 2",   "toreHeim": 36, "toreGast": 9,  "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2026-04-19T13:45:00", "heim": "TuS Esingen 2",       "gast": "Elmshorner HT 2",     "toreHeim": 19, "toreGast": 15, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2026-03-21T12:30:00", "heim": "TuS Esingen 2",       "gast": "SG Osdorf/Lurup",     "toreHeim": 28, "toreGast": 12, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2026-03-08T14:45:00", "heim": "HTS/BW96 Handball 3", "gast": "TuS Esingen 2",       "toreHeim": 0,  "toreGast": 0,  "halle": "Schenefeld, Halle B, Schenefeld","status": "finished", "hinweis": "WH – Wertung gegen Heim" },
+    { "datum": "2026-02-22T14:45:00", "heim": "TuS Esingen 2",       "gast": "SG Altona",           "toreHeim": 33, "toreGast": 18, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2026-01-24T12:00:00", "heim": "1. HC Quickborn 2",   "gast": "TuS Esingen 2",       "toreHeim": 11, "toreGast": 26, "halle": "Lilli-Henoch-Halle, Quickborn",  "status": "finished" },
+    { "datum": "2026-01-18T09:45:00", "heim": "FC St. Pauli 3",      "gast": "TuS Esingen 2",       "toreHeim": 27, "toreGast": 12, "halle": "Thedestr., Hamburg",             "status": "finished" },
+    { "datum": "2025-12-07T13:30:00", "heim": "Elmshorner HT 2",     "gast": "TuS Esingen 2",       "toreHeim": 27, "toreGast": 17, "halle": "Olympiahalle, Elmshorn",         "status": "finished" },
+    { "datum": "2025-11-30T13:45:00", "heim": "Barmstedter MTV 2",   "gast": "TuS Esingen 2",       "toreHeim": 14, "toreGast": 37, "halle": "Barmstedt, Barmstedt",           "status": "finished" },
+    { "datum": "2025-11-16T14:15:00", "heim": "SG Altona",           "gast": "TuS Esingen 2",       "toreHeim": 10, "toreGast": 23, "halle": "Eckernförder Straße, Hamburg",   "status": "finished" },
+    { "datum": "2025-09-27T13:30:00", "heim": "TuS Esingen 2",       "gast": "FC St. Pauli 3",      "toreHeim": 21, "toreGast": 25, "halle": "Esingen neu, Tornesch",          "status": "finished" },
+    { "datum": "2025-09-13T14:00:00", "heim": "SG Osdorf/Lurup",     "gast": "TuS Esingen 2",       "toreHeim": 9,  "toreGast": 24, "halle": "Glückstädter Weg, Hamburg",      "status": "finished" }
+  ]
+}

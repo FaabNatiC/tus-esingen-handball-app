@@ -3,7 +3,11 @@
   "mannschaft": "männlich D1",
   "liga": "männliche Jugend D Landesliga Gruppe 1 (461)",
   "trainer": [
-    { "name": "Till Krügel", "alter": 35, "rolle": "Trainer" }
+    {
+      "name": "Vorname Nachname",
+      "alter": 30,
+      "rolle": "Trainer"
+    }
   ],
   "spieler": []
 }

@@ -797,11 +797,27 @@ function renderKader(data) {
   (data.trainer||[]).forEach(t => {
     const initials = t.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
     const style = rolleStyle[t.rolle] || "background:#f0f0f0;color:#444";
+
+    // Kontakt-Buttons (nur wenn gepflegt)
+    let kontaktHtml = '';
+    if(t.telefon || t.email) {
+      const btnStyle = "width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:inline-flex;align-items:center;justify-content:center;font-size:16px;text-decoration:none;flex-shrink:0;cursor:pointer;border:none;transition:background 0.15s;";
+      kontaktHtml = '<div style="display:flex;gap:6px;align-items:center;margin-left:auto;flex-shrink:0;">';
+      if(t.telefon) {
+        kontaktHtml += `<a href="tel:${t.telefon}" style="${btnStyle}" title="${t.telefon}" onclick="event.stopPropagation()">📞</a>`;
+      }
+      if(t.email) {
+        kontaktHtml += `<a href="mailto:${t.email}" style="${btnStyle}" title="${t.email}" onclick="event.stopPropagation()">✉️</a>`;
+      }
+      kontaktHtml += '</div>';
+    }
+
     trainerHtml += `
-      <div class="nl">
+      <div class="nl" style="display:flex;align-items:center;gap:12px;">
         <div class="kader-nr" style="width:42px;height:42px;border-radius:50%;background:#1a1a1a;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;">${initials}</div>
-        <div><div class="nl-t">${t.name}</div><div class="nl-d">${t.alter} Jahre</div>
+        <div style="flex:1;min-width:0;"><div class="nl-t">${t.name}</div><div class="nl-d">${t.alter} Jahre</div>
         <span style="font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;margin-top:4px;display:inline-block;${style}">${t.rolle}</span></div>
+        ${kontaktHtml}
       </div>`;
   });
   const trainerEl = document.getElementById('trainer-list');

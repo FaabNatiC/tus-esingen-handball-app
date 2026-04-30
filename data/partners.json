@@ -1,5 +1,13 @@
 {
-  "gebr-schmidt":  { "name": "Gebr. Schmidt GmbH",      "url": "https://...", "logo": "data:image/jpeg;base64,..." },
-  "krieg":         { "name": "KRIEG Bausanierung GmbH", "url": "https://...", "logo": "data:image/jpeg;base64,..." },
-  "bayer":         { "name": "Hausverwaltung Bayer GmbH","url": "https://...", "logo": "data:image/jpeg;base64,..." }
+  "gebr-schmidt": {
+    "name": "Gebr. Schmidt GmbH",
+    "url": "https://www.gebr-schmidt.com/",
+    "logo": "data:image/jpeg;base64,..."
+  },
+  "krieg": {
+    ...
+  },
+  "bayer": {
+    ...
+  }
 }

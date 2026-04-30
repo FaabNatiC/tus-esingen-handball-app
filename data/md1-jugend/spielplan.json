@@ -1,1 +1,25 @@
-
+{
+  "aktualisiert": "28.04.2026",
+  "mannschaft": "TuS Esingen",
+  "liga": "männliche Jugend D Landesliga Gruppe 1 (461)",
+  "saison": "2025/26",
+  "spiele": [
+    { "datum": "2026-04-25T13:30:00", "heim": "TuS Esingen",         "gast": "Eimsbütteler TV 2",   "toreHeim": 43, "toreGast": 21, "halle": "Esingen neu, Tornesch",        "status": "finished" },
+    { "datum": "2026-04-19T13:30:00", "heim": "FC St. Pauli",        "gast": "TuS Esingen",         "toreHeim": 24, "toreGast": 24, "halle": "Thedestr., Hamburg",            "status": "finished" },
+    { "datum": "2026-03-21T15:15:00", "heim": "TuS Esingen",         "gast": "Niendorfer TSV",      "toreHeim": 29, "toreGast": 27, "halle": "Esingen neu, Tornesch",        "status": "finished" },
+    { "datum": "2026-03-08T12:15:00", "heim": "HTS/BW96 Handball 2", "gast": "TuS Esingen",         "toreHeim": 14, "toreGast": 42, "halle": "Schenefeld, Halle A, Schenefeld","status": "finished" },
+    { "datum": "2026-03-01T15:00:00", "heim": "HSG Pinnau",          "gast": "TuS Esingen",         "toreHeim": 21, "toreGast": 35, "halle": "Johannes-Brahms-Halle, Pinneberg","status": "finished" },
+    { "datum": "2026-02-22T14:00:00", "heim": "Barmstedter MTV",     "gast": "TuS Esingen",         "toreHeim": 22, "toreGast": 49, "halle": "Barmstedt, Barmstedt",          "status": "finished" },
+    { "datum": "2026-02-14T12:00:00", "heim": "TuS Esingen",         "gast": "Elmshorner HT",       "toreHeim": 34, "toreGast": 26, "halle": "Esingen neu, Tornesch",        "status": "finished" },
+    { "datum": "2026-02-08T11:00:00", "heim": "SG Hamburg-Nord 4",   "gast": "TuS Esingen",         "toreHeim": 25, "toreGast": 45, "halle": "Tegelsbarg, Hamburg",           "status": "finished" },
+    { "datum": "2026-01-24T12:00:00", "heim": "TuS Esingen",         "gast": "TSV Ellerbek",        "toreHeim": 32, "toreGast": 13, "halle": "Esingen neu, Tornesch",        "status": "finished" },
+    { "datum": "2025-12-07T11:00:00", "heim": "TuS Esingen",         "gast": "FC St. Pauli",        "toreHeim": 18, "toreGast": 23, "halle": "Esingen neu, Tornesch",        "status": "finished" },
+    { "datum": "2025-11-29T15:30:00", "heim": "Niendorfer TSV",      "gast": "TuS Esingen",         "toreHeim": 30, "toreGast": 24, "halle": "Sachsenweg alt, Hamburg",       "status": "finished" },
+    { "datum": "2025-11-23T13:30:00", "heim": "TuS Esingen",         "gast": "Rellinger TV 2",      "toreHeim": 41, "toreGast": 7,  "halle": "Esingen neu, Tornesch",        "status": "finished" },
+    { "datum": "2025-11-08T17:00:00", "heim": "TuS Esingen",         "gast": "Barmstedter MTV",     "toreHeim": 37, "toreGast": 16, "halle": "Esingen neu, Tornesch",        "status": "finished" },
+    { "datum": "2025-10-12T15:45:00", "heim": "Elmshorner HT",       "gast": "TuS Esingen",         "toreHeim": 23, "toreGast": 41, "halle": "Olympiahalle, Elmshorn",        "status": "finished" },
+    { "datum": "2025-10-04T11:00:00", "heim": "TuS Esingen",         "gast": "HTS/BW96 Handball 2", "toreHeim": 29, "toreGast": 10, "halle": "Esingen neu, Tornesch",        "status": "finished" },
+    { "datum": "2025-09-21T11:45:00", "heim": "TSV Ellerbek",        "gast": "TuS Esingen",         "toreHeim": 16, "toreGast": 31, "halle": "Ellerbek, Ellerbek",            "status": "finished" },
+    { "datum": "2025-09-14T11:15:00", "heim": "TuS Esingen",         "gast": "HSG Pinnau",          "toreHeim": 43, "toreGast": 23, "halle": "Esingen neu, Tornesch",        "status": "finished" }
+  ]
+}

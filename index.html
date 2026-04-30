@@ -654,6 +654,12 @@ async function ladeAllesDaten(teamId) {
 
 // Navigation
 function nav(p,btn){
+  // Beim Wechsel über die Bottom-Nav: den evtl. vorhandenen Hallen-Zurück-Button und State löschen
+  if(typeof hallenReturnTeam !== 'undefined') hallenReturnTeam = null;
+  var hb = document.getElementById('hallen-back'); if(hb) hb.remove();
+  // Detail-Header entfernen (für den Fall dass man von Detail-Page kommt)
+  var dhdr = document.getElementById('dhdr'); if(dhdr) dhdr.remove();
+
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
   document.getElementById('p-'+p).classList.add('active');
   document.querySelectorAll('.bt').forEach(function(b){b.classList.remove('on');b.style.background='transparent';b.querySelector('.bt-lb').style.color='rgba(255,255,255,0.4)';});
@@ -1122,14 +1128,45 @@ function closeNews(){
   showMain(true);
 }
 
+// Globaler Speicher: aus welcher Mannschaft wurde zur Hallen-Seite navigiert?
+let hallenReturnTeam = null;
+
 function navToHallen(){
+  // Wenn wir gerade in einer Mannschafts-Detail-Seite sind, merken wir uns das für später
+  const detailActive = document.getElementById('p-detail').classList.contains('active');
+  hallenReturnTeam = detailActive ? currentTeam : null;
+
+  // Detail-Header entfernen (falls vorhanden)
+  var dhdr = document.getElementById('dhdr'); if(dhdr) dhdr.remove();
+
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
   document.getElementById('p-hallen').classList.add('active');
   document.querySelectorAll('.bt').forEach(function(b){b.classList.remove('on');b.style.background='transparent';b.querySelector('.bt-lb').style.color='rgba(255,255,255,0.4)';});
   var btns = document.querySelectorAll('.bt');
   btns[4].classList.add('on');btns[4].style.background='white';btns[4].querySelector('.bt-lb').style.color='#1a1a1a';
   showMain(true);
+
+  // Falls wir aus einer Mannschaft kamen: einen Zurück-Button oben in der Hallen-Seite anzeigen
+  renderHallenBackButton();
+
   document.getElementById('scroll').scrollTop=0;
+}
+
+function renderHallenBackButton(){
+  const hallenPage = document.getElementById('p-hallen');
+  // Eventuell vorhandenen alten Zurück-Button entfernen
+  const oldBack = document.getElementById('hallen-back');
+  if(oldBack) oldBack.remove();
+
+  if(hallenReturnTeam && TEAMS[hallenReturnTeam]) {
+    const teamName = TEAMS[hallenReturnTeam].name;
+    const back = document.createElement('div');
+    back.id = 'hallen-back';
+    back.style.cssText = 'padding:10px 16px;background:#f5f5f5;border-bottom:1px solid #eee;cursor:pointer;font-size:13px;color:#1a1a1a;font-weight:600;';
+    back.innerHTML = '‹ Zurück zu ' + teamName;
+    back.onclick = function(){ openTeam(hallenReturnTeam); hallenReturnTeam = null; };
+    hallenPage.insertBefore(back, hallenPage.firstChild);
+  }
 }
 
 // Init nav buttons

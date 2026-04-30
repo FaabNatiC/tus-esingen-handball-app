@@ -528,7 +528,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div style="height:10px;"></div>
   </div>
   <div id="dt-kader" style="display:none;">
-    <div class="stats"><div class="st"><div class="sv" id="kader-anzahl">19</div><div class="sl">Spieler</div></div><div class="st"><div class="sv" id="kader-alter">26.4</div><div class="sl">Ø Alter</div></div><div class="st"><div class="sv" id="kader-erfahrung">--</div><div class="sl">Ø Jahre im Verein</div></div></div>
+    <div class="stats" id="kader-stats"><div class="st"><div class="sv" id="kader-anzahl">19</div><div class="sl">Spieler</div></div><div class="st"><div class="sv" id="kader-alter">26.4</div><div class="sl">Ø Alter</div></div><div class="st"><div class="sv" id="kader-erfahrung">--</div><div class="sl">Ø Jahre im Verein</div></div></div>
     <div id="kader-list">
 <div class="sg" style="background:#f8f8f8;">Torwart</div>
 
@@ -680,6 +680,13 @@ function renderKader(data) {
     return pi !== 0 ? pi : a.nummer - b.nummer;
   });
 
+  // Bei Jugend-Mannschaften die Statistik-Kacheln ausblenden
+  const statsBox = document.getElementById('kader-stats');
+  if(statsBox) {
+    const isJugend = currentTeam && (currentTeam.startsWith('m') || currentTeam.startsWith('w')) && currentTeam.includes('-jugend');
+    statsBox.style.display = isJugend ? 'none' : 'grid';
+  }
+
   // Stats aktualisieren
   const elAnzahl = document.getElementById('kader-anzahl');
   const elAlter = document.getElementById('kader-alter');
@@ -749,7 +756,7 @@ function renderKader(data) {
   const kaderEl = document.getElementById('kader-list');
   if(kaderEl) {
     if(spieler.length === 0) {
-      kaderEl.innerHTML = '<div style="padding:24px 16px;color:#999;text-align:center;font-size:13px;">Spielerliste folgt in Kürze.</div>';
+      kaderEl.innerHTML = '<div style="padding:24px 16px;color:#999;text-align:center;font-size:13px;">Kaderliste folgt in Kürze.</div>';
     } else {
       kaderEl.innerHTML = html;
     }

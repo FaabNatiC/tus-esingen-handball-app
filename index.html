@@ -87,7 +87,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ghint{font-size:9px;color:#666;text-align:center;margin-top:4px;font-style:italic;}
 .tlogo{border-radius:50%;object-fit:contain;background:white;border:1px solid #eee;flex-shrink:0;display:block;}
 .tini{background:#1a1a1a;color:white;display:flex;align-items:center;justify-content:center;font-weight:700;border:none;}
-.sg{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;padding:10px 16px 5px;background:#f5f5f5;border-top:1px solid #eee;border-bottom:1px solid #eee;}
+.sg{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;padding:10px 16px 5px;background:#f5f5f5;border-top:1px solid #eee;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;}
+.sg-count{font-weight:700;color:#aaa;font-size:10px;}
+.phone.dark .sg-count{color:#888;}
 .tc{display:flex;align-items:center;gap:14px;padding:13px 16px;border-bottom:1px solid #f0f0f0;cursor:pointer;}
 .ti2{width:42px;height:42px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
 .tn{font-size:14px;font-weight:700;} .ts{font-size:12px;color:#666;margin-top:1px;}
@@ -448,7 +450,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="sg">Jugend weiblich</div>
   <div class="tc"><div class="ti2">🏃</div><div><div class="tn">weiblich B</div><div class="ts">Oberliga</div></div><span class="jg-badge">Jg. 09/10</span><span class="cv">›</span></div>
   <div class="tc"><div class="ti2">🏃</div><div><div class="tn">weiblich D</div><div class="ts">Landesliga</div></div><span class="jg-badge">Jg. 13/14</span><span class="cv">›</span></div>
-  <div class="sg">Nachwuchs</div>
+  <div class="sg" data-no-count>Nachwuchs</div>
   <div class="tc"><div class="ti2">⭐</div><div><div class="tn">Minis</div><div class="ts">Nachwuchs · ab 4 Jahren</div></div><span class="cv">›</span></div>
   <div style="height:10px;"></div>
 </div>
@@ -577,7 +579,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </table></div>
     <div class="upd" id="tabelle-upd">Lade Daten…</div>
     <a class="ext-btn" id="dt-tab-link" href="#" target="_blank">Aktuelle Tabelle auf handball.net →</a>
-</div>
+  </div>
 
 <!-- TERMINE -->
 <div class="page" id="p-termine">
@@ -890,12 +892,39 @@ function renderSpielplan(data) {
   if(detStand) detStand.textContent = "Stand: " + (data.aktualisiert || '') + " · handball.net · " + data.spiele.length + " Spiele";
 }
 
+// Zählt Mannschaften pro Sektion auf der Teams-Seite und trägt sie ein
+function zaehleMannschaften(){
+  const teamsPage = document.getElementById('p-teams');
+  if(!teamsPage) return;
+  const sections = teamsPage.querySelectorAll('.sg');
+  sections.forEach(function(sec){
+    if(sec.hasAttribute('data-no-count')) return;
+    // Zähle alle .tc-Geschwister bis zur nächsten .sg
+    let count = 0;
+    let el = sec.nextElementSibling;
+    while(el && !el.classList.contains('sg')){
+      if(el.classList.contains('tc')) count++;
+      el = el.nextElementSibling;
+    }
+    // Vorhandenen Count entfernen, dann neu setzen
+    const existing = sec.querySelector('.sg-count');
+    if(existing) existing.remove();
+    if(count > 0){
+      const span = document.createElement('span');
+      span.className = 'sg-count';
+      span.textContent = count + (count === 1 ? ' Mannschaft' : ' Mannschaften');
+      sec.appendChild(span);
+    }
+  });
+}
+
 // App starten
 // Starte Laden sobald DOM bereit ist
 if(document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function(){ ladeAllesDaten(); });
+  document.addEventListener('DOMContentLoaded', function(){ ladeAllesDaten(); zaehleMannschaften(); });
 } else {
   ladeAllesDaten();
+  zaehleMannschaften();
 }
 
 function showMain(v){

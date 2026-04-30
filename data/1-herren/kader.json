@@ -7,14 +7,13 @@
       "name": "Fabian Wurl",
       "rolle": "Trainer",
       "alter": 32,
-      "telefon": "+49 170 1234567",
-      "email": "trainer@tus-esingen.de"
+      "telefon": "+49 176 66860716",
+      "email": "fabian.wurl@googlemail.com"
     },
     {
       "name": "Yannick Hellmich",
       "rolle": "Co-Trainer",
-      "alter": 31,
-      "email": "co-trainer@tus-esingen.de"
+      "alter": 31
     },
     {
       "name": "Tobias Haan",
@@ -24,14 +23,12 @@
     {
       "name": "Timo Okun",
       "rolle": "Spielertrainer",
-      "alter": 35,
-      "telefon": "+49 170 1234568"
+      "alter": 35
     },
     {
       "name": "Michel Göttsche",
       "rolle": "Physiotherapeut",
-      "alter": 23,
-      "email": "physio@tus-esingen.de"
+      "alter": 23
     }
   ],
   "spieler": [

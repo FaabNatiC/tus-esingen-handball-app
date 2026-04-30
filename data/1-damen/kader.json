@@ -5,7 +5,5 @@
   "trainer": [
     { "name": "Yannick Hellmich", "rolle": "Trainer", "alter": 31 }
   ],
-  "spieler": [
-    { "name": "Vorname Nachname", "nummer": 1, "position": "Torwart", "alter": 20, "seitJahr": 2024 }
-  ]
+  "spieler": []
 }

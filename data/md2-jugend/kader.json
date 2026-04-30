@@ -3,7 +3,11 @@
   "mannschaft": "männlich D2",
   "liga": "männliche Jugend D Kreisliga Gruppe 1 (466)",
   "trainer": [
-    { "name": "Till Krügel", "alter": 35, "rolle": "Trainer" }
+    {
+      "name": "Vorname Nachname",
+      "alter": 30,
+      "rolle": "Trainer"
+    }
   ],
   "spieler": []
 }

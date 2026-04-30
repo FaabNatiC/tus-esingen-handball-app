@@ -1,0 +1,9 @@
+{
+  "aktualisiert": "30.04.2026",
+  "mannschaft": "1. Herren",
+  "trainingszeiten": [
+    { "tag": "Mo", "von": "19:00", "bis": "20:30", "art": "Individualtraining", "ort": "neue-kgst" },
+    { "tag": "Di", "von": "19:00", "bis": "20:30", "art": "Hallentraining", "ort": "neue-kgst" },
+    { "tag": "Do", "von": "19:30", "bis": "22:00", "art": "Athletik + Hallentraining", "ort": "neue-kgst" }
+  ]
+}

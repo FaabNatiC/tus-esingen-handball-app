@@ -1,1 +1,18 @@
-
+{
+  "aktualisiert": "26.04.2026",
+  "liga": "männliche Jugend D Landesliga Gruppe 1 (461)",
+  "saison": "2025/26",
+  "tabelle": [
+    { "platz": 1,  "verein": "FC St. Pauli",        "logo": "a89c96ad-e3cb-4ff3-ac57-68b93410a180.png",  "spiele": 16, "siege": 14, "niederlagen": 2,  "diff": "+176", "punkte": 28 },
+    { "platz": 2,  "verein": "TuS Esingen",         "logo": "393a7d27-9c4e-48d7-9ece-19ba9fe48dd2.jpeg", "spiele": 16, "siege": 13, "niederlagen": 2,  "diff": "+222", "punkte": 27, "highlight": true },
+    { "platz": 3,  "verein": "Niendorfer TSV",      "logo": "18bd3ae5-95a4-449b-b1de-1c74e388cb09.png",  "spiele": 16, "siege": 12, "niederlagen": 3,  "diff": "+145", "punkte": 25 },
+    { "platz": 4,  "verein": "TSV Ellerbek",        "logo": "a47f1a43-c6c0-4bb6-bc02-98f4d6fc1ac2.jpeg", "spiele": 16, "siege": 8,  "niederlagen": 7,  "diff": "+3",   "punkte": 17 },
+    { "platz": 5,  "verein": "Elmshorner HT",       "logo": "c62fb52c-93e8-43bf-ae05-45f670f511c0.png",  "spiele": 16, "siege": 7,  "niederlagen": 8,  "diff": "+5",   "punkte": 15 },
+    { "platz": 6,  "verein": "HSG Pinnau",          "logo": "1d9bf8d8-12b2-4029-81dd-ed64ccd0bf9c.png",  "spiele": 16, "siege": 7,  "niederlagen": 9,  "diff": "-75",  "punkte": 14 },
+    { "platz": 7,  "verein": "SG Hamburg-Nord 4",   "logo": "563ea85e-12e3-4842-92be-23b5c1f2be09.png",  "spiele": 9,  "siege": 4,  "niederlagen": 5,  "diff": "-22",  "punkte": 8 },
+    { "platz": 8,  "verein": "HTS/BW96 Handball 2", "logo": "4e51a71d-06c3-4982-9a5d-3ef7542976e4.png",  "spiele": 16, "siege": 2,  "niederlagen": 13, "diff": "-196", "punkte": 5 },
+    { "platz": 9,  "verein": "Eimsbütteler TV 2",   "logo": "de003244-de5b-47c2-929c-7e105d5ead12.png",  "spiele": 9,  "siege": 2,  "niederlagen": 7,  "diff": "-55",  "punkte": 4 },
+    { "platz": 10, "verein": "Barmstedter MTV",     "logo": "a58c7406-6584-4889-ac15-657e81f572d9.png",  "spiele": 16, "siege": 1,  "niederlagen": 14, "diff": "-203", "punkte": 3 },
+    { "platz": 11, "verein": "Rellinger TV 2",      "logo": "cf47be18-afa7-4f1b-8350-50729da7d834.png",  "spiele": 0,  "siege": 0,  "niederlagen": 0,  "diff": "0",    "punkte": 0 }
+  ]
+}

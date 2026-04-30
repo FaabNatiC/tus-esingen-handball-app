@@ -1,0 +1,9 @@
+{
+  "aktualisiert": "30.04.2026",
+  "mannschaft": "männlich D1",
+  "trainingszeiten": [
+    { "tag": "Mo", "von": "17:30", "bis": "19:00", "art": "Hallentraining", "ort": "neue-kgst" },
+    { "tag": "Di", "von": "17:30", "bis": "19:00", "art": "Hallentraining", "ort": "alte-kgst" },
+    { "tag": "Fr", "von": "16:15", "bis": "17:30", "art": "Hallentraining", "ort": "neue-kgst" }
+  ]
+}

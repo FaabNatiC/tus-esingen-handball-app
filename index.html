@@ -92,6 +92,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ti2{width:42px;height:42px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
 .tn{font-size:14px;font-weight:700;} .ts{font-size:12px;color:#666;margin-top:1px;}
 .cv{color:#ddd;font-size:20px;margin-left:auto;}
+.jg-badge{margin-left:auto;font-size:10px;font-weight:700;color:#666;background:#f0f0f0;padding:3px 8px;border-radius:10px;letter-spacing:.02em;white-space:nowrap;}
+.jg-badge + .cv{margin-left:8px;}
+.phone.dark .jg-badge{background:#2a2a2a;color:#aaa;}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 14px;}
 .st{background:#f5f5f5;border-radius:10px;padding:10px;text-align:center;}
 .sv{font-size:22px;font-weight:700;} .sl{font-size:10px;color:#666;margin-top:2px;}
@@ -437,14 +440,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="tc" onclick="openTeam('1-damen')"><div class="ti2">🤾</div><div><div class="tn">1. Damen</div><div class="ts">Frauen Landesliga · Platz 3</div></div><span class="cv">›</span></div>
   <div class="tc"><div class="ti2">🤾</div><div><div class="tn">2. Damen</div><div class="ts">Bezirksliga</div></div><span class="cv">›</span></div>
   <div class="sg">Jugend männlich</div>
-  <div class="tc"><div class="ti2">🏃</div><div><div class="tn">männlich A Jugend</div><div class="ts">Bezirksstaffel</div></div><span class="cv">›</span></div>
-  <div class="tc"><div class="ti2">🏃</div><div><div class="tn">männlich B Jugend</div><div class="ts">Bezirksstaffel · Endrunde ✓</div></div><span class="cv">›</span></div>
-  <div class="tc"><div class="ti2">🏃</div><div><div class="tn">männlich C Jugend</div><div class="ts">Landesliga</div></div><span class="cv">›</span></div>
-  <div class="tc" onclick="openTeam('md1-jugend')"><div class="ti2">🏃</div><div><div class="tn">männlich D1 Jugend</div><div class="ts">Landesliga · Platz 2</div></div><span class="cv">›</span></div>
-  <div class="tc" onclick="openTeam('md2-jugend')"><div class="ti2">🏃</div><div><div class="tn">männlich D2 Jugend</div><div class="ts">Kreisliga · Platz 3</div></div><span class="cv">›</span></div>
+  <div class="tc"><div class="ti2">🏃</div><div><div class="tn">männlich A</div><div class="ts">Bezirksstaffel</div></div><span class="jg-badge">Jg. 07/08</span><span class="cv">›</span></div>
+  <div class="tc"><div class="ti2">🏃</div><div><div class="tn">männlich B</div><div class="ts">Bezirksstaffel · Endrunde ✓</div></div><span class="jg-badge">Jg. 09/10</span><span class="cv">›</span></div>
+  <div class="tc"><div class="ti2">🏃</div><div><div class="tn">männlich C</div><div class="ts">Landesliga</div></div><span class="jg-badge">Jg. 11/12</span><span class="cv">›</span></div>
+  <div class="tc" onclick="openTeam('md1-jugend')"><div class="ti2">🏃</div><div><div class="tn">männlich D1</div><div class="ts">Landesliga · Platz 2</div></div><span class="jg-badge">Jg. 13/14</span><span class="cv">›</span></div>
+  <div class="tc" onclick="openTeam('md2-jugend')"><div class="ti2">🏃</div><div><div class="tn">männlich D2</div><div class="ts">Kreisliga · Platz 3</div></div><span class="jg-badge">Jg. 13/14</span><span class="cv">›</span></div>
   <div class="sg">Jugend weiblich</div>
-  <div class="tc"><div class="ti2">🏃</div><div><div class="tn">weiblich B Jugend</div><div class="ts">Oberliga</div></div><span class="cv">›</span></div>
-  <div class="tc"><div class="ti2">🏃</div><div><div class="tn">weiblich D Jugend</div><div class="ts">Landesliga</div></div><span class="cv">›</span></div>
+  <div class="tc"><div class="ti2">🏃</div><div><div class="tn">weiblich B</div><div class="ts">Oberliga</div></div><span class="jg-badge">Jg. 09/10</span><span class="cv">›</span></div>
+  <div class="tc"><div class="ti2">🏃</div><div><div class="tn">weiblich D</div><div class="ts">Landesliga</div></div><span class="jg-badge">Jg. 13/14</span><span class="cv">›</span></div>
   <div class="sg">Nachwuchs</div>
   <div class="tc"><div class="ti2">⭐</div><div><div class="tn">Minis</div><div class="ts">Nachwuchs · ab 4 Jahren</div></div><span class="cv">›</span></div>
   <div style="height:10px;"></div>
@@ -615,8 +618,8 @@ var LOGO="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUA
 const TEAMS = {
   '1-herren':  { name: '1. Herren',          liga: 'Männer Oberliga',                              saison: '2025/26' },
   '1-damen':   { name: '1. Damen',           liga: 'Frauen Landesliga Gr. 1',                      saison: '2025/26' },
-  'md1-jugend':{ name: 'männlich D1 Jugend', liga: 'männliche Jugend D Landesliga Gruppe 1 (461)', saison: '2025/26' },
-  'md2-jugend':{ name: 'männlich D2 Jugend', liga: 'männliche Jugend D Kreisliga Gruppe 1 (466)',  saison: '2025/26' }
+  'md1-jugend':{ name: 'männlich D1', liga: 'männliche Jugend D Landesliga Gruppe 1 (461)', saison: '2025/26' },
+  'md2-jugend':{ name: 'männlich D2', liga: 'männliche Jugend D Kreisliga Gruppe 1 (466)',  saison: '2025/26' }
 };
 let currentTeam = '1-herren';
 
@@ -791,7 +794,7 @@ function renderSpielplan(data) {
     "1. HC Quickborn":      "4753f2b2-10e2-44e4-b7d0-7f6a917f5d68.png",
     "HG Hamburg-Barmbek 2": "5af9351c-f15d-4daa-9a59-907fdee5e195.jpeg",
     "Rellinger TV 2":       "cf47be18-afa7-4f1b-8350-50729da7d834.png",
-    "HSG Pinnau":           "1d9bf8d8-2ba2-4e41-987e-6d83ea8e9f87.png"
+    "HSG Pinnau":           "1d9bf8d8-12b2-4029-81dd-ed64ccd0bf9c.png"
   };
 
   // Logos aus den Daten ergänzen (für alle Mannschaften)

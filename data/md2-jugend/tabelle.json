@@ -1,1 +1,15 @@
-
+{
+  "aktualisiert": "26.04.2026",
+  "liga": "männliche Jugend D Kreisliga Gruppe 1 (466)",
+  "saison": "2025/26",
+  "tabelle": [
+    { "platz": 1, "verein": "FC St. Pauli 3",      "logo": "a89c96ad-e3cb-4ff3-ac57-68b93410a180.png",  "spiele": 12, "siege": 12, "niederlagen": 0,  "diff": "+169", "punkte": 24 },
+    { "platz": 2, "verein": "Elmshorner HT 2",     "logo": "c62fb52c-93e8-43bf-ae05-45f670f511c0.png",  "spiele": 12, "siege": 9,  "niederlagen": 3,  "diff": "+135", "punkte": 18 },
+    { "platz": 3, "verein": "TuS Esingen 2",       "logo": "393a7d27-9c4e-48d7-9ece-19ba9fe48dd2.jpeg", "spiele": 12, "siege": 9,  "niederlagen": 3,  "diff": "+99",  "punkte": 18, "highlight": true },
+    { "platz": 4, "verein": "SG Osdorf/Lurup",     "logo": "15fa8b00-979b-4153-8e7d-ac61c3191a30.jpeg", "spiele": 12, "siege": 6,  "niederlagen": 6,  "diff": "-12",  "punkte": 12 },
+    { "platz": 5, "verein": "HTS/BW96 Handball 3", "logo": "4e51a71d-06c3-4982-9a5d-3ef7542976e4.png",  "spiele": 7,  "siege": 3,  "niederlagen": 4,  "diff": "-21",  "punkte": 6 },
+    { "platz": 6, "verein": "1. HC Quickborn 2",   "logo": "4753f2b2-10e2-44e4-b7d0-7f6a917f5d68.png",  "spiele": 7,  "siege": 2,  "niederlagen": 5,  "diff": "-46",  "punkte": 4 },
+    { "platz": 7, "verein": "SG Altona",           "logo": "5d2eac4d-e2ff-4d66-a613-e71f72587d34.png",  "spiele": 12, "siege": 2,  "niederlagen": 10, "diff": "-100", "punkte": 4 },
+    { "platz": 8, "verein": "Barmstedter MTV 2",   "logo": "a58c7406-6584-4889-ac15-657e81f572d9.png",  "spiele": 12, "siege": 0,  "niederlagen": 12, "diff": "-224", "punkte": 0 }
+  ]
+}

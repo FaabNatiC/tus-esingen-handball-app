@@ -1,9 +1,15 @@
 {
-  "aktualisiert": "29.04.2026",
+  "aktualisiert": "30.04.2026",
   "mannschaft": "1. Damen",
   "liga": "Frauen Landesliga Gruppe 1",
   "trainer": [
-    { "name": "Yannick Hellmich", "rolle": "Trainer", "alter": 31 }
+    {
+      "name": "Yannick Hellmich",
+      "alter": 31,
+      "rolle": "Trainer",
+      "telefon": "+49 170 1234567",
+      "email": "damen-trainer@tus-esingen.de"
+    }
   ],
   "spieler": []
 }

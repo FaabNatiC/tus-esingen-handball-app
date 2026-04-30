@@ -1,10 +1,9 @@
 {
-  "aktualisiert": "28.04.2026",
+  "aktualisiert": "30.04.2026",
   "mannschaft": "männlich D1",
   "liga": "männliche Jugend D Landesliga Gruppe 1 (461)",
   "trainer": [
-    { "name": "Vorname Nachname", "alter": 30, "rolle": "Trainer" }
+    { "name": "Till Krügel", "alter": 35, "rolle": "Trainer" }
   ],
-  "spieler": [
-  ]
+  "spieler": []
 }

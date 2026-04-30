@@ -1,1 +1,11 @@
-
+{
+  "aktualisiert": "28.04.2026",
+  "mannschaft": "männlich D2 Jugend",
+  "liga": "männliche Jugend D Kreisliga Gruppe 1 (466)",
+  "trainer": [
+    { "name": "Vorname Nachname", "alter": 30, "rolle": "Trainer" }
+  ],
+  "spieler": [
+    { "name": "Vorname Nachname", "nummer": 1, "position": "Torwart", "alter": 13, "seitJahr": 2020 }
+  ]
+}

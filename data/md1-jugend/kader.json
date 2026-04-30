@@ -6,6 +6,5 @@
     { "name": "Vorname Nachname", "alter": 30, "rolle": "Trainer" }
   ],
   "spieler": [
-    { "name": "Vorname Nachname", "nummer": 1, "position": "Torwart", "alter": 13, "seitJahr": 2020 }
   ]
 }

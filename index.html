@@ -675,17 +675,22 @@ function nav(p,btn){
 // ── Kader rendern ──────────────────────────────────────────────────────────
 function renderKader(data) {
   const pos_order = ["Torwart","Außen","Rückraum","Kreisläufer"];
-  const spieler = data.spieler.sort((a,b) => {
+  const spieler = (data.spieler || []).sort((a,b) => {
     const pi = pos_order.indexOf(a.position) - pos_order.indexOf(b.position);
     return pi !== 0 ? pi : a.nummer - b.nummer;
   });
 
   // Stats aktualisieren
-  const alter_avg = (spieler.reduce((s,p)=>s+p.alter,0)/spieler.length).toFixed(1);
   const elAnzahl = document.getElementById('kader-anzahl');
   const elAlter = document.getElementById('kader-alter');
-  if(elAnzahl) elAnzahl.textContent = spieler.length;
-  if(elAlter) elAlter.textContent = alter_avg;
+  if(spieler.length > 0) {
+    const alter_avg = (spieler.reduce((s,p)=>s+p.alter,0)/spieler.length).toFixed(1);
+    if(elAnzahl) elAnzahl.textContent = spieler.length;
+    if(elAlter) elAlter.textContent = alter_avg;
+  } else {
+    if(elAnzahl) elAnzahl.textContent = '--';
+    if(elAlter) elAlter.textContent = '--';
+  }
 
   // Ø Jahre im Verein berechnen (aus seitJahr)
   const jahrJetzt = new Date().getFullYear();
@@ -742,7 +747,13 @@ function renderKader(data) {
       </div>`;
   });
   const kaderEl = document.getElementById('kader-list');
-  if(kaderEl) kaderEl.innerHTML = html;
+  if(kaderEl) {
+    if(spieler.length === 0) {
+      kaderEl.innerHTML = '<div style="padding:24px 16px;color:#999;text-align:center;font-size:13px;">Spielerliste folgt in Kürze.</div>';
+    } else {
+      kaderEl.innerHTML = html;
+    }
+  }
 }
 
 // ── Tabelle rendern ────────────────────────────────────────────────────────

@@ -465,12 +465,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
   <div id="dt-team">
     <div class="sec">Trainer & Betreuerstab</div>
-    <div id="trainer-list">
-    <div class="nl"><div class="kader-nr" style="width:42px;height:42px;border-radius:50%;background:#1a1a1a;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;">FW</div><div><div class="nl-t">Fabian Wurl</div><div class="nl-d">32 Jahre</div><span style="background:#1a1a1a;color:white;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;margin-top:4px;display:inline-block;">Trainer</span></div></div>
-    <div class="nl"><div class="kader-nr" style="width:42px;height:42px;border-radius:50%;background:#1a1a1a;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;">YH</div><div><div class="nl-t">Yannick Hellmich</div><div class="nl-d">31 Jahre</div><span style="background:#f0f0f0;color:#444;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;margin-top:4px;display:inline-block;">Co-Trainer</span></div></div>
-    <div class="nl"><div class="kader-nr" style="width:42px;height:42px;border-radius:50%;background:#1a1a1a;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;">TH</div><div><div class="nl-t">Tobias Haan</div><div class="nl-d">31 Jahre</div><span style="background:#f0f0f0;color:#444;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;margin-top:4px;display:inline-block;">Co-Trainer</span></div></div>
-    <div class="nl"><div class="kader-nr" style="width:42px;height:42px;border-radius:50%;background:#1a1a1a;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;">TO</div><div><div class="nl-t">Timo Okun</div><div class="nl-d">35 Jahre</div><span style="background:#f0f0f0;color:#444;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;margin-top:4px;display:inline-block;">Spielertrainer</span></div></div>
-    <div class="nl"><div class="kader-nr" style="width:42px;height:42px;border-radius:50%;background:#1a1a1a;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;">MG</div><div><div class="nl-t">Michel Göttsche</div><div class="nl-d">23 Jahre</div><span style="background:#E8F4F0;color:#1A7A5E;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;margin-top:4px;display:inline-block;">Physiotherapeut</span></div></div></div>
+    <div id="trainer-list"></div>
     <div class="sec">Trainingszeiten</div>
     <div id="trainingszeiten-list"></div>
     <div class="sec">Hauptsponsor</div>
@@ -821,7 +816,9 @@ function renderKader(data) {
       </div>`;
   });
   const trainerEl = document.getElementById('trainer-list');
-  if(trainerEl) trainerEl.innerHTML = trainerHtml;
+  if(trainerEl) {
+    trainerEl.innerHTML = trainerHtml || '<div style="padding:20px 16px;color:#999;text-align:center;font-size:13px;">Trainerstab folgt in Kürze.</div>';
+  }
 
   // Spieler rendern
   let html = '';

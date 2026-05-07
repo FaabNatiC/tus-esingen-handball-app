@@ -1,10 +1,15 @@
 {
-  "_hinweis": "News werden hier zentral gepflegt. 'topNews: true' = wird auf der Startseite als große Top-News-Karte gezeigt. Datumsformat: 'TT. Monat JJJJ' (deutsch). Sortierung erfolgt automatisch nach 'sortDate' (YYYY-MM-DD).",
+  "_hinweis": "Manuelle News der TuS Esingen Handball-App. Spielergebnis-News entstehen automatisch aus den spielplan.json-Dateien jeder Mannschaft.",
+  "_topNews": "Wenn mind. eine News topNews:true hat, wird genau die als Top angezeigt (max 3). Sonst werden automatisch die 3 neuesten als Top genommen.",
+  "_tags": "Verfügbare Kategorien (cat / catCl): 'Vereinsleben'/'vl', 'Sparte'/'sp', 'Herren'/'he', 'Damen'/'da', 'Jugend männlich'/'jm', 'Jugend weiblich'/'jw'",
+  "_matchOverride": "Wenn diese News bereits ein Spielergebnis behandelt, kann mit 'matchTeam' (Team-ID) und 'matchDate' (YYYY-MM-DD) festgelegt werden, dass die Auto-Spielnews für genau dieses Spiel NICHT zusätzlich erzeugt wird.",
   "news": [
     {
       "id": "saison-25-26-beendet-1herren",
       "topNews": true,
       "sortDate": "2026-04-27",
+      "matchTeam": "1-herren",
+      "matchDate": "2026-04-25",
       "cat": "Herren",
       "catCl": "he",
       "gradient": "linear-gradient(135deg,#1a3a5c 0%,#0d2540 100%)",
@@ -55,6 +60,210 @@
         {"type": "text", "text": "Mit einem souveränen 31:22-Sieg gegen den MTV Elmshorn hat sich die männliche B-Jugend das begehrte Endrunden-Ticket gesichert."},
         {"type": "score", "home": "TuS Esingen", "guest": "MTV Elmshorn", "result": "31:22", "liga": "mB Jugend Bezirksstaffel · Qualifikation"},
         {"type": "quote", "text": "Ich bin unglaublich stolz auf die Jungs. Die Endrunde ist verdient!", "author": "Dennis Böhm, Jugendtrainer"}
+      ]
+    },
+
+    {
+      "id": "dummy-jhv-2026",
+      "topNews": false,
+      "sortDate": "2026-04-15",
+      "cat": "Vereinsleben",
+      "catCl": "vl",
+      "gradient": "linear-gradient(135deg,#3a3a3a 0%,#1a1a1a 100%)",
+      "title": "Jahreshauptversammlung am 24.04.2026",
+      "date": "15. April 2026",
+      "author": "Vereinsvorstand",
+      "authorIni": "TuS",
+      "lead": "Alle Mitglieder sind herzlich zur Jahreshauptversammlung des TuS Esingen eingeladen.",
+      "body": [
+        {"type": "text", "text": "Am 24. April 2026 um 19:30 Uhr findet die Jahreshauptversammlung des TuS Esingen e.V. im Vereinsheim statt. Auf der Tagesordnung stehen unter anderem der Geschäftsbericht, der Kassenbericht sowie eine geplante Satzungsänderung."},
+        {"type": "text", "text": "Die Tagesordnung sowie alle relevanten Unterlagen können in der Geschäftsstelle eingesehen oder auf der Vereinswebsite heruntergeladen werden."}
+      ]
+    },
+    {
+      "id": "dummy-trainerwechsel-damen",
+      "topNews": false,
+      "sortDate": "2026-04-10",
+      "cat": "Damen",
+      "catCl": "da",
+      "gradient": "linear-gradient(135deg,#7a1a2e 0%,#5a0d1a 100%)",
+      "title": "Neuer Trainer für die 1. Damen ab Saison 2026/27",
+      "date": "10. April 2026",
+      "author": "Sportlicher Leiter",
+      "authorIni": "TuS",
+      "lead": "Ab der kommenden Saison übernimmt ein neuer Trainer die 1. Damen des TuS Esingen.",
+      "body": [
+        {"type": "text", "text": "Der Vorstand freut sich, mit Beginn der Saison 2026/27 einen neuen Trainer für die 1. Damen begrüßen zu dürfen. Details zur Person werden in den kommenden Wochen bekannt gegeben."},
+        {"type": "quote", "text": "Wir sind überzeugt, mit dieser Personalie den nächsten Schritt in der Entwicklung unserer Damenmannschaft zu gehen.", "author": "Sportlicher Leiter"}
+      ]
+    },
+    {
+      "id": "dummy-trainingslager",
+      "topNews": false,
+      "sortDate": "2026-04-05",
+      "cat": "Sparte",
+      "catCl": "sp",
+      "gradient": "linear-gradient(135deg,#1f6b1a 0%,#155010 100%)",
+      "title": "Trainingslager der Handball-Sparte in Boltenhagen",
+      "date": "5. April 2026",
+      "author": "Sparte Handball",
+      "authorIni": "TuS",
+      "lead": "Vom 8. bis 11. Juli geht es zum gemeinsamen Trainingslager an die Ostsee.",
+      "body": [
+        {"type": "text", "text": "Auch in diesem Jahr verbringen die Mannschaften der Handball-Sparte gemeinsam ein Trainingslager in Boltenhagen. Anmeldungen sind ab sofort über die jeweiligen Trainer möglich."},
+        {"type": "text", "text": "Neben intensiven Trainingseinheiten stehen auch Teambuilding-Aktivitäten und gemütliche Abende auf dem Programm."}
+      ]
+    },
+    {
+      "id": "dummy-jugend-tagder-tueren",
+      "topNews": false,
+      "sortDate": "2026-04-02",
+      "cat": "Sparte",
+      "catCl": "sp",
+      "gradient": "linear-gradient(135deg,#1f6b1a 0%,#155010 100%)",
+      "title": "Tag der offenen Tür: Schnuppertraining für Kinder",
+      "date": "2. April 2026",
+      "author": "Jugendabteilung",
+      "authorIni": "TuS",
+      "lead": "Am 18. Mai laden wir alle Kinder zum Schnuppertraining in die neue Halle ein.",
+      "body": [
+        {"type": "text", "text": "Du willst Handball ausprobieren? Dann komm am 18. Mai um 15:00 Uhr in die neue Halle in Esingen. Trainer und Spieler aller Jugendmannschaften zeigen dir, wie viel Spaß Handball macht!"},
+        {"type": "text", "text": "Mitbringen: Sportkleidung, Hallenschuhe und gute Laune. Eltern sind ebenfalls herzlich willkommen."}
+      ]
+    },
+    {
+      "id": "dummy-herren-aufstieg-spekulation",
+      "topNews": false,
+      "sortDate": "2026-03-30",
+      "cat": "Herren",
+      "catCl": "he",
+      "gradient": "linear-gradient(135deg,#1a3a5c 0%,#0d2540 100%)",
+      "title": "Saisonvorbereitung der 1. Herren startet im Juli",
+      "date": "30. März 2026",
+      "author": "Trainerteam Herren",
+      "authorIni": "TuS",
+      "lead": "Die Vorbereitung auf die Saison 2026/27 beginnt am 21. Juli mit dem ersten Mannschaftstraining.",
+      "body": [
+        {"type": "text", "text": "Nach einer kurzen, aber wohlverdienten Sommerpause startet die 1. Herren am 21. Juli in die Vorbereitung auf die neue Saison. Geplant sind drei Vorbereitungsspiele sowie ein Trainingslager."},
+        {"type": "quote", "text": "Wir wollen die Saison nutzen, um das Team weiter zu entwickeln und einen Schritt nach vorn zu machen.", "author": "Fabian Wurl, Trainer"}
+      ]
+    },
+    {
+      "id": "dummy-damen-meisterschaft",
+      "topNews": false,
+      "sortDate": "2026-03-22",
+      "cat": "Damen",
+      "catCl": "da",
+      "gradient": "linear-gradient(135deg,#7a1a2e 0%,#5a0d1a 100%)",
+      "title": "1. Damen erreichen Tabellenplatz 3",
+      "date": "22. März 2026",
+      "author": "Damenmannschaft",
+      "authorIni": "TuS",
+      "lead": "Mit einem starken Saisonendspurt klettern die 1. Damen auf den dritten Tabellenplatz.",
+      "body": [
+        {"type": "text", "text": "Eine beeindruckende Serie in den letzten Wochen hat die 1. Damen auf den dritten Tabellenplatz der Frauen Landesliga Gruppe 1 katapultiert. Das ist die beste Platzierung seit drei Jahren."},
+        {"type": "text", "text": "Ein großes Lob an die gesamte Mannschaft sowie das Trainerteam für die hervorragende Leistung in dieser Saison!"}
+      ]
+    },
+    {
+      "id": "dummy-md1-titel",
+      "topNews": false,
+      "sortDate": "2026-03-15",
+      "cat": "Jugend männlich",
+      "catCl": "jm",
+      "gradient": "linear-gradient(135deg,#5a9bd4 0%,#3a7ab5 100%)",
+      "title": "männlich D1 Tabellenführer der Landesliga",
+      "date": "15. März 2026",
+      "author": "Jugendabteilung",
+      "authorIni": "TuS",
+      "lead": "Die männliche D1 führt souverän die Tabelle der Landesliga Gruppe 1 an.",
+      "body": [
+        {"type": "text", "text": "Mit einer beeindruckenden Bilanz von 14 Siegen aus 16 Spielen führt die männliche D1 die Tabelle der Landesliga Gruppe 1 an. Damit haben sich die Jungs bereits frühzeitig den Meistertitel gesichert."},
+        {"type": "quote", "text": "Die Jungs haben über die gesamte Saison eine fantastische Mentalität gezeigt – darauf können sie wirklich stolz sein.", "author": "Trainer männlich D1"}
+      ]
+    },
+    {
+      "id": "dummy-jw-neue-mannschaft",
+      "topNews": false,
+      "sortDate": "2026-03-10",
+      "cat": "Jugend weiblich",
+      "catCl": "jw",
+      "gradient": "linear-gradient(135deg,#f5c6cf 0%,#d49aa8 100%)",
+      "title": "Neue weibliche D-Jugend ab Saison 2026/27",
+      "date": "10. März 2026",
+      "author": "Jugendabteilung",
+      "authorIni": "TuS",
+      "lead": "Wir freuen uns, ab der kommenden Saison auch eine weibliche D-Jugend ins Leben zu rufen!",
+      "body": [
+        {"type": "text", "text": "Aufgrund des großen Interesses und vieler Anmeldungen können wir ab der Saison 2026/27 erstmals seit längerer Zeit wieder eine weibliche D-Jugend stellen. Trainerin und Trainingszeiten werden in Kürze bekannt gegeben."},
+        {"type": "text", "text": "Mädchen der Jahrgänge 2014 und 2015, die Lust auf Handball haben, können sich gerne bei der Jugendabteilung melden!"}
+      ]
+    },
+    {
+      "id": "dummy-sportabzeichen",
+      "topNews": false,
+      "sortDate": "2026-03-03",
+      "cat": "Vereinsleben",
+      "catCl": "vl",
+      "gradient": "linear-gradient(135deg,#3a3a3a 0%,#1a1a1a 100%)",
+      "title": "Sportabzeichen-Aktion 2026 startet",
+      "date": "3. März 2026",
+      "author": "Vereinsvorstand",
+      "authorIni": "TuS",
+      "lead": "Auch 2026 bietet der TuS Esingen wieder die Möglichkeit, das Deutsche Sportabzeichen abzulegen.",
+      "body": [
+        {"type": "text", "text": "Vom 1. Mai bis zum 30. September 2026 könnt ihr beim TuS Esingen wieder das Deutsche Sportabzeichen ablegen. Termine und Disziplinen findet ihr ab April auf der Vereinswebsite."}
+      ]
+    },
+    {
+      "id": "dummy-sponsor-trikots",
+      "topNews": false,
+      "sortDate": "2026-02-25",
+      "cat": "Sparte",
+      "catCl": "sp",
+      "gradient": "linear-gradient(135deg,#1f6b1a 0%,#155010 100%)",
+      "title": "Neue Trikots dank Sponsor-Engagement",
+      "date": "25. Februar 2026",
+      "author": "Sparte Handball",
+      "authorIni": "TuS",
+      "lead": "Dank großzügiger Unterstützung lokaler Sponsoren erhalten alle Jugendmannschaften neue Trikots.",
+      "body": [
+        {"type": "text", "text": "Wir freuen uns, dass dank der Unterstützung mehrerer regionaler Unternehmen alle Jugendmannschaften der Handball-Sparte zur kommenden Saison neu eingekleidet werden können. Vielen Dank an alle Sponsoren für die Treue zum Verein!"},
+        {"type": "quote", "text": "Ohne unsere Sponsoren wäre Handball auf diesem Niveau nicht möglich. Vielen Dank für die Unterstützung!", "author": "Spartenleitung Handball"}
+      ]
+    },
+    {
+      "id": "dummy-schiedsrichterausbildung",
+      "topNews": false,
+      "sortDate": "2026-02-15",
+      "cat": "Sparte",
+      "catCl": "sp",
+      "gradient": "linear-gradient(135deg,#1f6b1a 0%,#155010 100%)",
+      "title": "Schiedsrichter-Ausbildung: Anmeldung läuft",
+      "date": "15. Februar 2026",
+      "author": "Sparte Handball",
+      "authorIni": "TuS",
+      "lead": "Im Mai startet ein neuer Lehrgang für angehende Schiedsrichter. Interessenten können sich noch bis 30. April anmelden.",
+      "body": [
+        {"type": "text", "text": "Du hast Interesse, als Schiedsrichter aktiv zu werden? Im Mai 2026 startet ein neuer Lehrgang des Hamburger Handballverbandes. Der TuS Esingen unterstützt seine Schiedsrichter-Anwärter mit Lehrgangsgebühren und Materialien."},
+        {"type": "text", "text": "Anmeldungen bitte bis spätestens 30. April über die Geschäftsstelle. Mindestalter: 14 Jahre."}
+      ]
+    },
+    {
+      "id": "dummy-vereinsfahrt",
+      "topNews": false,
+      "sortDate": "2026-02-08",
+      "cat": "Vereinsleben",
+      "catCl": "vl",
+      "gradient": "linear-gradient(135deg,#3a3a3a 0%,#1a1a1a 100%)",
+      "title": "Bundesliga-Ausflug: Mit dem Verein zu THW Kiel",
+      "date": "8. Februar 2026",
+      "author": "Vereinsvorstand",
+      "authorIni": "TuS",
+      "lead": "Am 14. Juni geht's gemeinsam zum Heimspiel des THW Kiel in die ZAG Arena.",
+      "body": [
+        {"type": "text", "text": "Am 14. Juni 2026 organisieren wir eine gemeinsame Fahrt zum Bundesliga-Heimspiel des THW Kiel. Die Tickets sind im Block 18 reserviert, der Bustransfer ist inklusive."},
+        {"type": "text", "text": "Anmeldungen bis 15. Mai bei der Geschäftsstelle. Begrenzte Platzkapazität – first come, first served!"}
       ]
     }
   ]

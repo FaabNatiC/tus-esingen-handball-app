@@ -1,6 +1,6 @@
 // TuS Esingen Handball App - Service Worker
 // Version bei Updates erhöhen, damit Browser den Cache aktualisiert
-const CACHE_VERSION = 'v23';
+const CACHE_VERSION = 'v24';
 const CACHE_NAME = `tus-esingen-${CACHE_VERSION}`;
 
 // Dateien, die beim Installieren in den Cache wandern (App-Shell)

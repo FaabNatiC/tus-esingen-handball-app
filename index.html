@@ -105,7 +105,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cd-l{font-size:9px;color:#555;margin-top:2px;}
 .cd-sep{font-size:16px;color:#999;align-self:flex-start;padding-top:3px;}
 .cd-match{font-size:10px;color:#444;line-height:1.4;}
-.nl{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid #f0f0f0;align-items:flex-start;}
+.nl{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid #f0f0f0;align-items:center;justify-content:space-between;}
+.nl > div:first-child{flex:1;min-width:0;}
+.nl-arr{font-size:22px;font-weight:300;color:#bbb;line-height:1;flex-shrink:0;margin-left:8px;}
+.phone.dark .nl-arr{color:#666;}
 .nl-th{width:52px;height:52px;border-radius:10px;background:#1a1a1a;flex-shrink:0;}
 .nl-th.vl{background:#3a3a3a;} .nl-th.jm{background:#a8d5f0;} .nl-th.jw{background:#f5c6cf;} .nl-th.sp{background:#1f6b1a;} .nl-th.he{background:#0d2540;} .nl-th.da{background:#7a1a2e;}
 .nl-b{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#f0f0f0;color:#444;margin-bottom:4px;}
@@ -706,7 +709,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.2.2";
+const APP_VERSION = "0.2.5";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1501,6 +1504,13 @@ async function loadAllNews(){
     console.warn('news.json konnte nicht geladen werden', e);
   }
   
+  // Wenn keine manuelles 'date' gesetzt: aus sortDate generieren (deutsch)
+  manualNews.forEach(function(n){
+    if(!n.date && n.sortDate){
+      n.date = formatGermanDate(n.sortDate);
+    }
+  });
+  
   // Set aus "teamId|YYYY-MM-DD" für alle Spiele, die manuell behandelt sind
   var excludeMatches = new Set();
   manualNews.forEach(function(n){
@@ -1521,26 +1531,17 @@ async function loadAllNews(){
 }
 
 
-// Helper: Tags nebeneinander rendern (Kategorie + optional Team)
-// Nutzt nl-tags-Container damit beide Badges in einer Zeile stehen
+// Helper: EIN Tag rendern. Wenn 'team' gesetzt → Team-Name in Kategorie-Farbe.
+// Sonst → Kategorie-Name in Kategorie-Farbe.
 function renderTagsInline(n){
-  var html = '<div class="nl-tags">';
-  html += '<span class="nl-b'+(n.catCl?' '+n.catCl:'')+'">'+n.cat+'</span>';
-  if(n.team){
-    html += '<span class="nl-b team">'+n.team+'</span>';
-  }
-  html += '</div>';
-  return html;
+  var label = n.team || n.cat;
+  return '<div class="nl-tags"><span class="nl-b'+(n.catCl?' '+n.catCl:'')+'">'+label+'</span></div>';
 }
 
-// Helper: Tags für Top-News-Karten (auf farbigem Hintergrund, helle Schrift)
+// Helper: Tag für Top-News-Karten (auf farbigem Hintergrund, helle Schrift)
 function renderTagsOnDark(n){
-  var html = '';
-  html += '<span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;background:rgba(255,255,255,.18);color:rgba(255,255,255,.95);margin-right:4px;">'+n.cat+'</span>';
-  if(n.team){
-    html += '<span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);">'+n.team+'</span>';
-  }
-  return html;
+  var label = n.team || n.cat;
+  return '<span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;background:rgba(255,255,255,.18);color:rgba(255,255,255,.95);">'+label+'</span>';
 }
 
 
@@ -1562,14 +1563,12 @@ function renderNewsHomepage(){
   var topHtml = '';
   if(topNews[0]){
     var n0 = topNews[0]; var i0 = NEWS.indexOf(n0);
+    var label0 = n0.team || n0.cat;
     topHtml += '<div style="border-radius:16px;overflow:hidden;background:#1a1a1a;margin-bottom:10px;cursor:pointer;" onclick="openNews('+i0+')">' +
       '<div style="height:110px;background:'+n0.gradient+';display:flex;align-items:flex-end;padding:14px;position:relative;">' +
       '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.05) 70%);"></div>' +
       '<div style="position:relative;z-index:1;">' +
-      '<div style="margin-bottom:6px;">' +
-      '<span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:white;color:#1a1a1a;margin-right:4px;">'+n0.cat+'</span>' +
-      (n0.team ? '<span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(255,255,255,.18);color:white;">'+n0.team+'</span>' : '') +
-      '</div>' +
+      '<div style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:white;color:#1a1a1a;margin-bottom:6px;">'+label0+'</div>' +
       '<div style="font-size:14px;font-weight:700;color:white;line-height:1.3;">'+n0.title+'</div>' +
       '</div></div>' +
       '<div style="padding:10px 14px;display:flex;align-items:center;justify-content:space-between;">' +
@@ -1659,14 +1658,9 @@ function openNews(idx){
   NEWS.forEach(function(r,i){
     if(i!==idx) relHtml+='<div class="nl" style="cursor:pointer;" onclick="openNews('+i+')"><div>'+renderTagsInline(r)+'<div class="nl-t">'+r.title+'</div><div class="nl-d">'+r.date+'</div></div><span class="nl-arr">›</span></div>';
   });
-  // Hero-Tags-HTML (Kategorie + optional Team auf farbigem Hintergrund)
-  var heroTagsHtml = '<div class="nd-cat '+n.catCl+'">'+n.cat+'</div>';
-  if(n.team){
-    heroTagsHtml = '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">' +
-      '<span class="nd-cat '+n.catCl+'" style="margin-bottom:0;">'+n.cat+'</span>' +
-      '<span style="display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;background:rgba(255,255,255,.18);color:white;">'+n.team+'</span>' +
-      '</div>';
-  }
+  // Hero-Tags-HTML: nur ein Tag (Team falls vorhanden, sonst Kategorie) in Kategorie-Farbe
+  var heroLabel = n.team || n.cat;
+  var heroTagsHtml = '<div class="nd-cat '+n.catCl+'">'+heroLabel+'</div>';
   document.getElementById('nd-content').innerHTML=
     '<div class="nd-hero" style="background:'+n.gradient+';"><div class="nd-hero-overlay"></div><div class="nd-hero-content">'+heroTagsHtml+'<div class="nd-hero-title">'+n.title+'</div></div></div>'+
     '<div class="nd-meta"><div class="nd-avatar" style="overflow:hidden;padding:0;">'+(n.authorIni==='TuS'?'<img src="'+LOGO+'" style="width:100%;height:100%;object-fit:cover;display:block;">':n.authorIni)+'</div><div><div class="nd-author">'+n.author+'</div><div class="nd-date">'+n.date+'</div></div><button class="nd-share">⎙ Teilen</button></div>'+
@@ -1784,7 +1778,10 @@ document.querySelectorAll('.bt').forEach(function(b,i){
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('sw.js')
+    // APP_VERSION als Query-Parameter mitgeben.
+    // So muss CACHE_VERSION in sw.js nicht mehr separat gepflegt werden -
+    // die sw.js liest die Version aus ihrem eigenen Script-URL aus.
+    navigator.serviceWorker.register('sw.js?v=' + APP_VERSION)
       .then(function(reg) {
         console.log('Service Worker registriert:', reg.scope);
 

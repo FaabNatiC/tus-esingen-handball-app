@@ -74,20 +74,18 @@ Falls kein Banner erscheint:
 
 ## Bei Updates an der App
 
-Wenn du später Änderungen an `index.html`, `sw.js`, `manifest.json` oder den Icons machst:
+Wenn du später Änderungen an `index.html`, `manifest.json` oder den Icons machst:
 
-1. In `index.html` die `APP_VERSION` erhöhen (z.B. `"0.1.7"`)
+1. In `index.html` die `APP_VERSION` erhöhen (z.B. `"0.2.6"`)
    ```js
-   const APP_VERSION = "0.1.7";  // war vorher 0.1.6
+   const APP_VERSION = "0.2.6";  // war vorher 0.2.5
    ```
-2. In `sw.js` die `CACHE_VERSION` erhöhen (z.B. `'v30'`)
-   ```js
-   const CACHE_VERSION = 'v30';  // war vorher v29
-   ```
-3. Committen und pushen
-4. Beim nächsten Öffnen der App holen sich Nutzer automatisch die neue Version
+2. Committen und pushen
+3. Beim nächsten Öffnen der App holen sich Nutzer automatisch die neue Version
 
-Wenn du das vergisst, sehen Nutzer evtl. noch die alte Version aus dem Cache.
+**Die `sw.js` musst du nicht mehr anfassen** – sie liest die Cache-Version automatisch aus der App-Version aus. Du musst sie nur einmalig im Repo haben.
+
+Wenn du das `APP_VERSION`-Update vergisst, sehen Nutzer evtl. noch die alte Version aus dem Cache.
 
 **Hinweis:** App-Icons werden von iOS sehr aggressiv gecached. Wenn das Icon
 geändert wurde, müssen Nutzer die App vom Homescreen löschen und neu hinzufügen,

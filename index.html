@@ -3,9 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<link rel="icon" type="image/png" href="data/logos/tus-esingen.png">
-<link rel="apple-touch-icon" href="data/logos/tus-esingen.png">
-<title>TuS Esingen – App Klickdummy</title>
+
+<!-- PWA: Manifest -->
+<link rel="manifest" href="manifest.json">
+
+<!-- PWA: Theme & Status Bar -->
+<meta name="theme-color" content="#1a1a1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TuS Esingen">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- PWA: Icons -->
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+<!-- SEO / Vorschau -->
+<meta name="description" content="Die offizielle App der Handball-Abteilung des TuS Esingen e.V. – Spielpläne, Tabellen, Mannschaften und News.">
+
+<title>TuS Esingen Handball</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#e5e5ea;display:flex;justify-content:center;padding:20px;}
@@ -1232,6 +1249,21 @@ document.querySelectorAll('.bt').forEach(function(b,i){
   b.style.background=i===0?'white':'transparent';
   b.querySelector('.bt-lb').style.color=i===0?'#1a1a1a':'rgba(255,255,255,0.4)';
 });
+</script>
+
+<!-- PWA: Service Worker registrieren -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js')
+      .then(function(reg) {
+        console.log('Service Worker registriert:', reg.scope);
+      })
+      .catch(function(err) {
+        console.log('Service Worker Fehler:', err);
+      });
+  });
+}
 </script>
 </body>
 </html>

@@ -775,7 +775,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.3.8";
+const APP_VERSION = "0.3.9";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1103,6 +1103,31 @@ function renderTabelle(data) {
 // 2) Altes Format: { liga: '...', spiele: [...] } oder { wettbewerb: '...', spiele: [...] }
 // Ergebnis ist immer: data.spiele = flache Liste mit jeweils 'art' und 'wettbewerb' pro Spiel,
 // data.wettbewerb = Default-Wettbewerb (Liga-Name) für die Statistik/Header.
+// Ergebnis eines Spiels aus TuS-Sicht: 'sieg' | 'niederlage' | 'unentschieden' | null
+// Berücksichtigt auch Wertungen (Hinweis 'WG' = Wertung gegen Gast, 'WH' = Wertung gegen Heim).
+// Bei Wertungen ist das Ergebnis trotz 0:0 fest entschieden.
+function tusOutcome(s){
+  if(!s || s.status !== 'finished') return null;
+  if(s.toreHeim == null || s.toreGast == null) return null;
+  var tusIstHeim = (s.heim || '').indexOf('TuS Esingen') === 0;
+  // Wertungen aus dem Hinweistext lesen (case-insensitive, deckt 'WG', 'WH' und ausgeschriebene Varianten ab)
+  var hinweis = (s.hinweis || '').toLowerCase();
+  var wertungGegenGast = hinweis.indexOf('wg') !== -1 || hinweis.indexOf('wertung gegen gast') !== -1;
+  var wertungGegenHeim = hinweis.indexOf('wh') !== -1 || hinweis.indexOf('wertung gegen heim') !== -1;
+  if(wertungGegenGast){
+    // Heim gewinnt automatisch, Gast verliert
+    return tusIstHeim ? 'sieg' : 'niederlage';
+  }
+  if(wertungGegenHeim){
+    // Gast gewinnt automatisch, Heim verliert
+    return tusIstHeim ? 'niederlage' : 'sieg';
+  }
+  // Reguläres Ergebnis nach Toren
+  if(s.toreHeim === s.toreGast) return 'unentschieden';
+  if(tusIstHeim) return s.toreHeim > s.toreGast ? 'sieg' : 'niederlage';
+  return s.toreGast > s.toreHeim ? 'sieg' : 'niederlage';
+}
+
 function normalizeSpielplan(data){
   if(!data || typeof data !== 'object') return data;
   // Neues Format: wettbewerbe-Array
@@ -1200,10 +1225,11 @@ function renderSpielplan(data) {
     const ergebnis = s.toreHeim !== null && s.toreGast !== null
       ? `<div class="gs">${s.toreHeim}:${s.toreGast}</div>`
       : `<div class="gs up">${formatDatum(s.datum).split(" · ")[1]}</div>`;
-    const heim_esingen = s.heim === "TuS Esingen";
-    const gewonnen = heim_esingen ? s.toreHeim > s.toreGast : s.toreGast > s.toreHeim;
-    const verloren  = heim_esingen ? s.toreHeim < s.toreGast : s.toreGast < s.toreHeim;
-    const cardClass = s.status === "finished" ? (gewonnen ? "gc rw" : (verloren ? "gc rl" : "gc rd")) : "gc";
+    // Farbiger Streifen links nach Ergebnis (berücksichtigt Wertungen)
+    const outcome = tusOutcome(s);
+    const cardClass = outcome === 'sieg' ? 'gc rw' :
+                      outcome === 'niederlage' ? 'gc rl' :
+                      outcome === 'unentschieden' ? 'gc rd' : 'gc';
     const hinweis = s.hinweis ? `<div class="ghint">${s.hinweis}</div>` : '';
     // Spielart-Badge: 'liga' (Default), 'pokal', 'test'
     const art = s.art || 'liga';
@@ -1252,14 +1278,12 @@ function renderSpielplan(data) {
   if(detStats) {
     let siege=0, unen=0, niederl=0;
     data.spiele.forEach(s => {
-      if(s.status !== 'finished' || s.toreHeim === null || s.toreGast === null) return;
       // Nur Liga-Spiele in die Saison-Statistik einrechnen
       if(s.art && s.art !== 'liga') return;
-      const heim_esingen = s.heim === "TuS Esingen";
-      const heimTore = s.toreHeim, gastTore = s.toreGast;
-      if(heimTore === gastTore) unen++;
-      else if((heim_esingen && heimTore > gastTore) || (!heim_esingen && gastTore > heimTore)) siege++;
-      else niederl++;
+      var outcome = tusOutcome(s);
+      if(outcome === 'sieg') siege++;
+      else if(outcome === 'niederlage') niederl++;
+      else if(outcome === 'unentschieden') unen++;
     });
     detStats.innerHTML =
       '<div class="st"><div class="sv" style="color:#639922;">' + siege + '</div><div class="sl">Siege</div></div>' +
@@ -1355,10 +1379,10 @@ async function loadGlobalSpielplan(force) {
   }
   function cardFinished(item) {
     const s = item.spiel;
-    const heim_esingen = s.heim === 'TuS Esingen';
-    const gewonnen = heim_esingen ? s.toreHeim > s.toreGast : s.toreGast > s.toreHeim;
-    const verloren = heim_esingen ? s.toreHeim < s.toreGast : s.toreGast < s.toreHeim;
-    const cls = gewonnen ? 'gc rw' : (verloren ? 'gc rl' : 'gc rd');
+    const outcome = tusOutcome(s);
+    const cls = outcome === 'sieg' ? 'gc rw' :
+                outcome === 'niederlage' ? 'gc rl' :
+                outcome === 'unentschieden' ? 'gc rd' : 'gc';
     return '<div class="' + cls + '">' +
       '<div class="gh"><span class="lb">' + item.liga + '</span><span>' + fmtFull(s.datum) + '</span></div>' +
       '<div class="gts">' +
@@ -1614,20 +1638,13 @@ async function loadAutoMatchNews(maxPerTeam, excludeMatches){
         var result = (th != null && tg != null) ? th + ':' + tg : '';
         var spielort = g.halle || '';
         
-        // Sieg/Niederlage/Unentschieden aus Sicht von TuS Esingen
+        // Sieg/Niederlage/Unentschieden aus Sicht von TuS Esingen (berücksichtigt Wertungen)
         var ourTeamHome = /esingen/i.test(heim);
-        var outcomeLabel, opponent;
-        if(ourTeamHome){
-          opponent = gast;
-          if(th > tg) outcomeLabel = 'Sieg';
-          else if(th < tg) outcomeLabel = 'Niederlage';
-          else outcomeLabel = 'Unentschieden';
-        } else {
-          opponent = heim;
-          if(tg > th) outcomeLabel = 'Sieg';
-          else if(tg < th) outcomeLabel = 'Niederlage';
-          else outcomeLabel = 'Unentschieden';
-        }
+        var opponent = ourTeamHome ? gast : heim;
+        var outcomeKey = tusOutcome(g);
+        var outcomeLabel = outcomeKey === 'sieg' ? 'Sieg' :
+                           outcomeKey === 'niederlage' ? 'Niederlage' :
+                           outcomeKey === 'unentschieden' ? 'Unentschieden' : 'Unentschieden';
         
         // Schöner formuliertes Ergebnis aus unserer Sicht
         var ourScore = ourTeamHome ? th : tg;

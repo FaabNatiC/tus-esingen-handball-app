@@ -107,16 +107,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cd-match{font-size:10px;color:#444;line-height:1.4;}
 .nl{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid #f0f0f0;align-items:flex-start;}
 .nl-th{width:52px;height:52px;border-radius:10px;background:#1a1a1a;flex-shrink:0;}
-.nl-th.vl{background:#3a3a3a;} .nl-th.jm{background:#1a3a5c;} .nl-th.jw{background:#7a1a3c;} .nl-th.sp{background:#1f4a1a;} .nl-th.he{background:#0d2540;} .nl-th.da{background:#5a0d1a;}
+.nl-th.vl{background:#3a3a3a;} .nl-th.jm{background:#a8d5f0;} .nl-th.jw{background:#f5c6cf;} .nl-th.sp{background:#1f6b1a;} .nl-th.he{background:#0d2540;} .nl-th.da{background:#7a1a2e;}
 .nl-b{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#f0f0f0;color:#444;margin-bottom:4px;}
-.nl-b.vl{background:#e5e5e5;color:#333;}
-.nl-b.sp{background:#E1F0DA;color:#1f4a1a;}
-.nl-b.he{background:#D8E3F2;color:#0d2540;}
-.nl-b.da{background:#F2D8DC;color:#5a0d1a;}
-.nl-b.jm{background:#E6F1FB;color:#0C447C;}
-.nl-b.jw{background:#FBE6EC;color:#9B2A4D;}
+.nl-b.vl{background:#3a3a3a;color:#ffffff;}
+.nl-b.sp{background:#1f6b1a;color:#ffffff;}
+.nl-b.he{background:#0d2540;color:#ffffff;}
+.nl-b.da{background:#7a1a2e;color:#ffffff;}
+.nl-b.jm{background:#a8d5f0;color:#0d2540;}
+.nl-b.jw{background:#f5c6cf;color:#7a1a2e;}
 /* Alte Klasse 'ju' bleibt als Alias auf 'jm' (männliche Jugend) für Kompatibilität */
-.nl-b.ju{background:#E6F1FB;color:#0C447C;}
+.nl-b.ju{background:#a8d5f0;color:#0d2540;}
 .nl-t{font-size:13px;font-weight:600;line-height:1.3;margin-bottom:2px;}
 .nl-d{font-size:11px;color:#666;}
 .sp-ban{background:#1a1a1a;padding:14px 16px;}
@@ -226,13 +226,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .phone.dark .nl-t{color:#eee;}
 .phone.dark .nl-d{color:#bbb;}
 .phone.dark .nl-b{background:#333;color:#ccc;}
-.phone.dark .nl-b.vl{background:#2a2a2a;color:#bbb;}
-.phone.dark .nl-b.sp{background:#1a2a14;color:#7ec64b;}
-.phone.dark .nl-b.he{background:#0d2540;color:#6baed6;}
-.phone.dark .nl-b.da{background:#3a0d14;color:#e88a98;}
-.phone.dark .nl-b.jm{background:#0d2540;color:#6baed6;}
-.phone.dark .nl-b.jw{background:#3a1626;color:#e88aa8;}
-.phone.dark .nl-b.ju{background:#0d2540;color:#6baed6;}
+.phone.dark .nl-b.vl{background:#3a3a3a;color:#ffffff;}
+.phone.dark .nl-b.sp{background:#1f6b1a;color:#ffffff;}
+.phone.dark .nl-b.he{background:#0d2540;color:#ffffff;}
+.phone.dark .nl-b.da{background:#7a1a2e;color:#ffffff;}
+.phone.dark .nl-b.jm{background:#a8d5f0;color:#0d2540;}
+.phone.dark .nl-b.jw{background:#f5c6cf;color:#7a1a2e;}
+.phone.dark .nl-b.ju{background:#a8d5f0;color:#0d2540;}
 
 /* ── Trainer Badges ── */
 .phone.dark .nl > div > span[style*="background:#1a1a1a"]{background:#444!important;color:#fff!important;}
@@ -468,7 +468,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <span style="font-size:11px;color:rgba(255,255,255,.4);">›</span>
       </div>
     </div>
-    <div style="border-radius:14px;overflow:hidden;background:#3a6a9c;cursor:pointer;" onclick="openNews(2)">
+    <div style="border-radius:14px;overflow:hidden;background:#5a9bd4;cursor:pointer;" onclick="openNews(2)">
       <div style="height:70px;display:flex;align-items:flex-end;padding:10px;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,rgba(0,0,0,.05) 100%);">
         <div style="font-size:12px;font-weight:700;color:white;line-height:1.3;">mB Jugend qualifiziert für Endrunde</div>
       </div>
@@ -722,7 +722,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.1.6";
+const APP_VERSION = "0.1.7";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1390,7 +1390,7 @@ var NEWS = [
     ]
   },
   {
-    cat:'Jugend männlich',catCl:'jm',gradient:'linear-gradient(135deg,#3a6a9c 0%,#1a4a7c 100%)',
+    cat:'Jugend männlich',catCl:'jm',gradient:'linear-gradient(135deg,#5a9bd4 0%,#3a7ab5 100%)',
     title:'mB Jugend qualifiziert sich für die Endrunde',
     date:'17. April 2026',author:'Jugendabteilung',authorIni:'TuS',
     lead:'Großer Erfolg für den Nachwuchs: Die männliche B-Jugend hat sich für die Endrunde der Bezirksstaffel qualifiziert!',

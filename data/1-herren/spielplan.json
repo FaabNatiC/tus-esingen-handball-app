@@ -32,8 +32,7 @@
         { "datum": "2025-10-11T17:00:00", "heim": "TuS Esingen",          "gast": "SG Hamburg-Nord 2",    "toreHeim": 29, "toreGast": 22, "halle": "Esingen neu, Tornesch",          "status": "finished" },
         { "datum": "2025-10-04T17:00:00", "heim": "TuS Esingen",          "gast": "Rellinger TV 2",       "toreHeim": 33, "toreGast": 19, "halle": "Esingen neu, Tornesch",          "status": "finished" },
         { "datum": "2025-09-27T18:30:00", "heim": "TV Fischbek",          "gast": "TuS Esingen",          "toreHeim": 28, "toreGast": 26, "halle": "Süderelbe, Hamburg",             "status": "finished" },
-        { "datum": "2025-09-19T20:30:00", "heim": "TuS Esingen",          "gast": "HG Hamburg-Barmbek 2", "toreHeim": 25, "toreGast": 24, "halle": "Esingen neu, Tornesch",          "status": "finished" },
-        { "datum": "2025-08-30T17:00:00", "heim": "TuS Esingen",          "gast": "TV Fischbek",          "toreHeim": 28, "toreGast": 24, "halle": "Esingen neu, Tornesch",          "status": "finished" }
+        { "datum": "2025-09-19T20:30:00", "heim": "TuS Esingen",          "gast": "HG Hamburg-Barmbek 2", "toreHeim": 25, "toreGast": 24, "halle": "Esingen neu, Tornesch",          "status": "finished" }
       ]
     },
     {

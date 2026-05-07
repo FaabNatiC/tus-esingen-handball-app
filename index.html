@@ -40,7 +40,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   body{padding:0;background:#1a1a1a;}
   .phone{width:100%;height:100vh;height:100dvh;min-height:0;border-radius:0;box-shadow:none;}
 }
-.hdr{background:#1a1a1a;padding:48px 16px 12px;padding-top:max(48px, calc(env(safe-area-inset-top) + 12px));display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.hdr{background:#1a1a1a;padding:14px 16px 12px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
+/* Nur in der installierten PWA: Platz für die Notch / Statusleiste */
+@media (display-mode: standalone) {
+  .hdr{padding-top:calc(env(safe-area-inset-top) + 12px);}
+}
 .hdr-logo{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid #555;}
 .hdr-logo img{width:100%;height:100%;object-fit:cover;}
 .hdr-name{font-size:16px;font-weight:700;color:white;}
@@ -53,7 +57,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .burger-overlay.open{background:rgba(0,0,0,0.5);pointer-events:all;}
 .burger-panel{position:absolute;top:0;right:-280px;width:280px;height:100%;background:white;transition:right .3s ease;overflow-y:auto;}
 .burger-panel.open{right:0;}
-.burger-hdr{background:#1a1a1a;padding:48px 20px 16px;padding-top:max(48px, calc(env(safe-area-inset-top) + 12px));display:flex;align-items:center;gap:12px;}
+.burger-hdr{background:#1a1a1a;padding:18px 20px 16px;display:flex;align-items:center;gap:12px;}
+@media (display-mode: standalone) {
+  .burger-hdr{padding-top:calc(env(safe-area-inset-top) + 16px);}
+}
 .burger-close{background:none;border:none;cursor:pointer;color:white;font-size:22px;margin-left:auto;line-height:1;}
 .burger-title{font-size:15px;font-weight:700;color:white;}
 .burger-item{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid #f0f0f0;cursor:pointer;font-size:14px;font-weight:600;}
@@ -68,12 +75,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .burger-section{font-size:11px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.07em;padding:12px 20px 6px;}
 .scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .page{display:none;} .page.active{display:block;}
-.bnav{display:flex;background:#1a1a1a;flex-shrink:0;padding:8px 6px 8px;padding-bottom:calc(env(safe-area-inset-bottom) + 8px);gap:3px;}
+.bnav{display:flex;background:#1a1a1a;flex-shrink:0;padding:8px 6px 8px;gap:3px;}
+/* Nur in der installierten PWA: Platz für den Home-Indicator */
+@media (display-mode: standalone) {
+  .bnav{padding-bottom:calc(env(safe-area-inset-bottom) + 8px);}
+}
 .bt{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;border:none;cursor:pointer;padding:8px 2px;border-radius:12px;background:transparent;}
 .bt-ic{font-size:22px;line-height:1;}
 .bt-lb{font-size:11px;color:rgba(255,255,255,0.4);white-space:nowrap;font-family:inherit;}
 .bt.on{background:white;} .bt.on .bt-lb{color:#1a1a1a;font-weight:700;}
-.d-hdr{background:#1a1a1a;padding:48px 14px 12px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.d-hdr{background:#1a1a1a;padding:14px 14px 12px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+@media (display-mode: standalone) {
+  .d-hdr{padding-top:calc(env(safe-area-inset-top) + 12px);}
+}
 .bk{color:rgba(255,255,255,0.7);font-size:26px;background:none;border:none;cursor:pointer;line-height:1;}
 .d-name{font-size:15px;font-weight:700;color:white;flex:1;}
 .d-sub{font-size:10px;color:rgba(255,255,255,0.5);margin-top:1px;}

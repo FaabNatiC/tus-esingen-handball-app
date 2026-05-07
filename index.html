@@ -444,47 +444,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
   
 <div class="sec">Top News</div>
-<div style="padding:12px 14px 0;">
-  <div style="border-radius:16px;overflow:hidden;background:#1a1a1a;margin-bottom:10px;cursor:pointer;" onclick="openNews(0)">
-    <div style="height:110px;background:linear-gradient(135deg,#1a3a5c 0%,#0d2540 100%);display:flex;align-items:flex-end;padding:14px;position:relative;">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.05) 70%);"></div>
-      <div style="position:relative;z-index:1;">
-        <div style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:white;color:#1a1a1a;margin-bottom:6px;">Herren</div>
-        <div style="font-size:14px;font-weight:700;color:white;line-height:1.3;">Saison 2025/26 beendet – Platz 6 für die 1. Herren</div>
-      </div>
-    </div>
-    <div style="padding:10px 14px;display:flex;align-items:center;justify-content:space-between;">
-      <div style="font-size:11px;color:rgba(255,255,255,.5);">27. April 2026</div>
-      <div style="font-size:11px;color:rgba(255,255,255,.4);">Weiterlesen ›</div>
-    </div>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-    <div style="border-radius:14px;overflow:hidden;background:#3a3a3a;cursor:pointer;" onclick="openNews(1)">
-      <div style="height:70px;display:flex;align-items:flex-end;padding:10px;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,rgba(0,0,0,.05) 100%);">
-        <div style="font-size:12px;font-weight:700;color:white;line-height:1.3;">Saisonabschlussfeier am 31. Mai</div>
-      </div>
-      <div style="padding:6px 10px 8px;display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.8);">Vereinsleben</span>
-        <span style="font-size:11px;color:rgba(255,255,255,.4);">›</span>
-      </div>
-    </div>
-    <div style="border-radius:14px;overflow:hidden;background:#5a9bd4;cursor:pointer;" onclick="openNews(2)">
-      <div style="height:70px;display:flex;align-items:flex-end;padding:10px;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,rgba(0,0,0,.05) 100%);">
-        <div style="font-size:12px;font-weight:700;color:white;line-height:1.3;">mB Jugend qualifiziert für Endrunde</div>
-      </div>
-      <div style="padding:6px 10px 8px;display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.8);">Jugend männlich</span>
-        <span style="font-size:11px;color:rgba(255,255,255,.4);">›</span>
-      </div>
-    </div>
-  </div>
+<div id="topnews-container" style="padding:12px 14px 0;">
+  <div style="text-align:center;color:#999;font-size:12px;padding:20px;">News werden geladen…</div>
 </div>
 
   <div class="sec">Alle News</div>
-  <div class="nl" style="cursor:pointer;" onclick="openNews(0)"><div><span class="nl-b he">Herren</span><div class="nl-t">Saison 2025/26 beendet – Platz 6 für die 1. Herren</div><div class="nl-d">27. April 2026</div></div><span class="nl-arr">›</span></div>
-  <div class="nl" style="cursor:pointer;" onclick="openNews(1)"><div><span class="nl-b vl">Vereinsleben</span><div class="nl-t">Saisonabschlussfeier am 31. Mai – alle eingeladen!</div><div class="nl-d">20. April 2026</div></div><span class="nl-arr">›</span></div>
-  <div class="nl" style="cursor:pointer;" onclick="openNews(2)"><div><span class="nl-b jm">Jugend männlich</span><div class="nl-t">mB Jugend qualifiziert sich für die Endrunde</div><div class="nl-d">17. April 2026</div></div><span class="nl-arr">›</span></div>
+  <div id="allnews-preview-container">
+    <div style="text-align:center;color:#999;font-size:12px;padding:14px;">News werden geladen…</div>
+  </div>
+  <div id="allnews-button-container"></div>
   <div style="height:10px;"></div>
+</div>
+
+<!-- ALLE NEWS (eigene Seite) -->
+<div class="page" id="p-allnews">
+  <div class="sec">Alle News</div>
+  <div id="allnews-grid" style="padding:12px 14px;">
+    <div style="text-align:center;color:#999;font-size:12px;padding:20px;">News werden geladen…</div>
+  </div>
+  <div style="height:20px;"></div>
 </div>
 
 <!-- ABOUT (Über diese App) -->
@@ -722,7 +700,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.1.7";
+const APP_VERSION = "0.1.8";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -793,6 +771,8 @@ function nav(p,btn){
   var hb = document.getElementById('hallen-back'); if(hb) hb.remove();
   // Detail-Header entfernen (für den Fall dass man von Detail-Page kommt)
   var dhdr = document.getElementById('dhdr'); if(dhdr) dhdr.remove();
+  var nhdr = document.getElementById('nhdr'); if(nhdr) nhdr.remove();
+  var anhdr = document.getElementById('anhdr'); if(anhdr) anhdr.remove();
 
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
   document.getElementById('p-'+p).classList.add('active');
@@ -1279,10 +1259,11 @@ function zaehleMannschaften(){
 // App starten
 // Starte Laden sobald DOM bereit ist
 if(document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function(){ ladeAllesDaten(); zaehleMannschaften(); });
+  document.addEventListener('DOMContentLoaded', function(){ ladeAllesDaten(); zaehleMannschaften(); loadAllNews(); });
 } else {
   ladeAllesDaten();
   zaehleMannschaften();
+  loadAllNews();
 }
 
 function showMain(v){
@@ -1361,50 +1342,267 @@ function dTab(id,btn){
   btn.classList.add('on');
 }
 
-// News Detail
-var NEWS = [
-  {
-    cat:'Herren',catCl:'he',gradient:'linear-gradient(135deg,#1a3a5c 0%,#0d2540 100%)',
-    title:'Saison 2025/26 beendet – Platz 6 für die 1. Herren',
-    date:'27. April 2026',author:'TuS Esingen',authorIni:'TuS',
-    lead:'Die 1. Herren beenden eine starke Saison auf dem sechsten Platz der Männer Oberliga Hamburg mit 27 Punkten aus 24 Spielen.',
-    body:[
-      {type:'text',text:'Mit dem letzten Spieltag am 25. April ist die Saison 2025/26 für die 1. Herren von TuS Esingen offiziell beendet. Nach 24 Spielen steht am Ende ein respektabler sechster Platz in der Männer Oberliga Hamburg – eine Leistung, auf die das gesamte Team stolz sein kann.'},
-      {type:'score',home:'TSV Uetersen',guest:'TuS Esingen',result:'30:27',liga:'Männer Oberliga (100) · Spieltag 24'},
-      {type:'text',text:'Das letzte Spiel der Saison in Uetersen war ein enges Duell. Trotz der Niederlage konnte die Mannschaft auf eine insgesamt positive Saison zurückblicken: 13 Siege, 1 Unentschieden und 10 Niederlagen sprechen für ein ausgeglichenes Niveau auf hohem Wettkampfstandard.'},
-      {type:'quote',text:'Wir haben als Team großartige Arbeit geleistet. Der sechste Platz spiegelt nicht immer wider, was wir in dieser Saison gezeigt haben – aber wir ziehen viel Positives mit in die Vorbereitung.',author:'Fabian Wurl, Trainer'},
-      {type:'text',text:'Die Saisonabschlussfeier findet am 31. Mai im Vereinsheim statt – alle Mitglieder sind herzlich eingeladen.'},
-      {type:'tags',tags:['1. Herren','Männer Oberliga','Saisonrückblick','2025/26']}
-    ]
-  },
-  {
-    cat:'Vereinsleben',catCl:'vl',gradient:'linear-gradient(135deg,#3a3a3a 0%,#1a1a1a 100%)',
-    title:'Saisonabschlussfeier am 31. Mai – alle eingeladen!',
-    date:'20. April 2026',author:'Vereinsvorstand',authorIni:'TuS',
-    lead:'Der TuS Esingen lädt alle Mitglieder, Fans und Freunde des Vereins zur großen Saisonabschlussfeier ins Vereinsheim ein.',
-    body:[
-      {type:'text',text:'Die Saison 2025/26 neigt sich dem Ende – und das feiern wir gemeinsam! Am Samstag, den 31. Mai 2026, findet ab 18:00 Uhr die traditionelle Saisonabschlussfeier der Handball-Abteilung im Vereinsheim am Sportplatz Tornesch statt.'},
-      {type:'quote',text:'Nach einer intensiven Saison freuen wir uns, gemeinsam zu feiern und zurückzublicken. Bringt eure Familien und Freunde mit – je mehr, desto schöner!',author:'Der Vorstand'},
-      {type:'text',text:'Um eine grobe Planung zu ermöglichen, bitten wir um eine kurze Rückmeldung an die Geschäftsstelle bis zum 25. Mai.'},
-      {type:'tags',tags:['Vereinsleben','Feier','Tornesch','Saisonabschluss']}
-    ]
-  },
-  {
-    cat:'Jugend männlich',catCl:'jm',gradient:'linear-gradient(135deg,#5a9bd4 0%,#3a7ab5 100%)',
-    title:'mB Jugend qualifiziert sich für die Endrunde',
-    date:'17. April 2026',author:'Jugendabteilung',authorIni:'TuS',
-    lead:'Großer Erfolg für den Nachwuchs: Die männliche B-Jugend hat sich für die Endrunde der Bezirksstaffel qualifiziert!',
-    body:[
-      {type:'text',text:'Mit einem souveränen 31:22-Sieg gegen den MTV Elmshorn hat sich die männliche B-Jugend das begehrte Endrunden-Ticket gesichert.'},
-      {type:'score',home:'TuS Esingen',guest:'MTV Elmshorn',result:'31:22',liga:'mB Jugend Bezirksstaffel · Qualifikation'},
-      {type:'quote',text:'Ich bin unglaublich stolz auf die Jungs. Die Endrunde ist verdient!',author:'Dennis Böhm, Jugendtrainer'},
-      {type:'tags',tags:['Jugend','mB Jugend','Endrunde','Bezirksstaffel']}
-    ]
+// News werden dynamisch geladen aus data/news.json + automatisch generierte Spielnews
+var NEWS = [];
+
+// Tag-Konfiguration für Auto-Spielnews je Team
+var TAG_CONFIG = {
+  '1-herren':   { cat:'Herren',           catCl:'he', gradient:'linear-gradient(135deg,#1a3a5c 0%,#0d2540 100%)', authorLabel:'Spielergebnis · 1. Herren' },
+  '1-damen':    { cat:'Damen',            catCl:'da', gradient:'linear-gradient(135deg,#7a1a2e 0%,#5a0d1a 100%)', authorLabel:'Spielergebnis · 1. Damen' },
+  'md1-jugend': { cat:'Jugend männlich',  catCl:'jm', gradient:'linear-gradient(135deg,#5a9bd4 0%,#3a7ab5 100%)', authorLabel:'Spielergebnis · männlich D1' },
+  'md2-jugend': { cat:'Jugend männlich',  catCl:'jm', gradient:'linear-gradient(135deg,#5a9bd4 0%,#3a7ab5 100%)', authorLabel:'Spielergebnis · männlich D2' }
+};
+
+// Hilfsfunktion: ISO-Datum → "TT. Monat JJJJ" deutsch
+function formatGermanDate(isoOrDate){
+  if(!isoOrDate) return '';
+  var d;
+  if(typeof isoOrDate === 'string'){
+    // Format z.B. "2026-04-27" oder "27.04.2026"
+    if(/^\d{4}-\d{2}-\d{2}/.test(isoOrDate)) d = new Date(isoOrDate);
+    else if(/^\d{2}\.\d{2}\.\d{4}/.test(isoOrDate)){
+      var p = isoOrDate.split('.');
+      d = new Date(p[2]+'-'+p[1]+'-'+p[0]);
+    } else d = new Date(isoOrDate);
+  } else d = isoOrDate;
+  if(isNaN(d.getTime())) return isoOrDate;
+  var months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  return d.getDate()+'. '+months[d.getMonth()]+' '+d.getFullYear();
+}
+
+// Hilfsfunktion: ISO-Datum für Sortierung (YYYY-MM-DD)
+function isoDate(isoOrDate){
+  if(!isoOrDate) return '0000-00-00';
+  if(/^\d{4}-\d{2}-\d{2}/.test(isoOrDate)) return isoOrDate.substr(0,10);
+  if(/^\d{2}\.\d{2}\.\d{4}/.test(isoOrDate)){
+    var p = isoOrDate.split('.');
+    return p[2]+'-'+p[1]+'-'+p[0].substr(0,2);
   }
-];
+  var d = new Date(isoOrDate);
+  if(isNaN(d.getTime())) return '0000-00-00';
+  return d.toISOString().substr(0,10);
+}
+
+// Auto-News aus den letzten Spielen erzeugen (max. maxPerTeam Spiele pro Team)
+async function loadAutoMatchNews(maxPerTeam){
+  var autoNews = [];
+  var teamIds = Object.keys(TEAMS);
+  var cb = "?_=" + Date.now();
+  
+  await Promise.allSettled(teamIds.map(async function(tid){
+    try {
+      var res = await fetch(BASE_URL + "/data/" + tid + "/spielplan.json" + cb);
+      if(!res.ok) return;
+      var data = await res.json();
+      var games = (data && data.spiele) ? data.spiele : (Array.isArray(data) ? data : []);
+      
+      // Nur gespielte Spiele (mit Ergebnis), absteigend nach Datum
+      var played = games.filter(function(g){
+        var hasResult = g.ergebnis || g.result || (g.heimTore != null && g.gastTore != null);
+        return hasResult;
+      });
+      
+      // Sortieren: neuestes zuerst
+      played.sort(function(a,b){
+        return isoDate(b.datum || b.date || '').localeCompare(isoDate(a.datum || a.date || ''));
+      });
+      
+      var tagCfg = TAG_CONFIG[tid] || { cat:'Bericht', catCl:'', gradient:'linear-gradient(135deg,#1a1a1a 0%,#2d3a1e 60%,#1a2a1a 100%)', authorLabel:'Spielergebnis' };
+      var teamName = (TEAMS[tid] && TEAMS[tid].name) || tid;
+      var liga = (TEAMS[tid] && TEAMS[tid].liga) || '';
+      
+      played.slice(0, maxPerTeam).forEach(function(g, idx){
+        var heim = g.heim || g.heimTeam || g.home || '';
+        var gast = g.gast || g.gastTeam || g.guest || '';
+        var result = g.ergebnis || g.result || ((g.heimTore != null && g.gastTore != null) ? (g.heimTore + ':' + g.gastTore) : '');
+        var datum = g.datum || g.date || '';
+        var spielort = g.halle || g.ort || '';
+        var spieltag = g.spieltag || '';
+        
+        // Sieg/Niederlage/Unentschieden bestimmen
+        var ourTeamHome = /esingen/i.test(heim);
+        var ourTeamGuest = /esingen/i.test(gast);
+        var our, opponent, ourScore, oppScore, outcomeLabel;
+        if(result && /^\d+:\d+$/.test(result)){
+          var parts = result.split(':').map(Number);
+          if(ourTeamHome){ ourScore = parts[0]; oppScore = parts[1]; our = heim; opponent = gast; }
+          else if(ourTeamGuest){ ourScore = parts[1]; oppScore = parts[0]; our = gast; opponent = heim; }
+          else { our = heim; opponent = gast; ourScore = parts[0]; oppScore = parts[1]; }
+          if(ourScore > oppScore) outcomeLabel = 'Sieg';
+          else if(ourScore < oppScore) outcomeLabel = 'Niederlage';
+          else outcomeLabel = 'Unentschieden';
+        } else {
+          outcomeLabel = 'Spielergebnis';
+          our = teamName; opponent = ourTeamHome ? gast : heim;
+        }
+        
+        var title = teamName + ': ' + outcomeLabel + ' gegen ' + (opponent || 'Gegner') + ' (' + (result || '') + ')';
+        var leadParts = [];
+        if(result) leadParts.push('Endstand ' + result);
+        if(spielort) leadParts.push('in ' + spielort);
+        if(datum) leadParts.push('am ' + formatGermanDate(datum));
+        var lead = leadParts.length ? leadParts.join(' · ') + '.' : 'Spielergebnis verfügbar.';
+        
+        autoNews.push({
+          id: 'auto-' + tid + '-' + idx + '-' + isoDate(datum),
+          topNews: false,
+          autoGenerated: true,
+          sortDate: isoDate(datum),
+          cat: tagCfg.cat,
+          catCl: tagCfg.catCl,
+          gradient: tagCfg.gradient,
+          title: title,
+          date: formatGermanDate(datum),
+          author: tagCfg.authorLabel,
+          authorIni: 'TuS',
+          lead: lead,
+          body: [
+            { type:'score', home: heim, guest: gast, result: result, liga: liga + (spieltag ? ' · Spieltag ' + spieltag : '') },
+            { type:'text', text: 'Das Spiel ' + (heim || '?') + ' gegen ' + (gast || '?') + ' endete mit ' + (result || 'unklarem Ergebnis') + '.' + (spielort ? ' Austragungsort: ' + spielort + '.' : '') }
+          ]
+        });
+      });
+    } catch(e){
+      console.warn('Auto-News fehlgeschlagen für', tid, e);
+    }
+  }));
+  
+  return autoNews;
+}
+
+// News laden: news.json + automatische Spielnews zusammenführen
+async function loadAllNews(){
+  var manualNews = [];
+  try {
+    var res = await fetch(BASE_URL + "/data/news.json?_=" + Date.now());
+    if(res.ok){
+      var data = await res.json();
+      manualNews = (data && data.news) ? data.news : [];
+    }
+  } catch(e){
+    console.warn('news.json konnte nicht geladen werden', e);
+  }
+  
+  var autoNews = await loadAutoMatchNews(2); // max. 2 pro Team
+  
+  // Zusammenführen + nach Datum sortieren (neueste zuerst)
+  NEWS = manualNews.concat(autoNews);
+  NEWS.sort(function(a,b){
+    return (b.sortDate || '').localeCompare(a.sortDate || '');
+  });
+  
+  renderNewsHomepage();
+}
+
+// Startseite: 3 Top + bis zu 10 weitere + Button "Alle News"
+function renderNewsHomepage(){
+  // Top News: maximal 3, die mit topNews:true markiert sind
+  var topNews = NEWS.filter(function(n){ return n.topNews; }).slice(0,3);
+  // Falls weniger als 3 als Top markiert, mit neuesten auffüllen
+  if(topNews.length < 3){
+    NEWS.forEach(function(n){
+      if(topNews.length < 3 && topNews.indexOf(n) === -1) topNews.push(n);
+    });
+  }
+  var topIds = topNews.map(function(n){ return n.id; });
+  
+  // Top-News-Container befüllen
+  var topHtml = '';
+  if(topNews[0]){
+    var n0 = topNews[0]; var i0 = NEWS.indexOf(n0);
+    topHtml += '<div style="border-radius:16px;overflow:hidden;background:#1a1a1a;margin-bottom:10px;cursor:pointer;" onclick="openNews('+i0+')">' +
+      '<div style="height:110px;background:'+n0.gradient+';display:flex;align-items:flex-end;padding:14px;position:relative;">' +
+      '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.05) 70%);"></div>' +
+      '<div style="position:relative;z-index:1;">' +
+      '<div style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:white;color:#1a1a1a;margin-bottom:6px;">'+n0.cat+'</div>' +
+      '<div style="font-size:14px;font-weight:700;color:white;line-height:1.3;">'+n0.title+'</div>' +
+      '</div></div>' +
+      '<div style="padding:10px 14px;display:flex;align-items:center;justify-content:space-between;">' +
+      '<div style="font-size:11px;color:rgba(255,255,255,.5);">'+n0.date+'</div>' +
+      '<div style="font-size:11px;color:rgba(255,255,255,.4);">Weiterlesen ›</div>' +
+      '</div></div>';
+  }
+  if(topNews[1] || topNews[2]){
+    topHtml += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">';
+    [topNews[1], topNews[2]].forEach(function(n){
+      if(!n) return;
+      var i = NEWS.indexOf(n);
+      // Hintergrundfarbe aus Gradient: nehme den ersten Farbcode
+      var bgMatch = n.gradient.match(/#[0-9a-fA-F]{6}/);
+      var bg = bgMatch ? bgMatch[0] : '#3a3a3a';
+      topHtml += '<div style="border-radius:14px;overflow:hidden;background:'+bg+';cursor:pointer;" onclick="openNews('+i+')">' +
+        '<div style="height:70px;display:flex;align-items:flex-end;padding:10px;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,rgba(0,0,0,.05) 100%);">' +
+        '<div style="font-size:12px;font-weight:700;color:white;line-height:1.3;">'+n.title+'</div>' +
+        '</div>' +
+        '<div style="padding:6px 10px 8px;display:flex;justify-content:space-between;align-items:center;">' +
+        '<span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.8);">'+n.cat+'</span>' +
+        '<span style="font-size:11px;color:rgba(255,255,255,.4);">›</span>' +
+        '</div></div>';
+    });
+    topHtml += '</div>';
+  }
+  document.getElementById('topnews-container').innerHTML = topHtml || '<div style="text-align:center;color:#999;font-size:12px;padding:20px;">Keine News vorhanden.</div>';
+  
+  // "Alle News" Vorschau: bis zu 10 weitere (ohne die Top 3)
+  var rest = NEWS.filter(function(n){ return topIds.indexOf(n.id) === -1; });
+  var preview = rest.slice(0, 10);
+  var listHtml = '';
+  preview.forEach(function(n){
+    var i = NEWS.indexOf(n);
+    listHtml += '<div class="nl" style="cursor:pointer;" onclick="openNews('+i+')"><div><span class="nl-b'+(n.catCl?' '+n.catCl:'')+'">'+n.cat+'</span><div class="nl-t">'+n.title+'</div><div class="nl-d">'+n.date+'</div></div><span class="nl-arr">›</span></div>';
+  });
+  document.getElementById('allnews-preview-container').innerHTML = listHtml || '<div style="text-align:center;color:#999;font-size:12px;padding:14px;">Keine weiteren News.</div>';
+  
+  // Button "Alle News" wenn mehr als 10 weitere vorhanden
+  var btnHtml = '';
+  if(rest.length > 10){
+    btnHtml = '<div style="padding:12px 14px 4px;"><button onclick="openAllNews()" style="width:100%;padding:12px;border-radius:12px;background:#1a1a1a;color:white;border:none;font-size:13px;font-weight:600;cursor:pointer;">Alle News anzeigen ('+rest.length+') ›</button></div>';
+  } else if(NEWS.length > 0){
+    // Auch wenn nicht "mehr als 10" da sind, Button trotzdem zeigen damit man die Übersichtsseite erreichen kann
+    btnHtml = '<div style="padding:12px 14px 4px;"><button onclick="openAllNews()" style="width:100%;padding:12px;border-radius:12px;background:#1a1a1a;color:white;border:none;font-size:13px;font-weight:600;cursor:pointer;">Zur Übersicht ›</button></div>';
+  }
+  document.getElementById('allnews-button-container').innerHTML = btnHtml;
+}
+
+// Eigene Seite "Alle News" als Kachel-Grid
+function openAllNews(){
+  var grid = document.getElementById('allnews-grid');
+  var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
+  NEWS.forEach(function(n, i){
+    var bgMatch = n.gradient.match(/#[0-9a-fA-F]{6}/);
+    var bg = bgMatch ? bgMatch[0] : '#3a3a3a';
+    html += '<div style="border-radius:14px;overflow:hidden;background:'+bg+';cursor:pointer;" onclick="openNews('+i+')">' +
+      '<div style="min-height:90px;display:flex;align-items:flex-end;padding:10px;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,rgba(0,0,0,.05) 100%);">' +
+      '<div style="font-size:12px;font-weight:700;color:white;line-height:1.3;">'+n.title+'</div>' +
+      '</div>' +
+      '<div style="padding:6px 10px 8px;display:flex;justify-content:space-between;align-items:center;">' +
+      '<span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.85);">'+n.cat+'</span>' +
+      '<span style="font-size:10px;color:rgba(255,255,255,.5);">'+n.date+'</span>' +
+      '</div></div>';
+  });
+  html += '</div>';
+  grid.innerHTML = html;
+  
+  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('p-allnews').classList.add('active');
+  showMain(false);
+  var old = document.getElementById('anhdr'); if(old) old.remove();
+  var h = document.createElement('div'); h.id = 'anhdr'; h.className = 'd-hdr';
+  h.style.background = '#1a1a1a';
+  h.innerHTML = '<button class="bk" onclick="closeAllNews()">&#8249;</button><div style="flex:1"><div class="d-name">Alle News</div><div class="d-sub">TuS Esingen · Handball · Abteilung</div></div><div class="hdr-logo"><img src="'+LOGO+'" alt="TuS"></div>';
+  document.getElementById('APP').insertBefore(h, document.getElementById('scroll'));
+  document.getElementById('scroll').scrollTop = 0;
+}
+function closeAllNews(){
+  var h = document.getElementById('anhdr'); if(h) h.remove();
+  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('p-news').classList.add('active');
+  showMain(true);
+}
 
 function openNews(idx){
   var n=NEWS[idx];
+  if(!n) return;
   var bodyHtml='';
   n.body.forEach(function(b){
     if(b.type==='text') bodyHtml+='<p class="nd-text">'+b.text+'</p>';

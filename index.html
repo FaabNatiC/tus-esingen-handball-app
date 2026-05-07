@@ -107,8 +107,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cd-match{font-size:10px;color:#444;line-height:1.4;}
 .nl{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid #f0f0f0;align-items:center;justify-content:space-between;}
 .nl > div:first-child{flex:1;min-width:0;}
-.nl-arr{font-size:22px;font-weight:300;color:#bbb;line-height:1;flex-shrink:0;margin-left:8px;}
-.phone.dark .nl-arr{color:#666;}
+.nl-arr{font-size:24px;font-weight:600;color:#666;line-height:1;flex-shrink:0;margin-left:12px;width:20px;text-align:center;}
+.phone.dark .nl-arr{color:#aaa;}
 .nl-th{width:52px;height:52px;border-radius:10px;background:#1a1a1a;flex-shrink:0;}
 .nl-th.vl{background:#3a3a3a;} .nl-th.jm{background:#a8d5f0;} .nl-th.jw{background:#f5c6cf;} .nl-th.sp{background:#1f6b1a;} .nl-th.he{background:#0d2540;} .nl-th.da{background:#7a1a2e;}
 .nl-b{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#f0f0f0;color:#444;margin-bottom:4px;}
@@ -125,6 +125,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 /* Mehrere Tags nebeneinander */
 .nl-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px;}
 .nl-tags .nl-b{margin-bottom:0;}
+/* Filter-Bar auf Alle-News-Seite */
+.an-filterbar{display:flex;gap:6px;padding:10px 14px 4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.an-filterbar::-webkit-scrollbar{display:none;}
+.an-fbtn{flex-shrink:0;font-size:11px;font-weight:700;padding:6px 12px;border-radius:20px;background:#f0f0f0;color:#666;border:1px solid transparent;cursor:pointer;white-space:nowrap;transition:all .15s;}
+.an-fbtn.on{background:#1a1a1a;color:#fff;}
+.an-fbtn.vl.on{background:#3a3a3a;}
+.an-fbtn.sp.on{background:#1f6b1a;}
+.an-fbtn.he.on{background:#0d2540;}
+.an-fbtn.da.on{background:#7a1a2e;}
+.an-fbtn.jm.on{background:#a8d5f0;color:#0d2540;}
+.an-fbtn.jw.on{background:#f5c6cf;color:#7a1a2e;}
+.phone.dark .an-fbtn{background:#2a2a2a;color:#aaa;}
+.phone.dark .an-fbtn.on{background:#fff;color:#1a1a1a;}
+.phone.dark .an-fbtn.vl.on{background:#3a3a3a;color:#fff;}
+.phone.dark .an-fbtn.sp.on{background:#1f6b1a;color:#fff;}
+.phone.dark .an-fbtn.he.on{background:#0d2540;color:#fff;}
+.phone.dark .an-fbtn.da.on{background:#7a1a2e;color:#fff;}
+.phone.dark .an-fbtn.jm.on{background:#a8d5f0;color:#0d2540;}
+.phone.dark .an-fbtn.jw.on{background:#f5c6cf;color:#7a1a2e;}
 .nl-t{font-size:13px;font-weight:600;line-height:1.3;margin-bottom:2px;}
 .nl-d{font-size:11px;color:#666;}
 .sp-ban{background:#1a1a1a;padding:14px 16px;}
@@ -197,12 +216,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nd-body{padding:16px;}
 .nd-lead{font-size:14px;font-weight:600;line-height:1.5;color:#1a1a1a;margin-bottom:14px;}
 .nd-text{font-size:13px;line-height:1.65;color:#444;margin-bottom:14px;}
-.nd-score-box{background:#1a1a1a;border-radius:14px;padding:16px;margin:16px 0;text-align:center;}
-.nd-score-teams{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:8px;}
-.nd-score-team{font-size:12px;font-weight:700;color:white;flex:1;}
-.nd-score-team:last-child{text-align:right;}
-.nd-score-result{font-size:28px;font-weight:700;color:white;padding:4px 12px;background:rgba(255,255,255,0.1);border-radius:8px;}
-.nd-score-liga{font-size:10px;color:rgba(255,255,255,0.5);margin-top:4px;}
+.nd-score-box{background:#1a1a1a;border-radius:14px;padding:14px;margin:16px 0;}
+.nd-score-row{display:grid;grid-template-columns:1fr 70px 1fr;align-items:center;gap:8px;}
+.nd-score-side{display:grid;grid-template-columns:32px 1fr;align-items:center;gap:6px;font-size:11px;font-weight:600;color:white;line-height:1.3;min-width:0;}
+.nd-score-side.right{grid-template-columns:1fr 32px;}
+.nd-score-side.right span{text-align:right;}
+.nd-score-side span{overflow:hidden;white-space:normal;overflow-wrap:break-word;word-break:normal;line-height:1.25;font-size:11px;}
+.nd-score-tlogo{width:32px;height:32px;border-radius:50%;object-fit:contain;background:white;border:1px solid #eee;flex-shrink:0;display:block;}
+.nd-score-tlogo.placeholder{background:#444;}
+.nd-score-result-box{background:rgba(255,255,255,0.1);border-radius:8px;padding:6px 8px;font-size:18px;font-weight:700;color:white;text-align:center;width:100%;}
+.nd-score-liga{font-size:10px;color:rgba(255,255,255,0.5);margin-top:8px;text-align:center;}
 .nd-quote{border-left:3px solid #1a1a1a;padding:10px 14px;margin:14px 0;background:#f8f8f8;border-radius:0 8px 8px 0;}
 .nd-quote-text{font-size:13px;font-style:italic;color:#333;line-height:1.5;margin-bottom:4px;}
 .nd-quote-author{font-size:11px;font-weight:700;color:#666;}
@@ -709,7 +732,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.2.5";
+const APP_VERSION = "0.2.6";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1491,8 +1514,29 @@ async function loadAutoMatchNews(maxPerTeam, excludeMatches){
   return autoNews;
 }
 
+// Logos für alle Teams vorab laden (für Score-Boxen in News)
+async function preloadTeamLogos(){
+  var teamIds = Object.keys(TEAMS);
+  var cb = "?_=" + Date.now();
+  await Promise.allSettled(teamIds.map(async function(tid){
+    try {
+      var res = await fetch(BASE_URL + "/data/" + tid + "/tabelle.json" + cb);
+      if(!res.ok) return;
+      var data = await res.json();
+      if(data && data.tabelle){
+        data.tabelle.forEach(function(t){
+          if(t.verein && t.logo) window.LOGOS_MAP[t.verein] = t.logo;
+        });
+      }
+    } catch(e){}
+  }));
+}
+
 // News laden: manuelle aus news.json + automatische Spielbericht-News
 async function loadAllNews(){
+  // Logos parallel im Hintergrund laden (nicht blockierend)
+  preloadTeamLogos();
+  
   var manualNews = [];
   try {
     var res = await fetch(BASE_URL + "/data/news.json?_=" + Date.now());
@@ -1618,23 +1662,64 @@ function renderNewsHomepage(){
   document.getElementById('allnews-button-container').innerHTML = btnHtml;
 }
 
-// Eigene Seite "Alle News" als Liste (gleiches Layout wie Vorschau)
-function openAllNews(){
+// Eigene Seite "Alle News" als Liste mit Filter-Tabs
+var allNewsFilter = 'all';
+
+function renderAllNewsList(){
   var grid = document.getElementById('allnews-grid');
-  var html = '';
-  NEWS.forEach(function(n, i){
-    html += '<div class="nl" style="cursor:pointer;" onclick="openNews('+i+')"><div>'+renderTagsInline(n)+'<div class="nl-t">'+n.title+'</div><div class="nl-d">'+n.date+'</div></div><span class="nl-arr">›</span></div>';
+  var filtered = NEWS.filter(function(n){
+    if(allNewsFilter === 'all') return true;
+    return n.catCl === allNewsFilter;
   });
-  grid.innerHTML = html || '<div style="text-align:center;color:#999;font-size:12px;padding:20px;">Keine News vorhanden.</div>';
+  var html = '';
+  filtered.forEach(function(n){
+    var i = NEWS.indexOf(n);
+    html += '<div class="nl" style="cursor:pointer;" onclick="openNews('+i+',true)"><div>'+renderTagsInline(n)+'<div class="nl-t">'+n.title+'</div><div class="nl-d">'+n.date+'</div></div><span class="nl-arr">›</span></div>';
+  });
+  grid.innerHTML = html || '<div style="text-align:center;color:#999;font-size:12px;padding:30px 14px;">Keine News in dieser Kategorie.</div>';
+}
+
+function setAllNewsFilter(filter){
+  allNewsFilter = filter;
+  // Filter-Buttons visuell aktualisieren
+  document.querySelectorAll('.an-fbtn').forEach(function(b){
+    b.classList.toggle('on', b.getAttribute('data-f') === filter);
+  });
+  renderAllNewsList();
+  document.getElementById('scroll').scrollTop = 0;
+}
+
+function openAllNews(){
+  // Filter-Bar mit allen Kategorien (alle, vl, sp, he, da, jm, jw)
+  var filterBarHtml = '<div class="an-filterbar">' +
+    '<button class="an-fbtn'+(allNewsFilter==='all'?' on':'')+'" data-f="all" onclick="setAllNewsFilter(\'all\')">Alle</button>' +
+    '<button class="an-fbtn'+(allNewsFilter==='vl'?' on':'')+' vl" data-f="vl" onclick="setAllNewsFilter(\'vl\')">Vereinsleben</button>' +
+    '<button class="an-fbtn'+(allNewsFilter==='sp'?' on':'')+' sp" data-f="sp" onclick="setAllNewsFilter(\'sp\')">Sparte</button>' +
+    '<button class="an-fbtn'+(allNewsFilter==='he'?' on':'')+' he" data-f="he" onclick="setAllNewsFilter(\'he\')">Herren</button>' +
+    '<button class="an-fbtn'+(allNewsFilter==='da'?' on':'')+' da" data-f="da" onclick="setAllNewsFilter(\'da\')">Damen</button>' +
+    '<button class="an-fbtn'+(allNewsFilter==='jm'?' on':'')+' jm" data-f="jm" onclick="setAllNewsFilter(\'jm\')">Jugend m.</button>' +
+    '<button class="an-fbtn'+(allNewsFilter==='jw'?' on':'')+' jw" data-f="jw" onclick="setAllNewsFilter(\'jw\')">Jugend w.</button>' +
+  '</div>';
+  
+  // Section-Header + Filter + Liste in den Page-Container
+  var p = document.getElementById('p-allnews');
+  p.innerHTML = '<div class="sec">Alle News</div>' +
+    filterBarHtml +
+    '<div id="allnews-grid" style="padding:0;"></div>' +
+    '<div style="height:20px;"></div>';
   
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
-  document.getElementById('p-allnews').classList.add('active');
-  showMain(false);
+  p.classList.add('active');
+  // showMain(true) → Bottom-Nav bleibt sichtbar
+  showMain(true);
+  // Custom Header anlegen für Zurück-Button
   var old = document.getElementById('anhdr'); if(old) old.remove();
   var h = document.createElement('div'); h.id = 'anhdr'; h.className = 'd-hdr';
   h.style.background = '#1a1a1a';
   h.innerHTML = '<button class="bk" onclick="closeAllNews()">&#8249;</button><div style="flex:1"><div class="d-name">Alle News</div><div class="d-sub">TuS Esingen · Handball · Abteilung</div></div><div class="hdr-logo"><img src="'+LOGO+'" alt="TuS"></div>';
   document.getElementById('APP').insertBefore(h, document.getElementById('scroll'));
+  
+  renderAllNewsList();
   document.getElementById('scroll').scrollTop = 0;
 }
 function closeAllNews(){
@@ -1644,19 +1729,54 @@ function closeAllNews(){
   showMain(true);
 }
 
-function openNews(idx){
+// Globale Hilfs-Funktion: Team-Logo aus LOGOS_MAP holen (für News-Score-Boxen)
+function getTeamLogo(teamname){
+  if(!teamname) return null;
+  var f = (window.LOGOS_MAP || {})[teamname];
+  if(!f) return null;
+  return "https://www.handball.net/files/clubs/logos/" + f;
+}
+
+// Globale Hilfs-Funktion: Score-Box im Spielplan-Look rendern
+function renderScoreBox(b){
+  var heim = b.home || '';
+  var gast = b.guest || '';
+  var result = b.result || '';
+  var liga = b.liga || '';
+  var heimLogo = getTeamLogo(heim);
+  var gastLogo = getTeamLogo(gast);
+  var heimImg = heimLogo
+    ? '<img src="'+heimLogo+'" class="nd-score-tlogo" alt="">'
+    : '<div class="nd-score-tlogo placeholder"></div>';
+  var gastImg = gastLogo
+    ? '<img src="'+gastLogo+'" class="nd-score-tlogo" alt="">'
+    : '<div class="nd-score-tlogo placeholder"></div>';
+  return '<div class="nd-score-box">' +
+    '<div class="nd-score-row">' +
+      '<div class="nd-score-side">'+heimImg+'<span>'+heim+'</span></div>' +
+      '<div class="nd-score-result-box">'+result+'</div>' +
+      '<div class="nd-score-side right"><span>'+gast+'</span>'+gastImg+'</div>' +
+    '</div>' +
+    (liga ? '<div class="nd-score-liga">'+liga+'</div>' : '') +
+  '</div>';
+}
+
+function openNews(idx, fromAllNews){
   var n=NEWS[idx];
   if(!n) return;
   var bodyHtml='';
   n.body.forEach(function(b){
     if(b.type==='text') bodyHtml+='<p class="nd-text">'+b.text+'</p>';
-    else if(b.type==='score') bodyHtml+='<div class="nd-score-box"><div class="nd-score-teams"><div class="nd-score-team">'+b.home+'</div><div class="nd-score-result">'+b.result+'</div><div class="nd-score-team" style="text-align:right;">'+b.guest+'</div></div><div class="nd-score-liga">'+b.liga+'</div></div>';
+    else if(b.type==='score') bodyHtml+=renderScoreBox(b);
     else if(b.type==='quote') bodyHtml+='<div class="nd-quote"><div class="nd-quote-text">„'+b.text+'"</div><div class="nd-quote-author">— '+b.author+'</div></div>';
     // tags ausgeblendet
   });
   var relHtml='<div class="nd-related-title">Weitere Meldungen</div>';
-  NEWS.forEach(function(r,i){
-    if(i!==idx) relHtml+='<div class="nl" style="cursor:pointer;" onclick="openNews('+i+')"><div>'+renderTagsInline(r)+'<div class="nl-t">'+r.title+'</div><div class="nl-d">'+r.date+'</div></div><span class="nl-arr">›</span></div>';
+  // Maximal 3 weitere News (außer der aktuellen), neueste zuerst
+  var related = NEWS.filter(function(r,i){ return i !== idx; }).slice(0, 3);
+  related.forEach(function(r){
+    var i = NEWS.indexOf(r);
+    relHtml+='<div class="nl" style="cursor:pointer;" onclick="openNews('+i+','+(fromAllNews?'true':'false')+')"><div>'+renderTagsInline(r)+'<div class="nl-t">'+r.title+'</div><div class="nl-d">'+r.date+'</div></div><span class="nl-arr">›</span></div>';
   });
   // Hero-Tags-HTML: nur ein Tag (Team falls vorhanden, sonst Kategorie) in Kategorie-Farbe
   var heroLabel = n.team || n.cat;
@@ -1668,10 +1788,15 @@ function openNews(idx){
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
   document.getElementById('p-newsdetail').classList.add('active');
   showMain(false);
+  // Alle bestehenden Detail-Header entfernen (egal von wo wir kamen)
   var old=document.getElementById('nhdr');if(old)old.remove();
+  var oldAn=document.getElementById('anhdr');if(oldAn)oldAn.remove();
+  // Merken woher wir kamen, damit closeNews korrekt zurück springt
+  newsCameFromAllNews = !!fromAllNews;
   var h=document.createElement('div');h.id='nhdr';h.className='d-hdr';
   h.style.background='#1a1a1a';
-  h.innerHTML='<button class="bk" onclick="closeNews()">&#8249;</button><div style="flex:1"><div class="d-name">News</div><div class="d-sub">TuS Esingen · Handball · Abteilung</div></div><div class="hdr-logo"><img src="'+LOGO+'" alt="TuS"></div>';
+  var backFn = fromAllNews ? 'closeNewsToAllNews()' : 'closeNews()';
+  h.innerHTML='<button class="bk" onclick="'+backFn+'">&#8249;</button><div style="flex:1"><div class="d-name">News</div><div class="d-sub">TuS Esingen · Handball · Abteilung</div></div><div class="hdr-logo"><img src="'+LOGO+'" alt="TuS"></div>';
   document.getElementById('APP').insertBefore(h,document.getElementById('scroll'));
   document.getElementById('scroll').scrollTop=0;
 }
@@ -1681,6 +1806,12 @@ function closeNews(){
   document.getElementById('p-news').classList.add('active');
   showMain(true);
 }
+function closeNewsToAllNews(){
+  var h=document.getElementById('nhdr');if(h)h.remove();
+  // Zurück zur Alle-News-Seite mit ihrem Header
+  openAllNews();
+}
+var newsCameFromAllNews = false;
 
 // ── Über diese App ──────────────────────────────────────────────────────────
 function openAbout(){

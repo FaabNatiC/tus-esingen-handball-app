@@ -1,30 +1,47 @@
 {
   "aktualisiert": "27.04.2026",
+  "_struktur": "Spiele sind nach Wettbewerb gruppiert. Jeder Eintrag in 'wettbewerbe' hat: 'art' ('liga' | 'pokal' | 'test'), optional 'name' (Wettbewerbsname), und 'spiele' (Array). Bei Testspielen darf 'name' weggelassen werden. Pro Spiel ist KEIN 'art'-Feld nötig – das übernimmt der Wettbewerbsblock.",
   "mannschaft": "1. Damen",
-  "liga": "Frauen Landesliga Gruppe 1",
   "saison": "2025/26",
-  "spiele": [
-    { "datum": "2026-04-25T15:00:00", "heim": "TuS Esingen",                 "gast": "SG Hamburg-Nord 2",           "toreHeim": 40, "toreGast": 29, "halle": "Esingen neu, Tornesch",         "status": "finished" },
-    { "datum": "2026-04-18T16:45:00", "heim": "Barmstedter MTV",             "gast": "TuS Esingen",                 "toreHeim": 35, "toreGast": 28, "halle": "Barmstedt, Barmstedt",          "status": "finished" },
-    { "datum": "2026-04-11T15:00:00", "heim": "TuS Esingen",                 "gast": "HSG Elbvororte",              "toreHeim": 29, "toreGast": 32, "halle": "Esingen neu, Tornesch",         "status": "finished" },
-    { "datum": "2026-03-29T16:00:00", "heim": "HSV/Hamm 02 2",               "gast": "TuS Esingen",                 "toreHeim": 26, "toreGast": 34, "halle": "Sorbenstraße, Hamburg",         "status": "finished" },
-    { "datum": "2026-03-21T16:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "TuS Esingen",                 "toreHeim": 30, "toreGast": 32, "halle": "Nordheidehalle, Buchholz",      "status": "finished" },
-    { "datum": "2026-03-14T15:00:00", "heim": "TuS Esingen",                 "gast": "Eimsbütteler TV 3",           "toreHeim": 35, "toreGast": 28, "halle": "Esingen neu, Tornesch",         "status": "finished" },
-    { "datum": "2026-03-07T18:00:00", "heim": "1. HC Quickborn",             "gast": "TuS Esingen",                 "toreHeim": 23, "toreGast": 30, "halle": "Comenius-Sporthalle, Quickborn","status": "finished" },
-    { "datum": "2026-02-26T20:00:00", "heim": "SG Altona 2",                 "gast": "TuS Esingen",                 "toreHeim": 30, "toreGast": 24, "halle": "Eckernförder Straße, Hamburg",  "status": "finished" },
-    { "datum": "2026-02-22T17:00:00", "heim": "Grün-Weiss Eimsbüttel",       "gast": "TuS Esingen",                 "toreHeim": 26, "toreGast": 46, "halle": "Wegenkamp, Hamburg",            "status": "finished" },
-    { "datum": "2026-02-14T15:00:00", "heim": "TuS Esingen",                 "gast": "Elmshorner HT",               "toreHeim": 27, "toreGast": 27, "halle": "Esingen neu, Tornesch",         "status": "finished" },
-    { "datum": "2026-01-24T15:00:00", "heim": "TuS Esingen",                 "gast": "HTS/BW96 Handball",           "toreHeim": 34, "toreGast": 18, "halle": "Esingen neu, Tornesch",         "status": "finished" },
-    { "datum": "2025-12-14T15:30:00", "heim": "SG Hamburg-Nord 2",           "gast": "TuS Esingen",                 "toreHeim": 38, "toreGast": 44, "halle": "Grützmühlenweg, Hamburg",       "status": "finished" },
-    { "datum": "2025-12-06T15:00:00", "heim": "TuS Esingen",                 "gast": "Barmstedter MTV",             "toreHeim": 37, "toreGast": 28, "halle": "Esingen neu, Tornesch",         "status": "finished" },
-    { "datum": "2025-12-03T18:50:00", "heim": "Eimsbütteler TV 3",           "gast": "TuS Esingen",                 "toreHeim": 33, "toreGast": 25, "halle": "Christian-Förster-Str., Hamburg","status": "finished" },
-    { "datum": "2025-11-30T14:00:00", "heim": "HSG Elbvororte",              "gast": "TuS Esingen",                 "toreHeim": 26, "toreGast": 29, "halle": "Blankenese, Hamburg",           "status": "finished" },
-    { "datum": "2025-11-22T15:00:00", "heim": "TuS Esingen",                 "gast": "HSV/Hamm 02 2",               "toreHeim": 30, "toreGast": 23, "halle": "Esingen neu, Tornesch",         "status": "finished" },
-    { "datum": "2025-11-16T15:00:00", "heim": "TuS Esingen",                 "gast": "HL Buchholz08-Rosengarten 3", "toreHeim": 32, "toreGast": 31, "halle": "Esingen neu, Tornesch",         "status": "finished" },
-    { "datum": "2025-10-25T16:00:00", "heim": "TuS Esingen",                 "gast": "SG Altona 2",                 "toreHeim": 48, "toreGast": 18, "halle": "Esingen neu, Tornesch",         "status": "finished" },
-    { "datum": "2025-10-18T15:00:00", "heim": "TuS Esingen",                 "gast": "Grün-Weiss Eimsbüttel",       "toreHeim": 23, "toreGast": 25, "halle": "Esingen neu, Tornesch",         "status": "finished" },
-    { "datum": "2025-10-04T17:00:00", "heim": "Elmshorner HT",               "gast": "TuS Esingen",                 "toreHeim": 21, "toreGast": 20, "halle": "Olympiahalle, Elmshorn",        "status": "finished" },
-    { "datum": "2025-09-27T15:00:00", "heim": "TuS Esingen",                 "gast": "1. HC Quickborn",             "toreHeim": 19, "toreGast": 22, "halle": "Esingen neu, Tornesch",         "status": "finished" },
-    { "datum": "2025-09-21T19:00:00", "heim": "HTS/BW96 Handball",           "gast": "TuS Esingen",                 "toreHeim": 20, "toreGast": 25, "halle": "Schenefeld, Halle B, Schenefeld","status": "finished" }
+  "wettbewerbe": [
+    {
+      "art": "liga",
+      "name": "Frauen Landesliga Gruppe 1",
+      "spiele": [
+        { "datum": "2026-04-25T15:00:00", "heim": "TuS Esingen",                 "gast": "SG Hamburg-Nord 2",           "toreHeim": 40, "toreGast": 29, "halle": "Esingen neu, Tornesch",         "status": "finished" },
+        { "datum": "2026-04-18T16:45:00", "heim": "Barmstedter MTV",             "gast": "TuS Esingen",                 "toreHeim": 35, "toreGast": 28, "halle": "Barmstedt, Barmstedt",          "status": "finished" },
+        { "datum": "2026-04-11T15:00:00", "heim": "TuS Esingen",                 "gast": "HSG Elbvororte",              "toreHeim": 29, "toreGast": 32, "halle": "Esingen neu, Tornesch",         "status": "finished" },
+        { "datum": "2026-03-29T16:00:00", "heim": "HSV/Hamm 02 2",               "gast": "TuS Esingen",                 "toreHeim": 26, "toreGast": 34, "halle": "Sorbenstraße, Hamburg",         "status": "finished" },
+        { "datum": "2026-03-21T16:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "TuS Esingen",                 "toreHeim": 30, "toreGast": 32, "halle": "Nordheidehalle, Buchholz",      "status": "finished" },
+        { "datum": "2026-03-14T15:00:00", "heim": "TuS Esingen",                 "gast": "Eimsbütteler TV 3",           "toreHeim": 35, "toreGast": 28, "halle": "Esingen neu, Tornesch",         "status": "finished" },
+        { "datum": "2026-03-07T18:00:00", "heim": "1. HC Quickborn",             "gast": "TuS Esingen",                 "toreHeim": 23, "toreGast": 30, "halle": "Comenius-Sporthalle, Quickborn","status": "finished" },
+        { "datum": "2026-02-26T20:00:00", "heim": "SG Altona 2",                 "gast": "TuS Esingen",                 "toreHeim": 30, "toreGast": 24, "halle": "Eckernförder Straße, Hamburg",  "status": "finished" },
+        { "datum": "2026-02-22T17:00:00", "heim": "Grün-Weiss Eimsbüttel",       "gast": "TuS Esingen",                 "toreHeim": 26, "toreGast": 46, "halle": "Wegenkamp, Hamburg",            "status": "finished" },
+        { "datum": "2026-02-14T15:00:00", "heim": "TuS Esingen",                 "gast": "Elmshorner HT",               "toreHeim": 27, "toreGast": 27, "halle": "Esingen neu, Tornesch",         "status": "finished" },
+        { "datum": "2026-01-24T15:00:00", "heim": "TuS Esingen",                 "gast": "HTS/BW96 Handball",           "toreHeim": 34, "toreGast": 18, "halle": "Esingen neu, Tornesch",         "status": "finished" },
+        { "datum": "2025-12-14T15:30:00", "heim": "SG Hamburg-Nord 2",           "gast": "TuS Esingen",                 "toreHeim": 38, "toreGast": 44, "halle": "Grützmühlenweg, Hamburg",       "status": "finished" },
+        { "datum": "2025-12-06T15:00:00", "heim": "TuS Esingen",                 "gast": "Barmstedter MTV",             "toreHeim": 37, "toreGast": 28, "halle": "Esingen neu, Tornesch",         "status": "finished" },
+        { "datum": "2025-12-03T18:50:00", "heim": "Eimsbütteler TV 3",           "gast": "TuS Esingen",                 "toreHeim": 33, "toreGast": 25, "halle": "Christian-Förster-Str., Hamburg","status": "finished" },
+        { "datum": "2025-11-30T14:00:00", "heim": "HSG Elbvororte",              "gast": "TuS Esingen",                 "toreHeim": 26, "toreGast": 29, "halle": "Blankenese, Hamburg",           "status": "finished" },
+        { "datum": "2025-11-22T15:00:00", "heim": "TuS Esingen",                 "gast": "HSV/Hamm 02 2",               "toreHeim": 30, "toreGast": 23, "halle": "Esingen neu, Tornesch",         "status": "finished" },
+        { "datum": "2025-11-16T15:00:00", "heim": "TuS Esingen",                 "gast": "HL Buchholz08-Rosengarten 3", "toreHeim": 32, "toreGast": 31, "halle": "Esingen neu, Tornesch",         "status": "finished" },
+        { "datum": "2025-10-25T16:00:00", "heim": "TuS Esingen",                 "gast": "SG Altona 2",                 "toreHeim": 48, "toreGast": 18, "halle": "Esingen neu, Tornesch",         "status": "finished" },
+        { "datum": "2025-10-18T15:00:00", "heim": "TuS Esingen",                 "gast": "Grün-Weiss Eimsbüttel",       "toreHeim": 23, "toreGast": 25, "halle": "Esingen neu, Tornesch",         "status": "finished" },
+        { "datum": "2025-10-04T17:00:00", "heim": "Elmshorner HT",               "gast": "TuS Esingen",                 "toreHeim": 21, "toreGast": 20, "halle": "Olympiahalle, Elmshorn",        "status": "finished" },
+        { "datum": "2025-09-27T15:00:00", "heim": "TuS Esingen",                 "gast": "1. HC Quickborn",             "toreHeim": 19, "toreGast": 22, "halle": "Esingen neu, Tornesch",         "status": "finished" },
+        { "datum": "2025-09-21T19:00:00", "heim": "HTS/BW96 Handball",           "gast": "TuS Esingen",                 "toreHeim": 20, "toreGast": 25, "halle": "Schenefeld, Halle B, Schenefeld","status": "finished" }
+      ]
+    },
+    {
+      "art": "pokal",
+      "name": "Frauen Pokal",
+      "spiele": [
+      ]
+    },
+    {
+      "art": "test",
+      "spiele": [
+      ]
+    }
   ]
 }

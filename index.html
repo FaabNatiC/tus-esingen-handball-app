@@ -350,6 +350,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .phone.dark .sponsor-name{color:#eee;}
 .phone.dark .sponsor-arrow{color:#555;}
 .phone.dark .sponsor-fallback{background:#333;color:#aaa;}
+
+/* INSTALL-BANNER (nur iOS Safari, nicht in PWA) */
+.install-banner{position:fixed;left:12px;right:12px;bottom:16px;background:#1a1a1a;color:#fff;border-radius:14px;padding:14px 14px 14px 16px;display:none;flex-direction:row;align-items:center;gap:12px;box-shadow:0 8px 30px rgba(0,0,0,0.35);z-index:1000;animation:ib-in .35s ease;}
+.install-banner.show{display:flex;}
+.install-banner-logo{width:42px;height:42px;border-radius:10px;flex-shrink:0;background:#fff;padding:4px;}
+.install-banner-logo img{width:100%;height:100%;object-fit:contain;border-radius:6px;}
+.install-banner-body{flex:1;min-width:0;}
+.install-banner-title{font-size:13px;font-weight:700;line-height:1.2;}
+.install-banner-text{font-size:11px;color:rgba(255,255,255,0.65);margin-top:3px;line-height:1.35;}
+.install-banner-text b{color:#fff;}
+.install-banner-close{background:none;border:none;color:rgba(255,255,255,0.5);font-size:22px;line-height:1;padding:4px 6px;cursor:pointer;flex-shrink:0;align-self:flex-start;margin-top:-4px;}
+@keyframes ib-in{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+@media (display-mode: standalone){.install-banner{display:none !important;}}
 </style>
 <script>
 // iOS Safari Viewport Height Fix
@@ -382,27 +395,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div style="flex:1"><div style="font-size:14px;font-weight:700;color:white;">TuS Esingen</div><div style="font-size:10px;color:rgba(255,255,255,.5);">Handball · Abteilung</div></div>
       <button class="burger-close" onclick="closeBurger()">✕</button>
     </div>
-    <div class="burger-section">Navigation</div>
-    <div class="burger-item" onclick="navBurger('news')"><span class="burger-icon">📰</span>News</div>
-    <div class="burger-item" onclick="navBurger('spielplan')"><span class="burger-icon">📅</span>Spielplan</div>
-    <div class="burger-item" onclick="navBurger('teams')"><span class="burger-icon">👕</span>Teams</div>
-    <div class="burger-item" onclick="navBurger('termine')"><span class="burger-icon">📆</span>Termine</div>
-    <div class="burger-item" onclick="navBurger('hallen')"><span class="burger-icon">📍</span>Anfahrt</div>
     <div class="burger-section">Einstellungen</div>
     <div class="burger-toggle">
       <span class="burger-icon">🌙</span>
       <span class="burger-toggle-label">Dunkelmodus</span>
       <div class="burger-toggle-sw" id="darkToggle" onclick="toggleDark()"></div>
     </div>
-    <div class="burger-toggle">
-      <span class="burger-icon">🔔</span>
-      <span class="burger-toggle-label">Benachrichtigungen</span>
-      <div class="burger-toggle-sw on" onclick="this.classList.toggle('on')"></div>
-    </div>
     <div class="burger-section">Verein</div>
-    <div class="burger-item"><span class="burger-icon">🌐</span>Website</div>
-    <div class="burger-item"><span class="burger-icon">📸</span>Instagram</div>
-    <div class="burger-item"><span class="burger-icon">💙</span>Facebook</div>
+    <div class="burger-item" onclick="window.open('https://www.tus-esingen.de','_blank')"><span class="burger-icon">🌐</span>Website</div>
+    <div class="burger-item" onclick="window.open('https://www.instagram.com/tusesingen_handball','_blank')"><span class="burger-icon">📸</span>Instagram</div>
+    <div class="burger-section">Rechtliches</div>
+    <div class="burger-item" onclick="window.open('https://www.tus-esingen.de/impressum','_blank')"><span class="burger-icon">📄</span>Impressum</div>
+    <div class="burger-item" onclick="window.open('https://www.tus-esingen.de/datenschutz','_blank')"><span class="burger-icon">🔒</span>Datenschutz</div>
     <div class="burger-section">App</div>
     <div class="burger-item" onclick="openAbout()"><span class="burger-icon">ℹ️</span>Über diese App</div>
     <div style="height:20px;"></div>
@@ -688,7 +692,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.0.9n";
+const APP_VERSION = "0.1.0";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1068,10 +1072,9 @@ function renderSpielplan(data) {
       </div>`;
   }
 
-  const nextEl = document.getElementById('sp-naechste');
-  const lastEl = document.getElementById('sp-letzte');
-  if(nextEl) nextEl.innerHTML = naechste.length ? naechste.map(gameCard).join('') : '<div style="padding:16px;color:#999;text-align:center;">Keine anstehenden Spiele</div>';
-  if(lastEl) lastEl.innerHTML = letzte.map(gameCard).join('');
+  // WICHTIG: Den GLOBALEN Spielplan-Tab (#sp-naechste / #sp-letzte) NICHT überschreiben.
+  // Der zeigt alle Mannschaften und wird statisch im HTML geliefert.
+  // Hier nur noch den Detail-Spielplan-Reiter befüllen:
 
   // Detail-Spielplan (im Mannschafts-Tab "Spielplan") befüllen
   const detSpiele = document.getElementById('dt-sp-spiele');
@@ -1410,5 +1413,44 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+<!-- iOS Install-Banner: Aufforderung "Zum Home-Bildschirm" für Browser-User -->
+<div class="install-banner" id="installBanner">
+  <div class="install-banner-logo"><img src="" id="ibLogo" alt="TuS Esingen"></div>
+  <div class="install-banner-body">
+    <div class="install-banner-title">App installieren</div>
+    <div class="install-banner-text">Tippe auf <b>Teilen</b> <span style="display:inline-block;vertical-align:-2px;">⬆︎</span> und dann <b>"Zum Home-Bildschirm"</b>, um die App wie eine echte App zu nutzen.</div>
+  </div>
+  <button class="install-banner-close" onclick="dismissInstallBanner()" aria-label="Schließen">×</button>
+</div>
+<script>
+(function(){
+  // Nur auf iOS Safari im Browser-Modus zeigen
+  var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  var ua = window.navigator.userAgent;
+  var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isSafari = /^((?!chrome|crios|fxios|edgios).)*safari/i.test(ua);
+  var dismissed = (function(){
+    try { return localStorage.getItem('installBannerDismissed'); } catch(e){ return null; }
+  })();
+
+  // Banner nur zeigen wenn: iOS + Safari + nicht installiert + nicht weggeklickt
+  if (isIOS && isSafari && !isStandalone && !dismissed) {
+    setTimeout(function(){
+      var banner = document.getElementById('installBanner');
+      var logoEl = document.getElementById('ibLogo');
+      if (banner && logoEl) {
+        if (typeof LOGO !== 'undefined') logoEl.src = LOGO;
+        banner.classList.add('show');
+      }
+    }, 1500);
+  }
+})();
+function dismissInstallBanner(){
+  var banner = document.getElementById('installBanner');
+  if (banner) banner.classList.remove('show');
+  try { localStorage.setItem('installBannerDismissed', '1'); } catch(e){}
+}
+</script>
+
 </body>
 </html>

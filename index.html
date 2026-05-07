@@ -732,7 +732,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.2.6";
+const APP_VERSION = "0.2.7";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1467,22 +1467,165 @@ async function loadAutoMatchNews(maxPerTeam, excludeMatches){
         var ourScore = ourTeamHome ? th : tg;
         var oppScore = ourTeamHome ? tg : th;
         var resultUs = ourScore + ':' + oppScore;
+        var diff = ourScore - oppScore;
+        var totalGoals = ourScore + oppScore;
         
-        var title;
-        if(outcomeLabel === 'Sieg') title = tagCfg.teamLabel + ': Sieg gegen ' + opponent + ' (' + resultUs + ')';
-        else if(outcomeLabel === 'Niederlage') title = tagCfg.teamLabel + ': Niederlage gegen ' + opponent + ' (' + resultUs + ')';
-        else title = tagCfg.teamLabel + ': Unentschieden gegen ' + opponent + ' (' + resultUs + ')';
+        // Deterministischer "Zufalls"-Picker: nimmt eine Variante aus Array,
+        // basierend auf Datum + TeamID, damit Texte bei Reload gleich bleiben
+        function pick(arr){
+          var seed = (datumIso + tid).split('').reduce(function(a,c){return a + c.charCodeAt(0);}, 0);
+          return arr[seed % arr.length];
+        }
         
-        var lead;
-        if(outcomeLabel === 'Sieg' && ourTeamHome) lead = 'Vor heimischer Kulisse setzten sich ' + tagCfg.teamLabel + ' mit ' + resultUs + ' gegen ' + opponent + ' durch.';
-        else if(outcomeLabel === 'Sieg') lead = 'Auswärtssieg: ' + tagCfg.teamLabel + ' gewinnen mit ' + resultUs + ' bei ' + opponent + '.';
-        else if(outcomeLabel === 'Niederlage' && ourTeamHome) lead = tagCfg.teamLabel + ' unterlagen zu Hause gegen ' + opponent + ' mit ' + resultUs + '.';
-        else if(outcomeLabel === 'Niederlage') lead = 'Auswärtsniederlage: ' + tagCfg.teamLabel + ' verlieren bei ' + opponent + ' mit ' + resultUs + '.';
-        else if(ourTeamHome) lead = 'Punkteteilung zu Hause: ' + tagCfg.teamLabel + ' trennen sich mit ' + resultUs + ' von ' + opponent + '.';
-        else lead = 'Punkteteilung auswärts: ' + tagCfg.teamLabel + ' trennen sich mit ' + resultUs + ' bei ' + opponent + '.';
+        // Charakter des Spiels bestimmen
+        var absDiff = Math.abs(diff);
+        var charLabel; // für Titel
+        var charBody;  // für Body
+        if(outcomeLabel === 'Unentschieden'){
+          charLabel = 'Unentschieden';
+          charBody = 'punktet';
+        } else if(absDiff === 1){
+          charLabel = outcomeLabel === 'Sieg' ? 'Hauchdünner Sieg' : 'Knappe Niederlage';
+          charBody = outcomeLabel === 'Sieg' ? 'rang sich knapp durch' : 'verlor in der Schlussphase';
+        } else if(absDiff <= 3){
+          charLabel = outcomeLabel === 'Sieg' ? 'Knapper Sieg' : 'Knappe Niederlage';
+          charBody = outcomeLabel === 'Sieg' ? 'setzte sich am Ende durch' : 'musste sich knapp geschlagen geben';
+        } else if(absDiff <= 6){
+          charLabel = outcomeLabel === 'Sieg' ? 'Sieg' : 'Niederlage';
+          charBody = outcomeLabel === 'Sieg' ? 'fuhr einen verdienten Sieg ein' : 'unterlag dem Gegner';
+        } else if(absDiff <= 10){
+          charLabel = outcomeLabel === 'Sieg' ? 'Klarer Sieg' : 'Klare Niederlage';
+          charBody = outcomeLabel === 'Sieg' ? 'gewann souverän' : 'unterlag deutlich';
+        } else if(absDiff <= 15){
+          charLabel = outcomeLabel === 'Sieg' ? 'Deutlicher Sieg' : 'Deutliche Niederlage';
+          charBody = outcomeLabel === 'Sieg' ? 'dominierte die Partie' : 'fand nie ins Spiel';
+        } else {
+          charLabel = outcomeLabel === 'Sieg' ? 'Kantersieg' : 'Klatsche';
+          charBody = outcomeLabel === 'Sieg' ? 'fertigte den Gegner regelrecht ab' : 'wurde vom Gegner überrollt';
+        }
         
-        var bodyText = 'Am ' + formatGermanDate(g.datum) + ' traf ' + heim + ' auf ' + gast + '. Endstand: ' + result + '.';
-        if(spielort) bodyText += ' Austragungsort: ' + spielort + '.';
+        var ortSuffix = ourTeamHome ? ' zu Hause' : ' auswärts';
+        var ortLong = ourTeamHome ? ' vor heimischer Kulisse' : ' beim Auswärtsspiel';
+        
+        // Titel
+        var title = tagCfg.teamLabel + ': ' + charLabel + ' gegen ' + opponent + ' (' + resultUs + ')';
+        
+        // Lead — mehrere Varianten je nach Ausgang
+        var leadOptions;
+        if(outcomeLabel === 'Sieg'){
+          leadOptions = [
+            tagCfg.teamLabel + ' ' + charBody + ' und gewinnen' + ortSuffix + ' gegen ' + opponent + ' mit ' + resultUs + '.',
+            'Mit ' + resultUs + (ourTeamHome ? ' setzen sich ' : ' gewinnen ') + tagCfg.teamLabel + ' gegen ' + opponent + ' durch.',
+            ortLong + ' fahren ' + tagCfg.teamLabel + ' einen Erfolg über ' + opponent + ' ein – Endstand: ' + resultUs + '.'
+          ];
+        } else if(outcomeLabel === 'Niederlage'){
+          leadOptions = [
+            tagCfg.teamLabel + ' ' + charBody + ' und verlieren' + ortSuffix + ' gegen ' + opponent + ' mit ' + resultUs + '.',
+            ortLong + ' müssen sich ' + tagCfg.teamLabel + ' ' + opponent + ' mit ' + resultUs + ' geschlagen geben.',
+            'Gegen ' + opponent + ' bleibt ' + tagCfg.teamLabel + ' ohne Punkte – am Ende steht ein ' + resultUs + ortSuffix + '.'
+          ];
+        } else {
+          leadOptions = [
+            tagCfg.teamLabel + ' und ' + opponent + ' trennen sich' + ortSuffix + ' mit ' + resultUs + '.',
+            'Punkteteilung' + ortSuffix + ': ' + tagCfg.teamLabel + ' kommen gegen ' + opponent + ' zum ' + resultUs + '.',
+            ortLong + ' kein Sieger: das Duell ' + tagCfg.teamLabel + ' gegen ' + opponent + ' endet ' + resultUs + '.'
+          ];
+        }
+        var lead = pick(leadOptions);
+        
+        // Body Absatz 1: Spielcharakter
+        var p1Options;
+        if(outcomeLabel === 'Sieg'){
+          if(absDiff <= 2){
+            p1Options = [
+              'Lange Zeit war die Partie offen – am Ende behielten ' + tagCfg.teamLabel + ' mit hauchdünnem Vorsprung die Oberhand.',
+              'In einem nervenaufreibenden Duell hatten ' + tagCfg.teamLabel + ' am Ende die besseren Argumente.',
+              'Bis zur Schlusssirene blieb es spannend, doch die Punkte gingen an ' + tagCfg.teamLabel + '.'
+            ];
+          } else if(absDiff <= 6){
+            p1Options = [
+              tagCfg.teamLabel + ' kontrollierten weite Phasen des Spiels und holten am Ende verdient die Punkte.',
+              'Mit einer geschlossenen Mannschaftsleistung sicherten sich ' + tagCfg.teamLabel + ' den Erfolg.',
+              'Die Partie verlief weitgehend kontrolliert – ' + tagCfg.teamLabel + ' ließen sich den Sieg nicht mehr nehmen.'
+            ];
+          } else {
+            p1Options = [
+              tagCfg.teamLabel + ' dominierten die Begegnung von Beginn an und ließen ' + opponent + ' kaum Chancen.',
+              'Es war eine klare Angelegenheit: ' + tagCfg.teamLabel + ' fuhren einen souveränen Erfolg ein.',
+              'Mit einer überzeugenden Vorstellung lieferten ' + tagCfg.teamLabel + ' eine deutliche Antwort.'
+            ];
+          }
+        } else if(outcomeLabel === 'Niederlage'){
+          if(absDiff <= 2){
+            p1Options = [
+              'Bis zum Schluss war alles drin, doch am Ende musste sich ' + tagCfg.teamLabel + ' knapp geschlagen geben.',
+              'In der Schlussphase setzte sich ' + opponent + ' hauchdünn durch – ein bitterer Punktverlust.',
+              'Eine Hand voll Tore Unterschied entschieden die Partie zugunsten von ' + opponent + '.'
+            ];
+          } else if(absDiff <= 6){
+            p1Options = [
+              tagCfg.teamLabel + ' hielten lange mit, am Ende war ' + opponent + ' aber zu stark.',
+              'Trotz kämpferischer Leistung reichte es nicht zu einem Erfolg gegen ' + opponent + '.',
+              opponent + ' war an diesem Tag eine Nummer zu groß für ' + tagCfg.teamLabel + '.'
+            ];
+          } else {
+            p1Options = [
+              tagCfg.teamLabel + ' fanden in dieser Partie kaum Mittel gegen ' + opponent + '.',
+              'Über weite Strecken war ' + opponent + ' das tonangebende Team.',
+              'Eine deutliche Niederlage, in der ' + tagCfg.teamLabel + ' nie richtig ins Spiel fanden.'
+            ];
+          }
+        } else {
+          p1Options = [
+            'In einer ausgeglichenen Partie nahmen beide Mannschaften je einen Punkt mit.',
+            'Auf Augenhöhe trennten sich ' + tagCfg.teamLabel + ' und ' + opponent + ' mit einem gerechten Ergebnis.',
+            'Ein offener Schlagabtausch endete ohne Sieger.'
+          ];
+        }
+        var p1 = pick(p1Options);
+        
+        // Body Absatz 2: Einordnung mit Liga, Halle, Daten
+        var hallenSatz = '';
+        if(spielort){
+          hallenSatz = ourTeamHome 
+            ? ' Das Spiel fand in der ' + spielort + ' statt.'
+            : ' Spielort war die ' + spielort + '.';
+        }
+        var ligaSatz = liga ? ' Liga: ' + liga + '.' : '';
+        var torSatz = '';
+        if(totalGoals >= 70){
+          torSatz = ' Mit insgesamt ' + totalGoals + ' Treffern war es eine torreiche Begegnung.';
+        } else if(totalGoals <= 40 && outcomeLabel !== 'Unentschieden'){
+          torSatz = ' Beide Teams taten sich mit insgesamt nur ' + totalGoals + ' Toren schwer im Abschluss.';
+        }
+        var p2 = 'Gespielt wurde am ' + formatGermanDate(g.datum) + '.' + hallenSatz + torSatz + ligaSatz;
+        
+        // Body Absatz 3 (optional): Ausblick
+        var p3 = '';
+        if(outcomeLabel === 'Sieg'){
+          p3 = pick([
+            'Ein Erfolg, auf dem die Mannschaft aufbauen kann.',
+            'Mit diesem Ergebnis im Rücken kann ' + tagCfg.teamLabel + ' positiv in die kommenden Aufgaben gehen.',
+            'Eine Leistung, die Lust auf mehr macht.'
+          ]);
+        } else if(outcomeLabel === 'Niederlage'){
+          p3 = pick([
+            'Bereits in den nächsten Wochen geht es darum, die Lehren aus dieser Begegnung zu ziehen.',
+            'Die Mannschaft wird die Partie analysieren und beim nächsten Spiel wieder angreifen.',
+            'Es gilt, schnell wieder den Blick nach vorn zu richten.'
+          ]);
+        } else {
+          p3 = pick([
+            'Ein Punkt, der unterm Strich für beide Seiten in Ordnung geht.',
+            'Beide Teams können mit dem Remis leben – eine Niederlage wäre für keine der Mannschaften verdient gewesen.'
+          ]);
+        }
+        
+        var bodyArr = [];
+        bodyArr.push({ type:'text', text: p1 });
+        bodyArr.push({ type:'score', home: heim, guest: gast, result: result, liga: liga });
+        bodyArr.push({ type:'text', text: p2 });
+        if(p3) bodyArr.push({ type:'text', text: p3 });
         
         autoNews.push({
           id: 'auto-' + tid + '-' + datumIso,
@@ -1500,10 +1643,7 @@ async function loadAutoMatchNews(maxPerTeam, excludeMatches){
           author: tagCfg.authorLabel,
           authorIni: 'TuS',
           lead: lead,
-          body: [
-            { type:'score', home: heim, guest: gast, result: result, liga: liga },
-            { type:'text', text: bodyText }
-          ]
+          body: bodyArr
         });
       });
     } catch(e){

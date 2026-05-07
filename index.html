@@ -77,12 +77,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .burger-section{font-size:11px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.07em;padding:12px 20px 6px;}
 .scroll{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:0;}
 .page{display:none;min-height:100%;background:inherit;} .page.active{display:block;}
-.bnav{display:flex;background:#1a1a1a;flex-shrink:0;padding:6px 6px 6px;gap:3px;}
-/* Im Browser (mobil) und in der PWA: Home-Indicator-Abstand, aber gedeckelt */
+.bnav{display:flex;background:#1a1a1a;flex-shrink:0;padding:4px 6px 4px;gap:3px;}
+/* PWA / Mobile: volle Safe Area unten, damit Bnav direkt am Bildschirmrand klebt */
 @media (max-width: 500px), (display-mode: standalone) {
-  .bnav{padding-bottom:max(6px, min(env(safe-area-inset-bottom), 18px));}
+  .bnav{padding-bottom:calc(env(safe-area-inset-bottom) + 4px);}
 }
-.bt{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;border:none;cursor:pointer;padding:6px 2px;border-radius:12px;background:transparent;}
+.bt{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;border:none;cursor:pointer;padding:6px 2px;border-radius:12px;background:transparent;}
 .bt-ic{font-size:22px;line-height:1;}
 .bt-lb{font-size:11px;color:rgba(255,255,255,0.4);white-space:nowrap;font-family:inherit;}
 .bt.on{background:white;} .bt.on .bt-lb{color:#1a1a1a;font-weight:700;}
@@ -672,7 +672,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.0.9c";
+const APP_VERSION = "0.0.9d";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1348,17 +1348,49 @@ document.querySelectorAll('.bt').forEach(function(b,i){
 });
 </script>
 
-<!-- PWA: Service Worker registrieren -->
+<!-- PWA: Service Worker registrieren mit Auto-Update -->
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('sw.js')
       .then(function(reg) {
         console.log('Service Worker registriert:', reg.scope);
+
+        // Bei jedem Laden aktiv nach Updates suchen
+        reg.update();
+
+        // Wenn ein neuer Service Worker gefunden wird:
+        reg.addEventListener('updatefound', function() {
+          var newWorker = reg.installing;
+          if (!newWorker) return;
+          newWorker.addEventListener('statechange', function() {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // Neue Version ist bereit - sofort aktivieren
+              newWorker.postMessage('SKIP_WAITING');
+            }
+          });
+        });
       })
       .catch(function(err) {
         console.log('Service Worker Fehler:', err);
       });
+
+    // Wenn der neue SW die Kontrolle übernimmt: Seite neu laden
+    var refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function() {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    });
+
+    // Beim Wieder-Sichtbar-werden der App: Update prüfen
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'visible') {
+        navigator.serviceWorker.getRegistration().then(function(reg) {
+          if (reg) reg.update();
+        });
+      }
+    });
   });
 }
 </script>

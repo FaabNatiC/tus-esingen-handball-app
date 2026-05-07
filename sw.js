@@ -1,6 +1,13 @@
 // TuS Esingen Handball App - Service Worker
-// Version bei Updates erhöhen, damit Browser den Cache aktualisiert
-const CACHE_VERSION = 'v35';
+//
+// Die Cache-Version wird automatisch aus dem ?v=... Parameter in der
+// Script-URL übernommen. Dadurch reicht es, die APP_VERSION in der index.html
+// zu erhöhen – diese sw.js muss nicht mehr angepasst werden.
+//
+// Fallback: Wenn kein ?v= mitgegeben wird, wird 'manual' verwendet.
+
+const SW_URL = new URL(self.location.href);
+const CACHE_VERSION = SW_URL.searchParams.get('v') || 'manual';
 const CACHE_NAME = `tus-esingen-${CACHE_VERSION}`;
 
 // Dateien, die beim Installieren in den Cache wandern (App-Shell)

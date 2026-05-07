@@ -53,9 +53,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .hdr-btn{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px;}
 .hdr-btn span{display:block;width:20px;height:2px;background:white;border-radius:2px;}
 /* HAUPTSPONSOR-BLOCK IM HEADER */
-.hdr-sponsor{display:flex;flex-direction:column;align-items:center;gap:2px;margin-left:auto;flex-shrink:0;}
+.hdr-sponsor{display:flex;flex-direction:column;align-items:center;gap:2px;margin-left:auto;flex-shrink:0;text-decoration:none;}
 .hdr-sponsor-label{font-size:8px;font-weight:600;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:.06em;line-height:1;}
-.hdr-sponsor-logo{height:30px;width:auto;max-width:80px;border-radius:4px;background:#fff;padding:3px 5px;box-sizing:border-box;display:block;object-fit:contain;}
+.hdr-sponsor-logo{height:38px;width:auto;max-width:100px;border-radius:4px;background:#fff;padding:2px 4px;box-sizing:border-box;display:block;object-fit:contain;}
 /* BURGER MENU */
 .burger-menu{position:absolute;top:0;right:0;bottom:0;left:0;z-index:100;pointer-events:none;}
 .burger-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .3s;pointer-events:none;}
@@ -166,23 +166,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .lb{background:#f0f0f0;color:#555;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;flex-shrink:0;display:inline-block;}
 /* Spielart-Badge: alle Spielarten bekommen ein Badge (Liga/Pokal/Testspiel) */
 .sp-art{font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;flex-shrink:0;display:inline-block;}
-.sp-art.liga{background:#1a1a1a;color:#fff;}
+.sp-art.liga{background:#4a4a4a;color:#fff;}
 .sp-art.pokal{background:#fce8b6;color:#7a4d00;}
 .sp-art.test{background:#e8b4d4;color:#6b1a4d;}
-.phone.dark .sp-art.liga{background:#fff;color:#1a1a1a;}
+.phone.dark .sp-art.liga{background:#d8d8d8;color:#2a2a2a;}
 .phone.dark .sp-art.pokal{background:#5a4500;color:#fde9b6;}
 .phone.dark .sp-art.test{background:#4d1a3a;color:#f5c8e0;}
 /* Spielart-Filter-Tabs */
 .sp-filterbar{display:flex;gap:6px;padding:8px 14px 4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .sp-filterbar::-webkit-scrollbar{display:none;}
 .sp-fbtn{flex-shrink:0;font-size:11px;font-weight:700;padding:6px 12px;border-radius:20px;background:#f0f0f0;color:#666;border:1px solid transparent;cursor:pointer;white-space:nowrap;transition:all .15s;}
-.sp-fbtn.on{background:#1a1a1a;color:#fff;}
-.sp-fbtn.liga.on{background:#1a1a1a;color:#fff;}
+.sp-fbtn.on{background:#4a4a4a;color:#fff;}
+.sp-fbtn.liga.on{background:#4a4a4a;color:#fff;}
 .sp-fbtn.pokal.on{background:#7a4d00;color:#fce8b6;}
 .sp-fbtn.test.on{background:#6b1a4d;color:#e8b4d4;}
 .phone.dark .sp-fbtn{background:#2a2a2a;color:#aaa;}
-.phone.dark .sp-fbtn.on{background:#fff;color:#1a1a1a;}
-.phone.dark .sp-fbtn.liga.on{background:#fff;color:#1a1a1a;}
+.phone.dark .sp-fbtn.on{background:#d8d8d8;color:#2a2a2a;}
+.phone.dark .sp-fbtn.liga.on{background:#d8d8d8;color:#2a2a2a;}
 .phone.dark .sp-fbtn.pokal.on{background:#fce8b6;color:#7a4d00;}
 .phone.dark .sp-fbtn.test.on{background:#e8b4d4;color:#6b1a4d;}
 .gts{display:grid;grid-template-columns:1fr 62px 1fr;align-items:center;gap:6px;}
@@ -219,8 +219,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .jg-badge{margin-left:auto;font-size:10px;font-weight:700;color:#666;background:#f0f0f0;padding:3px 8px;border-radius:10px;letter-spacing:.02em;white-space:nowrap;}
 .jg-badge + .cv{margin-left:8px;}
 .phone.dark .jg-badge{background:#2a2a2a;color:#aaa;}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 14px;}
-.st{background:#f5f5f5;border-radius:10px;padding:10px;text-align:center;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 14px 12px;background:#f5f5f5;}
+/* Überschrift direkt über den Stats-Kacheln, linksbündig zur ersten Kachel */
+.sec-stats{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;padding:14px 14px 6px;background:#f5f5f5;}
+.st{background:#fff;border-radius:10px;padding:10px;text-align:center;border:1px solid #eaeaea;}
 .sv{font-size:22px;font-weight:700;} .sl{font-size:10px;color:#666;margin-top:2px;}
 .tbl-wrap{padding:0 14px 14px;}
 .tbl{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed;}
@@ -706,7 +708,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div style="height:10px;"></div>
   </div></div>
   <div id="dt-sp" style="display:none;">
-    <div class="sec">Liga-Bilanz</div>
+    <div class="sec-stats">Liga-Bilanz</div>
     <div class="stats" id="dt-sp-stats">
       <div class="st"><div class="sv" style="color:#639922;">--</div><div class="sl">Siege</div></div>
       <div class="st"><div class="sv" style="color:#BA7517;">--</div><div class="sl">Unentschieden</div></div>
@@ -726,7 +728,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="stats" id="dt-tab-stats"><div class="st"><div class="sv">--</div><div class="sl">Platz</div></div><div class="st"><div class="sv">--</div><div class="sl">Punkte</div></div><div class="st"><div class="sv">--</div><div class="sl">Tordiff.</div></div></div>
     <div id="dt-tab-liga" style="font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;padding:4px 14px 2px;">Lade…</div>
     <div class="tbl-wrap"><table class="tbl">
-      <thead><tr><th>#</th><th>Verein</th><th>Sp</th><th>S</th><th>N</th><th>Diff</th><th>Pkt</th></tr></thead>
+      <thead><tr><th>#</th><th>Verein</th><th>Sp</th><th>S</th><th>U</th><th>N</th><th>Diff</th><th>Pkt</th></tr></thead>
       <tbody id="tabelle-body"></tbody>
     </table></div>
     <div class="upd" id="tabelle-upd">Lade Daten…</div>
@@ -784,7 +786,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.4.1";
+const APP_VERSION = "0.4.3";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1080,10 +1082,13 @@ function renderTabelle(data) {
   data.tabelle.forEach(t => {
     const hl = t.highlight ? ' hl' : '';
     const logo = t.logo ? `<img src="${LOGO_BASE}${t.logo}" style="width:20px;height:20px;object-fit:contain;border-radius:50%;">` : '';
+    // Unentschieden aus den anderen Werten ableiten, falls nicht in der Tabelle vorhanden:
+    // Sp - S - N = U (handball.net liefert U nicht im Standard-JSON mit)
+    const unen = (t.unentschieden != null) ? t.unentschieden : Math.max(0, (t.spiele || 0) - (t.siege || 0) - (t.niederlagen || 0));
     rows += `<tr class="${hl}">
       <td class="pos">${t.platz}</td>
       <td class="tname"><span style="display:flex;align-items:center;gap:6px;">${logo}${t.verein}</span></td>
-      <td>${t.spiele}</td><td>${t.siege}</td><td>${t.niederlagen}</td>
+      <td>${t.spiele}</td><td>${t.siege}</td><td>${unen}</td><td>${t.niederlagen}</td>
       <td>${t.diff}</td><td class="pts">${t.punkte}</td>
     </tr>`;
   });

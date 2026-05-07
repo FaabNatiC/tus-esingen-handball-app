@@ -1455,11 +1455,10 @@ function zaehleMannschaften(){
 // App starten
 // Starte Laden sobald DOM bereit ist
 function fillTeamLogos(){
-  // Alle .tus-logo-img mit dem TuS-Logo aus dem Repo befüllen
-  // Das Logo liegt unter data/logos/tus-esingen.png – relativ zum BASE_URL
+  // TuS-Logo aus dem Repo: relativer Pfad funktioniert auf GitHub Pages
   var imgs = document.querySelectorAll('.tus-logo-img');
   imgs.forEach(function(img){
-    if(img && !img.src) img.src = BASE_URL + "/data/logos/tus-esingen.png";
+    if(img && !img.src) img.src = "data/logos/tus-esingen.png";
   });
 }
 if(document.readyState === 'loading') {
@@ -1484,11 +1483,15 @@ function showMainBnavOnly(){
   document.getElementById('bnav').style.display='flex';
 }
 
-// Hauptsponsor-Logo: Pfad relativ zum Repo, daher BASE_URL voranstellen
-(function initHeaderSponsor(){
+// Hauptsponsor-Logo + andere Repo-Bilder: relativer Pfad
+// (NICHT BASE_URL/raw.githubusercontent verwenden – GitHub blockiert
+// das direkte Einbinden von Bildern aus raw.githubusercontent in HTML.
+// Da App + Bilder im selben Repo auf GitHub Pages liegen, reicht der
+// relative Pfad.)
+(function initRelativeImages(){
   document.querySelectorAll('img[data-src-rel]').forEach(function(img){
     var rel = img.getAttribute('data-src-rel');
-    if(rel) img.src = BASE_URL + '/' + rel;
+    if(rel) img.src = rel;
   });
 })();
 

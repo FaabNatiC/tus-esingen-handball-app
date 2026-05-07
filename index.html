@@ -700,7 +700,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.1.8";
+const APP_VERSION = "0.2.1";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1342,49 +1342,41 @@ function dTab(id,btn){
   btn.classList.add('on');
 }
 
-// News werden dynamisch geladen aus data/news.json + automatisch generierte Spielnews
+// News werden geladen aus:
+//   1) data/news.json (manuell gepflegte News)
+//   2) Automatisch generierte Spielbericht-News aus den spielplan.json jedes Teams
+//   Duplikate werden via matchTeam + matchDate aus news.json ausgeschlossen.
 var NEWS = [];
 
-// Tag-Konfiguration für Auto-Spielnews je Team
+// Tag-Konfiguration je Team-ID für Auto-Spielnews
 var TAG_CONFIG = {
-  '1-herren':   { cat:'Herren',           catCl:'he', gradient:'linear-gradient(135deg,#1a3a5c 0%,#0d2540 100%)', authorLabel:'Spielergebnis · 1. Herren' },
-  '1-damen':    { cat:'Damen',            catCl:'da', gradient:'linear-gradient(135deg,#7a1a2e 0%,#5a0d1a 100%)', authorLabel:'Spielergebnis · 1. Damen' },
-  'md1-jugend': { cat:'Jugend männlich',  catCl:'jm', gradient:'linear-gradient(135deg,#5a9bd4 0%,#3a7ab5 100%)', authorLabel:'Spielergebnis · männlich D1' },
-  'md2-jugend': { cat:'Jugend männlich',  catCl:'jm', gradient:'linear-gradient(135deg,#5a9bd4 0%,#3a7ab5 100%)', authorLabel:'Spielergebnis · männlich D2' }
+  '1-herren':   { cat:'Herren',           catCl:'he', gradient:'linear-gradient(135deg,#1a3a5c 0%,#0d2540 100%)', authorLabel:'Spielergebnis · 1. Herren',     teamLabel:'1. Herren' },
+  '1-damen':    { cat:'Damen',            catCl:'da', gradient:'linear-gradient(135deg,#7a1a2e 0%,#5a0d1a 100%)', authorLabel:'Spielergebnis · 1. Damen',     teamLabel:'1. Damen' },
+  'md1-jugend': { cat:'Jugend männlich',  catCl:'jm', gradient:'linear-gradient(135deg,#5a9bd4 0%,#3a7ab5 100%)', authorLabel:'Spielergebnis · männlich D1',  teamLabel:'männlich D1' },
+  'md2-jugend': { cat:'Jugend männlich',  catCl:'jm', gradient:'linear-gradient(135deg,#5a9bd4 0%,#3a7ab5 100%)', authorLabel:'Spielergebnis · männlich D2',  teamLabel:'männlich D2' }
 };
 
-// Hilfsfunktion: ISO-Datum → "TT. Monat JJJJ" deutsch
-function formatGermanDate(isoOrDate){
-  if(!isoOrDate) return '';
-  var d;
-  if(typeof isoOrDate === 'string'){
-    // Format z.B. "2026-04-27" oder "27.04.2026"
-    if(/^\d{4}-\d{2}-\d{2}/.test(isoOrDate)) d = new Date(isoOrDate);
-    else if(/^\d{2}\.\d{2}\.\d{4}/.test(isoOrDate)){
-      var p = isoOrDate.split('.');
-      d = new Date(p[2]+'-'+p[1]+'-'+p[0]);
-    } else d = new Date(isoOrDate);
-  } else d = isoOrDate;
-  if(isNaN(d.getTime())) return isoOrDate;
+// Hilfsfunktion: ISO-Datum → "TT. Monat JJJJ" (deutsch)
+function formatGermanDate(iso){
+  if(!iso) return '';
+  var d = (typeof iso === 'string') ? new Date(iso) : iso;
+  if(isNaN(d.getTime())) return iso;
   var months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
   return d.getDate()+'. '+months[d.getMonth()]+' '+d.getFullYear();
 }
 
-// Hilfsfunktion: ISO-Datum für Sortierung (YYYY-MM-DD)
-function isoDate(isoOrDate){
-  if(!isoOrDate) return '0000-00-00';
-  if(/^\d{4}-\d{2}-\d{2}/.test(isoOrDate)) return isoOrDate.substr(0,10);
-  if(/^\d{2}\.\d{2}\.\d{4}/.test(isoOrDate)){
-    var p = isoOrDate.split('.');
-    return p[2]+'-'+p[1]+'-'+p[0].substr(0,2);
-  }
-  var d = new Date(isoOrDate);
-  if(isNaN(d.getTime())) return '0000-00-00';
+// Hilfsfunktion: ISO-Datum → "YYYY-MM-DD"
+function isoDay(iso){
+  if(!iso) return '';
+  if(/^\d{4}-\d{2}-\d{2}/.test(iso)) return iso.substr(0,10);
+  var d = new Date(iso);
+  if(isNaN(d.getTime())) return '';
   return d.toISOString().substr(0,10);
 }
 
-// Auto-News aus den letzten Spielen erzeugen (max. maxPerTeam Spiele pro Team)
-async function loadAutoMatchNews(maxPerTeam){
+// Auto-Spielbericht-News aus den Spielplänen aller Teams generieren.
+// excludeMatches = Set aus "teamId|YYYY-MM-DD" für Spiele, die übersprungen werden sollen.
+async function loadAutoMatchNews(maxPerTeam, excludeMatches){
   var autoNews = [];
   var teamIds = Object.keys(TEAMS);
   var cb = "?_=" + Date.now();
@@ -1396,69 +1388,86 @@ async function loadAutoMatchNews(maxPerTeam){
       var data = await res.json();
       var games = (data && data.spiele) ? data.spiele : (Array.isArray(data) ? data : []);
       
-      // Nur gespielte Spiele (mit Ergebnis), absteigend nach Datum
+      // Nur abgeschlossene Spiele mit Toren (toreHeim/toreGast > 0 oder Hinweis-Wertung)
       var played = games.filter(function(g){
-        var hasResult = g.ergebnis || g.result || (g.heimTore != null && g.gastTore != null);
-        return hasResult;
+        if(g.status && g.status !== 'finished') return false;
+        // 0:0 mit Hinweis ist eine Wertung – aktuell überspringen wir die für News
+        if((g.toreHeim === 0 || g.toreHeim == null) && (g.toreGast === 0 || g.toreGast == null)) return false;
+        return true;
       });
       
       // Sortieren: neuestes zuerst
       played.sort(function(a,b){
-        return isoDate(b.datum || b.date || '').localeCompare(isoDate(a.datum || a.date || ''));
+        return isoDay(b.datum || '').localeCompare(isoDay(a.datum || ''));
       });
       
-      var tagCfg = TAG_CONFIG[tid] || { cat:'Bericht', catCl:'', gradient:'linear-gradient(135deg,#1a1a1a 0%,#2d3a1e 60%,#1a2a1a 100%)', authorLabel:'Spielergebnis' };
-      var teamName = (TEAMS[tid] && TEAMS[tid].name) || tid;
+      var tagCfg = TAG_CONFIG[tid] || { cat:'Sparte', catCl:'sp', gradient:'linear-gradient(135deg,#1f6b1a 0%,#155010 100%)', authorLabel:'Spielergebnis', teamLabel:tid };
       var liga = (TEAMS[tid] && TEAMS[tid].liga) || '';
       
       played.slice(0, maxPerTeam).forEach(function(g, idx){
-        var heim = g.heim || g.heimTeam || g.home || '';
-        var gast = g.gast || g.gastTeam || g.guest || '';
-        var result = g.ergebnis || g.result || ((g.heimTore != null && g.gastTore != null) ? (g.heimTore + ':' + g.gastTore) : '');
-        var datum = g.datum || g.date || '';
-        var spielort = g.halle || g.ort || '';
-        var spieltag = g.spieltag || '';
+        var heim = g.heim || '';
+        var gast = g.gast || '';
+        var datumIso = isoDay(g.datum || '');
         
-        // Sieg/Niederlage/Unentschieden bestimmen
+        // Duplikat-Check: Spiel bereits manuell in news.json behandelt?
+        if(excludeMatches.has(tid + '|' + datumIso)) return;
+        
+        var th = g.toreHeim, tg = g.toreGast;
+        var result = (th != null && tg != null) ? th + ':' + tg : '';
+        var spielort = g.halle || '';
+        
+        // Sieg/Niederlage/Unentschieden aus Sicht von TuS Esingen
         var ourTeamHome = /esingen/i.test(heim);
-        var ourTeamGuest = /esingen/i.test(gast);
-        var our, opponent, ourScore, oppScore, outcomeLabel;
-        if(result && /^\d+:\d+$/.test(result)){
-          var parts = result.split(':').map(Number);
-          if(ourTeamHome){ ourScore = parts[0]; oppScore = parts[1]; our = heim; opponent = gast; }
-          else if(ourTeamGuest){ ourScore = parts[1]; oppScore = parts[0]; our = gast; opponent = heim; }
-          else { our = heim; opponent = gast; ourScore = parts[0]; oppScore = parts[1]; }
-          if(ourScore > oppScore) outcomeLabel = 'Sieg';
-          else if(ourScore < oppScore) outcomeLabel = 'Niederlage';
+        var outcomeLabel, opponent;
+        if(ourTeamHome){
+          opponent = gast;
+          if(th > tg) outcomeLabel = 'Sieg';
+          else if(th < tg) outcomeLabel = 'Niederlage';
           else outcomeLabel = 'Unentschieden';
         } else {
-          outcomeLabel = 'Spielergebnis';
-          our = teamName; opponent = ourTeamHome ? gast : heim;
+          opponent = heim;
+          if(tg > th) outcomeLabel = 'Sieg';
+          else if(tg < th) outcomeLabel = 'Niederlage';
+          else outcomeLabel = 'Unentschieden';
         }
         
-        var title = teamName + ': ' + outcomeLabel + ' gegen ' + (opponent || 'Gegner') + ' (' + (result || '') + ')';
-        var leadParts = [];
-        if(result) leadParts.push('Endstand ' + result);
-        if(spielort) leadParts.push('in ' + spielort);
-        if(datum) leadParts.push('am ' + formatGermanDate(datum));
-        var lead = leadParts.length ? leadParts.join(' · ') + '.' : 'Spielergebnis verfügbar.';
+        // Schöner formuliertes Ergebnis aus unserer Sicht
+        var ourScore = ourTeamHome ? th : tg;
+        var oppScore = ourTeamHome ? tg : th;
+        var resultUs = ourScore + ':' + oppScore;
+        
+        var title;
+        if(outcomeLabel === 'Sieg') title = tagCfg.teamLabel + ': Sieg gegen ' + opponent + ' (' + resultUs + ')';
+        else if(outcomeLabel === 'Niederlage') title = tagCfg.teamLabel + ': Niederlage gegen ' + opponent + ' (' + resultUs + ')';
+        else title = tagCfg.teamLabel + ': Unentschieden gegen ' + opponent + ' (' + resultUs + ')';
+        
+        var lead;
+        if(outcomeLabel === 'Sieg' && ourTeamHome) lead = 'Vor heimischer Kulisse setzten sich ' + tagCfg.teamLabel + ' mit ' + resultUs + ' gegen ' + opponent + ' durch.';
+        else if(outcomeLabel === 'Sieg') lead = 'Auswärtssieg: ' + tagCfg.teamLabel + ' gewinnen mit ' + resultUs + ' bei ' + opponent + '.';
+        else if(outcomeLabel === 'Niederlage' && ourTeamHome) lead = tagCfg.teamLabel + ' unterlagen zu Hause gegen ' + opponent + ' mit ' + resultUs + '.';
+        else if(outcomeLabel === 'Niederlage') lead = 'Auswärtsniederlage: ' + tagCfg.teamLabel + ' verlieren bei ' + opponent + ' mit ' + resultUs + '.';
+        else if(ourTeamHome) lead = 'Punkteteilung zu Hause: ' + tagCfg.teamLabel + ' trennen sich mit ' + resultUs + ' von ' + opponent + '.';
+        else lead = 'Punkteteilung auswärts: ' + tagCfg.teamLabel + ' trennen sich mit ' + resultUs + ' bei ' + opponent + '.';
+        
+        var bodyText = 'Am ' + formatGermanDate(g.datum) + ' traf ' + heim + ' auf ' + gast + '. Endstand: ' + result + '.';
+        if(spielort) bodyText += ' Austragungsort: ' + spielort + '.';
         
         autoNews.push({
-          id: 'auto-' + tid + '-' + idx + '-' + isoDate(datum),
+          id: 'auto-' + tid + '-' + datumIso,
           topNews: false,
           autoGenerated: true,
-          sortDate: isoDate(datum),
+          sortDate: datumIso,
           cat: tagCfg.cat,
           catCl: tagCfg.catCl,
           gradient: tagCfg.gradient,
           title: title,
-          date: formatGermanDate(datum),
+          date: formatGermanDate(g.datum),
           author: tagCfg.authorLabel,
           authorIni: 'TuS',
           lead: lead,
           body: [
-            { type:'score', home: heim, guest: gast, result: result, liga: liga + (spieltag ? ' · Spieltag ' + spieltag : '') },
-            { type:'text', text: 'Das Spiel ' + (heim || '?') + ' gegen ' + (gast || '?') + ' endete mit ' + (result || 'unklarem Ergebnis') + '.' + (spielort ? ' Austragungsort: ' + spielort + '.' : '') }
+            { type:'score', home: heim, guest: gast, result: result, liga: liga },
+            { type:'text', text: bodyText }
           ]
         });
       });
@@ -1470,7 +1479,7 @@ async function loadAutoMatchNews(maxPerTeam){
   return autoNews;
 }
 
-// News laden: news.json + automatische Spielnews zusammenführen
+// News laden: manuelle aus news.json + automatische Spielbericht-News
 async function loadAllNews(){
   var manualNews = [];
   try {
@@ -1483,7 +1492,15 @@ async function loadAllNews(){
     console.warn('news.json konnte nicht geladen werden', e);
   }
   
-  var autoNews = await loadAutoMatchNews(2); // max. 2 pro Team
+  // Set aus "teamId|YYYY-MM-DD" für alle Spiele, die manuell behandelt sind
+  var excludeMatches = new Set();
+  manualNews.forEach(function(n){
+    if(n.matchTeam && n.matchDate){
+      excludeMatches.add(n.matchTeam + '|' + n.matchDate);
+    }
+  });
+  
+  var autoNews = await loadAutoMatchNews(2, excludeMatches);
   
   // Zusammenführen + nach Datum sortieren (neueste zuerst)
   NEWS = manualNews.concat(autoNews);
@@ -1494,15 +1511,18 @@ async function loadAllNews(){
   renderNewsHomepage();
 }
 
+
 // Startseite: 3 Top + bis zu 10 weitere + Button "Alle News"
 function renderNewsHomepage(){
-  // Top News: maximal 3, die mit topNews:true markiert sind
-  var topNews = NEWS.filter(function(n){ return n.topNews; }).slice(0,3);
-  // Falls weniger als 3 als Top markiert, mit neuesten auffüllen
-  if(topNews.length < 3){
-    NEWS.forEach(function(n){
-      if(topNews.length < 3 && topNews.indexOf(n) === -1) topNews.push(n);
-    });
+  // Top News-Logik:
+  // - Wenn mind. eine News explizit topNews:true hat → nur die nehmen (max 3)
+  // - Wenn keine markiert ist → die 3 neuesten als Top
+  var explicitTop = NEWS.filter(function(n){ return n.topNews === true; });
+  var topNews;
+  if(explicitTop.length > 0){
+    topNews = explicitTop.slice(0, 3);
+  } else {
+    topNews = NEWS.slice(0, 3);
   }
   var topIds = topNews.map(function(n){ return n.id; });
   

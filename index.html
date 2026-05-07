@@ -31,14 +31,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 /* MOBIL: Vollbild ohne Klickdummy-Rahmen */
 @media (max-width: 500px) {
   html,body{height:100%;overflow:hidden;}
-  body{padding:0;background:#fff;}
+  body{padding:0;background:#1a1a1a;}
   .phone{position:fixed;inset:0;width:100%;height:100%;min-height:0;border-radius:0;box-shadow:none;}
   .phone.dark{background:#111;}
 }
 /* PWA-Modus (installierte App): immer Vollbild, egal welche Bildschirmgröße */
 @media (display-mode: standalone) {
   html,body{height:100%;overflow:hidden;}
-  body{padding:0;background:#fff;}
+  body{padding:0;background:#1a1a1a;}
   .phone{position:fixed;inset:0;width:100%;height:100%;min-height:0;border-radius:0;box-shadow:none;}
   .phone.dark{background:#111;}
 }
@@ -75,8 +75,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .burger-toggle-sw::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:white;border-radius:50%;transition:left .2s;}
 .burger-toggle-sw.on::after{left:21px;}
 .burger-section{font-size:11px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.07em;padding:12px 20px 6px;}
-.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-.page{display:none;} .page.active{display:block;}
+.scroll{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:0;}
+.page{display:none;min-height:100%;background:inherit;} .page.active{display:block;}
 .bnav{display:flex;background:#1a1a1a;flex-shrink:0;padding:6px 6px 6px;gap:3px;}
 /* Im Browser (mobil) und in der PWA: Home-Indicator-Abstand, aber gedeckelt */
 @media (max-width: 500px), (display-mode: standalone) {
@@ -672,7 +672,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.0.9b";
+const APP_VERSION = "0.0.9c";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt

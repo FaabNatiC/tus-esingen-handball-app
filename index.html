@@ -102,17 +102,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cd-wrap{padding:10px 14px 0;}
 .cd-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
 .cd-card{background:#e8e8e8;border-radius:14px;padding:10px 10px 8px;text-align:center;}
-.cd-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px;}
-.cd-team{font-size:11px;color:#1a1a1a;font-weight:600;line-height:1;}
+.cd-team{font-size:11px;color:#1a1a1a;font-weight:600;line-height:1;margin-bottom:6px;}
 .cd-units{display:flex;justify-content:center;gap:4px;margin:6px 0 4px;}
 .cd-u{display:flex;flex-direction:column;align-items:center;}
 .cd-n{font-size:20px;font-weight:700;color:#1a1a1a;line-height:1;}
 .cd-l{font-size:9px;color:#555;margin-top:2px;}
 .cd-sep{font-size:16px;color:#999;align-self:flex-start;padding-top:3px;}
 .cd-match{font-size:10px;color:#444;line-height:1.35;}
-.cd-when{font-size:9px;color:#666;margin-top:4px;}
+.cd-comp{font-size:9px;color:#888;margin-top:4px;line-height:1.2;}
+.cd-when{font-size:9px;color:#666;margin-top:2px;}
 .cd-status{font-size:11px;font-weight:600;color:#1a1a1a;padding:14px 4px;}
 .phone.dark .cd-l{color:#bbb;}
+.phone.dark .cd-comp{color:#aaa;}
 .phone.dark .cd-when{color:#bbb;}
 .phone.dark .cd-status{color:#fff;}
 .nl{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid #f0f0f0;align-items:center;}
@@ -804,7 +805,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.1";
+const APP_VERSION = "0.6.2";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1214,6 +1215,8 @@ function findeNaechstesSpiel(teamId){
 }
 
 function spielArtBadge(art){
+  // (deprecated - durch spielArtLabel ersetzt; Funktion bleibt als
+  // Fallback falls externer Code sie ruft)
   if(art === 'pokal') return '<span class="sp-art pokal">Pokal</span>';
   if(art === 'test')  return '<span class="sp-art test">Testspiel</span>';
   return '<span class="sp-art liga">Liga</span>';
@@ -1225,6 +1228,18 @@ function formatSpielDatum(iso){
   return tage[d.getDay()] + ' ' + d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}) + ' · ' + d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}) + ' Uhr';
 }
 
+function spielArtLabel(spiel){
+  // Dezenter Text statt Badge - zwischen Countdown und Datum
+  if(spiel.art === 'pokal'){
+    return spiel.wettbewerb || 'Pokal';
+  }
+  if(spiel.art === 'test'){
+    return 'Testspiel';
+  }
+  // Liga: Wettbewerbsname, fallback "Liga"
+  return spiel.wettbewerb || 'Liga';
+}
+
 function renderCountdownCard(teamId){
   var card = document.getElementById('cd-card-' + teamId);
   if(!card) return;
@@ -1232,21 +1247,18 @@ function renderCountdownCard(teamId){
   if(!contentEl) return;
 
   var teamName = card.getAttribute('data-team') || '';
+  var teamHtml = '<div class="cd-team">' + teamName + '</div>';
 
   // Cache noch nicht geladen?
   var cache = window.spielplaeneCache || {};
   if(!cache[teamId]){
-    contentEl.innerHTML =
-      '<div class="cd-top"><span class="cd-team">' + teamName + '</span></div>' +
-      '<div class="cd-status">Lade …</div>';
+    contentEl.innerHTML = teamHtml + '<div class="cd-status">Lade …</div>';
     return;
   }
 
   var spiel = findeNaechstesSpiel(teamId);
   if(!spiel){
-    contentEl.innerHTML =
-      '<div class="cd-top"><span class="cd-team">' + teamName + '</span></div>' +
-      '<div class="cd-status">Kein nächstes Spiel</div>';
+    contentEl.innerHTML = teamHtml + '<div class="cd-status">Kein nächstes Spiel</div>';
     return;
   }
 
@@ -1254,26 +1266,20 @@ function renderCountdownCard(teamId){
   var now = new Date();
   var diff = anwurf - now;
 
-  // Top-Zeile: Team links, Spielart-Badge rechts
-  var topRow =
-    '<div class="cd-top">' +
-      '<span class="cd-team">' + teamName + '</span>' +
-      spielArtBadge(spiel.art) +
-    '</div>';
-
   // Spiel läuft: Anwurf < jetzt < Anwurf + 90min
   var spielLaeuft = diff < 0 && diff > -90 * 60 * 1000;
   if(spielLaeuft){
     contentEl.innerHTML =
-      topRow +
+      teamHtml +
       '<div class="cd-match"><strong>' + spiel.heim + '</strong><br>vs. ' + spiel.gast + '</div>' +
-      '<div class="cd-status">Spiel läuft</div>';
+      '<div class="cd-status">Spiel läuft</div>' +
+      '<div class="cd-comp">' + spielArtLabel(spiel) + '</div>';
     return;
   }
 
   // Sicherheit: falls negativer diff aber außerhalb 90min-Fenster
   if(diff < 0){
-    contentEl.innerHTML = topRow + '<div class="cd-status">Kein nächstes Spiel</div>';
+    contentEl.innerHTML = teamHtml + '<div class="cd-status">Kein nächstes Spiel</div>';
     return;
   }
 
@@ -1285,7 +1291,7 @@ function renderCountdownCard(teamId){
   var pad = function(n){ return n < 10 ? '0' + n : '' + n; };
 
   contentEl.innerHTML =
-    topRow +
+    teamHtml +
     '<div class="cd-match"><strong>' + spiel.heim + '</strong><br>vs. ' + spiel.gast + '</div>' +
     '<div class="cd-units">' +
       '<div class="cd-u"><span class="cd-n">' + pad(tage) + '</span><span class="cd-l">Tage</span></div>' +
@@ -1294,6 +1300,7 @@ function renderCountdownCard(teamId){
       '<div class="cd-sep">:</div>' +
       '<div class="cd-u"><span class="cd-n">' + pad(min) + '</span><span class="cd-l">Min</span></div>' +
     '</div>' +
+    '<div class="cd-comp">' + spielArtLabel(spiel) + '</div>' +
     '<div class="cd-when">' + formatSpielDatum(spiel.datum) + '</div>';
 }
 
@@ -1304,6 +1311,32 @@ function tickCountdowns(){
 
 // Jede Minute aktualisieren (sobald App läuft)
 setInterval(tickCountdowns, 60 * 1000);
+
+// Lädt nur die zwei Spielpläne (1-herren, 1-damen) für die Countdown-Karten
+// auf der Startseite. Wird direkt beim App-Start angestoßen, parallel zu
+// allem anderen, damit die Karten so früh wie möglich erscheinen.
+// Befüllt denselben Cache wie loadGlobalSpielplan, sodass keine doppelten
+// Fetches passieren.
+async function loadCountdownData(){
+  var teamIds = ['1-herren', '1-damen'];
+  var cb = '?_=' + Date.now();
+  window.spielplaeneCache = window.spielplaeneCache || {};
+
+  await Promise.all(teamIds.map(function(tid){
+    return fetch(BASE_URL + "/data/" + tid + "/spielplan.json" + cb)
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(data){
+        if(data){
+          window.spielplaeneCache[tid] = normalizeSpielplan(data);
+          // Sobald ein Spielplan da ist: zugehörige Karte sofort rendern
+          renderCountdownCard(tid);
+        } else {
+          renderCountdownCard(tid);
+        }
+      })
+      .catch(function(){ renderCountdownCard(tid); });
+  }));
+}
 
 function renderSpielplan(data) {
   // Beide Eingabeformate auf flache Liste normalisieren
@@ -1587,9 +1620,10 @@ function fillTeamLogos(){
   });
 }
 if(document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function(){ fillTeamLogos(); ladeAllesDaten(); zaehleMannschaften(); loadAllNews(); });
+  document.addEventListener('DOMContentLoaded', function(){ fillTeamLogos(); loadCountdownData(); ladeAllesDaten(); zaehleMannschaften(); loadAllNews(); });
 } else {
   fillTeamLogos();
+  loadCountdownData();
   ladeAllesDaten();
   zaehleMannschaften();
   loadAllNews();

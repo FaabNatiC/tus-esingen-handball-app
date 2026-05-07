@@ -1,0 +1,61 @@
+{
+  "_hinweis": "News werden hier zentral gepflegt. 'topNews: true' = wird auf der Startseite als große Top-News-Karte gezeigt. Datumsformat: 'TT. Monat JJJJ' (deutsch). Sortierung erfolgt automatisch nach 'sortDate' (YYYY-MM-DD).",
+  "news": [
+    {
+      "id": "saison-25-26-beendet-1herren",
+      "topNews": true,
+      "sortDate": "2026-04-27",
+      "cat": "Herren",
+      "catCl": "he",
+      "gradient": "linear-gradient(135deg,#1a3a5c 0%,#0d2540 100%)",
+      "title": "Saison 2025/26 beendet – Platz 6 für die 1. Herren",
+      "date": "27. April 2026",
+      "author": "TuS Esingen",
+      "authorIni": "TuS",
+      "lead": "Die 1. Herren beenden eine starke Saison auf dem sechsten Platz der Männer Oberliga Hamburg mit 27 Punkten aus 24 Spielen.",
+      "body": [
+        {"type": "text", "text": "Mit dem letzten Spieltag am 25. April ist die Saison 2025/26 für die 1. Herren von TuS Esingen offiziell beendet. Nach 24 Spielen steht am Ende ein respektabler sechster Platz in der Männer Oberliga Hamburg – eine Leistung, auf die das gesamte Team stolz sein kann."},
+        {"type": "score", "home": "TSV Uetersen", "guest": "TuS Esingen", "result": "30:27", "liga": "Männer Oberliga (100) · Spieltag 24"},
+        {"type": "text", "text": "Das letzte Spiel der Saison in Uetersen war ein enges Duell. Trotz der Niederlage konnte die Mannschaft auf eine insgesamt positive Saison zurückblicken: 13 Siege, 1 Unentschieden und 10 Niederlagen sprechen für ein ausgeglichenes Niveau auf hohem Wettkampfstandard."},
+        {"type": "quote", "text": "Wir haben als Team großartige Arbeit geleistet. Der sechste Platz spiegelt nicht immer wider, was wir in dieser Saison gezeigt haben – aber wir ziehen viel Positives mit in die Vorbereitung.", "author": "Fabian Wurl, Trainer"},
+        {"type": "text", "text": "Die Saisonabschlussfeier findet am 31. Mai im Vereinsheim statt – alle Mitglieder sind herzlich eingeladen."}
+      ]
+    },
+    {
+      "id": "saisonabschlussfeier-2026",
+      "topNews": true,
+      "sortDate": "2026-04-20",
+      "cat": "Vereinsleben",
+      "catCl": "vl",
+      "gradient": "linear-gradient(135deg,#3a3a3a 0%,#1a1a1a 100%)",
+      "title": "Saisonabschlussfeier am 31. Mai – alle eingeladen!",
+      "date": "20. April 2026",
+      "author": "Vereinsvorstand",
+      "authorIni": "TuS",
+      "lead": "Der TuS Esingen lädt alle Mitglieder, Fans und Freunde des Vereins zur großen Saisonabschlussfeier ins Vereinsheim ein.",
+      "body": [
+        {"type": "text", "text": "Die Saison 2025/26 neigt sich dem Ende – und das feiern wir gemeinsam! Am Samstag, den 31. Mai 2026, findet ab 18:00 Uhr die traditionelle Saisonabschlussfeier der Handball-Abteilung im Vereinsheim am Sportplatz Tornesch statt."},
+        {"type": "quote", "text": "Nach einer intensiven Saison freuen wir uns, gemeinsam zu feiern und zurückzublicken. Bringt eure Familien und Freunde mit – je mehr, desto schöner!", "author": "Der Vorstand"},
+        {"type": "text", "text": "Um eine grobe Planung zu ermöglichen, bitten wir um eine kurze Rückmeldung an die Geschäftsstelle bis zum 25. Mai."}
+      ]
+    },
+    {
+      "id": "mb-jugend-endrunde",
+      "topNews": true,
+      "sortDate": "2026-04-17",
+      "cat": "Jugend männlich",
+      "catCl": "jm",
+      "gradient": "linear-gradient(135deg,#5a9bd4 0%,#3a7ab5 100%)",
+      "title": "mB Jugend qualifiziert sich für die Endrunde",
+      "date": "17. April 2026",
+      "author": "Jugendabteilung",
+      "authorIni": "TuS",
+      "lead": "Großer Erfolg für den Nachwuchs: Die männliche B-Jugend hat sich für die Endrunde der Bezirksstaffel qualifiziert!",
+      "body": [
+        {"type": "text", "text": "Mit einem souveränen 31:22-Sieg gegen den MTV Elmshorn hat sich die männliche B-Jugend das begehrte Endrunden-Ticket gesichert."},
+        {"type": "score", "home": "TuS Esingen", "guest": "MTV Elmshorn", "result": "31:22", "liga": "mB Jugend Bezirksstaffel · Qualifikation"},
+        {"type": "quote", "text": "Ich bin unglaublich stolz auf die Jungs. Die Endrunde ist verdient!", "author": "Dennis Böhm, Jugendtrainer"}
+      ]
+    }
+  ]
+}

@@ -54,13 +54,14 @@ tus-esingen-handball-app/
 Falls kein Banner erscheint:
 - Menü (3 Punkte) → "App installieren" oder "Zum Startbildschirm hinzufügen"
 
-### iPhone (Safari)
-1. App-URL in Safari öffnen
+### iPhone (Safari, Chrome, Edge, Firefox)
+1. App-URL im Browser öffnen
 2. Teilen-Button antippen (das Quadrat mit Pfeil nach oben)
+   - In **Safari**: unten in der Mitte
+   - In **Chrome**: rechts in der Adressleiste
+   - In **Edge / Firefox**: im Menü
 3. "Zum Home-Bildschirm" auswählen
 4. Bestätigen → App-Icon erscheint auf dem Homescreen
-
-**Wichtig:** Auf iOS funktioniert das **nur in Safari**, nicht in Chrome!
 
 ## Was macht die App jetzt zusätzlich?
 
@@ -73,16 +74,24 @@ Falls kein Banner erscheint:
 
 ## Bei Updates an der App
 
-Wenn du später Änderungen an `index.html`, `sw.js` oder den Icons machst:
+Wenn du später Änderungen an `index.html`, `sw.js`, `manifest.json` oder den Icons machst:
 
-1. Im `sw.js` ganz oben die `CACHE_VERSION` erhöhen (z.B. `'v2'`)
+1. In `index.html` die `APP_VERSION` erhöhen (z.B. `"0.1.7"`)
    ```js
-   const CACHE_VERSION = 'v2';  // war vorher v1
+   const APP_VERSION = "0.1.7";  // war vorher 0.1.6
    ```
-2. Committen und pushen
-3. Beim nächsten Öffnen der App holen sich Nutzer automatisch die neue Version
+2. In `sw.js` die `CACHE_VERSION` erhöhen (z.B. `'v30'`)
+   ```js
+   const CACHE_VERSION = 'v30';  // war vorher v29
+   ```
+3. Committen und pushen
+4. Beim nächsten Öffnen der App holen sich Nutzer automatisch die neue Version
 
 Wenn du das vergisst, sehen Nutzer evtl. noch die alte Version aus dem Cache.
+
+**Hinweis:** App-Icons werden von iOS sehr aggressiv gecached. Wenn das Icon
+geändert wurde, müssen Nutzer die App vom Homescreen löschen und neu hinzufügen,
+damit das neue Icon erscheint.
 
 ## Testen, ob es funktioniert
 

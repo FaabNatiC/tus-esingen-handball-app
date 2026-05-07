@@ -30,16 +30,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 /* MOBIL: Vollbild ohne Klickdummy-Rahmen */
 @media (max-width: 500px) {
-  html{height:100vh;height:100dvh;}
-  body{height:100vh;height:100dvh;padding:0;margin:0;background:#1a1a1a;display:flex;overflow:hidden;}
-  .phone{flex:1 1 auto;width:100%;height:100%;min-height:0;border-radius:0;box-shadow:none;position:static;}
+  html,body{margin:0;padding:0;background:#1a1a1a;overflow:hidden;}
+  .phone{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100dvh;min-height:0;border-radius:0;box-shadow:none;display:flex;flex-direction:column;}
   .phone.dark{background:#111;}
 }
 /* PWA-Modus (installierte App): immer Vollbild, egal welche Bildschirmgröße */
 @media (display-mode: standalone) {
-  html{height:100vh;height:100dvh;}
-  body{height:100vh;height:100dvh;padding:0;margin:0;background:#1a1a1a;display:flex;overflow:hidden;}
-  .phone{flex:1 1 auto;width:100%;height:100%;min-height:0;border-radius:0;box-shadow:none;position:static;}
+  html,body{margin:0;padding:0;background:#1a1a1a;overflow:hidden;}
+  .phone{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100dvh;min-height:0;border-radius:0;box-shadow:none;display:flex;flex-direction:column;}
   .phone.dark{background:#111;}
 }
 .hdr{background:#1a1a1a;padding:14px 16px 12px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
@@ -672,7 +670,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.0.9f";
+const APP_VERSION = "0.0.9g";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt

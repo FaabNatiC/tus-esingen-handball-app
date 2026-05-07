@@ -351,6 +351,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .phone.dark .sponsor-arrow{color:#555;}
 .phone.dark .sponsor-fallback{background:#333;color:#aaa;}
 
+/* FORMULARE-Liste */
+.form-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #f0f0f0;text-decoration:none;color:inherit;cursor:pointer;background:#fff;}
+.form-row:hover{background:#f8f8f8;}
+.form-icon{width:42px;height:42px;border-radius:10px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.form-body{flex:1;min-width:0;}
+.form-title{font-size:14px;font-weight:700;color:#1a1a1a;line-height:1.2;}
+.form-desc{font-size:11px;color:#888;margin-top:3px;line-height:1.3;}
+.form-arrow{color:#999;font-size:18px;flex-shrink:0;}
+.phone.dark .form-row{background:#1a1a1a;border-bottom-color:#2a2a2a;color:#eee;}
+.phone.dark .form-row:hover{background:#2a2a2a;}
+.phone.dark .form-icon{background:#2a2a2a;}
+.phone.dark .form-title{color:#fff;}
+.phone.dark .form-desc{color:#888;}
+
 /* INSTALL-BANNER (nur iOS Safari, nicht in PWA) */
 .install-banner{position:fixed;left:12px;right:12px;bottom:16px;background:#1a1a1a;color:#fff;border-radius:14px;padding:14px 14px 14px 16px;display:none;flex-direction:row;align-items:center;gap:12px;box-shadow:0 8px 30px rgba(0,0,0,0.35);z-index:1000;animation:ib-in .35s ease;}
 .install-banner.show{display:flex;}
@@ -361,6 +375,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .install-banner-text{font-size:11px;color:rgba(255,255,255,0.65);margin-top:3px;line-height:1.35;}
 .install-banner-text b{color:#fff;}
 .install-banner-close{background:none;border:none;color:rgba(255,255,255,0.5);font-size:22px;line-height:1;padding:4px 6px;cursor:pointer;flex-shrink:0;align-self:flex-start;margin-top:-4px;}
+.install-banner-action{background:#fff;color:#1a1a1a;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit;}
+.install-banner-action:active{opacity:0.8;}
 @keyframes ib-in{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
 @media (display-mode: standalone){.install-banner{display:none !important;}}
 </style>
@@ -404,9 +420,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="burger-section">Verein</div>
     <div class="burger-item" onclick="window.open('https://www.tus-esingen.de','_blank')"><span class="burger-icon">🌐</span>Website</div>
     <div class="burger-item" onclick="window.open('https://www.instagram.com/tusesingen_handball','_blank')"><span class="burger-icon">📸</span>Instagram</div>
+    <div class="burger-section">Service</div>
+    <div class="burger-item" onclick="openFormulare()"><span class="burger-icon">📋</span>Formulare</div>
     <div class="burger-section">Rechtliches</div>
-    <div class="burger-item" onclick="window.open('https://www.tus-esingen.de/impressum','_blank')"><span class="burger-icon">📄</span>Impressum</div>
-    <div class="burger-item" onclick="window.open('https://www.tus-esingen.de/datenschutz','_blank')"><span class="burger-icon">🔒</span>Datenschutz</div>
+    <div class="burger-item" onclick="window.open('https://tus-esingen.de/impressum.html','_blank')"><span class="burger-icon">📄</span>Impressum</div>
+    <div class="burger-item" onclick="window.open('https://tus-esingen.de/datenschutz-des-tus-esingen.html','_blank')"><span class="burger-icon">🔒</span>Datenschutz</div>
     <div class="burger-section">App</div>
     <div class="burger-item" onclick="openAbout()"><span class="burger-icon">ℹ️</span>Über diese App</div>
     <div style="height:20px;"></div>
@@ -514,6 +532,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div style="height:20px;"></div>
 </div>
 
+<!-- FORMULARE -->
+<div class="page" id="p-formulare">
+  <div class="sec">Vereinsformulare</div>
+  <div style="padding:14px 16px;font-size:13px;line-height:1.5;color:#666;">
+    Hier findest du alle wichtigen Formulare und Dokumente des TuS Esingen e.V. zum Herunterladen.
+  </div>
+
+  <div class="sec">Mitgliedschaft</div>
+  <a class="form-row" href="https://tus-esingen.de/fileadmin/Formulare/beitrittserklaerung_tus_esingen.pdf" target="_blank" rel="noopener">
+    <div class="form-icon">📝</div>
+    <div class="form-body">
+      <div class="form-title">Beitrittserklärung</div>
+      <div class="form-desc">Antrag auf Mitgliedschaft im TuS Esingen e.V. (PDF)</div>
+    </div>
+    <div class="form-arrow">↓</div>
+  </a>
+
+  <div style="padding:30px 16px;font-size:12px;color:#aaa;text-align:center;line-height:1.5;">
+    Weitere Formulare folgen in Kürze.<br>Du vermisst etwas? Schreib uns an <a href="mailto:handball@tus-esingen.de" style="color:#1a1a1a;text-decoration:underline;">handball@tus-esingen.de</a>
+  </div>
+  <div style="height:20px;"></div>
+</div>
+
 <!-- NEWS DETAIL -->
 <div class="page" id="p-newsdetail"><div id="nd-content"></div></div>
 
@@ -524,14 +565,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="sp-bs">Alle Mannschaften · TuS Esingen</div>
   </div>
   <div class="sp-sh">Nächste Spiele</div>
-  <div id="sp-naechste" class="gw"><div class="gc "><div class="gh"><span class="lb">Frauen Landesliga (221)</span><span>03.05.2026 · 15:00</span></div><div class="gts"><div class="gt"><img src="https://www.handball.net/files/clubs/logos/393a7d27-9c4e-48d7-9ece-19ba9fe48dd2.jpeg" alt="" class="tlogo" style="width:26px;height:26px;"><span>TuS Esingen</span></div><div class="gs up">Sa 15:00</div><div class="gt"><span>HSG Pinnau</span><img src="https://www.handball.net/files/clubs/logos/1d9bf8d8-12b2-4029-81dd-ed64ccd0bf9c.png" alt="" class="tlogo" style="width:26px;height:26px;"></div></div></div>
-<div class="gc "><div class="gh"><span class="lb">Männer Kreisliga (141)</span><span>03.05.2026 · 17:00</span></div><div class="gts"><div class="gt"><img src="https://www.handball.net/files/clubs/logos/393a7d27-9c4e-48d7-9ece-19ba9fe48dd2.jpeg" alt="" class="tlogo" style="width:26px;height:26px;"><span>TuS Esingen 3</span></div><div class="gs up">Sa 17:00</div><div class="gt"><span>Rellinger TV 2</span><img src="https://www.handball.net/files/clubs/logos/cf47be18-afa7-4f1b-8350-50729da7d834.png" alt="" class="tlogo" style="width:26px;height:26px;"></div></div></div>
-<div class="gc "><div class="gh"><span class="lb">wB Jugend Oberliga (520)</span><span>04.05.2026 · 11:00</span></div><div class="gts"><div class="gt"><img src="https://www.handball.net/files/clubs/logos/393a7d27-9c4e-48d7-9ece-19ba9fe48dd2.jpeg" alt="" class="tlogo" style="width:26px;height:26px;"><span>TuS Esingen</span></div><div class="gs up">So 11:00</div><div class="gt"><span>Ahrensburger TSV</span><img src="https://www.handball.net/files/clubs/logos/c80e1fdf-cef0-4b88-8fd3-694bbb36b5c0.png" alt="" class="tlogo" style="width:26px;height:26px;"></div></div></div></div>
+  <div id="sp-naechste" class="gw"><div style="padding:20px 16px;color:#999;text-align:center;font-size:13px;">Lade Spiele …</div></div>
   <div class="sp-sh">Letzte Spiele</div>
-  <div id="sp-letzte" class="gw"><div class="gc rl"><div class="gh"><span class="lb">Männer Oberliga (100)</span><span>25.04.2026 · 17:00</span></div><div class="gts"><div class="gt"><img src="https://www.handball.net/files/clubs/logos/d0a597b3-488f-436b-8b59-ea0134bcdcea.png" alt="" class="tlogo" style="width:26px;height:26px;"><span>TSV Uetersen</span></div><div class="gs">30:27</div><div class="gt"><span>TuS Esingen</span><img src="https://www.handball.net/files/clubs/logos/393a7d27-9c4e-48d7-9ece-19ba9fe48dd2.jpeg" alt="" class="tlogo" style="width:26px;height:26px;"></div></div></div>
-<div class="gc rl"><div class="gh"><span class="lb">Frauen Landesliga (221)</span><span>26.04.2026 · 15:00</span></div><div class="gts"><div class="gt"><img src="https://www.handball.net/files/clubs/logos/393a7d27-9c4e-48d7-9ece-19ba9fe48dd2.jpeg" alt="" class="tlogo" style="width:26px;height:26px;"><span>TuS Esingen</span></div><div class="gs">22:25</div><div class="gt"><span>HSG Elbvororte</span><img src="https://www.handball.net/files/clubs/logos/0203fd65-c79f-4d04-ae12-714e633ec6d1.png" alt="" class="tlogo" style="width:26px;height:26px;"></div></div></div>
-<div class="gc rw"><div class="gh"><span class="lb">mC Jugend Landesliga (441)</span><span>26.04.2026 · 13:00</span></div><div class="gts"><div class="gt"><img src="https://www.handball.net/files/clubs/logos/393a7d27-9c4e-48d7-9ece-19ba9fe48dd2.jpeg" alt="" class="tlogo" style="width:26px;height:26px;"><span>TuS Esingen</span></div><div class="gs">28:21</div><div class="gt"><span>TSV Ellerbek 2</span><img src="https://www.handball.net/files/clubs/logos/a47f1a43-c6c0-4bb6-bc02-98f4d6fc1ac2.jpeg" alt="" class="tlogo" style="width:26px;height:26px;"></div></div></div>
-<div class="gc rw"><div class="gh"><span class="lb">wB Jugend Oberliga (520)</span><span>27.04.2026 · 10:00</span></div><div class="gts"><div class="gt"><img src="https://www.handball.net/files/clubs/logos/563ea85e-12e3-4842-92be-23b5c1f2be09.png" alt="" class="tlogo" style="width:26px;height:26px;"><span>SG Hamburg-Nord 2</span></div><div class="gs">18:24</div><div class="gt"><span>TuS Esingen</span><img src="https://www.handball.net/files/clubs/logos/393a7d27-9c4e-48d7-9ece-19ba9fe48dd2.jpeg" alt="" class="tlogo" style="width:26px;height:26px;"></div></div></div></div>
+  <div id="sp-letzte" class="gw"></div>
   <a class="ext-btn" href="https://www.handball.net/vereine/handball4all.hamburg.1404/spielplan?dateFrom=2025-07-01&dateTo=2026-06-30" target="_blank">Vollständiger Vereinsspielplan auf handball.net →</a>
 </div>
 
@@ -692,7 +728,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.1.0";
+const APP_VERSION = "0.1.1";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -770,6 +806,11 @@ function nav(p,btn){
   btn.classList.add('on');btn.style.background='white';btn.querySelector('.bt-lb').style.color='#1a1a1a';
   document.getElementById('scroll').scrollTop=0;
   showMain(true);
+
+  // Beim Wechsel auf den Spielplan-Tab: Daten aller Mannschaften laden
+  if (p === 'spielplan') {
+    loadGlobalSpielplan();
+  }
 }
 
 
@@ -1107,6 +1148,114 @@ function renderSpielplan(data) {
   if(detStand) detStand.textContent = "Stand: " + (data.aktualisiert || '') + " · handball.net · " + data.spiele.length + " Spiele";
 }
 
+// ── Globaler Spielplan-Tab ──────────────────────────────────────────────────
+// Lädt für jede Mannschaft das nächste UND letzte Spiel und zeigt sie zusammen.
+let globalSpielplanLoaded = false;
+async function loadGlobalSpielplan(force) {
+  if (globalSpielplanLoaded && !force) return;
+  const nextEl = document.getElementById('sp-naechste');
+  const lastEl = document.getElementById('sp-letzte');
+  if (!nextEl || !lastEl) return;
+
+  const teamIds = Object.keys(TEAMS);
+  const cb = '?_=' + Date.now();
+  const LOGO_BASE = "https://www.handball.net/files/clubs/logos/";
+
+  // Hole für jede Mannschaft den Spielplan parallel
+  const ergebnisse = await Promise.allSettled(
+    teamIds.map(tid =>
+      fetch(BASE_URL + "/data/" + tid + "/spielplan.json" + cb)
+        .then(r => r.ok ? r.json() : null)
+        .then(data => ({ teamId: tid, data: data }))
+    )
+  );
+
+  const now = new Date();
+  const naechsteListe = [];   // {teamId, team, liga, spiel}
+  const letzteListe = [];
+
+  ergebnisse.forEach(r => {
+    if (r.status !== 'fulfilled' || !r.value.data) return;
+    const teamId = r.value.teamId;
+    const data = r.value.data;
+    const teamMeta = TEAMS[teamId] || {};
+    const ligaLabel = data.liga || teamMeta.liga || 'Liga';
+
+    // Nächstes Spiel = das früheste anstehende
+    const naechste = data.spiele
+      .filter(s => new Date(s.datum) > now && s.status !== 'finished')
+      .sort((a,b) => new Date(a.datum) - new Date(b.datum));
+    if (naechste.length > 0) {
+      naechsteListe.push({ teamId, teamName: teamMeta.name, liga: ligaLabel, spiel: naechste[0] });
+    }
+
+    // Letztes Spiel = das jüngste beendete
+    const letzte = data.spiele
+      .filter(s => s.status === 'finished')
+      .sort((a,b) => new Date(b.datum) - new Date(a.datum));
+    if (letzte.length > 0) {
+      letzteListe.push({ teamId, teamName: teamMeta.name, liga: ligaLabel, spiel: letzte[0] });
+    }
+  });
+
+  // Sortieren: nächste nach Datum aufsteigend, letzte nach Datum absteigend
+  naechsteListe.sort((a,b) => new Date(a.spiel.datum) - new Date(b.spiel.datum));
+  letzteListe.sort((a,b) => new Date(b.spiel.datum) - new Date(a.spiel.datum));
+
+  function logo(teamname) {
+    const id = (window.LOGOS_MAP || {})[teamname];
+    if (!id) return '<div class="tlogo" style="width:26px;height:26px;background:#e5e5e5;border-radius:50%;display:inline-block;"></div>';
+    return '<img src="' + LOGO_BASE + id + '" alt="" class="tlogo" style="width:26px;height:26px;">';
+  }
+
+  function fmtUpcoming(datum) {
+    const d = new Date(datum);
+    const tage = ["So","Mo","Di","Mi","Do","Fr","Sa"];
+    return tage[d.getDay()] + ' ' + d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+  }
+  function fmtFull(datum) {
+    const d = new Date(datum);
+    return d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'}) + ' · ' + d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+  }
+
+  function cardUpcoming(item) {
+    const s = item.spiel;
+    return '<div class="gc">' +
+      '<div class="gh"><span class="lb">' + item.liga + '</span><span>' + fmtFull(s.datum) + '</span></div>' +
+      '<div class="gts">' +
+        '<div class="gt">' + logo(s.heim) + '<span>' + s.heim + '</span></div>' +
+        '<div class="gs up">' + fmtUpcoming(s.datum) + '</div>' +
+        '<div class="gt"><span>' + s.gast + '</span>' + logo(s.gast) + '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  function cardFinished(item) {
+    const s = item.spiel;
+    const heim_esingen = s.heim === 'TuS Esingen';
+    const gewonnen = heim_esingen ? s.toreHeim > s.toreGast : s.toreGast > s.toreHeim;
+    const verloren = heim_esingen ? s.toreHeim < s.toreGast : s.toreGast < s.toreHeim;
+    const cls = gewonnen ? 'gc rw' : (verloren ? 'gc rl' : 'gc rd');
+    return '<div class="' + cls + '">' +
+      '<div class="gh"><span class="lb">' + item.liga + '</span><span>' + fmtFull(s.datum) + '</span></div>' +
+      '<div class="gts">' +
+        '<div class="gt">' + logo(s.heim) + '<span>' + s.heim + '</span></div>' +
+        '<div class="gs">' + s.toreHeim + ':' + s.toreGast + '</div>' +
+        '<div class="gt"><span>' + s.gast + '</span>' + logo(s.gast) + '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  nextEl.innerHTML = naechsteListe.length
+    ? naechsteListe.map(cardUpcoming).join('')
+    : '<div style="padding:20px 16px;color:#999;text-align:center;font-size:13px;">Aktuell sind keine kommenden Spiele eingeplant.</div>';
+
+  lastEl.innerHTML = letzteListe.length
+    ? letzteListe.map(cardFinished).join('')
+    : '<div style="padding:20px 16px;color:#999;text-align:center;font-size:13px;">Noch keine gespielten Partien.</div>';
+
+  globalSpielplanLoaded = true;
+}
+
 // Zählt Mannschaften pro Sektion auf der Teams-Seite und trägt sie ein
 function zaehleMannschaften(){
   const teamsPage = document.getElementById('p-teams');
@@ -1319,6 +1468,25 @@ function closeAbout(){
   showMain(true);
 }
 
+// ── Formulare ───────────────────────────────────────────────────────────────
+function openFormulare(){
+  closeBurger();
+  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('p-formulare').classList.add('active');
+  showMain(false);
+  var old=document.getElementById('fhdr');if(old)old.remove();
+  var h=document.createElement('div');h.id='fhdr';h.className='d-hdr';
+  h.innerHTML='<button class="bk" onclick="closeFormulare()">&#8249;</button><div style="flex:1"><div class="d-name">Formulare</div><div class="d-sub">TuS Esingen · Handball · Abteilung</div></div><div class="hdr-logo"><img src="'+LOGO+'" alt="TuS"></div>';
+  document.getElementById('APP').insertBefore(h,document.getElementById('scroll'));
+  document.getElementById('scroll').scrollTop=0;
+}
+function closeFormulare(){
+  var h=document.getElementById('fhdr');if(h)h.remove();
+  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('p-news').classList.add('active');
+  showMain(true);
+}
+
 // Globaler Speicher: aus welcher Mannschaft wurde zur Hallen-Seite navigiert?
 let hallenReturnTeam = null;
 
@@ -1413,43 +1581,108 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
-<!-- iOS Install-Banner: Aufforderung "Zum Home-Bildschirm" für Browser-User -->
+<!-- Install-Banner: Aufforderung zur App-Installation für mobile Browser-User -->
 <div class="install-banner" id="installBanner">
   <div class="install-banner-logo"><img src="" id="ibLogo" alt="TuS Esingen"></div>
   <div class="install-banner-body">
-    <div class="install-banner-title">App installieren</div>
-    <div class="install-banner-text">Tippe auf <b>Teilen</b> <span style="display:inline-block;vertical-align:-2px;">⬆︎</span> und dann <b>"Zum Home-Bildschirm"</b>, um die App wie eine echte App zu nutzen.</div>
+    <div class="install-banner-title" id="ibTitle">App installieren</div>
+    <div class="install-banner-text" id="ibText"></div>
   </div>
+  <button class="install-banner-action" id="ibAction" onclick="triggerInstallPrompt()" style="display:none;">Installieren</button>
   <button class="install-banner-close" onclick="dismissInstallBanner()" aria-label="Schließen">×</button>
 </div>
 <script>
 (function(){
-  // Nur auf iOS Safari im Browser-Modus zeigen
+  // Schon installiert? Dann nichts anzeigen.
   var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-  var ua = window.navigator.userAgent;
-  var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
-  var isSafari = /^((?!chrome|crios|fxios|edgios).)*safari/i.test(ua);
+  if (isStandalone) return;
+
+  // Schon weggeklickt? Dann auch nichts anzeigen.
   var dismissed = (function(){
     try { return localStorage.getItem('installBannerDismissed'); } catch(e){ return null; }
   })();
+  if (dismissed) return;
 
-  // Banner nur zeigen wenn: iOS + Safari + nicht installiert + nicht weggeklickt
-  if (isIOS && isSafari && !isStandalone && !dismissed) {
-    setTimeout(function(){
-      var banner = document.getElementById('installBanner');
-      var logoEl = document.getElementById('ibLogo');
-      if (banner && logoEl) {
-        if (typeof LOGO !== 'undefined') logoEl.src = LOGO;
-        banner.classList.add('show');
-      }
-    }, 1500);
+  var ua = window.navigator.userAgent;
+  var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isAndroid = /Android/i.test(ua);
+  var isMobile = isIOS || isAndroid || /Mobile/i.test(ua);
+  if (!isMobile) return; // Desktop: kein Banner
+
+  // Browser-Erkennung
+  var isSafari = /^((?!chrome|crios|fxios|edgios).)*safari/i.test(ua) && isIOS;
+  var isIOSChrome = /CriOS/i.test(ua);
+  var isIOSFirefox = /FxiOS/i.test(ua);
+  var isIOSEdge = /EdgiOS/i.test(ua);
+  var isIOSOther = isIOS && !isSafari; // alles andere auf iOS
+  var isAndroidChrome = isAndroid && /Chrome/i.test(ua) && !/SamsungBrowser/i.test(ua);
+  var isAndroidFirefox = isAndroid && /Firefox/i.test(ua);
+  var isAndroidSamsung = isAndroid && /SamsungBrowser/i.test(ua);
+
+  // Text je nach Browser
+  var titleText = 'App installieren';
+  var bodyText = '';
+  if (isSafari) {
+    bodyText = 'Tippe auf <b>Teilen</b> <span style="display:inline-block;vertical-align:-2px;">⬆︎</span> und dann <b>"Zum Home-Bildschirm"</b>, um die App wie eine echte App zu nutzen.';
+  } else if (isIOSOther) {
+    titleText = 'App-Installation';
+    bodyText = 'Auf iPhone/iPad ist eine Installation nur über <b>Safari</b> möglich. Öffne diese Seite in Safari und tippe dort auf <b>Teilen → "Zum Home-Bildschirm"</b>.';
+  } else if (isAndroidChrome) {
+    bodyText = 'Tippe rechts oben auf das <b>Menü ⋮</b> und wähle <b>"App installieren"</b> bzw. <b>"Zum Startbildschirm hinzufügen"</b>.';
+    // Native Prompt wird ggf. unten aktiviert
+  } else if (isAndroidFirefox) {
+    bodyText = 'Tippe rechts oben auf das <b>Menü ⋮</b> und wähle <b>"Installieren"</b> bzw. <b>"Zum Startbildschirm hinzufügen"</b>.';
+  } else if (isAndroidSamsung) {
+    bodyText = 'Tippe unten auf das <b>Menü ☰</b> und wähle <b>"Seite hinzufügen zu" → "Startbildschirm"</b>.';
+  } else if (isAndroid) {
+    bodyText = 'Öffne das <b>Browser-Menü</b> und wähle <b>"Zum Startbildschirm hinzufügen"</b>, um die App zu installieren.';
+  } else {
+    return; // unbekannt → kein Banner
   }
+
+  // Banner einblenden nach kurzer Verzögerung
+  setTimeout(function(){
+    var banner = document.getElementById('installBanner');
+    var titleEl = document.getElementById('ibTitle');
+    var textEl = document.getElementById('ibText');
+    var logoEl = document.getElementById('ibLogo');
+    if (banner && titleEl && textEl && logoEl) {
+      titleEl.textContent = titleText;
+      textEl.innerHTML = bodyText;
+      if (typeof LOGO !== 'undefined') logoEl.src = LOGO;
+      banner.classList.add('show');
+    }
+  }, 1500);
 })();
+
+// Native Install-Prompt für Chromium-Browser (Android Chrome, Edge, etc.)
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  var actionBtn = document.getElementById('ibAction');
+  if (actionBtn) actionBtn.style.display = 'inline-block';
+});
+
+function triggerInstallPrompt(){
+  if (!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  deferredInstallPrompt.userChoice.then(function(){
+    deferredInstallPrompt = null;
+    dismissInstallBanner();
+  });
+}
+
 function dismissInstallBanner(){
   var banner = document.getElementById('installBanner');
   if (banner) banner.classList.remove('show');
   try { localStorage.setItem('installBannerDismissed', '1'); } catch(e){}
 }
+
+// App-Installation registriert? Banner wegblenden.
+window.addEventListener('appinstalled', function(){
+  dismissInstallBanner();
+});
 </script>
 
 </body>

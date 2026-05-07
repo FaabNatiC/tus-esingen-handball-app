@@ -101,20 +101,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .sec{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;padding:10px 16px;background:#f5f5f5;border-top:1px solid #eee;border-bottom:1px solid #eee;}
 .cd-wrap{padding:10px 14px 0;}
 .cd-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
-.cd-card{background:#e8e8e8;border-radius:14px;padding:10px 10px 8px;text-align:center;}
-.cd-team{font-size:11px;color:#1a1a1a;font-weight:600;line-height:1;margin-bottom:6px;}
-.cd-units{display:flex;justify-content:center;gap:4px;margin:6px 0 4px;}
+.cd-card{background:#e8e8e8;border-radius:14px;padding:8px 10px 10px;text-align:center;}
+.cd-meta{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;font-size:9px;color:#888;line-height:1.2;min-height:11px;margin-bottom:6px;}
+.cd-meta-l{text-align:left;flex:1;}
+.cd-meta-r{text-align:right;flex:1;}
+.cd-team{font-size:13px;color:#1a1a1a;font-weight:700;line-height:1;margin-bottom:6px;}
+.cd-units{display:flex;justify-content:center;gap:4px;margin:6px 0 0;}
 .cd-u{display:flex;flex-direction:column;align-items:center;}
-.cd-n{font-size:20px;font-weight:700;color:#1a1a1a;line-height:1;}
+.cd-n{font-size:17px;font-weight:700;color:#1a1a1a;line-height:1;}
 .cd-l{font-size:9px;color:#555;margin-top:2px;}
-.cd-sep{font-size:16px;color:#999;align-self:flex-start;padding-top:3px;}
+.cd-sep{font-size:14px;color:#999;align-self:flex-start;padding-top:2px;}
 .cd-match{font-size:10px;color:#444;line-height:1.35;}
-.cd-comp{font-size:9px;color:#888;margin-top:4px;line-height:1.2;}
-.cd-when{font-size:9px;color:#666;margin-top:2px;}
-.cd-status{font-size:11px;font-weight:600;color:#1a1a1a;padding:14px 4px;}
+.cd-status{font-size:11px;font-weight:600;color:#1a1a1a;margin:6px 0 2px;}
+.phone.dark .cd-meta{color:#aaa;}
 .phone.dark .cd-l{color:#bbb;}
-.phone.dark .cd-comp{color:#aaa;}
-.phone.dark .cd-when{color:#bbb;}
 .phone.dark .cd-status{color:#fff;}
 .nl{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid #f0f0f0;align-items:center;}
 .nl-arr{font-size:24px;font-weight:600;color:#666;line-height:1;flex-shrink:0;margin-left:auto;width:20px;text-align:center;}
@@ -805,7 +805,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.2";
+const APP_VERSION = "0.6.3";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1228,16 +1228,20 @@ function formatSpielDatum(iso){
   return tage[d.getDay()] + ' ' + d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}) + ' · ' + d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}) + ' Uhr';
 }
 
+// Aufgeteilt für 2-zeilige Anzeige in der Top-Zeile (Datum | Uhrzeit)
+function formatSpielDatumZeilen(iso){
+  var d = new Date(iso);
+  var tage = ["So","Mo","Di","Mi","Do","Fr","Sa"];
+  var datum = tage[d.getDay()] + ' ' + d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'});
+  var zeit  = d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}) + ' Uhr';
+  return { datum: datum, zeit: zeit };
+}
+
 function spielArtLabel(spiel){
-  // Dezenter Text statt Badge - zwischen Countdown und Datum
-  if(spiel.art === 'pokal'){
-    return spiel.wettbewerb || 'Pokal';
-  }
-  if(spiel.art === 'test'){
-    return 'Testspiel';
-  }
-  // Liga: Wettbewerbsname, fallback "Liga"
-  return spiel.wettbewerb || 'Liga';
+  // Kurze Tags für die Top-Zeile
+  if(spiel.art === 'pokal') return 'Pokalspiel';
+  if(spiel.art === 'test')  return 'Testspiel';
+  return 'Ligaspiel';
 }
 
 function renderCountdownCard(teamId){
@@ -1249,16 +1253,58 @@ function renderCountdownCard(teamId){
   var teamName = card.getAttribute('data-team') || '';
   var teamHtml = '<div class="cd-team">' + teamName + '</div>';
 
+  // Hilfs-Funktionen für die einzelnen Bereiche
+  function metaRow(spiel){
+    if(!spiel){
+      // leere Top-Zeile reserviert Platz, hält Karten gleich hoch
+      return '<div class="cd-meta"><span class="cd-meta-l">&nbsp;</span><span class="cd-meta-r">&nbsp;</span></div>';
+    }
+    var dz = formatSpielDatumZeilen(spiel.datum);
+    return '<div class="cd-meta">' +
+      '<span class="cd-meta-l">' + spielArtLabel(spiel) + '</span>' +
+      '<span class="cd-meta-r">' + dz.datum + '<br>' + dz.zeit + '</span>' +
+    '</div>';
+  }
+  function emptyCountdown(){
+    return '<div class="cd-units">' +
+      '<div class="cd-u"><span class="cd-n">--</span><span class="cd-l">Tage</span></div>' +
+      '<div class="cd-sep">:</div>' +
+      '<div class="cd-u"><span class="cd-n">--</span><span class="cd-l">Std</span></div>' +
+      '<div class="cd-sep">:</div>' +
+      '<div class="cd-u"><span class="cd-n">--</span><span class="cd-l">Min</span></div>' +
+    '</div>';
+  }
+  function fullCountdown(diff){
+    var pad = function(n){ return n < 10 ? '0' + n : '' + n; };
+    var totalMin = Math.floor(diff / 60000);
+    var tage = Math.floor(totalMin / (60 * 24));
+    var std  = Math.floor((totalMin - tage * 60 * 24) / 60);
+    var min  = totalMin - tage * 60 * 24 - std * 60;
+    return '<div class="cd-units">' +
+      '<div class="cd-u"><span class="cd-n">' + pad(tage) + '</span><span class="cd-l">Tage</span></div>' +
+      '<div class="cd-sep">:</div>' +
+      '<div class="cd-u"><span class="cd-n">' + pad(std) + '</span><span class="cd-l">Std</span></div>' +
+      '<div class="cd-sep">:</div>' +
+      '<div class="cd-u"><span class="cd-n">' + pad(min) + '</span><span class="cd-l">Min</span></div>' +
+    '</div>';
+  }
+
   // Cache noch nicht geladen?
   var cache = window.spielplaeneCache || {};
   if(!cache[teamId]){
-    contentEl.innerHTML = teamHtml + '<div class="cd-status">Lade …</div>';
+    contentEl.innerHTML = metaRow(null) + teamHtml + '<div class="cd-status">Lade …</div>' + emptyCountdown();
     return;
   }
 
   var spiel = findeNaechstesSpiel(teamId);
+
+  // Kein nächstes Spiel
   if(!spiel){
-    contentEl.innerHTML = teamHtml + '<div class="cd-status">Kein nächstes Spiel</div>';
+    contentEl.innerHTML =
+      metaRow(null) +
+      teamHtml +
+      '<div class="cd-status">Kein nächstes Spiel</div>' +
+      emptyCountdown();
     return;
   }
 
@@ -1270,38 +1316,29 @@ function renderCountdownCard(teamId){
   var spielLaeuft = diff < 0 && diff > -90 * 60 * 1000;
   if(spielLaeuft){
     contentEl.innerHTML =
+      metaRow(spiel) +
       teamHtml +
       '<div class="cd-match"><strong>' + spiel.heim + '</strong><br>vs. ' + spiel.gast + '</div>' +
-      '<div class="cd-status">Spiel läuft</div>' +
-      '<div class="cd-comp">' + spielArtLabel(spiel) + '</div>';
+      '<div class="cd-status">Spiel läuft</div>';
     return;
   }
 
-  // Sicherheit: falls negativer diff aber außerhalb 90min-Fenster
+  // Sicherheit: negativer diff außerhalb 90min-Fenster
   if(diff < 0){
-    contentEl.innerHTML = teamHtml + '<div class="cd-status">Kein nächstes Spiel</div>';
+    contentEl.innerHTML =
+      metaRow(null) +
+      teamHtml +
+      '<div class="cd-status">Kein nächstes Spiel</div>' +
+      emptyCountdown();
     return;
   }
 
-  var totalMin = Math.floor(diff / 60000);
-  var tage = Math.floor(totalMin / (60 * 24));
-  var std  = Math.floor((totalMin - tage * 60 * 24) / 60);
-  var min  = totalMin - tage * 60 * 24 - std * 60;
-
-  var pad = function(n){ return n < 10 ? '0' + n : '' + n; };
-
+  // Normalfall: kommendes Spiel mit Live-Countdown
   contentEl.innerHTML =
+    metaRow(spiel) +
     teamHtml +
     '<div class="cd-match"><strong>' + spiel.heim + '</strong><br>vs. ' + spiel.gast + '</div>' +
-    '<div class="cd-units">' +
-      '<div class="cd-u"><span class="cd-n">' + pad(tage) + '</span><span class="cd-l">Tage</span></div>' +
-      '<div class="cd-sep">:</div>' +
-      '<div class="cd-u"><span class="cd-n">' + pad(std) + '</span><span class="cd-l">Std</span></div>' +
-      '<div class="cd-sep">:</div>' +
-      '<div class="cd-u"><span class="cd-n">' + pad(min) + '</span><span class="cd-l">Min</span></div>' +
-    '</div>' +
-    '<div class="cd-comp">' + spielArtLabel(spiel) + '</div>' +
-    '<div class="cd-when">' + formatSpielDatum(spiel.datum) + '</div>';
+    fullCountdown(diff);
 }
 
 function tickCountdowns(){

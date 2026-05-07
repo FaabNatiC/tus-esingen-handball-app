@@ -101,8 +101,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .sec{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;padding:10px 16px;background:#f5f5f5;border-top:1px solid #eee;border-bottom:1px solid #eee;}
 .cd-wrap{padding:10px 14px 0;}
 .cd-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
-.cd-card{background:#e8e8e8;border-radius:14px;padding:10px 10px 8px 22px;text-align:center;position:relative;}
-.cd-tag{position:absolute;left:4px;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:center;font-size:9px;color:#888;letter-spacing:.04em;white-space:nowrap;line-height:1;}
+.cd-card{background:#e8e8e8;border-radius:14px;padding:10px 14px 8px 14px;text-align:center;position:relative;}
+.cd-tag{position:absolute;left:4px;top:0;bottom:0;width:11px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.cd-tag-inner{transform:rotate(-90deg);transform-origin:center;font-size:9px;color:#888;letter-spacing:.04em;white-space:nowrap;line-height:1;}
 .cd-team{font-size:13px;color:#1a1a1a;font-weight:700;line-height:1;margin-bottom:6px;}
 .cd-units{display:flex;justify-content:center;gap:4px;margin:6px 0 0;}
 .cd-u{display:flex;flex-direction:column;align-items:center;}
@@ -112,7 +113,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cd-match{font-size:10px;color:#444;line-height:1.35;}
 .cd-when{font-size:9px;color:#666;margin-top:6px;min-height:11px;line-height:1.2;}
 .cd-status{font-size:11px;font-weight:600;color:#1a1a1a;margin:6px 0 2px;}
-.phone.dark .cd-tag{color:#aaa;}
+.phone.dark .cd-tag-inner{color:#aaa;}
 .phone.dark .cd-l{color:#bbb;}
 .phone.dark .cd-when{color:#bbb;}
 .phone.dark .cd-status{color:#fff;}
@@ -805,7 +806,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.4";
+const APP_VERSION = "0.6.5";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1256,7 +1257,7 @@ function renderCountdownCard(teamId){
   // Hilfs-Funktionen
   function tagLeft(spiel){
     if(!spiel) return ''; // kein Tag
-    return '<div class="cd-tag">' + spielArtLabel(spiel) + '</div>';
+    return '<div class="cd-tag"><span class="cd-tag-inner">' + spielArtLabel(spiel) + '</span></div>';
   }
   function whenBottom(spiel){
     // Reservierter Slot - hält Karten gleich hoch auch wenn leer

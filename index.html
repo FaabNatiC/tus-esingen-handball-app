@@ -101,15 +101,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .sec{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;padding:10px 16px;background:#f5f5f5;border-top:1px solid #eee;border-bottom:1px solid #eee;}
 .cd-wrap{padding:10px 14px 0;}
 .cd-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
-.cd-card{background:#e8e8e8;border-radius:14px;padding:14px 10px;text-align:center;}
-.cd-team{font-size:11px;color:#1a1a1a;margin-bottom:6px;font-weight:600;}
-.cd-art-row{display:flex;justify-content:center;margin-bottom:8px;min-height:16px;}
-.cd-units{display:flex;justify-content:center;gap:4px;margin-bottom:6px;}
+.cd-card{background:#e8e8e8;border-radius:14px;padding:10px 10px 8px;text-align:center;}
+.cd-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px;}
+.cd-team{font-size:11px;color:#1a1a1a;font-weight:600;line-height:1;}
+.cd-units{display:flex;justify-content:center;gap:4px;margin:6px 0 4px;}
 .cd-u{display:flex;flex-direction:column;align-items:center;}
 .cd-n{font-size:20px;font-weight:700;color:#1a1a1a;line-height:1;}
 .cd-l{font-size:9px;color:#555;margin-top:2px;}
 .cd-sep{font-size:16px;color:#999;align-self:flex-start;padding-top:3px;}
-.cd-match{font-size:10px;color:#444;line-height:1.4;}
+.cd-match{font-size:10px;color:#444;line-height:1.35;}
 .cd-when{font-size:9px;color:#666;margin-top:4px;}
 .cd-status{font-size:11px;font-weight:600;color:#1a1a1a;padding:14px 4px;}
 .phone.dark .cd-l{color:#bbb;}
@@ -533,12 +533,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="sec">Nächstes Spiel</div>
   <div class="cd-wrap" style="padding:12px 14px 14px;">
     <div class="cd-cards">
-      <div class="cd-card" id="cd-card-1-herren">
-        <div class="cd-team">1. Herren</div>
+      <div class="cd-card" id="cd-card-1-herren" data-team="1. Herren">
         <div class="cd-content"><div class="cd-status">Lade …</div></div>
       </div>
-      <div class="cd-card" id="cd-card-1-damen">
-        <div class="cd-team">1. Damen</div>
+      <div class="cd-card" id="cd-card-1-damen" data-team="1. Damen">
         <div class="cd-content"><div class="cd-status">Lade …</div></div>
       </div>
     </div>
@@ -806,7 +804,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.0";
+const APP_VERSION = "0.6.1";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1233,16 +1231,22 @@ function renderCountdownCard(teamId){
   var contentEl = card.querySelector('.cd-content');
   if(!contentEl) return;
 
+  var teamName = card.getAttribute('data-team') || '';
+
   // Cache noch nicht geladen?
   var cache = window.spielplaeneCache || {};
   if(!cache[teamId]){
-    contentEl.innerHTML = '<div class="cd-status">Lade …</div>';
+    contentEl.innerHTML =
+      '<div class="cd-top"><span class="cd-team">' + teamName + '</span></div>' +
+      '<div class="cd-status">Lade …</div>';
     return;
   }
 
   var spiel = findeNaechstesSpiel(teamId);
   if(!spiel){
-    contentEl.innerHTML = '<div class="cd-status">Kein nächstes Spiel</div>';
+    contentEl.innerHTML =
+      '<div class="cd-top"><span class="cd-team">' + teamName + '</span></div>' +
+      '<div class="cd-status">Kein nächstes Spiel</div>';
     return;
   }
 
@@ -1250,20 +1254,26 @@ function renderCountdownCard(teamId){
   var now = new Date();
   var diff = anwurf - now;
 
+  // Top-Zeile: Team links, Spielart-Badge rechts
+  var topRow =
+    '<div class="cd-top">' +
+      '<span class="cd-team">' + teamName + '</span>' +
+      spielArtBadge(spiel.art) +
+    '</div>';
+
   // Spiel läuft: Anwurf < jetzt < Anwurf + 90min
   var spielLaeuft = diff < 0 && diff > -90 * 60 * 1000;
   if(spielLaeuft){
     contentEl.innerHTML =
-      '<div class="cd-art-row">' + spielArtBadge(spiel.art) + '</div>' +
-      '<div class="cd-status">Spiel läuft</div>' +
-      '<div class="cd-match"><strong>' + spiel.heim + '</strong><br>vs. ' + spiel.gast + '</div>';
+      topRow +
+      '<div class="cd-match"><strong>' + spiel.heim + '</strong><br>vs. ' + spiel.gast + '</div>' +
+      '<div class="cd-status">Spiel läuft</div>';
     return;
   }
 
-  // Sicherheit: falls negativer diff aber außerhalb 90min-Fenster (sollte
-  // selten vorkommen, da nächstes Spiel ja > now ist - nur als Fallback)
+  // Sicherheit: falls negativer diff aber außerhalb 90min-Fenster
   if(diff < 0){
-    contentEl.innerHTML = '<div class="cd-status">Kein nächstes Spiel</div>';
+    contentEl.innerHTML = topRow + '<div class="cd-status">Kein nächstes Spiel</div>';
     return;
   }
 
@@ -1275,7 +1285,8 @@ function renderCountdownCard(teamId){
   var pad = function(n){ return n < 10 ? '0' + n : '' + n; };
 
   contentEl.innerHTML =
-    '<div class="cd-art-row">' + spielArtBadge(spiel.art) + '</div>' +
+    topRow +
+    '<div class="cd-match"><strong>' + spiel.heim + '</strong><br>vs. ' + spiel.gast + '</div>' +
     '<div class="cd-units">' +
       '<div class="cd-u"><span class="cd-n">' + pad(tage) + '</span><span class="cd-l">Tage</span></div>' +
       '<div class="cd-sep">:</div>' +
@@ -1283,7 +1294,6 @@ function renderCountdownCard(teamId){
       '<div class="cd-sep">:</div>' +
       '<div class="cd-u"><span class="cd-n">' + pad(min) + '</span><span class="cd-l">Min</span></div>' +
     '</div>' +
-    '<div class="cd-match"><strong>' + spiel.heim + '</strong><br>vs. ' + spiel.gast + '</div>' +
     '<div class="cd-when">' + formatSpielDatum(spiel.datum) + '</div>';
 }
 

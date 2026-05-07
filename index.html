@@ -118,6 +118,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nl-b.da{background:#7a1a2e;color:#ffffff;}
 .nl-b.jm{background:#a8d5f0;color:#0d2540;}
 .nl-b.jw{background:#f5c6cf;color:#7a1a2e;}
+.nl-b.mini{background:#d4a017;color:#3a2700;}
 /* Alte Klasse 'ju' bleibt als Alias auf 'jm' (männliche Jugend) für Kompatibilität */
 .nl-b.ju{background:#a8d5f0;color:#0d2540;}
 /* Team-Tag: neutrale Farbe, zeigt die Mannschaft */
@@ -136,6 +137,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .an-fbtn.da.on{background:#7a1a2e;}
 .an-fbtn.jm.on{background:#a8d5f0;color:#0d2540;}
 .an-fbtn.jw.on{background:#f5c6cf;color:#7a1a2e;}
+.an-fbtn.mini.on{background:#d4a017;color:#3a2700;}
 .phone.dark .an-fbtn{background:#2a2a2a;color:#aaa;}
 .phone.dark .an-fbtn.on{background:#fff;color:#1a1a1a;}
 .phone.dark .an-fbtn.vl.on{background:#3a3a3a;color:#fff;}
@@ -144,6 +146,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .phone.dark .an-fbtn.da.on{background:#7a1a2e;color:#fff;}
 .phone.dark .an-fbtn.jm.on{background:#a8d5f0;color:#0d2540;}
 .phone.dark .an-fbtn.jw.on{background:#f5c6cf;color:#7a1a2e;}
+.phone.dark .an-fbtn.mini.on{background:#d4a017;color:#3a2700;}
 .nl-t{font-size:13px;font-weight:600;line-height:1.3;margin-bottom:2px;}
 .nl-d{font-size:11px;color:#666;}
 .sp-ban{background:#1a1a1a;padding:14px 16px;}
@@ -179,7 +182,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ti-logo.da{background:#7a1a2e;}
 .ti-logo.jm{background:#3d6b8c;}
 .ti-logo.jw{background:#a8456a;}
-.ti-logo.mini{background:#fff8d8;}
+.ti-logo.mini{background:#d4a017;}
 .phone.dark .ti-logo.he{background:#0d2540;}
 .phone.dark .ti-logo.da{background:#7a1a2e;}
 .phone.dark .ti-logo.jm{background:#3d6b8c;}
@@ -275,6 +278,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .phone.dark .nl-b.da{background:#7a1a2e;color:#ffffff;}
 .phone.dark .nl-b.jm{background:#a8d5f0;color:#0d2540;}
 .phone.dark .nl-b.jw{background:#f5c6cf;color:#7a1a2e;}
+.phone.dark .nl-b.mini{background:#d4a017;color:#3a2700;}
 .phone.dark .nl-b.ju{background:#a8d5f0;color:#0d2540;}
 .phone.dark .nl-b.team{background:#2a2a2e;color:#ddd;border:1px solid #444;}
 
@@ -606,7 +610,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="tc"><div class="ti-logo jw"><img class="tus-logo-img" alt="TuS"></div><div><div class="tn">weiblich B</div><div class="ts">Oberliga</div></div><span class="jg-badge">Jg. 09/10</span><span class="cv">›</span></div>
   <div class="tc"><div class="ti-logo jw"><img class="tus-logo-img" alt="TuS"></div><div><div class="tn">weiblich D</div><div class="ts">Landesliga</div></div><span class="jg-badge">Jg. 13/14</span><span class="cv">›</span></div>
   <div class="sg" data-no-count>Nachwuchs</div>
-  <div class="tc"><div class="ti2">⭐</div><div><div class="tn">Minis</div><div class="ts">Nachwuchs · ab 4 Jahren</div></div><span class="cv">›</span></div>
+  <div class="tc"><div class="ti-logo mini"><img class="tus-logo-img" alt="TuS"></div><div><div class="tn">Minis</div><div class="ts">Nachwuchs · ab 4 Jahren</div></div><span class="cv">›</span></div>
   <div style="height:10px;"></div>
 </div>
 
@@ -742,7 +746,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.3.2";
+const APP_VERSION = "0.3.3";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1885,6 +1889,7 @@ function openAllNews(){
     '<button class="an-fbtn'+(allNewsFilter==='da'?' on':'')+' da" data-f="da" onclick="setAllNewsFilter(\'da\')">Damen</button>' +
     '<button class="an-fbtn'+(allNewsFilter==='jm'?' on':'')+' jm" data-f="jm" onclick="setAllNewsFilter(\'jm\')">Jugend m.</button>' +
     '<button class="an-fbtn'+(allNewsFilter==='jw'?' on':'')+' jw" data-f="jw" onclick="setAllNewsFilter(\'jw\')">Jugend w.</button>' +
+    '<button class="an-fbtn'+(allNewsFilter==='mini'?' on':'')+' mini" data-f="mini" onclick="setAllNewsFilter(\'mini\')">Minis</button>' +
   '</div>';
   
   // Section-Header + Filter + Liste in den Page-Container

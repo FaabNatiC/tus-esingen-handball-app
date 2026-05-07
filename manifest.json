@@ -1,6 +1,6 @@
 {
-  "name": "TuS Esingen Handball",
-  "short_name": "TuS Esingen",
+  "name": "TuS Esingen - Handball",
+  "short_name": "TuS Esingen - Handball",
   "description": "Die offizielle App der Handball-Abteilung des TuS Esingen e.V. – Spielpläne, Tabellen, Mannschaften und News.",
   "start_url": "./",
   "scope": "./",

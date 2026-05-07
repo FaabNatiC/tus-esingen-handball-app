@@ -746,7 +746,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.3.3";
+const APP_VERSION = "0.3.4";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1582,6 +1582,8 @@ async function loadAutoMatchNews(maxPerTeam, excludeMatches){
           ];
         }
         var lead = pick(leadOptions);
+        // Erster Buchstabe immer groß (z.B. "vor heimischer..." → "Vor heimischer...")
+        if(lead && lead.length > 0) lead = lead.charAt(0).toUpperCase() + lead.slice(1);
         
         // Body Absatz 1: Spielcharakter
         var p1Options;
@@ -1633,6 +1635,7 @@ async function loadAutoMatchNews(maxPerTeam, excludeMatches){
           ];
         }
         var p1 = pick(p1Options);
+        if(p1 && p1.length > 0) p1 = p1.charAt(0).toUpperCase() + p1.slice(1);
         
         // Body Absatz 2: Einordnung mit Liga, Halle, Daten
         var hallenSatz = '';
@@ -1673,7 +1676,7 @@ async function loadAutoMatchNews(maxPerTeam, excludeMatches){
         
         var bodyArr = [];
         bodyArr.push({ type:'text', text: p1 });
-        bodyArr.push({ type:'score', home: heim, guest: gast, result: result, liga: liga });
+        bodyArr.push({ type:'score', home: heim, guest: gast, result: result, liga: liga, outcome: outcomeLabel });
         bodyArr.push({ type:'text', text: p2 });
         if(p3) bodyArr.push({ type:'text', text: p3 });
         
@@ -1765,16 +1768,22 @@ async function loadAllNews(){
 }
 
 
+// Helper: Ersten Buchstaben groß machen (für Tag-Labels)
+function capFirst(s){
+  if(!s || s.length===0) return s;
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 // Helper: EIN Tag rendern. Wenn 'team' gesetzt → Team-Name in Kategorie-Farbe.
 // Sonst → Kategorie-Name in Kategorie-Farbe.
 function renderTagsInline(n){
-  var label = n.team || n.cat;
+  var label = capFirst(n.team || n.cat);
   return '<div class="nl-tags"><span class="nl-b'+(n.catCl?' '+n.catCl:'')+'">'+label+'</span></div>';
 }
 
 // Helper: Tag für Top-News-Karten (auf farbigem Hintergrund, helle Schrift)
 function renderTagsOnDark(n){
-  var label = n.team || n.cat;
+  var label = capFirst(n.team || n.cat);
   return '<span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;background:rgba(255,255,255,.18);color:rgba(255,255,255,.95);">'+label+'</span>';
 }
 
@@ -1934,6 +1943,7 @@ function renderScoreBox(b){
   var gast = b.guest || '';
   var result = b.result || '';
   var liga = b.liga || '';
+  var outcome = b.outcome || '';
   var heimLogo = getTeamLogo(heim);
   var gastLogo = getTeamLogo(gast);
   var heimImg = heimLogo
@@ -1942,7 +1952,17 @@ function renderScoreBox(b){
   var gastImg = gastLogo
     ? '<img src="'+gastLogo+'" class="nd-score-tlogo" alt="">'
     : '<div class="nd-score-tlogo placeholder"></div>';
-  return '<div class="nd-score-box">' +
+  // Hintergrund-Verlauf abhängig vom Spielausgang (Spielplan-Farben)
+  // Sieg: Grün (#639922) · Niederlage: Rot (#A32D2D) · Unentschieden: Orange (#BA7517)
+  var bgStyle = '';
+  if(outcome === 'Sieg'){
+    bgStyle = 'background:linear-gradient(135deg,#1a1a1a 0%,#1a1a1a 55%,#3d6516 100%);';
+  } else if(outcome === 'Niederlage'){
+    bgStyle = 'background:linear-gradient(135deg,#1a1a1a 0%,#1a1a1a 55%,#7a1f1f 100%);';
+  } else if(outcome === 'Unentschieden'){
+    bgStyle = 'background:linear-gradient(135deg,#1a1a1a 0%,#1a1a1a 55%,#8a531a 100%);';
+  }
+  return '<div class="nd-score-box"'+(bgStyle ? ' style="'+bgStyle+'"' : '')+'>' +
     '<div class="nd-score-row">' +
       '<div class="nd-score-side">'+heimImg+'<span>'+heim+'</span></div>' +
       '<div class="nd-score-result-box">'+result+'</div>' +
@@ -1970,7 +1990,7 @@ function openNews(idx, fromAllNews){
     relHtml+='<div class="nl" style="cursor:pointer;" onclick="openNews('+i+','+(fromAllNews?'true':'false')+')"><div style="flex:1;min-width:0;">'+renderTagsInline(r)+'<div class="nl-t">'+r.title+'</div><div class="nl-d">'+r.date+'</div></div><span class="nl-arr">›</span></div>';
   });
   // Hero-Tags-HTML: nur ein Tag (Team falls vorhanden, sonst Kategorie) in Kategorie-Farbe
-  var heroLabel = n.team || n.cat;
+  var heroLabel = capFirst(n.team || n.cat);
   var heroTagsHtml = '<div class="nd-cat '+n.catCl+'">'+heroLabel+'</div>';
   document.getElementById('nd-content').innerHTML=
     '<div class="nd-hero" style="background:'+n.gradient+';"><div class="nd-hero-overlay"></div><div class="nd-hero-content">'+heroTagsHtml+'<div class="nd-hero-title">'+n.title+'</div></div></div>'+

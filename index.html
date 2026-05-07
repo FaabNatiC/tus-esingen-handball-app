@@ -11,7 +11,7 @@
 <meta name="theme-color" content="#1a1a1a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="TuS Esingen">
+<meta name="apple-mobile-web-app-title" content="TuS Esingen - Handball">
 <meta name="mobile-web-app-capable" content="yes">
 
 <!-- PWA: Icons -->
@@ -107,9 +107,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cd-match{font-size:10px;color:#444;line-height:1.4;}
 .nl{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid #f0f0f0;align-items:flex-start;}
 .nl-th{width:52px;height:52px;border-radius:10px;background:#1a1a1a;flex-shrink:0;}
-.nl-th.vl{background:#2d4a1e;} .nl-th.ju{background:#1a3a5c;}
+.nl-th.vl{background:#3a3a3a;} .nl-th.jm{background:#1a3a5c;} .nl-th.jw{background:#7a1a3c;} .nl-th.sp{background:#1f4a1a;} .nl-th.he{background:#0d2540;} .nl-th.da{background:#5a0d1a;}
 .nl-b{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#f0f0f0;color:#444;margin-bottom:4px;}
-.nl-b.vl{background:#EAF3DE;color:#27500A;} .nl-b.ju{background:#E6F1FB;color:#0C447C;}
+.nl-b.vl{background:#e5e5e5;color:#333;}
+.nl-b.sp{background:#E1F0DA;color:#1f4a1a;}
+.nl-b.he{background:#D8E3F2;color:#0d2540;}
+.nl-b.da{background:#F2D8DC;color:#5a0d1a;}
+.nl-b.jm{background:#E6F1FB;color:#0C447C;}
+.nl-b.jw{background:#FBE6EC;color:#9B2A4D;}
+/* Alte Klasse 'ju' bleibt als Alias auf 'jm' (männliche Jugend) für Kompatibilität */
+.nl-b.ju{background:#E6F1FB;color:#0C447C;}
 .nl-t{font-size:13px;font-weight:600;line-height:1.3;margin-bottom:2px;}
 .nl-d{font-size:11px;color:#666;}
 .sp-ban{background:#1a1a1a;padding:14px 16px;}
@@ -219,7 +226,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .phone.dark .nl-t{color:#eee;}
 .phone.dark .nl-d{color:#bbb;}
 .phone.dark .nl-b{background:#333;color:#ccc;}
-.phone.dark .nl-b.vl{background:#1a3010;color:#7ec64b;}
+.phone.dark .nl-b.vl{background:#2a2a2a;color:#bbb;}
+.phone.dark .nl-b.sp{background:#1a2a14;color:#7ec64b;}
+.phone.dark .nl-b.he{background:#0d2540;color:#6baed6;}
+.phone.dark .nl-b.da{background:#3a0d14;color:#e88a98;}
+.phone.dark .nl-b.jm{background:#0d2540;color:#6baed6;}
+.phone.dark .nl-b.jw{background:#3a1626;color:#e88aa8;}
 .phone.dark .nl-b.ju{background:#0d2540;color:#6baed6;}
 
 /* ── Trainer Badges ── */
@@ -434,10 +446,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="sec">Top News</div>
 <div style="padding:12px 14px 0;">
   <div style="border-radius:16px;overflow:hidden;background:#1a1a1a;margin-bottom:10px;cursor:pointer;" onclick="openNews(0)">
-    <div style="height:110px;background:linear-gradient(135deg,#1a1a1a 0%,#2d3a1e 60%);display:flex;align-items:flex-end;padding:14px;position:relative;">
+    <div style="height:110px;background:linear-gradient(135deg,#1a3a5c 0%,#0d2540 100%);display:flex;align-items:flex-end;padding:14px;position:relative;">
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.05) 70%);"></div>
       <div style="position:relative;z-index:1;">
-        <div style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:white;color:#1a1a1a;margin-bottom:6px;">Bericht</div>
+        <div style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:white;color:#1a1a1a;margin-bottom:6px;">Herren</div>
         <div style="font-size:14px;font-weight:700;color:white;line-height:1.3;">Saison 2025/26 beendet – Platz 6 für die 1. Herren</div>
       </div>
     </div>
@@ -447,7 +459,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-    <div style="border-radius:14px;overflow:hidden;background:#2d4a1e;cursor:pointer;" onclick="openNews(1)">
+    <div style="border-radius:14px;overflow:hidden;background:#3a3a3a;cursor:pointer;" onclick="openNews(1)">
       <div style="height:70px;display:flex;align-items:flex-end;padding:10px;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,rgba(0,0,0,.05) 100%);">
         <div style="font-size:12px;font-weight:700;color:white;line-height:1.3;">Saisonabschlussfeier am 31. Mai</div>
       </div>
@@ -456,12 +468,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <span style="font-size:11px;color:rgba(255,255,255,.4);">›</span>
       </div>
     </div>
-    <div style="border-radius:14px;overflow:hidden;background:#1a3a5c;cursor:pointer;" onclick="openNews(2)">
+    <div style="border-radius:14px;overflow:hidden;background:#3a6a9c;cursor:pointer;" onclick="openNews(2)">
       <div style="height:70px;display:flex;align-items:flex-end;padding:10px;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,rgba(0,0,0,.05) 100%);">
         <div style="font-size:12px;font-weight:700;color:white;line-height:1.3;">mB Jugend qualifiziert für Endrunde</div>
       </div>
       <div style="padding:6px 10px 8px;display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.8);">Jugend</span>
+        <span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.8);">Jugend männlich</span>
         <span style="font-size:11px;color:rgba(255,255,255,.4);">›</span>
       </div>
     </div>
@@ -469,9 +481,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 
   <div class="sec">Alle News</div>
-  <div class="nl" style="cursor:pointer;" onclick="openNews(0)"><div><span class="nl-b">Bericht</span><div class="nl-t">Saison 2025/26 beendet – Platz 6 für die 1. Herren</div><div class="nl-d">27. April 2026</div></div><span class="nl-arr">›</span></div>
+  <div class="nl" style="cursor:pointer;" onclick="openNews(0)"><div><span class="nl-b he">Herren</span><div class="nl-t">Saison 2025/26 beendet – Platz 6 für die 1. Herren</div><div class="nl-d">27. April 2026</div></div><span class="nl-arr">›</span></div>
   <div class="nl" style="cursor:pointer;" onclick="openNews(1)"><div><span class="nl-b vl">Vereinsleben</span><div class="nl-t">Saisonabschlussfeier am 31. Mai – alle eingeladen!</div><div class="nl-d">20. April 2026</div></div><span class="nl-arr">›</span></div>
-  <div class="nl" style="cursor:pointer;" onclick="openNews(2)"><div><span class="nl-b ju">Jugend</span><div class="nl-t">mB Jugend qualifiziert sich für die Endrunde</div><div class="nl-d">17. April 2026</div></div><span class="nl-arr">›</span></div>
+  <div class="nl" style="cursor:pointer;" onclick="openNews(2)"><div><span class="nl-b jm">Jugend männlich</span><div class="nl-t">mB Jugend qualifiziert sich für die Endrunde</div><div class="nl-d">17. April 2026</div></div><span class="nl-arr">›</span></div>
   <div style="height:10px;"></div>
 </div>
 
@@ -710,7 +722,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.1.4";
+const APP_VERSION = "0.1.6";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1352,7 +1364,7 @@ function dTab(id,btn){
 // News Detail
 var NEWS = [
   {
-    cat:'Bericht',catCl:'',gradient:'linear-gradient(135deg,#1a1a1a 0%,#2d3a1e 60%,#1a2a1a 100%)',
+    cat:'Herren',catCl:'he',gradient:'linear-gradient(135deg,#1a3a5c 0%,#0d2540 100%)',
     title:'Saison 2025/26 beendet – Platz 6 für die 1. Herren',
     date:'27. April 2026',author:'TuS Esingen',authorIni:'TuS',
     lead:'Die 1. Herren beenden eine starke Saison auf dem sechsten Platz der Männer Oberliga Hamburg mit 27 Punkten aus 24 Spielen.',
@@ -1366,7 +1378,7 @@ var NEWS = [
     ]
   },
   {
-    cat:'Vereinsleben',catCl:'vl',gradient:'linear-gradient(135deg,#2d4a1e 0%,#1a3a10 100%)',
+    cat:'Vereinsleben',catCl:'vl',gradient:'linear-gradient(135deg,#3a3a3a 0%,#1a1a1a 100%)',
     title:'Saisonabschlussfeier am 31. Mai – alle eingeladen!',
     date:'20. April 2026',author:'Vereinsvorstand',authorIni:'TuS',
     lead:'Der TuS Esingen lädt alle Mitglieder, Fans und Freunde des Vereins zur großen Saisonabschlussfeier ins Vereinsheim ein.',
@@ -1378,7 +1390,7 @@ var NEWS = [
     ]
   },
   {
-    cat:'Jugend',catCl:'ju',gradient:'linear-gradient(135deg,#1a3a5c 0%,#0d2540 100%)',
+    cat:'Jugend männlich',catCl:'jm',gradient:'linear-gradient(135deg,#3a6a9c 0%,#1a4a7c 100%)',
     title:'mB Jugend qualifiziert sich für die Endrunde',
     date:'17. April 2026',author:'Jugendabteilung',authorIni:'TuS',
     lead:'Großer Erfolg für den Nachwuchs: Die männliche B-Jugend hat sich für die Endrunde der Bezirksstaffel qualifiziert!',

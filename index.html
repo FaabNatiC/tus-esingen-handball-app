@@ -88,6 +88,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .bt-ic{font-size:22px;line-height:1;}
 .bt-lb{font-size:11px;color:rgba(255,255,255,0.4);white-space:nowrap;font-family:inherit;}
 .bt.on{background:white;} .bt.on .bt-lb{color:#1a1a1a;font-weight:700;}
+/* Mittlerer "Teams"-Tab: TuS-Logo etwas größer + leicht hervorgehoben */
+.bt-logo{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.08);margin:-3px 0;transition:background .2s;}
+.bt-logo img{width:30px;height:30px;object-fit:contain;display:block;}
+.bt.on .bt-logo{background:#1a1a1a;}
+.bt.on .bt-logo img{filter:brightness(1.1);}
 .d-hdr{background:#1a1a1a;padding:14px 16px 12px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
 @media (display-mode: standalone) {
   .d-hdr{padding-top:calc(env(safe-area-inset-top) + 12px);}
@@ -510,16 +515,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .upd-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px;}
 .upd-ver{font-size:14px;font-weight:700;color:#1a1a1a;}
 .upd-date{font-size:11px;color:#888;}
-.upd-new{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;color:#1a7a5e;background:#e8f4f0;padding:3px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.06em;margin-left:6px;}
+.upd-new{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;color:#0d6efd;background:#e7f1ff;padding:3px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.06em;margin-left:6px;}
 .upd-new::before{content:"●";font-size:8px;}
 .upd-text{font-size:12px;color:#444;line-height:1.45;}
+.upd-points{margin:0;padding-left:18px;list-style:disc;}
+.upd-points li{font-size:12px;color:#444;line-height:1.5;margin-bottom:4px;}
+.upd-points li:last-child{margin-bottom:0;}
+.phone.dark .upd-points li{color:#ddd;}
 .phone.dark .upd-card{background:#2a2a2a;border-color:#3a3a3a;}
 .phone.dark .upd-card.current{background:#3a3a3a;border-color:#fff;}
 .phone.dark .upd-card.current::before{background:#fff;}
 .phone.dark .upd-ver{color:#fff;}
 .phone.dark .upd-date{color:#aaa;}
 .phone.dark .upd-text{color:#ddd;}
-.phone.dark .upd-new{background:#1f3a30;color:#7fc9b0;}
+.phone.dark .upd-new{background:#1a3050;color:#7fb6ff;}
 </style>
 </head>
 <body>
@@ -550,7 +559,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="burger-item" onclick="window.open('https://tus-esingen.de/datenschutz-des-tus-esingen.html','_blank')"><span class="burger-icon">🔒</span>Datenschutz</div>
     <div class="burger-section">App</div>
     <div class="burger-item" onclick="openAbout()"><span class="burger-icon">ℹ️</span>Über diese App</div>
-    <div class="burger-item" onclick="openUpdateHistory(false)"><span class="burger-icon">🆕</span>App-Updates</div>
+    <div class="burger-item" onclick="openUpdateHistory(false)"><span class="burger-icon">✨</span>App-Updates</div>
     <div style="height:20px;"></div>
   </div>
 </div>
@@ -825,7 +834,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="bnav" id="bnav">
   <button class="bt on" onclick="nav('news',this)"><span class="bt-ic">🏠</span><span class="bt-lb">Home</span></button>
   <button class="bt" onclick="nav('spielplan',this)"><span class="bt-ic">🤾</span><span class="bt-lb">Spielplan</span></button>
-  <button class="bt" onclick="nav('teams',this)"><span class="bt-ic"><img src="data/logos/tus-esingen.png" alt="" style="width:22px;height:22px;object-fit:contain;vertical-align:middle;"></span><span class="bt-lb">Teams</span></button>
+  <button class="bt" onclick="nav('teams',this)"><span class="bt-ic bt-logo"><img src="data/logos/tus-esingen.png" alt="TuS"></span><span class="bt-lb">Teams</span></button>
   <button class="bt" onclick="nav('termine',this)"><span class="bt-ic">📆</span><span class="bt-lb">Termine</span></button>
   <button class="bt" onclick="nav('hallen',this)"><span class="bt-ic">📍</span><span class="bt-lb">Anfahrt</span></button>
 </div>
@@ -849,23 +858,59 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.9";
+const APP_VERSION = "0.6.10";
 const APP_BUILD_DATE = "08.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
 // Wird im Burger-Menü unter "App-Updates" angezeigt und gibt der App-Banner-
 // Anzeige den User-freundlichen Text. Datum wird hier pro Eintrag gepflegt.
+// "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
+// dargestellt werden.
 const UPDATE_HISTORY = [
-  { version: "0.6.9", date: "08.05.2026", text: "Du wirst jetzt informiert, wenn die App ein Update bekommen hat. Über das Menü unter 'App-Updates' findest du eine Übersicht der letzten Änderungen in einfacher Sprache." },
-  { version: "0.6.8", date: "07.05.2026", text: "Der Tab 'News' unten heißt jetzt 'Home'. Spielplan und Teams haben neue Icons bekommen. Die zwei Countdown-Karten oben auf der Startseite stehen jetzt immer auf gleicher Höhe, auch wenn keine Spiele anstehen." },
-  { version: "0.6.7", date: "07.05.2026", text: "Die Tabelle war kaputt - die Vereinsnamen waren abgeschnitten und die Werte verrutscht. Das ist behoben. Außerdem werden die Punkte jetzt im Handball-Standard angezeigt (z.B. 27:21 statt nur 27). Auf der 'Alle News'-Seite gibt es kleine Pfeile, mit denen du die Filter nach links und rechts schieben kannst." },
-  { version: "0.6.6", date: "07.05.2026", text: "Die kleine Beschriftung an den Countdown-Karten ('Testspiel', 'Ligaspiel', 'Pokalspiel') ist jetzt besser lesbar." },
-  { version: "0.6.5", date: "07.05.2026", text: "Die Beschriftung an der Seite der Countdown-Karten klebt jetzt sauber am Rand. Der Inhalt der Karten wirkt dadurch besser zentriert." },
-  { version: "0.6.4", date: "07.05.2026", text: "Die Spielart (z.B. 'Testspiel') steht jetzt vertikal an der linken Kachelkante - lesbar von unten nach oben. Datum und Uhrzeit stehen wieder gemeinsam unten." },
-  { version: "0.6.3", date: "07.05.2026", text: "Die Countdown-Karten sind kompakter geworden und nutzen den Platz besser aus. Wenn kein Spiel ansteht, bleibt die Karte trotzdem in voller Größe erhalten." },
-  { version: "0.6.2", date: "07.05.2026", text: "Die Karten laden schneller, weil die App die Spielplandaten gleich beim Start parallel lädt. Außerdem wurde das Layout der Karten dezenter gestaltet." },
-  { version: "0.6.1", date: "07.05.2026", text: "Die Countdown-Karten wurden im Layout aufgeräumt: Spielart-Hinweis und Datum sind dezenter, Reihenfolge der Infos überarbeitet." },
-  { version: "0.6.0", date: "07.05.2026", text: "Auf der Startseite gibt es jetzt zwei Live-Countdowns für die nächsten Spiele der 1. Herren und 1. Damen. Du siehst auf einen Blick, wie viele Tage, Stunden und Minuten bis zum nächsten Anwurf bleiben - egal ob Liga, Pokal oder Testspiel." }
+  { version: "0.6.10", date: "08.05.2026", points: [
+    "Der Zurück-Pfeil auf der 'Alle News'-Seite führt jetzt zuverlässig zurück zur Startseite.",
+    "Die einzelnen Änderungen pro Update werden jetzt als übersichtliche Liste angezeigt statt als langer Fließtext.",
+    "Das 'Neu'-Etikett bei der aktuellen Version ist jetzt blau statt grün.",
+    "Das Symbol für 'App-Updates' im Menü wurde geändert, damit es sich besser von anderen Symbolen abhebt.",
+    "Das TuS-Logo unten in der Menüleiste beim Tab 'Teams' ist jetzt etwas größer und wird leicht hervorgehoben."
+  ] },
+  { version: "0.6.9", date: "08.05.2026", points: [
+    "Du wirst jetzt informiert, wenn die App ein Update bekommen hat.",
+    "Über das Menü unter 'App-Updates' findest du eine Übersicht der letzten Änderungen in einfacher Sprache."
+  ] },
+  { version: "0.6.8", date: "07.05.2026", points: [
+    "Der Tab 'News' unten heißt jetzt 'Home'.",
+    "Spielplan und Teams haben neue Icons bekommen.",
+    "Die zwei Countdown-Karten oben auf der Startseite stehen jetzt immer auf gleicher Höhe, auch wenn keine Spiele anstehen."
+  ] },
+  { version: "0.6.7", date: "07.05.2026", points: [
+    "Die Tabelle war kaputt - die Vereinsnamen waren abgeschnitten und die Werte verrutscht. Das ist behoben.",
+    "Die Punkte werden jetzt im Handball-Standard angezeigt (z.B. 27:21 statt nur 27).",
+    "Auf der 'Alle News'-Seite gibt es kleine Pfeile, mit denen du die Filter nach links und rechts schieben kannst."
+  ] },
+  { version: "0.6.6", date: "07.05.2026", points: [
+    "Die kleine Beschriftung an den Countdown-Karten ('Testspiel', 'Ligaspiel', 'Pokalspiel') ist jetzt besser lesbar."
+  ] },
+  { version: "0.6.5", date: "07.05.2026", points: [
+    "Die Beschriftung an der Seite der Countdown-Karten klebt jetzt sauber am Rand.",
+    "Der Inhalt der Karten wirkt dadurch besser zentriert."
+  ] },
+  { version: "0.6.4", date: "07.05.2026", points: [
+    "Die Spielart (z.B. 'Testspiel') steht jetzt vertikal an der linken Kachelkante - lesbar von unten nach oben.",
+    "Datum und Uhrzeit stehen wieder gemeinsam unten."
+  ] },
+  { version: "0.6.3", date: "07.05.2026", points: [
+    "Die Countdown-Karten sind kompakter geworden und nutzen den Platz besser aus.",
+    "Wenn kein Spiel ansteht, bleibt die Karte trotzdem in voller Größe erhalten."
+  ] },
+  { version: "0.6.2", date: "07.05.2026", points: [
+    "Die Karten laden schneller, weil die App die Spielplandaten gleich beim Start parallel lädt.",
+    "Das Layout der Karten wurde dezenter gestaltet."
+  ] },
+  { version: "0.6.1", date: "07.05.2026", points: [
+    "Die Countdown-Karten wurden im Layout aufgeräumt: Spielart-Hinweis und Datum sind dezenter.",
+    "Die Reihenfolge der Infos wurde überarbeitet."
+  ] }
 ];
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -2398,6 +2443,19 @@ function closeAllNews(){
   var h = document.getElementById('anhdr'); if(h) h.remove();
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
   document.getElementById('p-news').classList.add('active');
+  // Bottom-Nav: Home-Button sichtbar als aktiv markieren (Index 0 = Home)
+  var btns = document.querySelectorAll('.bt');
+  btns.forEach(function(b){
+    b.classList.remove('on');
+    b.style.background = 'transparent';
+    var lb = b.querySelector('.bt-lb'); if(lb) lb.style.color = 'rgba(255,255,255,0.4)';
+  });
+  if(btns[0]){
+    btns[0].classList.add('on');
+    btns[0].style.background = 'white';
+    var lb0 = btns[0].querySelector('.bt-lb'); if(lb0) lb0.style.color = '#1a1a1a';
+  }
+  document.getElementById('scroll').scrollTop = 0;
   showMain(true);
 }
 
@@ -2536,12 +2594,22 @@ function openUpdateHistory(scrollToCurrent){
   if(listEl){
     var html = UPDATE_HISTORY.slice(0, 10).map(function(u){
       var isCurrent = u.version === APP_VERSION;
+      // Bevorzugt das neue points-Array; Fallback: alter text-String wird als
+      // einzelner Listenpunkt dargestellt, damit alte Einträge nicht brechen.
+      var bodyHtml = '';
+      if(Array.isArray(u.points) && u.points.length > 0){
+        bodyHtml = '<ul class="upd-points">' + u.points.map(function(p){
+          return '<li>' + p + '</li>';
+        }).join('') + '</ul>';
+      } else if(typeof u.text === 'string' && u.text.length > 0){
+        bodyHtml = '<ul class="upd-points"><li>' + u.text + '</li></ul>';
+      }
       return '<div class="upd-card' + (isCurrent ? ' current' : '') + '" id="upd-card-' + u.version.replace(/\./g, '-') + '">' +
         '<div class="upd-row">' +
           '<span class="upd-ver">Version ' + u.version + (isCurrent ? '<span class="upd-new">Neu</span>' : '') + '</span>' +
           '<span class="upd-date">' + u.date + '</span>' +
         '</div>' +
-        '<div class="upd-text">' + u.text + '</div>' +
+        bodyHtml +
       '</div>';
     }).join('');
     listEl.innerHTML = html;

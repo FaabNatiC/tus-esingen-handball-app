@@ -91,10 +91,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   z-index:0;
   pointer-events:none;
   /* viewBox 100x60, preserveAspectRatio=none -> streckt sich auf die Bar.
-     Die Mulde geht von x=39..61 (22% Breite) und ~13% tief (~8px bei
-     typischer Bar-Höhe ~62px). Subtil aber sichtbar. */
-  -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60' preserveAspectRatio='none'><path d='M0,0 L0,60 L100,60 L100,0 L61,0 C58,0 57.5,1 56.5,3 C54,7 52,8 50,8 C48,8 46,7 43.5,3 C42.5,1 42,0 39,0 Z' fill='black'/></svg>");
-          mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60' preserveAspectRatio='none'><path d='M0,0 L0,60 L100,60 L100,0 L61,0 C58,0 57.5,1 56.5,3 C54,7 52,8 50,8 C48,8 46,7 43.5,3 C42.5,1 42,0 39,0 Z' fill='black'/></svg>");
+     Mulde von x=36..64 (28% Breite) und ~14 tief - größeres Logo braucht
+     proportional größere Welle, damit es harmonisch wirkt. */
+  -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60' preserveAspectRatio='none'><path d='M0,0 L0,60 L100,60 L100,0 L64,0 C60,0 59,2 57,5 C54.5,11 52,14 50,14 C48,14 45.5,11 43,5 C41,2 40,0 36,0 Z' fill='black'/></svg>");
+          mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60' preserveAspectRatio='none'><path d='M0,0 L0,60 L100,60 L100,0 L64,0 C60,0 59,2 57,5 C54.5,11 52,14 50,14 C48,14 45.5,11 43,5 C41,2 40,0 36,0 Z' fill='black'/></svg>");
   -webkit-mask-size:100% 100%;
           mask-size:100% 100%;
   -webkit-mask-repeat:no-repeat;
@@ -110,16 +110,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .bt-ic{font-size:22px;line-height:1;}
 .bt-lb{font-size:11px;color:rgba(255,255,255,0.4);white-space:nowrap;font-family:inherit;}
 .bt.on{background:white;} .bt.on .bt-lb{color:#1a1a1a;font-weight:700;}
-/* Mittlerer "Teams"-Tab: TuS-Logo ragt subtil aus der Nav heraus.
-   Logo-Wrapper 44x44 mit -10px margin-top: ragt ~7px über die Bar-Oberkante.
-   Der schwarze Border (3px) grenzt den Kreis sauber gegen die Page ab.
-   Das Label sitzt darunter auf gleicher Höhe wie die anderen Labels. */
-.bt-logo{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#1a1a1a;border:3px solid #1a1a1a;margin-top:-10px;margin-bottom:0;box-shadow:0 2px 6px rgba(0,0,0,0.25);transition:background .2s,border-color .2s;}
-.bt-logo img{width:34px;height:34px;object-fit:contain;display:block;}
-/* Aktiver Teams-Tab: kein weißer Bar-Background (würde mit Notch kollidieren),
-   stattdessen Logo-Kreis weiß + Label wie bei anderen aktiven Tabs */
+/* Mittlerer "Teams"-Tab: Logo schwebt absolut über dem Tab.
+   Der Tab selbst behält seine Standardhöhe (Icon-Slot mit normaler Höhe +
+   Label), damit das "Teams"-Label auf gleicher Höhe wie die anderen Labels
+   sitzt. Das Logo wird absolut darüber positioniert und ragt deutlich
+   raus (~15px über die Bar-Oberkante). */
+.bt.bt-teams{position:relative;}
+/* Leerer Spacer-Span im Teams-Tab: reserviert die Höhe des normalen Icon-
+   Slots, damit das "Teams"-Label auf gleicher Höhe wie die anderen Labels
+   sitzt. Das Logo wird absolut darüber positioniert. */
+.bt.bt-teams .bt-ic{display:block;width:22px;height:22px;}
+.bt-logo{position:absolute;left:50%;top:0;transform:translate(-50%,-18px);display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:#1a1a1a;border:3px solid #1a1a1a;box-shadow:0 2px 8px rgba(0,0,0,0.3);transition:background .2s;z-index:2;}
+.bt-logo img{width:40px;height:40px;object-fit:contain;display:block;}
+/* Aktiver Teams-Tab: Innenkreis weiß, Border bleibt schwarz, kein
+   weißer Bar-Background (würde mit Notch kollidieren) */
 .bt.bt-teams.on{background:transparent;}
-.bt.bt-teams.on .bt-logo{background:#fff;border-color:#fff;}
+.bt.bt-teams.on .bt-logo{background:#fff;}
 .d-hdr{background:#1a1a1a;padding:14px 16px 12px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
 @media (display-mode: standalone) {
   .d-hdr{padding-top:calc(env(safe-area-inset-top) + 12px);}
@@ -861,7 +867,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="bnav" id="bnav">
   <button class="bt on" onclick="nav('news',this)"><span class="bt-ic">🏠</span><span class="bt-lb">Home</span></button>
   <button class="bt" onclick="nav('spielplan',this)"><span class="bt-ic">🤾</span><span class="bt-lb">Spielplan</span></button>
-  <button class="bt bt-teams" onclick="nav('teams',this)"><span class="bt-ic bt-logo"><img src="data/logos/tus-esingen.png" alt="TuS"></span><span class="bt-lb">Teams</span></button>
+  <button class="bt bt-teams" onclick="nav('teams',this)"><span class="bt-ic" aria-hidden="true"></span><span class="bt-logo"><img src="data/logos/tus-esingen.png" alt="TuS"></span><span class="bt-lb">Teams</span></button>
   <button class="bt" onclick="nav('termine',this)"><span class="bt-ic">📆</span><span class="bt-lb">Termine</span></button>
   <button class="bt" onclick="nav('hallen',this)"><span class="bt-ic">📍</span><span class="bt-lb">Anfahrt</span></button>
 </div>
@@ -885,7 +891,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.11";
+const APP_VERSION = "0.6.12";
 const APP_BUILD_DATE = "08.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
@@ -894,6 +900,12 @@ const APP_BUILD_DATE = "08.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
+  { version: "0.6.12", date: "08.05.2026", points: [
+    "Die Update-Info am oberen Rand kommt jetzt zuverlässig - auch dann, wenn die App im Hintergrund aktualisiert wurde, während sie geschlossen war.",
+    "Das TuS-Logo unten in der Mitte ist jetzt deutlich größer und ragt sichtbarer aus der Menüleiste heraus. Die Welle in der Leiste passt sich proportional an.",
+    "Der Schriftzug 'Teams' steht jetzt exakt auf gleicher Höhe wie die anderen Beschriftungen in der Menüleiste.",
+    "Der schmale Rand um das TuS-Logo bleibt jetzt auch im aktiven Zustand schwarz, nur die Innenfläche wird weiß."
+  ] },
   { version: "0.6.11", date: "08.05.2026", points: [
     "Die Update-Info oben am Rand erscheint jetzt zuverlässig, wenn die App eine neue Version geladen hat.",
     "In der Menüleiste unten wölbt sich die Mitte jetzt sanft nach oben und das TuS-Logo ragt leicht aus der Leiste heraus. Der Schriftzug 'Teams' steht wieder auf gleicher Höhe wie die anderen Beschriftungen.",
@@ -934,10 +946,6 @@ const UPDATE_HISTORY = [
   { version: "0.6.3", date: "07.05.2026", points: [
     "Die Countdown-Karten sind kompakter geworden und nutzen den Platz besser aus.",
     "Wenn kein Spiel ansteht, bleibt die Karte trotzdem in voller Größe erhalten."
-  ] },
-  { version: "0.6.2", date: "07.05.2026", points: [
-    "Die Karten laden schneller, weil die App die Spielplandaten gleich beim Start parallel lädt.",
-    "Das Layout der Karten wurde dezenter gestaltet."
   ] }
 ];
 
@@ -2706,23 +2714,39 @@ function hideUpdateBanner(immediate){
 (function checkForUpdate(){
   try {
     var bannerShown = false;
+    var lastSeen = localStorage.getItem('lastSeenAppVersion');
+    var bannerShownFor = localStorage.getItem('bannerShownForVersion');
+
     // 1) Robuster Pfad: Wenn der Service Worker zuletzt die Seite reloaded hat
-    //    (controllerchange), wurde pendingUpdateNotice gesetzt. Dann zeigen wir
-    //    das Banner zuverlässig - unabhängig vom lastSeenAppVersion-Vergleich.
+    //    (controllerchange), wurde pendingUpdateNotice gesetzt. Banner zeigen.
     var pending = localStorage.getItem('pendingUpdateNotice');
     if(pending){
       showUpdateBanner(APP_VERSION);
       localStorage.removeItem('pendingUpdateNotice');
+      localStorage.setItem('bannerShownForVersion', APP_VERSION);
       bannerShown = true;
     }
-    // 2) Klassischer Pfad: Versionen vergleichen, falls Banner noch nicht gezeigt.
-    if(!bannerShown){
-      var lastSeen = localStorage.getItem('lastSeenAppVersion');
-      if(lastSeen && lastSeen !== APP_VERSION){
-        showUpdateBanner(APP_VERSION);
-      }
+
+    // 2) Hauptpfad: Banner wurde für DIESE Version noch nie gezeigt UND der
+    //    User kannte die App schon vorher (lastSeen ist gesetzt). Das deckt
+    //    den häufigen Fall ab, in dem der Service-Worker im Hintergrund
+    //    aktualisiert hat (App war zu) - dann gibt es kein controllerchange-
+    //    Event mehr, das wir abfangen können. Beim nächsten App-Öffnen sehen
+    //    wir aber: bannerShownForVersion ist veraltet -> Banner zeigen.
+    if(!bannerShown && lastSeen && bannerShownFor !== APP_VERSION){
+      showUpdateBanner(APP_VERSION);
+      localStorage.setItem('bannerShownForVersion', APP_VERSION);
+      bannerShown = true;
     }
-    // Aktuelle Version speichern (auch beim ersten Start, dann beim nächsten Update wird verglichen)
+
+    // Beim allerersten Start (lastSeen leer): Kein Banner, aber bannerShownFor
+    // direkt auf aktuelle Version setzen, damit beim ZWEITEN Start auch kein
+    // Banner kommt (es ist ja keine echte Aktualisierung).
+    if(!lastSeen){
+      localStorage.setItem('bannerShownForVersion', APP_VERSION);
+    }
+
+    // Aktuelle Version speichern - dient als Marker "User kennt diese Version"
     localStorage.setItem('lastSeenAppVersion', APP_VERSION);
   } catch(e) { /* localStorage nicht verfügbar - egal */ }
 })();

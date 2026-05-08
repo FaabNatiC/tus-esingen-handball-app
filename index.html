@@ -120,12 +120,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
    Slots, damit das "Teams"-Label auf gleicher Höhe wie die anderen Labels
    sitzt. Das Logo wird absolut darüber positioniert. */
 .bt.bt-teams .bt-ic{display:block;width:22px;height:22px;}
-.bt-logo{position:absolute;left:50%;top:0;transform:translate(-50%,-18px);display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:#1a1a1a;border:3px solid #1a1a1a;box-shadow:0 2px 8px rgba(0,0,0,0.3);transition:background .2s;z-index:2;}
-.bt-logo img{width:40px;height:40px;object-fit:contain;display:block;}
-/* Aktiver Teams-Tab: Innenkreis weiß, Border bleibt schwarz, kein
-   weißer Bar-Background (würde mit Notch kollidieren) */
+/* Mehr Abstand zwischen Logo-Unterkante und Label, damit das Label nicht
+   am Logo klebt. Das Logo ragt höher (translateY -24px), gleichzeitig
+   rutscht das Label per margin-top weiter nach unten. */
+.bt.bt-teams .bt-lb{margin-top:6px;}
+.bt-logo{position:absolute;left:50%;top:0;transform:translate(-50%,-24px);display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:#1a1a1a;border:3px solid #1a1a1a;box-shadow:0 2px 8px rgba(0,0,0,0.3);transition:background .2s;z-index:2;}
+.bt-logo img{width:40px;height:40px;object-fit:contain;display:block;transition:width .2s,height .2s;}
+/* Aktiver Teams-Tab: Innenkreis weiß, Border bleibt schwarz, Logo-Image
+   wird größer (40 -> 46) und füllt den Innenkreis bis zur Border-Kante,
+   damit kein weißer Ring zwischen Border und Logo zu sehen ist. */
 .bt.bt-teams.on{background:transparent;}
 .bt.bt-teams.on .bt-logo{background:#fff;}
+.bt.bt-teams.on .bt-logo img{width:46px;height:46px;}
 .d-hdr{background:#1a1a1a;padding:14px 16px 12px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
 @media (display-mode: standalone) {
   .d-hdr{padding-top:calc(env(safe-area-inset-top) + 12px);}
@@ -533,7 +539,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 @media (display-mode: standalone){.install-banner{display:none !important;}}
 
 /* ── Update-Banner (oben) ─────────────────────────────────────────── */
-.upd-banner{position:fixed;top:0;left:0;right:0;background:#1a1a1a;color:#fff;padding:11px 16px calc(11px + env(safe-area-inset-top, 0px));display:none;justify-content:center;align-items:center;gap:8px;font-size:12px;font-weight:600;z-index:1100;cursor:pointer;text-align:center;animation:ub-in .25s ease;}
+.upd-banner{position:fixed;top:0;left:0;right:0;background:#1a1a1a;color:#fff;padding:calc(11px + env(safe-area-inset-top, 0px)) 16px 11px;display:none;justify-content:center;align-items:center;gap:8px;font-size:12px;font-weight:600;z-index:1100;cursor:pointer;text-align:center;animation:ub-in .25s ease;}
 .upd-banner.show{display:flex;}
 .upd-banner-arr{font-size:14px;color:rgba(255,255,255,0.65);font-weight:400;}
 .upd-banner.hide{animation:ub-out .25s ease forwards;}
@@ -660,7 +666,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div style="font-size:18px;font-weight:700;margin-bottom:2px;">TuS Esingen Handball</div>
     <div style="font-size:12px;color:#888;margin-bottom:14px;">Die App der Handball-Abteilung</div>
-    <div style="display:inline-block;background:#1a1a1a;color:white;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;">Version <span id="about-version">–</span></div>
+    <div id="about-version-pill" style="display:inline-block;background:#1a1a1a;color:white;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;cursor:pointer;user-select:none;-webkit-user-select:none;" onclick="onAboutVersionTap()">Version <span id="about-version">–</span></div>
   </div>
 
   <div class="sec">Über die App</div>
@@ -686,6 +692,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
   <div style="padding:20px 16px;font-size:11px;color:#aaa;text-align:center;line-height:1.5;">
     © 2026 TuS Esingen e.V.<br>Mit ♥ für den Handball entwickelt.
+  </div>
+  <div style="height:20px;"></div>
+</div>
+
+<!-- DEBUG-SCREEN (versteckt, erreichbar nur über 5x-Tap auf Versionspad) -->
+<div class="page" id="p-debug">
+  <div class="sec">Debug</div>
+  <div style="padding:14px 16px;font-size:12px;line-height:1.7;color:#444;font-family:ui-monospace,Menlo,Consolas,monospace;">
+    <div><b>APP_VERSION:</b> <span id="dbg-app-version">–</span></div>
+    <div><b>lastSeenAppVersion:</b> <span id="dbg-last-seen">–</span></div>
+    <div><b>bannerShownForVersion:</b> <span id="dbg-banner-shown">–</span></div>
+    <div><b>pendingUpdateNotice:</b> <span id="dbg-pending">–</span></div>
+    <div style="margin-top:8px;"><b>Service Worker:</b></div>
+    <div style="padding-left:8px;"><span id="dbg-sw-status">–</span></div>
+  </div>
+  <div class="sec">Aktionen</div>
+  <div style="padding:12px 16px;display:flex;flex-direction:column;gap:8px;">
+    <button onclick="dbgShowBanner()" style="padding:10px;border-radius:10px;background:#1a1a1a;color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Banner-Trigger testen</button>
+    <button onclick="dbgResetStorage()" style="padding:10px;border-radius:10px;background:#7a1a2e;color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">localStorage zurücksetzen</button>
+    <button onclick="dbgRefresh()" style="padding:10px;border-radius:10px;background:#e8e8e8;color:#1a1a1a;border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Ansicht aktualisieren</button>
+  </div>
+  <div style="padding:14px 16px;font-size:11px;color:#888;line-height:1.5;">
+    Hinweis: Dieser Screen ist nur über die geheime 5×-Tipp-Geste auf dem Versions-Etikett erreichbar.
   </div>
   <div style="height:20px;"></div>
 </div>
@@ -891,7 +920,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.12";
+const APP_VERSION = "0.6.13";
 const APP_BUILD_DATE = "08.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
@@ -900,6 +929,12 @@ const APP_BUILD_DATE = "08.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
+  { version: "0.6.13", date: "08.05.2026", points: [
+    "Die Update-Info am oberen Rand war auf dem iPhone von der Statusleiste verdeckt - sie ist jetzt korrekt darunter platziert und gut lesbar.",
+    "Das TuS-Logo unten in der Mitte ragt jetzt deutlicher aus der Menüleiste heraus.",
+    "Der Schriftzug 'Teams' hat jetzt mehr Abstand zum Logo, damit beides nicht aneinanderklebt.",
+    "Im aktiven Zustand füllt das Logo den weißen Innenkreis komplett aus, sodass kein weißer Ring mehr zu sehen ist."
+  ] },
   { version: "0.6.12", date: "08.05.2026", points: [
     "Die Update-Info am oberen Rand kommt jetzt zuverlässig - auch dann, wenn die App im Hintergrund aktualisiert wurde, während sie geschlossen war.",
     "Das TuS-Logo unten in der Mitte ist jetzt deutlich größer und ragt sichtbarer aus der Menüleiste heraus. Die Welle in der Leiste passt sich proportional an.",
@@ -942,10 +977,6 @@ const UPDATE_HISTORY = [
   { version: "0.6.4", date: "07.05.2026", points: [
     "Die Spielart (z.B. 'Testspiel') steht jetzt vertikal an der linken Kachelkante - lesbar von unten nach oben.",
     "Datum und Uhrzeit stehen wieder gemeinsam unten."
-  ] },
-  { version: "0.6.3", date: "07.05.2026", points: [
-    "Die Countdown-Karten sind kompakter geworden und nutzen den Platz besser aus.",
-    "Wenn kein Spiel ansteht, bleibt die Karte trotzdem in voller Größe erhalten."
   ] }
 ];
 
@@ -2615,6 +2646,88 @@ function closeAbout(){
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
   document.getElementById('p-news').classList.add('active');
   showMain(true);
+}
+
+// ── Debug-Screen (versteckt) ────────────────────────────────────────────────
+// Erreichbar über 5× Tap auf das Versions-Etikett im "Über diese App"-Screen.
+// Zeigt localStorage-Werte und SW-Status, um Banner-Probleme zu diagnostizieren.
+var aboutVersionTapCount = 0;
+var aboutVersionTapTimer = null;
+function onAboutVersionTap(){
+  aboutVersionTapCount++;
+  clearTimeout(aboutVersionTapTimer);
+  if(aboutVersionTapCount >= 5){
+    aboutVersionTapCount = 0;
+    openDebug();
+    return;
+  }
+  // Reset bei zu langer Pause zwischen Taps
+  aboutVersionTapTimer = setTimeout(function(){ aboutVersionTapCount = 0; }, 1500);
+}
+
+function openDebug(){
+  // Werte aus localStorage einlesen
+  var ls = function(k){
+    try { return localStorage.getItem(k); } catch(e){ return '(localStorage-Fehler)'; }
+  };
+  var fmt = function(v){ return (v === null || v === undefined) ? '(nicht gesetzt)' : v; };
+  document.getElementById('dbg-app-version').textContent = APP_VERSION;
+  document.getElementById('dbg-last-seen').textContent = fmt(ls('lastSeenAppVersion'));
+  document.getElementById('dbg-banner-shown').textContent = fmt(ls('bannerShownForVersion'));
+  document.getElementById('dbg-pending').textContent = fmt(ls('pendingUpdateNotice'));
+
+  // SW-Status
+  var swEl = document.getElementById('dbg-sw-status');
+  if(!('serviceWorker' in navigator)){
+    swEl.textContent = 'nicht unterstützt';
+  } else {
+    swEl.textContent = 'lade...';
+    navigator.serviceWorker.getRegistration().then(function(reg){
+      if(!reg){ swEl.textContent = 'keine Registrierung'; return; }
+      var states = [];
+      if(reg.installing) states.push('installing: ' + reg.installing.state);
+      if(reg.waiting)    states.push('waiting: '    + reg.waiting.state);
+      if(reg.active)     states.push('active: '     + reg.active.state);
+      var ctrl = navigator.serviceWorker.controller ? 'ja' : 'nein';
+      swEl.innerHTML = states.join('<br>') + '<br>controller aktiv: ' + ctrl + '<br>scope: ' + reg.scope;
+    }).catch(function(e){
+      swEl.textContent = 'Fehler: ' + e.message;
+    });
+  }
+
+  // Page anzeigen
+  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('p-debug').classList.add('active');
+  showMain(false);
+  var old = document.getElementById('dbghdr'); if(old) old.remove();
+  var h = document.createElement('div'); h.id = 'dbghdr'; h.className = 'd-hdr';
+  h.innerHTML = '<button class="bk" onclick="closeDebug()">&#8249;</button><div style="flex:1"><div class="d-name">Debug</div><div class="d-sub">interner Diagnose-Screen</div></div><div class="hdr-logo"><img src="'+LOGO+'" alt="TuS"></div>';
+  document.getElementById('APP').insertBefore(h, document.getElementById('scroll'));
+  document.getElementById('scroll').scrollTop = 0;
+}
+
+function closeDebug(){
+  var h = document.getElementById('dbghdr'); if(h) h.remove();
+  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+  // Zurück zum About-Screen, von dem aus der Debug-Screen geöffnet wurde
+  openAbout();
+}
+
+function dbgShowBanner(){
+  showUpdateBanner(APP_VERSION);
+}
+
+function dbgResetStorage(){
+  try {
+    localStorage.removeItem('lastSeenAppVersion');
+    localStorage.removeItem('bannerShownForVersion');
+    localStorage.removeItem('pendingUpdateNotice');
+    openDebug(); // Werte neu einlesen + anzeigen
+  } catch(e) {}
+}
+
+function dbgRefresh(){
+  openDebug();
 }
 
 // ── App-Updates (Update-Historie-Seite) ────────────────────────────────────

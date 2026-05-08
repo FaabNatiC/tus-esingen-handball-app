@@ -103,7 +103,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cd-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
 .cd-card{background:#e8e8e8;border-radius:14px;padding:10px 14px 8px 14px;text-align:center;position:relative;}
 .cd-tag{position:absolute;left:4px;top:0;bottom:0;width:11px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
-.cd-tag-inner{transform:rotate(-90deg);transform-origin:center;font-size:11px;color:#888;letter-spacing:.10em;white-space:nowrap;line-height:1;}
+.cd-tag-inner{transform:rotate(-90deg);transform-origin:center;font-size:11px;font-weight:600;color:#888;letter-spacing:.20em;white-space:nowrap;line-height:1;}
 .cd-team{font-size:13px;color:#1a1a1a;font-weight:700;line-height:1;margin-bottom:6px;}
 .cd-units{display:flex;justify-content:center;gap:4px;margin:6px 0 0;}
 .cd-u{display:flex;flex-direction:column;align-items:center;}
@@ -138,8 +138,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nl-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px;}
 .nl-tags .nl-b{margin-bottom:0;}
 /* Filter-Bar auf Alle-News-Seite */
-.an-filterbar{display:flex;gap:6px;padding:10px 14px 4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.an-filter-wrap{position:relative;}
+.an-filterbar{display:flex;gap:6px;padding:10px 14px 4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-behavior:smooth;}
 .an-filterbar::-webkit-scrollbar{display:none;}
+.an-arr{position:absolute;top:0;bottom:0;width:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;color:#1a1a1a;font-size:18px;font-weight:700;line-height:1;padding:0;z-index:2;opacity:0;pointer-events:none;transition:opacity .15s;}
+.an-arr.show{opacity:1;pointer-events:auto;}
+.an-arr-l{left:0;background:linear-gradient(to right, #fff 50%, rgba(255,255,255,0));justify-content:flex-start;padding-left:4px;}
+.an-arr-r{right:0;background:linear-gradient(to left, #fff 50%, rgba(255,255,255,0));justify-content:flex-end;padding-right:4px;}
+.phone.dark .an-arr{color:#eee;}
+.phone.dark .an-arr-l{background:linear-gradient(to right, #1a1a1a 50%, rgba(26,26,26,0));}
+.phone.dark .an-arr-r{background:linear-gradient(to left, #1a1a1a 50%, rgba(26,26,26,0));}
 .an-fbtn{flex-shrink:0;font-size:11px;font-weight:700;padding:6px 12px;border-radius:20px;background:#f0f0f0;color:#666;border:1px solid transparent;cursor:pointer;white-space:nowrap;transition:all .15s;}
 .an-fbtn.on{background:#1a1a1a;color:#fff;}
 .an-fbtn.vl.on{background:#3a3a3a;}
@@ -240,12 +248,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .st{background:#fff;border-radius:10px;padding:10px;text-align:center;border:1px solid #eaeaea;}
 .sv{font-size:22px;font-weight:700;} .sl{font-size:10px;color:#666;margin-top:2px;}
 .tbl-wrap{padding:0 14px 14px;}
-.tbl{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed;}
-.tbl th{font-size:10px;font-weight:700;color:#888;padding:8px 4px;text-align:right;border-bottom:1px solid #d0d0d0;background:#f5f5f5;}
+.tbl{width:100%;border-collapse:collapse;font-size:10px;}
+.tbl th{font-size:10px;font-weight:700;color:#888;padding:8px 3px;text-align:right;border-bottom:1px solid #d0d0d0;background:#f5f5f5;}
 .tbl th:nth-child(1){text-align:center;width:22px;} .tbl th:nth-child(2){text-align:left;}
-.tbl th:nth-child(3),.tbl th:nth-child(4),.tbl th:nth-child(5){width:24px;}
-.tbl th:nth-child(6){width:38px;} .tbl th:nth-child(7){width:28px;}
-.tbl td{padding:8px 4px;text-align:right;border-bottom:1px solid #f0f0f0;}
+.tbl th:nth-child(3){width:24px;} .tbl th:nth-child(4),.tbl th:nth-child(5),.tbl th:nth-child(6){width:22px;}
+.tbl th:nth-child(7){width:38px;} .tbl th:nth-child(8){width:46px;}
+.tbl td{padding:8px 3px;text-align:right;border-bottom:1px solid #f0f0f0;}
 .tbl td.pos{text-align:center;color:#666;font-size:10px;}
 .tname{display:flex;align-items:center;gap:6px;font-weight:600;overflow:hidden;min-width:0;}
 .tname span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1;}
@@ -780,7 +788,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div><!-- /scroll -->
 
 <div class="bnav" id="bnav">
-  <button class="bt on" onclick="nav('news',this)"><span class="bt-ic">📰</span><span class="bt-lb">News</span></button>
+  <button class="bt on" onclick="nav('news',this)"><span class="bt-ic">🏠</span><span class="bt-lb">Home</span></button>
   <button class="bt" onclick="nav('spielplan',this)"><span class="bt-ic">📅</span><span class="bt-lb">Spielplan</span></button>
   <button class="bt" onclick="nav('teams',this)"><span class="bt-ic">👕</span><span class="bt-lb">Teams</span></button>
   <button class="bt" onclick="nav('termine',this)"><span class="bt-ic">📆</span><span class="bt-lb">Termine</span></button>
@@ -806,7 +814,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.6";
+const APP_VERSION = "0.6.7";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1105,11 +1113,16 @@ function renderTabelle(data) {
     // Unentschieden aus den anderen Werten ableiten, falls nicht in der Tabelle vorhanden:
     // Sp - S - N = U (handball.net liefert U nicht im Standard-JSON mit)
     const unen = (t.unentschieden != null) ? t.unentschieden : Math.max(0, (t.spiele || 0) - (t.siege || 0) - (t.niederlagen || 0));
+    // Plus-/Minuspunkte nach Handball-Standard:
+    // Plus = 2*Siege + 1*Unentschieden, Minus = 2*Niederlagen + 1*Unentschieden
+    const plusPunkte  = 2 * (t.siege || 0) + unen;
+    const minusPunkte = 2 * (t.niederlagen || 0) + unen;
+    const pktStr = plusPunkte + ':' + minusPunkte;
     rows += `<tr class="${hl}">
       <td class="pos">${t.platz}</td>
       <td class="tname"><span style="display:flex;align-items:center;gap:6px;">${logo}${t.verein}</span></td>
       <td>${t.spiele}</td><td>${t.siege}</td><td>${unen}</td><td>${t.niederlagen}</td>
-      <td>${t.diff}</td><td class="pts">${t.punkte}</td>
+      <td>${t.diff}</td><td class="pts">${pktStr}</td>
     </tr>`;
   });
   const tblEl = document.getElementById('tabelle-body');
@@ -1122,9 +1135,12 @@ function renderTabelle(data) {
   const eigen = data.tabelle.find(t => t.highlight) || data.tabelle.find(t => t.verein === "TuS Esingen");
   const detStats = document.getElementById('dt-tab-stats');
   if(detStats && eigen) {
+    const eUnen = (eigen.unentschieden != null) ? eigen.unentschieden : Math.max(0, (eigen.spiele || 0) - (eigen.siege || 0) - (eigen.niederlagen || 0));
+    const ePlus  = 2 * (eigen.siege || 0) + eUnen;
+    const eMinus = 2 * (eigen.niederlagen || 0) + eUnen;
     detStats.innerHTML =
       '<div class="st"><div class="sv">' + eigen.platz + '.</div><div class="sl">Platz</div></div>' +
-      '<div class="st"><div class="sv">' + eigen.punkte + '</div><div class="sl">Punkte</div></div>' +
+      '<div class="st"><div class="sv">' + ePlus + ':' + eMinus + '</div><div class="sl">Punkte</div></div>' +
       '<div class="st"><div class="sv">' + eigen.diff + '</div><div class="sl">Tordiff.</div></div>';
   }
   const detLiga = document.getElementById('dt-tab-liga');
@@ -2255,15 +2271,19 @@ function setAllNewsFilter(filter){
 
 function openAllNews(){
   // Filter-Bar mit allen Kategorien (alle, vl, sp, he, da, jm, jw)
-  var filterBarHtml = '<div class="an-filterbar">' +
-    '<button class="an-fbtn'+(allNewsFilter==='all'?' on':'')+'" data-f="all" onclick="setAllNewsFilter(\'all\')">Alle</button>' +
-    '<button class="an-fbtn'+(allNewsFilter==='vl'?' on':'')+' vl" data-f="vl" onclick="setAllNewsFilter(\'vl\')">Vereinsleben</button>' +
-    '<button class="an-fbtn'+(allNewsFilter==='sp'?' on':'')+' sp" data-f="sp" onclick="setAllNewsFilter(\'sp\')">Sparte</button>' +
-    '<button class="an-fbtn'+(allNewsFilter==='he'?' on':'')+' he" data-f="he" onclick="setAllNewsFilter(\'he\')">Herren</button>' +
-    '<button class="an-fbtn'+(allNewsFilter==='da'?' on':'')+' da" data-f="da" onclick="setAllNewsFilter(\'da\')">Damen</button>' +
-    '<button class="an-fbtn'+(allNewsFilter==='jm'?' on':'')+' jm" data-f="jm" onclick="setAllNewsFilter(\'jm\')">Jugend m.</button>' +
-    '<button class="an-fbtn'+(allNewsFilter==='jw'?' on':'')+' jw" data-f="jw" onclick="setAllNewsFilter(\'jw\')">Jugend w.</button>' +
-    '<button class="an-fbtn'+(allNewsFilter==='mini'?' on':'')+' mini" data-f="mini" onclick="setAllNewsFilter(\'mini\')">Minis</button>' +
+  var filterBarHtml = '<div class="an-filter-wrap">' +
+    '<button class="an-arr an-arr-l" onclick="scrollAllNewsFilter(-120)" aria-label="Filter nach links">&#8249;</button>' +
+    '<div class="an-filterbar" id="an-filterbar">' +
+      '<button class="an-fbtn'+(allNewsFilter==='all'?' on':'')+'" data-f="all" onclick="setAllNewsFilter(\'all\')">Alle</button>' +
+      '<button class="an-fbtn'+(allNewsFilter==='vl'?' on':'')+' vl" data-f="vl" onclick="setAllNewsFilter(\'vl\')">Vereinsleben</button>' +
+      '<button class="an-fbtn'+(allNewsFilter==='sp'?' on':'')+' sp" data-f="sp" onclick="setAllNewsFilter(\'sp\')">Sparte</button>' +
+      '<button class="an-fbtn'+(allNewsFilter==='he'?' on':'')+' he" data-f="he" onclick="setAllNewsFilter(\'he\')">Herren</button>' +
+      '<button class="an-fbtn'+(allNewsFilter==='da'?' on':'')+' da" data-f="da" onclick="setAllNewsFilter(\'da\')">Damen</button>' +
+      '<button class="an-fbtn'+(allNewsFilter==='jm'?' on':'')+' jm" data-f="jm" onclick="setAllNewsFilter(\'jm\')">Jugend m.</button>' +
+      '<button class="an-fbtn'+(allNewsFilter==='jw'?' on':'')+' jw" data-f="jw" onclick="setAllNewsFilter(\'jw\')">Jugend w.</button>' +
+      '<button class="an-fbtn'+(allNewsFilter==='mini'?' on':'')+' mini" data-f="mini" onclick="setAllNewsFilter(\'mini\')">Minis</button>' +
+    '</div>' +
+    '<button class="an-arr an-arr-r" onclick="scrollAllNewsFilter(120)" aria-label="Filter nach rechts">&#8250;</button>' +
   '</div>';
   
   // Section-Header + Filter + Liste in den Page-Container
@@ -2286,7 +2306,39 @@ function openAllNews(){
   
   renderAllNewsList();
   document.getElementById('scroll').scrollTop = 0;
+
+  // Pfeil-Indikatoren initial setzen + auf Scroll reagieren
+  initAllNewsArrows();
 }
+
+// Pfeile links/rechts neben der Filter-Bar je nach Scroll-Position ein/aus.
+// Wird nach dem Rendern aufgerufen und reagiert dann auf scroll-Events.
+function initAllNewsArrows(){
+  var bar = document.getElementById('an-filterbar');
+  if(!bar) return;
+  var wrap = bar.parentElement;
+  var arrL = wrap.querySelector('.an-arr-l');
+  var arrR = wrap.querySelector('.an-arr-r');
+  function update(){
+    var canLeft  = bar.scrollLeft > 4;
+    var canRight = bar.scrollLeft + bar.clientWidth < bar.scrollWidth - 4;
+    if(arrL) arrL.classList.toggle('show', canLeft);
+    if(arrR) arrR.classList.toggle('show', canRight);
+  }
+  bar.addEventListener('scroll', update, { passive: true });
+  // Initial mit kleiner Verzögerung damit Layout fertig ist
+  setTimeout(update, 50);
+  // Bei Resize ebenfalls neu prüfen
+  window.addEventListener('resize', update);
+}
+
+// Klick auf Pfeil scrollt die Filter-Bar horizontal
+function scrollAllNewsFilter(delta){
+  var bar = document.getElementById('an-filterbar');
+  if(!bar) return;
+  bar.scrollBy({ left: delta, behavior: 'smooth' });
+}
+
 function closeAllNews(){
   var h = document.getElementById('anhdr'); if(h) h.remove();
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});

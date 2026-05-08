@@ -956,7 +956,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.14";
+const APP_VERSION = "0.6.15";
 const APP_BUILD_DATE = "08.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
@@ -965,6 +965,9 @@ const APP_BUILD_DATE = "08.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
+  { version: "0.6.15", date: "08.05.2026", points: [
+    "Ein technisches Problem hat verhindert, dass die Update-Info zuverlässig erscheint. Das ist behoben — beim nächsten Update wird sie wirklich angezeigt."
+  ] },
   { version: "0.6.14", date: "08.05.2026", points: [
     "Die Update-Info erscheint jetzt als schwebende Karte unten am Bildschirm — im gleichen Stil wie der Hinweis zum App-Installieren.",
     "Wenn beide Hinweise gleichzeitig auftreten würden, wird zuerst die Update-Info gezeigt. Sobald sie verschwindet, erscheint der Installations-Hinweis automatisch."
@@ -1009,10 +1012,6 @@ const UPDATE_HISTORY = [
   ] },
   { version: "0.6.6", date: "07.05.2026", points: [
     "Die kleine Beschriftung an den Countdown-Karten ('Testspiel', 'Ligaspiel', 'Pokalspiel') ist jetzt besser lesbar."
-  ] },
-  { version: "0.6.5", date: "07.05.2026", points: [
-    "Die Beschriftung an der Seite der Countdown-Karten klebt jetzt sauber am Rand.",
-    "Der Inhalt der Karten wirkt dadurch besser zentriert."
   ] }
 ];
 
@@ -2969,7 +2968,7 @@ var updBannerTimeout = null;
 var installBannerWasVisible = false;
 function showUpdateBanner(version){
   var el = document.getElementById('updBanner');
-  if(!el) return;
+  if(!el) return false; // DOM nicht bereit - Aufrufer kann reagieren
   var txt = document.getElementById('updBannerText');
   if(txt) txt.textContent = 'App aktualisiert auf ' + version;
   // Logo-Bild setzen (nutzt die globale LOGO-Variable wie alle Header-Logos)
@@ -2990,6 +2989,7 @@ function showUpdateBanner(version){
   // Nach 10s automatisch ausblenden
   clearTimeout(updBannerTimeout);
   updBannerTimeout = setTimeout(function(){ hideUpdateBanner(false); }, 10000);
+  return true;
 }
 function hideUpdateBanner(immediate){
   var el = document.getElementById('updBanner');
@@ -3022,8 +3022,13 @@ function hideUpdateBanner(immediate){
   }, 250);
 }
 
-// Beim App-Start: Version vergleichen, ggf. Banner zeigen
-(function checkForUpdate(){
+// Beim App-Start: Version vergleichen, ggf. Banner zeigen.
+// WICHTIG: Wir warten auf DOMContentLoaded, weil der updBanner-DIV im HTML
+// erst weiter unten platziert ist und showUpdateBanner sonst null findet
+// und stillschweigend abbricht. Außerdem setzen wir bannerShownForVersion
+// nur dann, wenn der Banner-Show tatsächlich erfolgreich war (Defense-
+// in-Depth gegen künftige DOM-Reihenfolge-Probleme).
+function checkForUpdate(){
   try {
     var bannerShown = false;
     var lastSeen = localStorage.getItem('lastSeenAppVersion');
@@ -3033,10 +3038,12 @@ function hideUpdateBanner(immediate){
     //    (controllerchange), wurde pendingUpdateNotice gesetzt. Banner zeigen.
     var pending = localStorage.getItem('pendingUpdateNotice');
     if(pending){
-      showUpdateBanner(APP_VERSION);
+      var ok1 = showUpdateBanner(APP_VERSION);
       localStorage.removeItem('pendingUpdateNotice');
-      localStorage.setItem('bannerShownForVersion', APP_VERSION);
-      bannerShown = true;
+      if(ok1){
+        localStorage.setItem('bannerShownForVersion', APP_VERSION);
+        bannerShown = true;
+      }
     }
 
     // 2) Hauptpfad: Banner wurde für DIESE Version noch nie gezeigt UND der
@@ -3046,9 +3053,11 @@ function hideUpdateBanner(immediate){
     //    Event mehr, das wir abfangen können. Beim nächsten App-Öffnen sehen
     //    wir aber: bannerShownForVersion ist veraltet -> Banner zeigen.
     if(!bannerShown && lastSeen && bannerShownFor !== APP_VERSION){
-      showUpdateBanner(APP_VERSION);
-      localStorage.setItem('bannerShownForVersion', APP_VERSION);
-      bannerShown = true;
+      var ok2 = showUpdateBanner(APP_VERSION);
+      if(ok2){
+        localStorage.setItem('bannerShownForVersion', APP_VERSION);
+        bannerShown = true;
+      }
     }
 
     // Beim allerersten Start (lastSeen leer): Kein Banner, aber bannerShownFor
@@ -3061,7 +3070,14 @@ function hideUpdateBanner(immediate){
     // Aktuelle Version speichern - dient als Marker "User kennt diese Version"
     localStorage.setItem('lastSeenAppVersion', APP_VERSION);
   } catch(e) { /* localStorage nicht verfügbar - egal */ }
-})();
+}
+// DOM erst, dann Update-Check. Falls DOM bereits fertig (z.B. bei
+// readyState=complete weil das Script am Ende des body steht), direkt aufrufen.
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', checkForUpdate);
+} else {
+  checkForUpdate();
+}
 
 // ── Formulare ───────────────────────────────────────────────────────────────
 function openFormulare(){

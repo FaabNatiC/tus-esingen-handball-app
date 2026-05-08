@@ -538,13 +538,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 @keyframes ib-in{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
 @media (display-mode: standalone){.install-banner{display:none !important;}}
 
-/* ── Update-Banner (oben) ─────────────────────────────────────────── */
-.upd-banner{position:fixed;top:0;left:0;right:0;background:#1a1a1a;color:#fff;padding:calc(11px + env(safe-area-inset-top, 0px)) 16px 11px;display:none;justify-content:center;align-items:center;gap:8px;font-size:12px;font-weight:600;z-index:1100;cursor:pointer;text-align:center;animation:ub-in .25s ease;}
+/* ── Update-Banner (unten, schwebende Karte im Install-Banner-Look) ──
+   Position: fixed unten, schwebt über der Bottom-Nav. Beachtet die safe-
+   area-inset-bottom (iPhone Home-Indicator). Layout analog zum Install-
+   Banner: Logo + Body (Titel + Subtext) + Pfeil + Close-Button. */
+.upd-banner{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px);background:#1a1a1a;color:#fff;border-radius:14px;padding:14px 14px 14px 16px;display:none;flex-direction:row;align-items:center;gap:12px;box-shadow:0 8px 30px rgba(0,0,0,0.35);z-index:1100;cursor:pointer;animation:ub-in .35s ease;}
 .upd-banner.show{display:flex;}
-.upd-banner-arr{font-size:14px;color:rgba(255,255,255,0.65);font-weight:400;}
 .upd-banner.hide{animation:ub-out .25s ease forwards;}
-@keyframes ub-in{from{transform:translateY(-100%);}to{transform:translateY(0);}}
-@keyframes ub-out{from{transform:translateY(0);}to{transform:translateY(-100%);}}
+.upd-banner-logo{width:42px;height:42px;border-radius:10px;flex-shrink:0;background:#fff;padding:4px;display:flex;align-items:center;justify-content:center;}
+.upd-banner-logo img{width:100%;height:100%;object-fit:contain;border-radius:6px;}
+.upd-banner-body{flex:1;min-width:0;}
+.upd-banner-title{font-size:13px;font-weight:700;line-height:1.2;}
+.upd-banner-sub{font-size:11px;color:rgba(255,255,255,0.65);margin-top:3px;line-height:1.35;}
+.upd-banner-arr{font-size:18px;color:rgba(255,255,255,0.5);font-weight:400;flex-shrink:0;padding:0 4px;}
+.upd-banner-close{background:none;border:none;color:rgba(255,255,255,0.5);font-size:22px;line-height:1;padding:4px 6px;cursor:pointer;flex-shrink:0;align-self:flex-start;margin-top:-4px;font-family:inherit;}
+@keyframes ub-in{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+@keyframes ub-out{from{transform:translateY(0);opacity:1;}to{transform:translateY(20px);opacity:0;}}
+
+/* ── Debug-Screen (versteckt) ──────────────────────────────────────── */
+.dbg-block{padding:14px 16px;font-size:12px;line-height:1.7;color:#444;font-family:ui-monospace,Menlo,Consolas,monospace;border-bottom:1px solid #f0f0f0;}
+.dbg-block b{color:#1a1a1a;font-weight:700;}
+.phone.dark .dbg-block{color:#ccc;border-bottom-color:#2a2a2a;}
+.phone.dark .dbg-block b{color:#fff;}
 
 /* ── Update-Historie-Seite ─────────────────────────────────────────── */
 .upd-list{padding:10px 14px 14px;}
@@ -698,15 +713,36 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <!-- DEBUG-SCREEN (versteckt, erreichbar nur über 5x-Tap auf Versionspad) -->
 <div class="page" id="p-debug">
-  <div class="sec">Debug</div>
-  <div style="padding:14px 16px;font-size:12px;line-height:1.7;color:#444;font-family:ui-monospace,Menlo,Consolas,monospace;">
+  <div class="sec">Banner-Storage</div>
+  <div class="dbg-block">
     <div><b>APP_VERSION:</b> <span id="dbg-app-version">–</span></div>
     <div><b>lastSeenAppVersion:</b> <span id="dbg-last-seen">–</span></div>
     <div><b>bannerShownForVersion:</b> <span id="dbg-banner-shown">–</span></div>
     <div><b>pendingUpdateNotice:</b> <span id="dbg-pending">–</span></div>
-    <div style="margin-top:8px;"><b>Service Worker:</b></div>
-    <div style="padding-left:8px;"><span id="dbg-sw-status">–</span></div>
+    <div><b>installBannerDismissed:</b> <span id="dbg-install-dismissed">–</span></div>
+    <div style="margin-top:6px;"><b>Letzter Banner-Trigger:</b> <span id="dbg-last-trigger">–</span></div>
   </div>
+
+  <div class="sec">Service Worker</div>
+  <div class="dbg-block">
+    <div><b>installing:</b> <span id="dbg-sw-installing">–</span></div>
+    <div><b>waiting:</b> <span id="dbg-sw-waiting">–</span></div>
+    <div><b>active:</b> <span id="dbg-sw-active">–</span></div>
+    <div><b>controller aktiv:</b> <span id="dbg-sw-controller">–</span></div>
+    <div style="margin-top:6px;"><b>scope:</b><br><span id="dbg-sw-scope" style="word-break:break-all;">–</span></div>
+  </div>
+
+  <div class="sec">Caches</div>
+  <div class="dbg-block">
+    <div id="dbg-caches">–</div>
+  </div>
+
+  <div class="sec">App-Kontext</div>
+  <div class="dbg-block">
+    <div><b>display-mode:</b> <span id="dbg-display-mode">–</span></div>
+    <div><b>online:</b> <span id="dbg-online">–</span></div>
+  </div>
+
   <div class="sec">Aktionen</div>
   <div style="padding:12px 16px;display:flex;flex-direction:column;gap:8px;">
     <button onclick="dbgShowBanner()" style="padding:10px;border-radius:10px;background:#1a1a1a;color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Banner-Trigger testen</button>
@@ -920,7 +956,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.13";
+const APP_VERSION = "0.6.14";
 const APP_BUILD_DATE = "08.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
@@ -929,6 +965,10 @@ const APP_BUILD_DATE = "08.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
+  { version: "0.6.14", date: "08.05.2026", points: [
+    "Die Update-Info erscheint jetzt als schwebende Karte unten am Bildschirm — im gleichen Stil wie der Hinweis zum App-Installieren.",
+    "Wenn beide Hinweise gleichzeitig auftreten würden, wird zuerst die Update-Info gezeigt. Sobald sie verschwindet, erscheint der Installations-Hinweis automatisch."
+  ] },
   { version: "0.6.13", date: "08.05.2026", points: [
     "Die Update-Info am oberen Rand war auf dem iPhone von der Statusleiste verdeckt - sie ist jetzt korrekt darunter platziert und gut lesbar.",
     "Das TuS-Logo unten in der Mitte ragt jetzt deutlicher aus der Menüleiste heraus.",
@@ -973,10 +1013,6 @@ const UPDATE_HISTORY = [
   { version: "0.6.5", date: "07.05.2026", points: [
     "Die Beschriftung an der Seite der Countdown-Karten klebt jetzt sauber am Rand.",
     "Der Inhalt der Karten wirkt dadurch besser zentriert."
-  ] },
-  { version: "0.6.4", date: "07.05.2026", points: [
-    "Die Spielart (z.B. 'Testspiel') steht jetzt vertikal an der linken Kachelkante - lesbar von unten nach oben.",
-    "Datum und Uhrzeit stehen wieder gemeinsam unten."
   ] }
 ];
 
@@ -2665,36 +2701,148 @@ function onAboutVersionTap(){
   aboutVersionTapTimer = setTimeout(function(){ aboutVersionTapCount = 0; }, 1500);
 }
 
-function openDebug(){
-  // Werte aus localStorage einlesen
-  var ls = function(k){
-    try { return localStorage.getItem(k); } catch(e){ return '(localStorage-Fehler)'; }
-  };
-  var fmt = function(v){ return (v === null || v === undefined) ? '(nicht gesetzt)' : v; };
-  document.getElementById('dbg-app-version').textContent = APP_VERSION;
-  document.getElementById('dbg-last-seen').textContent = fmt(ls('lastSeenAppVersion'));
-  document.getElementById('dbg-banner-shown').textContent = fmt(ls('bannerShownForVersion'));
-  document.getElementById('dbg-pending').textContent = fmt(ls('pendingUpdateNotice'));
+// Speichert Listener-Cleanup-Funktionen, damit wir beim Schließen des Debug-
+// Screens keine Memory-Leaks oder Phantom-Aktualisierungen haben.
+var dbgListenerCleanup = [];
 
-  // SW-Status
-  var swEl = document.getElementById('dbg-sw-status');
+function dbgFmt(v){
+  if(v === null || v === undefined) return '(nicht gesetzt)';
+  return v;
+}
+function dbgGet(k){
+  try { return localStorage.getItem(k); } catch(e){ return '(Fehler)'; }
+}
+
+// Befüllt nur die Daten-Felder neu, ohne Page-Setup. Wird von Live-Listenern
+// aufgerufen, wenn sich SW-States ändern.
+function dbgUpdateData(){
+  // Banner-Storage-Felder
+  var setText = function(id, v){
+    var el = document.getElementById(id);
+    if(el) el.textContent = v;
+  };
+  setText('dbg-app-version', APP_VERSION);
+  setText('dbg-last-seen', dbgFmt(dbgGet('lastSeenAppVersion')));
+  setText('dbg-banner-shown', dbgFmt(dbgGet('bannerShownForVersion')));
+  setText('dbg-pending', dbgFmt(dbgGet('pendingUpdateNotice')));
+  setText('dbg-install-dismissed', dbgFmt(dbgGet('installBannerDismissed')));
+  setText('dbg-last-trigger', dbgFmt(dbgGet('dbgLastBannerTrigger')));
+
+  // App-Kontext
+  var dispMode = window.matchMedia('(display-mode: standalone)').matches ? 'standalone'
+                : window.matchMedia('(display-mode: minimal-ui)').matches ? 'minimal-ui'
+                : 'browser';
+  setText('dbg-display-mode', dispMode);
+  setText('dbg-online', navigator.onLine ? 'ja' : 'nein');
+
+  // Service-Worker-States
   if(!('serviceWorker' in navigator)){
-    swEl.textContent = 'nicht unterstützt';
+    setText('dbg-sw-installing', '(nicht unterstützt)');
+    setText('dbg-sw-waiting', '(nicht unterstützt)');
+    setText('dbg-sw-active', '(nicht unterstützt)');
+    setText('dbg-sw-controller', '(nicht unterstützt)');
+    setText('dbg-sw-scope', '(nicht unterstützt)');
   } else {
-    swEl.textContent = 'lade...';
     navigator.serviceWorker.getRegistration().then(function(reg){
-      if(!reg){ swEl.textContent = 'keine Registrierung'; return; }
-      var states = [];
-      if(reg.installing) states.push('installing: ' + reg.installing.state);
-      if(reg.waiting)    states.push('waiting: '    + reg.waiting.state);
-      if(reg.active)     states.push('active: '     + reg.active.state);
-      var ctrl = navigator.serviceWorker.controller ? 'ja' : 'nein';
-      swEl.innerHTML = states.join('<br>') + '<br>controller aktiv: ' + ctrl + '<br>scope: ' + reg.scope;
+      if(!reg){
+        setText('dbg-sw-installing', '(keine Registrierung)');
+        setText('dbg-sw-waiting', '–');
+        setText('dbg-sw-active', '–');
+        setText('dbg-sw-controller', '–');
+        setText('dbg-sw-scope', '–');
+        return;
+      }
+      setText('dbg-sw-installing', reg.installing ? reg.installing.state : '–');
+      setText('dbg-sw-waiting',    reg.waiting    ? reg.waiting.state    : '–');
+      setText('dbg-sw-active',     reg.active     ? reg.active.state     : '–');
+      setText('dbg-sw-controller', navigator.serviceWorker.controller ? 'ja' : 'nein');
+      setText('dbg-sw-scope', reg.scope);
     }).catch(function(e){
-      swEl.textContent = 'Fehler: ' + e.message;
+      setText('dbg-sw-active', 'Fehler: ' + e.message);
     });
   }
 
+  // Caches
+  var cachesEl = document.getElementById('dbg-caches');
+  if(cachesEl){
+    if(!('caches' in window)){
+      cachesEl.textContent = '(nicht unterstützt)';
+    } else {
+      cachesEl.textContent = 'lade...';
+      caches.keys().then(function(names){
+        if(!names.length){ cachesEl.textContent = '(keine)'; return; }
+        var jobs = names.map(function(n){
+          return caches.open(n).then(function(c){
+            return c.keys().then(function(ks){ return { name:n, count:ks.length }; });
+          });
+        });
+        Promise.all(jobs).then(function(infos){
+          cachesEl.innerHTML = infos.map(function(i){
+            return '<div><b>' + i.name + ':</b> ' + i.count + ' Einträge</div>';
+          }).join('');
+        });
+      }).catch(function(e){
+        cachesEl.textContent = 'Fehler: ' + e.message;
+      });
+    }
+  }
+}
+
+// Listener-Setup: lauschen auf SW-Lifecycle-Events, damit der Debug-Screen
+// sich live aktualisiert (z.B. wenn ein SW von "activating" zu "activated"
+// wechselt). Cleanup-Funktionen werden in dbgListenerCleanup gesammelt.
+function dbgAttachListeners(){
+  // Sicherheitshalber alte Listener vorher entfernen
+  dbgDetachListeners();
+
+  if(!('serviceWorker' in navigator)) return;
+
+  var onControllerChange = function(){ dbgUpdateData(); };
+  navigator.serviceWorker.addEventListener('controllerchange', onControllerChange);
+  dbgListenerCleanup.push(function(){
+    navigator.serviceWorker.removeEventListener('controllerchange', onControllerChange);
+  });
+
+  navigator.serviceWorker.getRegistration().then(function(reg){
+    if(!reg) return;
+    var onUpdateFound = function(){
+      dbgUpdateData();
+      // Auch auf den neu installierten SW lauschen
+      var newW = reg.installing;
+      if(newW){
+        var onState = function(){ dbgUpdateData(); };
+        newW.addEventListener('statechange', onState);
+        dbgListenerCleanup.push(function(){
+          newW.removeEventListener('statechange', onState);
+        });
+      }
+    };
+    reg.addEventListener('updatefound', onUpdateFound);
+    dbgListenerCleanup.push(function(){
+      reg.removeEventListener('updatefound', onUpdateFound);
+    });
+
+    // Auch die bereits aktiven Worker auf statechange beobachten
+    ['installing','waiting','active'].forEach(function(slot){
+      var w = reg[slot];
+      if(!w) return;
+      var onState = function(){ dbgUpdateData(); };
+      w.addEventListener('statechange', onState);
+      dbgListenerCleanup.push(function(){
+        w.removeEventListener('statechange', onState);
+      });
+    });
+  });
+}
+
+function dbgDetachListeners(){
+  dbgListenerCleanup.forEach(function(fn){
+    try { fn(); } catch(e){}
+  });
+  dbgListenerCleanup = [];
+}
+
+function openDebug(){
   // Page anzeigen
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
   document.getElementById('p-debug').classList.add('active');
@@ -2704,9 +2852,15 @@ function openDebug(){
   h.innerHTML = '<button class="bk" onclick="closeDebug()">&#8249;</button><div style="flex:1"><div class="d-name">Debug</div><div class="d-sub">interner Diagnose-Screen</div></div><div class="hdr-logo"><img src="'+LOGO+'" alt="TuS"></div>';
   document.getElementById('APP').insertBefore(h, document.getElementById('scroll'));
   document.getElementById('scroll').scrollTop = 0;
+
+  // Daten befüllen + Live-Listener anhängen
+  dbgUpdateData();
+  dbgAttachListeners();
 }
 
 function closeDebug(){
+  // Live-Listener wieder entfernen
+  dbgDetachListeners();
   var h = document.getElementById('dbghdr'); if(h) h.remove();
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
   // Zurück zum About-Screen, von dem aus der Debug-Screen geöffnet wurde
@@ -2714,7 +2868,14 @@ function closeDebug(){
 }
 
 function dbgShowBanner(){
+  // Zeitstempel des letzten Trigger-Tests speichern
+  try {
+    var ts = new Date().toLocaleString('de-DE');
+    localStorage.setItem('dbgLastBannerTrigger', ts);
+  } catch(e){}
   showUpdateBanner(APP_VERSION);
+  // Anzeige im Debug-Screen aktualisieren (falls noch sichtbar)
+  dbgUpdateData();
 }
 
 function dbgResetStorage(){
@@ -2722,12 +2883,14 @@ function dbgResetStorage(){
     localStorage.removeItem('lastSeenAppVersion');
     localStorage.removeItem('bannerShownForVersion');
     localStorage.removeItem('pendingUpdateNotice');
-    openDebug(); // Werte neu einlesen + anzeigen
+    localStorage.removeItem('installBannerDismissed');
+    localStorage.removeItem('dbgLastBannerTrigger');
+    dbgUpdateData(); // Werte neu einlesen
   } catch(e) {}
 }
 
 function dbgRefresh(){
-  openDebug();
+  dbgUpdateData();
 }
 
 // ── App-Updates (Update-Historie-Seite) ────────────────────────────────────
@@ -2795,15 +2958,33 @@ function closeUpdateHistory(){
   showMain(true);
 }
 
-// ── Update-Banner (oben am Bildschirmrand) ──────────────────────────────────
-// Zeigt für 10 Sekunden einen schmalen Banner, wenn die App auf eine neue
-// Version aktualisiert wurde. Klick führt zur Update-Historie.
+// ── Update-Banner (schwebende Karte unten) ──────────────────────────────────
+// Zeigt für 10 Sekunden eine Karte am unteren Bildschirmrand, wenn die App auf
+// eine neue Version aktualisiert wurde. Klick auf Body/Pfeil -> Update-Historie.
+// Falls der Install-Banner gerade sichtbar ist, wird er kurz pausiert, weil
+// beide Banner denselben unteren Bildschirmbereich nutzen würden.
 var updBannerTimeout = null;
+// Merker: war der Install-Banner sichtbar als der Update-Banner kam?
+// Wenn ja, blenden wir ihn nach Ablauf des Update-Banners wieder ein.
+var installBannerWasVisible = false;
 function showUpdateBanner(version){
   var el = document.getElementById('updBanner');
   if(!el) return;
   var txt = document.getElementById('updBannerText');
   if(txt) txt.textContent = 'App aktualisiert auf ' + version;
+  // Logo-Bild setzen (nutzt die globale LOGO-Variable wie alle Header-Logos)
+  var logoEl = document.getElementById('ubLogo');
+  if(logoEl && typeof LOGO !== 'undefined') logoEl.src = LOGO;
+
+  // Priorität: Wenn der Install-Banner gerade sichtbar ist, vorübergehend
+  // ausblenden (ohne dismissed-Flag zu setzen) und merken, dass er später
+  // wieder sichtbar gemacht werden soll.
+  var ib = document.getElementById('installBanner');
+  installBannerWasVisible = !!(ib && ib.classList.contains('show'));
+  if(installBannerWasVisible && ib){
+    ib.classList.remove('show');
+  }
+
   el.classList.remove('hide');
   el.classList.add('show');
   // Nach 10s automatisch ausblenden
@@ -2814,13 +2995,31 @@ function hideUpdateBanner(immediate){
   var el = document.getElementById('updBanner');
   if(!el) return;
   clearTimeout(updBannerTimeout);
+  // Nach dem Ausblenden ggf. den Install-Banner zurückbringen
+  var restoreInstall = function(){
+    if(installBannerWasVisible){
+      var ib = document.getElementById('installBanner');
+      // Nur wieder einblenden, wenn er nicht zwischenzeitlich dismissed wurde
+      var dismissed = false;
+      try { dismissed = !!localStorage.getItem('installBannerDismissed'); } catch(e){}
+      if(ib && !dismissed){
+        ib.classList.add('show');
+      }
+      installBannerWasVisible = false;
+    }
+  };
   if(immediate){
     el.classList.remove('show');
     el.classList.remove('hide');
+    restoreInstall();
     return;
   }
   el.classList.add('hide');
-  setTimeout(function(){ el.classList.remove('show'); el.classList.remove('hide'); }, 250);
+  setTimeout(function(){
+    el.classList.remove('show');
+    el.classList.remove('hide');
+    restoreInstall();
+  }, 250);
 }
 
 // Beim App-Start: Version vergleichen, ggf. Banner zeigen
@@ -2986,9 +3185,14 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 <!-- Install-Banner: Aufforderung zur App-Installation für mobile Browser-User -->
-<div class="upd-banner" id="updBanner" onclick="openUpdateHistory(true)">
-  <span id="updBannerText">App aktualisiert auf 0.0.0</span>
-  <span class="upd-banner-arr">› Details</span>
+<div class="upd-banner" id="updBanner">
+  <div class="upd-banner-logo"><img src="" id="ubLogo" alt="TuS Esingen"></div>
+  <div class="upd-banner-body" onclick="openUpdateHistory(true)">
+    <div class="upd-banner-title" id="updBannerText">App aktualisiert auf 0.0.0</div>
+    <div class="upd-banner-sub">Tippen für Details</div>
+  </div>
+  <span class="upd-banner-arr" onclick="openUpdateHistory(true)">›</span>
+  <button class="upd-banner-close" onclick="hideUpdateBanner(true)" aria-label="Schließen">×</button>
 </div>
 <div class="install-banner" id="installBanner">
   <div class="install-banner-logo"><img src="" id="ibLogo" alt="TuS Esingen"></div>
@@ -3054,18 +3258,27 @@ if ('serviceWorker' in navigator) {
   }
 
   // Banner einblenden nach kurzer Verzögerung
-  setTimeout(function(){
+  // Falls der Update-Banner gerade sichtbar ist, warten wir, bis er weg ist.
+  var trySchowInstallBanner = function(){
     var banner = document.getElementById('installBanner');
     var titleEl = document.getElementById('ibTitle');
     var textEl = document.getElementById('ibText');
     var logoEl = document.getElementById('ibLogo');
-    if (banner && titleEl && textEl && logoEl) {
-      titleEl.textContent = titleText;
-      textEl.innerHTML = bodyText;
-      if (typeof LOGO !== 'undefined') logoEl.src = LOGO;
-      banner.classList.add('show');
+    if(!banner || !titleEl || !textEl || !logoEl) return;
+    // Update-Banner hat Vorrang. Falls er sichtbar ist: später nochmal prüfen.
+    var ub = document.getElementById('updBanner');
+    if(ub && ub.classList.contains('show')){
+      setTimeout(trySchowInstallBanner, 500);
+      return;
     }
-  }, 1500);
+    // Falls zwischenzeitlich dismissed wurde: nichts tun
+    try { if(localStorage.getItem('installBannerDismissed')) return; } catch(e){}
+    titleEl.textContent = titleText;
+    textEl.innerHTML = bodyText;
+    if (typeof LOGO !== 'undefined') logoEl.src = LOGO;
+    banner.classList.add('show');
+  };
+  setTimeout(trySchowInstallBanner, 1500);
 })();
 
 // Native Install-Prompt für Chromium-Browser (Android Chrome, Edge, etc.)

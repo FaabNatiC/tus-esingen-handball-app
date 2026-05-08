@@ -125,19 +125,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
    rutscht das Label per margin-top weiter nach unten. */
 .bt.bt-home .bt-lb{margin-top:6px;}
 .bt-logo{position:absolute;left:50%;top:0;transform:translate(-50%,-24px);display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:#1a1a1a;border:3px solid #1a1a1a;box-shadow:0 2px 8px rgba(0,0,0,0.3);transition:background .2s;z-index:2;}
-.bt-logo img{width:40px;height:40px;object-fit:contain;display:block;transition:width .2s,height .2s;}
-/* Aktiver Home-Tab: Innenkreis weiß, Border bleibt schwarz, Logo-Image
-   wird größer (40 -> 46) und füllt den Innenkreis bis zur Border-Kante,
-   damit kein weißer Ring zwischen Border und Logo zu sehen ist. */
-.bt.bt-home.on{background:transparent;}
-.bt.bt-home.on .bt-logo{background:#fff;}
-.bt.bt-home.on .bt-logo img{width:46px;height:46px;}
-/* Home-Label im aktiven Zustand: weiß + fett. Überschreibt die generische
-   Active-Regel .bt.on .bt-lb{color:#1a1a1a}, die für die anderen Tabs gilt
-   (die einen weißen Pillen-Background bekommen). Der Home-Tab bleibt aber
-   transparent (Notch-kompatibel), daher braucht das Label eine helle Farbe
-   gegen die schwarze Bar. */
-.bt.bt-home.on .bt-lb{color:#fff;font-weight:700;}
+.bt-logo img{width:40px;height:40px;object-fit:contain;display:block;}
+/* Home-Tab im aktiven Zustand: Bekommt - wie alle anderen Tabs - die
+   generische .bt.on-Regel (weißer Pillen-Hintergrund + dunkles fettes
+   Label). Das Logo bleibt schwarz wie im Inaktiv-Zustand und steht dann
+   auf weißem Hintergrund - klarer Kontrast. */
 .d-hdr{background:#1a1a1a;padding:14px 16px 12px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
 @media (display-mode: standalone) {
   .d-hdr{padding-top:calc(env(safe-area-inset-top) + 12px);}
@@ -962,7 +954,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.17";
+const APP_VERSION = "0.6.18";
 const APP_BUILD_DATE = "08.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
@@ -971,6 +963,10 @@ const APP_BUILD_DATE = "08.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
+  { version: "0.6.18", date: "08.05.2026", points: [
+    "Beim App-Start war fälschlich der Tab 'Teams' weiß hervorgehoben, obwohl die App auf der Home-Seite startet. Der korrekte Tab 'Home' wird nun beim Start markiert.",
+    "Der Tab 'Home' wird im aktiven Zustand jetzt — wie alle anderen Tabs — mit einem weißen Hintergrund und dunkler, fetter Beschriftung dargestellt."
+  ] },
   { version: "0.6.17", date: "08.05.2026", points: [
     "Auf der Home-Seite war die Beschriftung 'Home' in der Menüleiste nicht zu lesen, weil sie in dunkler Schrift auf dunklem Hintergrund angezeigt wurde. Sie erscheint nun in weißer, fetter Schrift und ist gut sichtbar."
   ] },
@@ -1014,11 +1010,6 @@ const UPDATE_HISTORY = [
   { version: "0.6.9", date: "08.05.2026", points: [
     "Du wirst jetzt informiert, wenn die App ein Update bekommen hat.",
     "Über das Menü unter 'App-Updates' findest du eine Übersicht der letzten Änderungen in einfacher Sprache."
-  ] },
-  { version: "0.6.8", date: "07.05.2026", points: [
-    "Der Tab 'News' unten heißt jetzt 'Home'.",
-    "Spielplan und Teams haben neue Icons bekommen.",
-    "Die zwei Countdown-Karten oben auf der Startseite stehen jetzt immer auf gleicher Höhe, auch wenn keine Spiele anstehen."
   ] }
 ];
 
@@ -1110,17 +1101,8 @@ function nav(p,btn){
   document.getElementById('p-'+p).classList.add('active');
   document.querySelectorAll('.bt').forEach(function(b){b.classList.remove('on');b.style.background='transparent';b.querySelector('.bt-lb').style.color='rgba(255,255,255,0.4)';});
   btn.classList.add('on');
-  // Home-Button (bt-home, in der Mitte mit Notch) hat einen Spezial-Active-
-  // State via CSS - kein inline weißer Background, sonst wird der Notch
-  // überdeckt. Andere Tabs bekommen den klassischen weißen Pillen-BG.
-  // Label-Farbe entsprechend: dunkel auf weißem BG, weiß auf transparentem
-  // Bar-Hintergrund (Home-Tab).
-  if(btn.classList.contains('bt-home')){
-    btn.querySelector('.bt-lb').style.color='#fff';
-  } else {
-    btn.style.background='white';
-    btn.querySelector('.bt-lb').style.color='#1a1a1a';
-  }
+  btn.style.background='white';
+  btn.querySelector('.bt-lb').style.color='#1a1a1a';
   document.getElementById('scroll').scrollTop=0;
   showMain(true);
 
@@ -1952,14 +1934,8 @@ function navBurger(p){
     if(map[p]!==undefined){
       var targetBtn = btns[map[p]];
       targetBtn.classList.add('on');
-      // Home-Button (bt-home): kein inline-BG, Label weiß. Andere: weißer BG
-      // mit dunklem Label.
-      if(targetBtn.classList.contains('bt-home')){
-        targetBtn.querySelector('.bt-lb').style.color='#fff';
-      } else {
-        targetBtn.style.background='white';
-        targetBtn.querySelector('.bt-lb').style.color='#1a1a1a';
-      }
+      targetBtn.style.background='white';
+      targetBtn.querySelector('.bt-lb').style.color='#1a1a1a';
     }
     document.getElementById('scroll').scrollTop=0;
     showMain(true);
@@ -2574,11 +2550,8 @@ function closeAllNews(){
   var h = document.getElementById('anhdr'); if(h) h.remove();
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
   document.getElementById('p-news').classList.add('active');
-  // Bottom-Nav: Home-Button (in der Mitte, Index 2) als aktiv markieren.
-  // Der Home-Button hat die Klasse bt-home und einen Spezial-Active-State
-  // via CSS - daher KEIN inline background='white' setzen, das würde mit
-  // dem Notch-Layout kollidieren. Nur die .on-Klasse setzen, das CSS
-  // erledigt den Rest (Logo-Kreis wird weiß, Label fett).
+  // Bottom-Nav: Home-Button (mittig, Index 2) als aktiv markieren - genauso
+  // behandelt wie alle anderen Tabs (weißer Pillen-Background, dunkles Label).
   var btns = document.querySelectorAll('.bt');
   btns.forEach(function(b){
     b.classList.remove('on');
@@ -2587,9 +2560,8 @@ function closeAllNews(){
   });
   if(btns[2]){
     btns[2].classList.add('on');
-    // KEIN btns[2].style.background = 'white' - bt-home.on bleibt transparent
-    // Label-Farbe weiß, weil der Home-Tab gegen die schwarze Bar steht.
-    var lb2 = btns[2].querySelector('.bt-lb'); if(lb2) lb2.style.color = '#fff';
+    btns[2].style.background = 'white';
+    var lb2 = btns[2].querySelector('.bt-lb'); if(lb2) lb2.style.color = '#1a1a1a';
   }
   document.getElementById('scroll').scrollTop = 0;
   showMain(true);
@@ -3173,11 +3145,10 @@ function renderHallenBackButton(){
   }
 }
 
-// Init nav buttons
-document.querySelectorAll('.bt').forEach(function(b,i){
-  b.style.background=i===0?'white':'transparent';
-  b.querySelector('.bt-lb').style.color=i===0?'#1a1a1a':'rgba(255,255,255,0.4)';
-});
+// Init nav buttons: Der Default-State (Home-Tab aktiv) ist bereits via
+// HTML-Klasse "on" auf dem mittleren Button gesetzt - das CSS regelt den
+// Look. Hier nichts mehr per JS überschreiben (frühere Index-basierte
+// Init-Schleife war buggy nach der Nav-Umsortierung).
 </script>
 
 <!-- PWA: Service Worker registrieren mit Auto-Update -->

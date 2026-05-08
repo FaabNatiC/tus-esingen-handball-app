@@ -103,7 +103,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cd-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
 .cd-card{background:#e8e8e8;border-radius:14px;padding:10px 14px 8px 14px;text-align:center;position:relative;}
 .cd-tag{position:absolute;left:4px;top:0;bottom:0;width:11px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
-.cd-tag-inner{transform:rotate(-90deg);transform-origin:center;font-size:11px;font-weight:600;color:#888;letter-spacing:.20em;white-space:nowrap;line-height:1;}
+.cd-tag-inner{transform:rotate(-90deg);transform-origin:center;font-size:11px;font-weight:700;color:#888;letter-spacing:.25em;white-space:nowrap;line-height:1;}
 .cd-team{font-size:13px;color:#1a1a1a;font-weight:700;line-height:1;margin-bottom:6px;}
 .cd-units{display:flex;justify-content:center;gap:4px;margin:6px 0 0;}
 .cd-u{display:flex;flex-direction:column;align-items:center;}
@@ -789,8 +789,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <div class="bnav" id="bnav">
   <button class="bt on" onclick="nav('news',this)"><span class="bt-ic">🏠</span><span class="bt-lb">Home</span></button>
-  <button class="bt" onclick="nav('spielplan',this)"><span class="bt-ic">📅</span><span class="bt-lb">Spielplan</span></button>
-  <button class="bt" onclick="nav('teams',this)"><span class="bt-ic">👕</span><span class="bt-lb">Teams</span></button>
+  <button class="bt" onclick="nav('spielplan',this)"><span class="bt-ic">🤾</span><span class="bt-lb">Spielplan</span></button>
+  <button class="bt" onclick="nav('teams',this)"><span class="bt-ic"><img src="data/logos/tus-esingen.png" alt="" style="width:22px;height:22px;object-fit:contain;vertical-align:middle;"></span><span class="bt-lb">Teams</span></button>
   <button class="bt" onclick="nav('termine',this)"><span class="bt-ic">📆</span><span class="bt-lb">Termine</span></button>
   <button class="bt" onclick="nav('hallen',this)"><span class="bt-ic">📍</span><span class="bt-lb">Anfahrt</span></button>
 </div>
@@ -814,7 +814,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.7";
+const APP_VERSION = "0.6.8";
 const APP_BUILD_DATE = "07.05.2026";
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
@@ -1307,18 +1307,22 @@ function renderCountdownCard(teamId){
   // Cache noch nicht geladen?
   var cache = window.spielplaeneCache || {};
   if(!cache[teamId]){
-    contentEl.innerHTML = tagLeft(null) + teamHtml + '<div class="cd-status">Lade …</div>' + emptyCountdown() + whenBottom(null);
+    contentEl.innerHTML = tagLeft(null) + teamHtml +
+      '<div class="cd-match"><strong>Lade …</strong><br>&nbsp;</div>' +
+      emptyCountdown() + whenBottom(null);
     return;
   }
 
   var spiel = findeNaechstesSpiel(teamId);
 
-  // Kein nächstes Spiel
+  // Kein nächstes Spiel - gleiche Struktur wie sonst, damit beide Karten
+  // exakt die gleiche Höhe haben. Statt Paarung steht "Kein nächstes Spiel"
+  // im selben Slot (zwei Zeilen für gleiche Höhe).
   if(!spiel){
     contentEl.innerHTML =
       tagLeft(null) +
       teamHtml +
-      '<div class="cd-status">Kein nächstes Spiel</div>' +
+      '<div class="cd-match"><strong>Kein nächstes</strong><br>Spiel</div>' +
       emptyCountdown() +
       whenBottom(null);
     return;
@@ -1345,7 +1349,7 @@ function renderCountdownCard(teamId){
     contentEl.innerHTML =
       tagLeft(null) +
       teamHtml +
-      '<div class="cd-status">Kein nächstes Spiel</div>' +
+      '<div class="cd-match"><strong>Kein nächstes</strong><br>Spiel</div>' +
       emptyCountdown() +
       whenBottom(null);
     return;
@@ -2425,7 +2429,8 @@ function openNews(idx, fromAllNews){
   var h=document.createElement('div');h.id='nhdr';h.className='d-hdr';
   h.style.background='#1a1a1a';
   var backFn = fromAllNews ? 'closeNewsToAllNews()' : 'closeNews()';
-  h.innerHTML='<button class="bk" onclick="'+backFn+'">&#8249;</button><div style="flex:1"><div class="d-name">News</div><div class="d-sub">TuS Esingen · Handball · Abteilung</div></div><div class="hdr-logo"><img src="'+LOGO+'" alt="TuS"></div>';
+  var hdrTitle = fromAllNews ? 'Alle News' : 'Home';
+  h.innerHTML='<button class="bk" onclick="'+backFn+'">&#8249;</button><div style="flex:1"><div class="d-name">'+hdrTitle+'</div><div class="d-sub">TuS Esingen · Handball · Abteilung</div></div><div class="hdr-logo"><img src="'+LOGO+'" alt="TuS"></div>';
   document.getElementById('APP').insertBefore(h,document.getElementById('scroll'));
   document.getElementById('scroll').scrollTop=0;
 }

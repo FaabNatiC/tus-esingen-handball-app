@@ -493,6 +493,33 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .install-banner-action:active{opacity:0.8;}
 @keyframes ib-in{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
 @media (display-mode: standalone){.install-banner{display:none !important;}}
+
+/* ── Update-Banner (oben) ─────────────────────────────────────────── */
+.upd-banner{position:fixed;top:0;left:0;right:0;background:#1a1a1a;color:#fff;padding:11px 16px calc(11px + env(safe-area-inset-top, 0px));display:none;justify-content:center;align-items:center;gap:8px;font-size:12px;font-weight:600;z-index:1100;cursor:pointer;text-align:center;animation:ub-in .25s ease;}
+.upd-banner.show{display:flex;}
+.upd-banner-arr{font-size:14px;color:rgba(255,255,255,0.65);font-weight:400;}
+.upd-banner.hide{animation:ub-out .25s ease forwards;}
+@keyframes ub-in{from{transform:translateY(-100%);}to{transform:translateY(0);}}
+@keyframes ub-out{from{transform:translateY(0);}to{transform:translateY(-100%);}}
+
+/* ── Update-Historie-Seite ─────────────────────────────────────────── */
+.upd-list{padding:10px 14px 14px;}
+.upd-card{background:#fff;border:1px solid #eaeaea;border-radius:14px;padding:14px 14px 14px 16px;margin-bottom:10px;position:relative;}
+.upd-card.current{border-color:#1a1a1a;background:#f5f5f5;}
+.upd-card.current::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;background:#1a1a1a;border-radius:0 3px 3px 0;}
+.upd-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px;}
+.upd-ver{font-size:14px;font-weight:700;color:#1a1a1a;}
+.upd-date{font-size:11px;color:#888;}
+.upd-new{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;color:#1a7a5e;background:#e8f4f0;padding:3px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.06em;margin-left:6px;}
+.upd-new::before{content:"●";font-size:8px;}
+.upd-text{font-size:12px;color:#444;line-height:1.45;}
+.phone.dark .upd-card{background:#2a2a2a;border-color:#3a3a3a;}
+.phone.dark .upd-card.current{background:#3a3a3a;border-color:#fff;}
+.phone.dark .upd-card.current::before{background:#fff;}
+.phone.dark .upd-ver{color:#fff;}
+.phone.dark .upd-date{color:#aaa;}
+.phone.dark .upd-text{color:#ddd;}
+.phone.dark .upd-new{background:#1f3a30;color:#7fc9b0;}
 </style>
 </head>
 <body>
@@ -523,6 +550,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="burger-item" onclick="window.open('https://tus-esingen.de/datenschutz-des-tus-esingen.html','_blank')"><span class="burger-icon">🔒</span>Datenschutz</div>
     <div class="burger-section">App</div>
     <div class="burger-item" onclick="openAbout()"><span class="burger-icon">ℹ️</span>Über diese App</div>
+    <div class="burger-item" onclick="openUpdateHistory(false)"><span class="burger-icon">🆕</span>App-Updates</div>
     <div style="height:20px;"></div>
   </div>
 </div>
@@ -571,6 +599,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div id="allnews-grid" style="padding:12px 14px;">
     <div style="text-align:center;color:#999;font-size:12px;padding:20px;">News werden geladen…</div>
   </div>
+  <div style="height:20px;"></div>
+</div>
+
+<!-- APP-UPDATES (eigene Seite) -->
+<div class="page" id="p-updates">
+  <div class="sec">App-Updates</div>
+  <div id="upd-list" class="upd-list"></div>
   <div style="height:20px;"></div>
 </div>
 
@@ -814,8 +849,24 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.8";
-const APP_BUILD_DATE = "07.05.2026";
+const APP_VERSION = "0.6.9";
+const APP_BUILD_DATE = "08.05.2026";
+
+// ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
+// Wird im Burger-Menü unter "App-Updates" angezeigt und gibt der App-Banner-
+// Anzeige den User-freundlichen Text. Datum wird hier pro Eintrag gepflegt.
+const UPDATE_HISTORY = [
+  { version: "0.6.9", date: "08.05.2026", text: "Du wirst jetzt informiert, wenn die App ein Update bekommen hat. Über das Menü unter 'App-Updates' findest du eine Übersicht der letzten Änderungen in einfacher Sprache." },
+  { version: "0.6.8", date: "07.05.2026", text: "Der Tab 'News' unten heißt jetzt 'Home'. Spielplan und Teams haben neue Icons bekommen. Die zwei Countdown-Karten oben auf der Startseite stehen jetzt immer auf gleicher Höhe, auch wenn keine Spiele anstehen." },
+  { version: "0.6.7", date: "07.05.2026", text: "Die Tabelle war kaputt - die Vereinsnamen waren abgeschnitten und die Werte verrutscht. Das ist behoben. Außerdem werden die Punkte jetzt im Handball-Standard angezeigt (z.B. 27:21 statt nur 27). Auf der 'Alle News'-Seite gibt es kleine Pfeile, mit denen du die Filter nach links und rechts schieben kannst." },
+  { version: "0.6.6", date: "07.05.2026", text: "Die kleine Beschriftung an den Countdown-Karten ('Testspiel', 'Ligaspiel', 'Pokalspiel') ist jetzt besser lesbar." },
+  { version: "0.6.5", date: "07.05.2026", text: "Die Beschriftung an der Seite der Countdown-Karten klebt jetzt sauber am Rand. Der Inhalt der Karten wirkt dadurch besser zentriert." },
+  { version: "0.6.4", date: "07.05.2026", text: "Die Spielart (z.B. 'Testspiel') steht jetzt vertikal an der linken Kachelkante - lesbar von unten nach oben. Datum und Uhrzeit stehen wieder gemeinsam unten." },
+  { version: "0.6.3", date: "07.05.2026", text: "Die Countdown-Karten sind kompakter geworden und nutzen den Platz besser aus. Wenn kein Spiel ansteht, bleibt die Karte trotzdem in voller Größe erhalten." },
+  { version: "0.6.2", date: "07.05.2026", text: "Die Karten laden schneller, weil die App die Spielplandaten gleich beim Start parallel lädt. Außerdem wurde das Layout der Karten dezenter gestaltet." },
+  { version: "0.6.1", date: "07.05.2026", text: "Die Countdown-Karten wurden im Layout aufgeräumt: Spielart-Hinweis und Datum sind dezenter, Reihenfolge der Infos überarbeitet." },
+  { version: "0.6.0", date: "07.05.2026", text: "Auf der Startseite gibt es jetzt zwei Live-Countdowns für die nächsten Spiele der 1. Herren und 1. Damen. Du siehst auf einen Blick, wie viele Tage, Stunden und Minuten bis zum nächsten Anwurf bleiben - egal ob Liga, Pokal oder Testspiel." }
+];
 
 // Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
 window.LOGOS_MAP = window.LOGOS_MAP || {};
@@ -2472,6 +2523,102 @@ function closeAbout(){
   showMain(true);
 }
 
+// ── App-Updates (Update-Historie-Seite) ────────────────────────────────────
+// Zeigt die letzten 10 Update-Einträge aus UPDATE_HISTORY.
+// Wird aufgerufen aus dem Burger-Menü oder durch Klick auf den Update-Banner.
+function openUpdateHistory(scrollToCurrent){
+  closeBurger();
+  // Banner ausblenden, falls noch sichtbar
+  hideUpdateBanner(true);
+
+  // Liste rendern
+  var listEl = document.getElementById('upd-list');
+  if(listEl){
+    var html = UPDATE_HISTORY.slice(0, 10).map(function(u){
+      var isCurrent = u.version === APP_VERSION;
+      return '<div class="upd-card' + (isCurrent ? ' current' : '') + '" id="upd-card-' + u.version.replace(/\./g, '-') + '">' +
+        '<div class="upd-row">' +
+          '<span class="upd-ver">Version ' + u.version + (isCurrent ? '<span class="upd-new">Neu</span>' : '') + '</span>' +
+          '<span class="upd-date">' + u.date + '</span>' +
+        '</div>' +
+        '<div class="upd-text">' + u.text + '</div>' +
+      '</div>';
+    }).join('');
+    listEl.innerHTML = html;
+  }
+
+  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('p-updates').classList.add('active');
+  showMain(false);
+  var old=document.getElementById('uhdr');if(old)old.remove();
+  var h=document.createElement('div');h.id='uhdr';h.className='d-hdr';
+  h.innerHTML='<button class="bk" onclick="closeUpdateHistory()">&#8249;</button><div style="flex:1"><div class="d-name">App-Updates</div><div class="d-sub">TuS Esingen · Handball · Abteilung</div></div><div class="hdr-logo"><img src="'+LOGO+'" alt="TuS"></div>';
+  document.getElementById('APP').insertBefore(h,document.getElementById('scroll'));
+
+  // Scrollen: zum aktuellen Eintrag falls gewünscht, sonst nach oben
+  var scrollEl = document.getElementById('scroll');
+  if(scrollToCurrent){
+    setTimeout(function(){
+      var card = document.getElementById('upd-card-' + APP_VERSION.replace(/\./g, '-'));
+      if(card){
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        scrollEl.scrollTop = 0;
+      }
+    }, 50);
+  } else {
+    scrollEl.scrollTop = 0;
+  }
+}
+
+function closeUpdateHistory(){
+  var h=document.getElementById('uhdr');if(h)h.remove();
+  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('p-news').classList.add('active');
+  showMain(true);
+}
+
+// ── Update-Banner (oben am Bildschirmrand) ──────────────────────────────────
+// Zeigt für 10 Sekunden einen schmalen Banner, wenn die App auf eine neue
+// Version aktualisiert wurde. Klick führt zur Update-Historie.
+var updBannerTimeout = null;
+function showUpdateBanner(version){
+  var el = document.getElementById('updBanner');
+  if(!el) return;
+  var txt = document.getElementById('updBannerText');
+  if(txt) txt.textContent = 'App aktualisiert auf ' + version;
+  el.classList.remove('hide');
+  el.classList.add('show');
+  // Nach 10s automatisch ausblenden
+  clearTimeout(updBannerTimeout);
+  updBannerTimeout = setTimeout(function(){ hideUpdateBanner(false); }, 10000);
+}
+function hideUpdateBanner(immediate){
+  var el = document.getElementById('updBanner');
+  if(!el) return;
+  clearTimeout(updBannerTimeout);
+  if(immediate){
+    el.classList.remove('show');
+    el.classList.remove('hide');
+    return;
+  }
+  el.classList.add('hide');
+  setTimeout(function(){ el.classList.remove('show'); el.classList.remove('hide'); }, 250);
+}
+
+// Beim App-Start: Version vergleichen, ggf. Banner zeigen
+(function checkForUpdate(){
+  try {
+    var lastSeen = localStorage.getItem('lastSeenAppVersion');
+    if(lastSeen && lastSeen !== APP_VERSION){
+      // Update erkannt - Banner zeigen
+      showUpdateBanner(APP_VERSION);
+    }
+    // Aktuelle Version speichern (auch beim ersten Start, dann beim nächsten Update wird verglichen)
+    localStorage.setItem('lastSeenAppVersion', APP_VERSION);
+  } catch(e) { /* localStorage nicht verfügbar - egal */ }
+})();
+
 // ── Formulare ───────────────────────────────────────────────────────────────
 function openFormulare(){
   closeBurger();
@@ -2589,6 +2736,10 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 <!-- Install-Banner: Aufforderung zur App-Installation für mobile Browser-User -->
+<div class="upd-banner" id="updBanner" onclick="openUpdateHistory(true)">
+  <span id="updBannerText">App aktualisiert auf 0.0.0</span>
+  <span class="upd-banner-arr">› Details</span>
+</div>
 <div class="install-banner" id="installBanner">
   <div class="install-banner-logo"><img src="" id="ibLogo" alt="TuS Esingen"></div>
   <div class="install-banner-body">

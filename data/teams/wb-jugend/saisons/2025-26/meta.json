@@ -5,16 +5,21 @@
   "spieltageGeplant": 18,
   "linkSpielplan": "https://www.handball.net/ligen/handball4all.hamburg.wb-ol-520_hhv/spielplan",
   "linkTabelle": "https://www.handball.net/ligen/handball4all.hamburg.wb-ol-520_hhv/tabelle",
+  "zurueckgezogen": ["TSV Uetersen", "SG Hamburg-Nord 3"],
+  "hinweise": [
+    "TSV Uetersen zurückgezogen.",
+    "SG Hamburg-Nord 3 zurückgezogen."
+  ],
   "mannschaften": [
-    { "name": "TuS Esingen",                                "logo": "tus-esingen.png" },
-    { "name": "Ahrensburger TSV",                           "logo": "ahrensburger-tsv.png" },
-    { "name": "HT Norderstedt",                             "logo": "ht-norderstedt.png" },
-    { "name": "Niendorfer TSV",                             "logo": "niendorfer-tsv.png" },
-    { "name": "Rellinger TV",                               "logo": "rellinger-tv.png" },
-    { "name": "SC Alstertal-Langenhorn",                    "logo": "sc-alstertal-langenhorn.png" },
-    { "name": "SG HHD/AMTV 2",  "logo": "sg-hhd-amtv.png" },
-    { "name": "SG Hamburg-Nord 3",                          "logo": "sg-hamburg-nord.png" },
-    { "name": "TSC Wellingsbüttel",                         "logo": "tsc-wellingsbuettel.png" },
-    { "name": "TSV Uetersen",                               "logo": "tsv-uetersen.png" }
+    { "name": "TuS Esingen",                "logo": "tus-esingen.png" },
+    { "name": "Ahrensburger TSV",           "logo": "ahrensburger-tsv.png" },
+    { "name": "HT Norderstedt",             "logo": "ht-norderstedt.png" },
+    { "name": "Niendorfer TSV",             "logo": "niendorfer-tsv.png" },
+    { "name": "Rellinger TV",               "logo": "rellinger-tv.png" },
+    { "name": "SC Alstertal-Langenhorn",    "logo": "sc-alstertal-langenhorn.png" },
+    { "name": "SG HHD/AMTV 2",              "logo": "sg-hhd-amtv.png" },
+    { "name": "SG Hamburg-Nord 3",          "logo": "sg-hamburg-nord.png" },
+    { "name": "TSC Wellingsbüttel",         "logo": "tsc-wellingsbuettel.png" },
+    { "name": "TSV Uetersen",               "logo": "tsv-uetersen.png" }
   ]
 }

@@ -33,7 +33,7 @@ Wenn du nur schnell ein Spielergebnis nachtragen willst, springe direkt zum Kapi
 **Datei-Referenz**
 - [Die Stammdaten-Dateien](#die-stammdaten-dateien-im-detail) – `meta/teams.json`, `info.json`, `kader.json`, `training.json`
 - [Die Inhaltsdateien](#die-inhaltsdateien-im-detail) – `news.json`, `partners.json`, `partner.json`
-- [Die Spielbetrieb-Dateien](#die-spielbetrieb-dateien-im-detail) – `saisons/<saison>/meta.json`, `spieltage/XX.json`, `pokalspiele.json`, `testspiele.json`
+- [Die Spielbetrieb-Dateien](#die-spielbetrieb-dateien-im-detail) – `saisons/<saison>/meta.json`, `spieltage/XX-kwNN.json`, `pokalspiele.json`, `testspiele.json`
 
 **Pflege-Workflows**
 - [Wöchentlich: Spielergebnisse eintragen](#wöchentlich-spielergebnisse-eintragen)
@@ -91,8 +91,8 @@ data/
 │   │       ├── 2025-26/           ← ein Ordner pro Saison
 │   │       │   ├── meta.json      ← Liga-Info, Mannschaftsliste
 │   │       │   ├── spieltage/
-│   │       │   │   ├── 01.json    ← Spieltag 1 mit allen Liga-Spielen
-│   │       │   │   ├── 02.json    ← Spieltag 2
+│   │       │   │   ├── 01-kw37.json  ← Spieltag 1 (gespielt in KW 37/2025)
+│   │       │   │   ├── 02-kw38.json  ← Spieltag 2 (KW 38/2025)
 │   │       │   │   └── ...
 │   │       │   ├── pokalspiele.json ← alle Pokalspiele dieser Saison
 │   │       │   └── testspiele.json  ← alle Testspiele dieser Saison
@@ -141,8 +141,8 @@ teams/1-herren/saisons/
 ├── 2025-26/                   ← Saison 2025/26
 │   ├── meta.json              ← Liga-Info dieser Saison
 │   ├── spieltage/             ← Liga-Spiele
-│   │   ├── 01.json
-│   │   ├── 02.json
+│   │   ├── 01-kw37.json       ← Spieltag 1, gespielt in KW 37/2025
+│   │   ├── 02-kw38.json
 │   │   └── ...
 │   ├── pokalspiele.json       ← Pokalspiele dieser Saison
 │   └── testspiele.json        ← Testspiele dieser Saison
@@ -158,7 +158,7 @@ teams/1-herren/saisons/
 
 | Du willst… | Datei |
 |---|---|
-| ein Liga-Spielergebnis eintragen | `teams/<mannschaft>/saisons/<saison>/spieltage/<XX>.json` |
+| ein Liga-Spielergebnis eintragen | `teams/<mannschaft>/saisons/<saison>/spieltage/<XX-kwNN>.json` |
 | ein Pokalspiel eintragen | `teams/<mannschaft>/saisons/<saison>/pokalspiele.json` |
 | ein Testspiel eintragen | `teams/<mannschaft>/saisons/<saison>/testspiele.json` |
 | eine News veröffentlichen | `content/news.json` |
@@ -850,7 +850,7 @@ Bei einer Wertung (eine Mannschaft tritt nicht an) bekommt der Sieger 2 Punkte o
 
 ---
 
-## `teams/<id>/saisons/<saison>/spieltage/XX.json` – Ein einzelner Spieltag
+## `teams/<id>/saisons/<saison>/spieltage/XX-kwNN.json` – Ein einzelner Spieltag
 
 In dieser Datei stehen **alle Spiele eines Spieltags** einer Liga – also nicht nur die TuS-Spiele, sondern auch die der anderen Mannschaften. Aus diesen Dateien berechnet die App die komplette Tabelle.
 
@@ -858,14 +858,18 @@ In dieser Datei stehen **alle Spiele eines Spieltags** einer Liga – also nicht
 
 ### Dateinamen-Konvention
 
-Die Dateinamen entsprechen der **Spieltag-Nummer mit führender Null**:
+Die Dateinamen kombinieren **Spieltag-Nummer** und **Kalenderwoche** der ersten Austragung:
 
-- `01.json` = Spieltag 1
-- `02.json` = Spieltag 2
-- `12.json` = Spieltag 12
-- `26.json` = Spieltag 26
+- `01-kw37.json` = Spieltag 1, ursprünglich angesetzt in KW 37
+- `02-kw38.json` = Spieltag 2, KW 38
+- `05-kw41.json` = Spieltag 5, KW 41
+- `24-kw17.json` = Spieltag 24, KW 17 des Folgejahres
 
-So wird die Reihenfolge im Repo-Browser automatisch korrekt sortiert.
+**Beide Zahlen sind zweistellig** (`01`, nicht `1`). So bleibt die Sortierung im Repo-Browser korrekt.
+
+Die KW im Dateinamen ist die **ursprünglich angesetzte Spielwoche**. Wenn ein Spiel innerhalb des Spieltags unter der Woche nachgeholt oder verlegt wird, bleibt der Dateiname trotzdem `XX-kwNN.json` – im `datum`-Feld des betroffenen Spiels steht dann das tatsächliche Spieldatum.
+
+> 💡 **Pflege-Tipp:** Auf handball.net kannst du mit dem Filter „Aktuelle Spielwoche" die laufende Spielwoche anzeigen. Die KW der angezeigten Spiele findest du im Dateinamen (z.B. KW 41 → `05-kw41.json`).
 
 ### Beispiel (Spieltag 24, 1. Herren)
 
@@ -1192,13 +1196,15 @@ Das ist der häufigste Vorgang. Nach jedem Spielwochenende werden die Ergebnisse
 Im Repository zur Datei der Mannschaft und Saison navigieren:
 
 ```
-data/teams/<mannschaft>/saisons/<saison>/spieltage/<XX>.json
+data/teams/<mannschaft>/saisons/<saison>/spieltage/<XX-kwNN>.json
 ```
 
-Beispiel: Für Spieltag 25 der 1. Herren in Saison 2025/26:
+Beispiel: Für Spieltag 24 der 1. Herren in Saison 2025/26 (Spielwoche KW 17):
 ```
-data/teams/1-herren/saisons/2025-26/spieltage/25.json
+data/teams/1-herren/saisons/2025-26/spieltage/24-kw17.json
 ```
+
+> 💡 **Wie finde ich die richtige Datei?** Auf handball.net Filter „Aktuelle Spielwoche" anwenden – die angezeigte KW findest du im Dateinamen wieder.
 
 **2. In den Edit-Modus wechseln**
 
@@ -1401,14 +1407,22 @@ Die genauen Felder findest du im Kapitel `teams/<id>/saisons/<saison>/meta.json`
 
 **3. Spieltage anlegen**
 
-Für jeden geplanten Spieltag eine Datei in `spieltage/` anlegen, z.B. `01.json`, `02.json`, ..., `26.json`.
+Für jeden geplanten Spieltag eine Datei in `spieltage/` anlegen, mit Dateinamen im Format `XX-kwNN.json`.
+
+Beispiel für die ersten Spieltage einer Saison, die im September startet:
+- `01-kw37.json` (Spieltag 1, KW 37)
+- `02-kw38.json` (Spieltag 2, KW 38)
+- ...
+- `24-kw17.json` (Spieltag 24, KW 17 des Folgejahres)
+
+Welche KW jeder Spieltag bekommt, siehst du auf handball.net im Spielplan der Liga (Datum des ersten Spiels des Spieltags → KW).
 
 Pro Datei:
-- Alle Spiele des Spieltags eintragen (mit Mannschaftsnamen, Datum, Halle)
+- Alle Spiele des Spieltags eintragen (mit Mannschaftsnamen, Datum, Halle nur bei TuS-Spielen)
 - `toreHeim` und `toreGast` auf `null`
 - `status` auf `"scheduled"`
 
-Das ist die meiste Arbeit beim Saisonstart, weil es ~26 Dateien pro Mannschaft sind.
+Das ist die meiste Arbeit beim Saisonstart, weil es ~24-26 Dateien pro Mannschaft sind.
 
 > **Tipp:** Wenn du eine bestehende Spieltag-Datei der vorigen Saison als Vorlage nutzt und Mannschaften/Datum anpasst, geht das deutlich schneller.
 
@@ -1507,7 +1521,7 @@ In den neuen Ordner mindestens diese Dateien:
 
 **4. Saison-Struktur anlegen**
 
-`saisons/<aktuelle-saison>/meta.json` plus mindestens einen ersten Spieltag in `spieltage/01.json`.
+`saisons/<aktuelle-saison>/meta.json` plus mindestens einen ersten Spieltag in `spieltage/01-kwNN.json` (mit der passenden KW als Suffix).
 
 **5. Ergebnis in der App prüfen**
 
@@ -1872,7 +1886,7 @@ Wenn es Fehler gibt, zeigt die Seite genau die Zeile an, in der etwas nicht stim
 - Auch ein einzelnes Leerzeichen oder ein Tippfehler reicht aus
 
 **Vorgehen:**
-- Beide Stellen vergleichen (Spielname in `spieltage/XX.json` und in `meta.json`)
+- Beide Stellen vergleichen (Spielname in `spieltage/XX-kwNN.json` und in `meta.json`)
 - Schreibweise angleichen
 
 ### Punktestand stimmt nicht

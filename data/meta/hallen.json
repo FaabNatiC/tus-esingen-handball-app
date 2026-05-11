@@ -1,0 +1,263 @@
+{
+  "_doc": "Zentrales Hallen-Verzeichnis. Die ID (Schlüssel) ist ein sprechender Name, der von ligaspiele.json/pokalspiele.json/testspiele.json im Feld halleId referenziert wird. Bei einer neuen Halle hier einen Eintrag ergänzen.",
+  "hallen": {
+    "barmstedt": {
+      "name": "Barmstedt",
+      "adresse": "Schulstraße",
+      "plz": "25355",
+      "ort": "Barmstedt"
+    },
+    "bergstrasse-wedel": {
+      "name": "Bergstraße/Wedel",
+      "adresse": "Bergstraße",
+      "plz": "22880",
+      "ort": "Wedel"
+    },
+    "bickbargen-halstenbek": {
+      "name": "Bickbargen/Halstenbek",
+      "adresse": "Bickbargen 111",
+      "plz": "25469",
+      "ort": "Halstenbek"
+    },
+    "blankenese": {
+      "name": "Blankenese",
+      "adresse": "Willhöden 74",
+      "plz": "22587",
+      "ort": "Hamburg"
+    },
+    "brehmweg": {
+      "name": "Brehmweg",
+      "adresse": "Brehmweg 62",
+      "plz": "22527",
+      "ort": "Hamburg"
+    },
+    "budapester-strasse": {
+      "name": "Budapester Straße",
+      "adresse": "Budapester Straße 58",
+      "plz": "20359",
+      "ort": "Hamburg"
+    },
+    "christian-foerster-strasse": {
+      "name": "Christian-Förster-Str.",
+      "adresse": "Christian-Förster-Straße 21",
+      "plz": "20253",
+      "ort": "Hamburg"
+    },
+    "comenius-sporthalle": {
+      "name": "Comenius-Sporthalle",
+      "adresse": "Ellerauer Straße 15",
+      "plz": "25451",
+      "ort": "Quickborn"
+    },
+    "eckernfoerder-strasse": {
+      "name": "Eckernförder Straße",
+      "adresse": "Eckernförder Straße 70",
+      "plz": "22769",
+      "ort": "Hamburg"
+    },
+    "egenbuettel": {
+      "name": "Egenbüttel",
+      "adresse": "Schulweg",
+      "plz": "25462",
+      "ort": "Rellingen"
+    },
+    "eidelstedter-brook": {
+      "name": "Eidelstedter Brook",
+      "adresse": "Halstenbeker Straße 41",
+      "plz": "22457",
+      "ort": "Hamburg"
+    },
+    "ellerbek": {
+      "name": "Ellerbek",
+      "adresse": "Rugenbergener Mühlenweg",
+      "plz": "25474",
+      "ort": "Ellerbek"
+    },
+    "esingen-alt": {
+      "name": "Esingen alt",
+      "adresse": "Klaus-Groth-Straße 11",
+      "plz": "25436",
+      "ort": "Tornesch"
+    },
+    "esingen-neu": {
+      "name": "Esingen neu",
+      "adresse": "Klaus-Groth-Straße 11",
+      "plz": "25436",
+      "ort": "Tornesch"
+    },
+    "grootmoor": {
+      "name": "Grootmoor",
+      "adresse": "Am Damm 47",
+      "plz": "22175",
+      "ort": "Hamburg"
+    },
+    "gruetzmuehlenweg": {
+      "name": "Grützmühlenweg",
+      "adresse": "Grützmühlenweg 38",
+      "plz": "22339",
+      "ort": "Hamburg"
+    },
+    "heidkampstrasse": {
+      "name": "Heidkampstraße",
+      "adresse": "Heidkampstraße",
+      "plz": "25451",
+      "ort": "Quickborn"
+    },
+    "heimgarten": {
+      "name": "Heimgarten",
+      "adresse": "Reesenbüttler Redder 4-10",
+      "plz": "22926",
+      "ort": "Ahrensburg"
+    },
+    "hohe-weide": {
+      "name": "Hohe Weide",
+      "adresse": "Hohe Weide 17",
+      "plz": "20357",
+      "ort": "Hamburg"
+    },
+    "klecken": {
+      "name": "Klecken",
+      "adresse": "Hainbuchenweg 19",
+      "plz": "21224",
+      "ort": "Rosengarten"
+    },
+    "langenfort": {
+      "name": "Langenfort",
+      "adresse": "Langenfort 5",
+      "plz": "22049",
+      "ort": "Hamburg"
+    },
+    "lilli-henoch-halle": {
+      "name": "Lilli-Henoch-Halle",
+      "adresse": "Ziegenweg 7",
+      "plz": "25451",
+      "ort": "Quickborn"
+    },
+    "luettkoppel": {
+      "name": "Lüttkoppel",
+      "adresse": "Lüttkoppel 1",
+      "plz": "22335",
+      "ort": "Hamburg"
+    },
+    "nenndorf": {
+      "name": "Nenndorf",
+      "adresse": "Emsener Straße 67",
+      "plz": "21224",
+      "ort": "Rosengarten"
+    },
+    "neuwiedenthal": {
+      "name": "Neuwiedenthal",
+      "adresse": "Quellmoor 24",
+      "plz": "21147",
+      "ort": "Hamburg"
+    },
+    "nordheidehalle": {
+      "name": "Nordheidehalle",
+      "adresse": "Holzweg 4",
+      "plz": "21244",
+      "ort": "Buchholz"
+    },
+    "ohlstedt": {
+      "name": "Ohlstedt",
+      "adresse": "Sthamerstraße 55",
+      "plz": "22397",
+      "ort": "Hamburg"
+    },
+    "olympiahalle": {
+      "name": "Olympiahalle",
+      "adresse": "Pestalozzistraße / Ost-West-Brücke",
+      "plz": "25335",
+      "ort": "Elmshorn"
+    },
+    "rellinger-strasse": {
+      "name": "Rellinger Straße",
+      "adresse": "Kieler Straße 128",
+      "plz": "20257",
+      "ort": "Hamburg"
+    },
+    "ritterstrasse": {
+      "name": "Ritterstraße",
+      "adresse": "Ritterstraße 9",
+      "plz": "22089",
+      "ort": "Hamburg"
+    },
+    "sachsenweg-alt": {
+      "name": "Sachsenweg alt",
+      "adresse": "Sachsenweg 74",
+      "plz": "22455",
+      "ort": "Hamburg"
+    },
+    "scharbeutzer-strasse": {
+      "name": "Scharbeutzer Straße",
+      "adresse": "Scharbeutzer Straße 36",
+      "plz": "22147",
+      "ort": "Hamburg"
+    },
+    "schenefeld-halle-a": {
+      "name": "Schenefeld, Halle A",
+      "adresse": "Achter de Weiden 91",
+      "plz": "22869",
+      "ort": "Schenefeld"
+    },
+    "schenefeld-halle-b": {
+      "name": "Schenefeld, Halle B",
+      "adresse": "Achter de Weiden 91",
+      "plz": "22869",
+      "ort": "Schenefeld"
+    },
+    "schulzentrum-sued-1": {
+      "name": "Schulzentrum Süd 1",
+      "adresse": "Poppenbütteler Straße 230",
+      "plz": "22851",
+      "ort": "Norderstedt"
+    },
+    "schulzentrum-sued-2": {
+      "name": "Schulzentrum Süd 2",
+      "adresse": "Poppenbütteler Straße 230",
+      "plz": "22851",
+      "ort": "Norderstedt"
+    },
+    "seminarstrasse": {
+      "name": "Seminarstraße",
+      "adresse": "Seminarstraße",
+      "plz": "25436",
+      "ort": "Uetersen"
+    },
+    "sorbenstrasse": {
+      "name": "Sorbenstraße",
+      "adresse": "Sorbenstraße 15",
+      "plz": "20537",
+      "ort": "Hamburg"
+    },
+    "steinhauerdamm": {
+      "name": "Steinhauerdamm",
+      "adresse": "Steinhauerdamm 4",
+      "plz": "22087",
+      "ort": "Hamburg"
+    },
+    "suederelbe": {
+      "name": "Süderelbe",
+      "adresse": "Neumoorstück 1",
+      "plz": "21147",
+      "ort": "Hamburg"
+    },
+    "tangstedter-landstrasse": {
+      "name": "Tangstedter Landstraße",
+      "adresse": "Tangstedter Landstraße 300",
+      "plz": "22417",
+      "ort": "Hamburg"
+    },
+    "tegelsbarg": {
+      "name": "Tegelsbarg",
+      "adresse": "Tegelsbarg 2",
+      "plz": "22399",
+      "ort": "Hamburg"
+    },
+    "wegenkamp": {
+      "name": "Wegenkamp",
+      "adresse": "Wegenkamp 3",
+      "plz": "22527",
+      "ort": "Hamburg"
+    }
+  }
+}

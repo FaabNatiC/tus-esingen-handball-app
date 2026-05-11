@@ -1050,3 +1050,450 @@ Pokal- und Testspiele gehören nicht zur Liga und zählen nicht für die Tabelle
 - Pokal- und Testspiele werden **nicht** für die Liga-Tabelle gewertet
 - Im Gegensatz zur Liga-Spielplan-Datei gibt es hier **keinen Status für Wertungen** – ein nicht angetretenes Testspiel wird einfach aus der Liste entfernt oder als `"finished"` mit 0:0 geführt
 - `art` kann aktuell nur `"pokal"` oder `"test"` sein. Falls ein neuer Wettbewerbstyp gebraucht wird (z.B. Freundschaftsspiel-Turnier), sag im Entwickler-Chat Bescheid
+
+---
+
+# Pflege-Workflows
+
+Dieser Teil ist der **handlungsorientierte** Teil der Anleitung. Hier geht es nicht mehr darum, was in welcher Datei steht, sondern darum, wie du in typischen Situationen vorgehst.
+
+Die Reihenfolge orientiert sich daran, was am häufigsten passiert – beginnend mit dem wöchentlichen Spieltag-Update am Sonntagabend.
+
+---
+
+## Wöchentlich: Spielergebnisse eintragen
+
+Das ist der häufigste Vorgang. Nach jedem Spielwochenende werden die Ergebnisse aller TuS-Mannschaften und der anderen Liga-Spiele eingetragen.
+
+### Was du brauchst
+
+- Die Spielergebnisse des Wochenendes (z.B. über handball.net abrufbar)
+- Browser-Zugang zum GitHub-Repository
+- Etwa 15-25 Minuten Zeit (bei 4-5 Liga-Spielen pro Mannschaft)
+
+### Schritt-für-Schritt-Anleitung
+
+**1. Spieltag-Datei der Mannschaft öffnen**
+
+Im Repository zur Datei der Mannschaft und Saison navigieren:
+
+```
+data/teams/<mannschaft>/saisons/<saison>/spieltage/<XX>.json
+```
+
+Beispiel: Für Spieltag 25 der 1. Herren in Saison 2025/26:
+```
+data/teams/1-herren/saisons/2025-26/spieltage/25.json
+```
+
+**2. In den Edit-Modus wechseln**
+
+Oben rechts auf das Bleistift-Symbol (✏️) klicken.
+
+**3. Ergebnisse eintragen**
+
+Für jedes gespielte Spiel **drei Werte** anpassen:
+
+- `toreHeim`: Anzahl Tore der Heimmannschaft (Zahl ohne Anführungszeichen)
+- `toreGast`: Anzahl Tore der Gastmannschaft (Zahl ohne Anführungszeichen)
+- `status`: von `"scheduled"` auf `"finished"` ändern
+
+**Vorher:**
+```json
+{
+  "datum": "2026-05-02T17:00:00",
+  "heim": "TuS Esingen",
+  "gast": "TV Fischbek",
+  "toreHeim": null,
+  "toreGast": null,
+  "halle": "Esingen neu, Tornesch",
+  "status": "scheduled"
+}
+```
+
+**Nachher:**
+```json
+{
+  "datum": "2026-05-02T17:00:00",
+  "heim": "TuS Esingen",
+  "gast": "TV Fischbek",
+  "toreHeim": 28,
+  "toreGast": 25,
+  "halle": "Esingen neu, Tornesch",
+  "status": "finished"
+}
+```
+
+**4. Speichern als Commit**
+
+Unten auf der Seite das Commit-Formular ausfüllen:
+
+- **Commit-Message:** Klar und kurz, z.B. `Spieltag 25 1. Herren: Ergebnisse eingetragen`
+- Auf „Commit changes" klicken
+
+**5. Mit der nächsten Mannschaft weitermachen**
+
+Wiederhole die Schritte für alle anderen Mannschaften, die an diesem Wochenende gespielt haben.
+
+### Tipp: Eigene Aufteilung im Pfleger-Team
+
+Bei mehreren Pflegern lohnt es sich, die Mannschaften aufzuteilen:
+
+- Pfleger A: 1. Herren, 2. Herren, männliche Jugend
+- Pfleger B: 1. Damen, 2. Damen, weibliche Jugend
+- Pfleger C: D-Jugend und jüngere
+
+So weiß jeder genau, wer welche Datei am Sonntagabend bearbeitet, und es kommt nicht zu Doppelarbeit.
+
+### Was passiert automatisch
+
+Sobald die Ergebnisse committet sind:
+
+1. **GitHub Pages baut die App neu** (dauert 1-2 Minuten)
+2. **Beim nächsten App-Öffnen** sehen alle Nutzer die neuen Ergebnisse
+3. **Die Tabelle aktualisiert sich automatisch** – du musst nichts pflegen
+4. **Spielberichte-News** zu den TuS-Spielen erscheinen automatisch auf der Startseite
+
+### Stolperfallen
+
+- Wenn du nur die Tore eingibst, aber den `status` auf `"scheduled"` lässt, **wird das Spiel nicht gewertet**. Status immer auf `"finished"` setzen.
+- `toreHeim` und `toreGast` müssen **Zahlen ohne Anführungszeichen** sein. Also `28`, nicht `"28"`.
+- Wenn du dich vertippst, kannst du jederzeit zurück in die Datei gehen und korrigieren – die Tabelle rechnet beim nächsten Aufruf neu.
+
+---
+
+## Spielverlegung eintragen
+
+Manchmal wird ein Spiel verschoben (Krankheit, Halle nicht verfügbar, Vereinsentscheidung). Der **Spieltag bleibt gleich**, nur Datum und Status ändern sich.
+
+### Vorgehen
+
+In der entsprechenden Spieltag-Datei das Spiel finden und folgende Felder anpassen:
+
+**1. `status` auf `"verlegt"` setzen**
+
+**2. Neues Datum im Feld `verlegtAuf` ergänzen** (im gleichen Format wie `datum`)
+
+**3. `toreHeim` und `toreGast` bleiben auf `null`**, bis das Spiel tatsächlich gespielt wurde
+
+**Beispiel:**
+
+```json
+{
+  "datum": "2026-04-25T17:00:00",
+  "heim": "HG Hamburg-Barmbek 2",
+  "gast": "HT Norderstedt 2",
+  "toreHeim": null,
+  "toreGast": null,
+  "halle": "Langenfort, Hamburg",
+  "status": "verlegt",
+  "verlegtAuf": "2026-05-10T17:00:00",
+  "hinweis": "Wegen Hallenwartung verschoben"
+}
+```
+
+Das Feld `hinweis` ist optional, hilft aber, den Grund festzuhalten.
+
+### Wenn das verlegte Spiel später gespielt wird
+
+Nach dem Nachholspiel:
+
+- `status` auf `"finished"` setzen
+- `toreHeim` und `toreGast` eintragen
+- Das Feld `verlegtAuf` kann gelöscht werden (oder bleibt drin – die App ignoriert es bei `"finished"`)
+
+Der ursprüngliche `spieltag` bleibt der Spieltag, an dem das Spiel laut Spielplan ursprünglich gewertet wurde – auch wenn das tatsächliche Datum später war. So bleibt die Tabellenberechnung korrekt.
+
+---
+
+## Wertung wegen Nicht-Antreten
+
+Wenn eine Mannschaft nicht zum Spiel erscheint, wird das Spiel mit einer **Wertung** abgeschlossen. Der anwesende Verein bekommt die 2 Punkte, der nicht angetretene Verein 0 Punkte.
+
+### Vorgehen
+
+In der Spieltag-Datei das betreffende Spiel anpassen:
+
+- `status`: `"wertung-heim"` (wenn der Gast nicht antritt → Heim gewinnt) oder `"wertung-gast"` (wenn Heim nicht antritt → Gast gewinnt)
+- `toreHeim` und `toreGast`: Werte aus dem `wertungTore`-Feld der `meta.json` der Saison (in der Regel `0` und `0`)
+- `hinweis`: Kurze Erklärung (optional, aber empfohlen)
+
+**Beispiel: Gast (Hamburg-Nord 2) nicht angetreten**
+
+```json
+{
+  "datum": "2026-04-26T17:00:00",
+  "heim": "SG Hamburg-Nord 2",
+  "gast": "TuS Esingen",
+  "toreHeim": 0,
+  "toreGast": 0,
+  "halle": "Tegelsberg, Hamburg",
+  "status": "wertung-gast",
+  "hinweis": "WG – Hamburg-Nord 2 nicht angetreten"
+}
+```
+
+### Was passiert in der Tabelle
+
+Bei einer Wertung gehen 2 Punkte an den Sieger, 0 Punkte an den Verlierer, und die Tore werden gezählt wie in `wertungTore` festgelegt (Standard: 0:0, also keine Auswirkung auf die Tordifferenz).
+
+---
+
+## Tippfehler korrigieren
+
+Egal, ob bei einem Spielergebnis, im Kader oder in den News – jede Datei ist im Repository nachträglich änderbar.
+
+### Vorgehen
+
+1. Die betreffende Datei öffnen
+2. Auf den Bleistift klicken (✏️)
+3. Den Fehler korrigieren
+4. Mit einer aussagekräftigen Commit-Message speichern (z.B. `Tippfehler: TSV Ellerbek statt TSV Ellerbeck`)
+
+### Was passiert in der App
+
+- Bei **Spielergebnissen:** Die Tabelle wird beim nächsten App-Öffnen automatisch neu berechnet.
+- Bei **News:** Die News wird beim nächsten App-Öffnen aktualisiert angezeigt.
+- Bei **Kader/Training:** Die Mannschaftsseite zeigt beim nächsten Öffnen die neuen Daten.
+
+### Was nicht passiert
+
+Es gibt **keine Versionierung in der App**, die alte Versionen zeigt. Sobald du eine Korrektur committest, ist sie für alle Nutzer „die Wahrheit". Die Git-Versionshistorie im Repository bleibt natürlich erhalten.
+
+---
+
+## Saisonstart: Neue Saison anlegen
+
+Vor jeder neuen Saison muss für jede Mannschaft ein neuer Saison-Ordner angelegt werden. Das ist der **aufwendigste** Workflow im Jahr und sollte am besten **ein paar Wochen vor Saisonstart** vorbereitet werden, wenn die Spielpläne von handball.net verfügbar sind.
+
+### Schritt-für-Schritt
+
+**1. Neuen Saison-Ordner anlegen**
+
+Unter `data/teams/<mannschaft>/saisons/` einen neuen Ordner mit dem Saison-Namen anlegen, z.B. `2026-27/`.
+
+> **Tipp:** Den einfachsten Weg, einen neuen Ordner anzulegen, beschreibt das spätere Kapitel „GitHub-Crashkurs". Kurz: Beim Anlegen einer Datei den vollständigen Pfad (mit Slash) als Namen eingeben, GitHub legt die Unterordner automatisch an.
+
+**2. `meta.json` für die neue Saison erstellen**
+
+In den neuen Saison-Ordner eine Datei `meta.json` anlegen mit:
+- Liga-Name dieser Saison
+- Punktesystem (`"2-punkte"`)
+- Mannschaftsliste (alle Vereine der Liga)
+- Geplante Anzahl Spieltage
+- Links zur Liga auf handball.net
+
+Die genauen Felder findest du im Kapitel `teams/<id>/saisons/<saison>/meta.json` weiter oben.
+
+**3. Spieltage anlegen**
+
+Für jeden geplanten Spieltag eine Datei in `spieltage/` anlegen, z.B. `01.json`, `02.json`, ..., `26.json`.
+
+Pro Datei:
+- Alle Spiele des Spieltags eintragen (mit Mannschaftsnamen, Datum, Halle)
+- `toreHeim` und `toreGast` auf `null`
+- `status` auf `"scheduled"`
+
+Das ist die meiste Arbeit beim Saisonstart, weil es ~26 Dateien pro Mannschaft sind.
+
+> **Tipp:** Wenn du eine bestehende Spieltag-Datei der vorigen Saison als Vorlage nutzt und Mannschaften/Datum anpasst, geht das deutlich schneller.
+
+**4. `info.json` der Mannschaft aktualisieren**
+
+Die `aktuelleSaison` in der `info.json` umstellen auf die neue Saison – aber **erst, wenn alle Spieltage angelegt sind**. Solange die alte Saison noch laufende Spiele hat, bleibt die alte Saison aktiv.
+
+**5. Kader für die neue Saison prüfen**
+
+Die `kader.json` durchgehen:
+- Spieler, die den Verein verlassen haben: entfernen
+- Neue Spieler: ergänzen
+- Bei allen anderen: `alter` um 1 erhöhen (sofern Geburtstag vor Saisonstart liegt)
+
+**6. Trainingszeiten anpassen**
+
+Wenn sich die Trainingszeiten ändern, `training.json` aktualisieren.
+
+### Reihenfolge der Schritte
+
+Wichtig: Erst alle Inhalte vorbereiten, **dann** die `aktuelleSaison` umstellen. Sonst sehen Nutzer in der App leere Bereiche oder unvollständige Daten.
+
+### Was du **nicht** machen musst
+
+- Eine Tabelle anlegen – die wird automatisch berechnet
+- News löschen – alte News bleiben, neue kommen oben drauf
+- Sponsoren überarbeiten (nur wenn sich tatsächlich was ändert)
+
+---
+
+## Saisonende: Was passiert mit alten Daten?
+
+Am Ende einer Saison passiert in der App **nichts automatisch**. Die alten Daten bleiben, bis du sie änderst.
+
+### Empfohlenes Vorgehen
+
+**Direkt nach Saisonende:**
+- Die letzten Spielergebnisse eintragen
+- Eine Saisonabschluss-News schreiben (optional)
+- Die Saison-Ordnerstruktur als Vorlage für die nächste Saison nutzen
+
+**Wenn die neue Saison vorbereitet ist:**
+- `aktuelleSaison` in `info.json` der Mannschaften auf die neue Saison umstellen
+- Die alten Daten bleiben im Repository erhalten
+
+### Archivieren von alten Saisons (optional)
+
+Wenn der `teams/`-Ordner über die Jahre zu voll wird, kannst du alte Saisons in den `data/archive/`-Ordner verschieben:
+
+```
+data/archive/2023-24/teams/1-herren/saisons/2023-24/
+```
+
+Die App schaut nicht in `archive/` – das ist nur eine Möglichkeit, alte Daten geordnet aufzubewahren, ohne die aktive Struktur zu überladen. Wann das nötig wird, hängt davon ab, wie viele Saisons im aktiven Bereich liegen.
+
+> **Hinweis:** Falls Inhalte aus alten Saisons in der App weiterhin sichtbar sein sollen (z.B. ein „Historische Erfolge"-Bereich), muss das im App-Code zusätzlich umgesetzt werden – sag im Entwickler-Chat Bescheid.
+
+---
+
+## Neue Mannschaft zur App hinzufügen
+
+Wenn eine neue Mannschaft gegründet wird (z.B. 2. Damen kommt dazu), sind folgende Schritte nötig:
+
+### Schritt-für-Schritt
+
+**1. Eintrag in `meta/teams.json` ergänzen**
+
+Neue Mannschaft hinzufügen mit `id`, `name`, `kurzname` und `reihenfolge`.
+
+**2. Neuen Mannschafts-Ordner anlegen**
+
+Unter `data/teams/` einen Ordner mit der gleichen `id` wie in `meta/teams.json` anlegen.
+
+**3. Stammdaten-Dateien anlegen**
+
+In den neuen Ordner mindestens diese Dateien:
+- `info.json` (mit `aktuelleSaison`, `ligaTeamName`)
+- `kader.json` (kann zunächst nur Trainer enthalten, Spieler werden später ergänzt)
+- `training.json` (Trainingszeiten)
+- `partner.json` (Sponsoren, kann auch leer beginnen: `"partner": []`)
+
+**4. Saison-Struktur anlegen**
+
+`saisons/<aktuelle-saison>/meta.json` plus mindestens einen ersten Spieltag in `spieltage/01.json`.
+
+**5. Ergebnis in der App prüfen**
+
+Nach 1-2 Minuten (GitHub Pages braucht Zeit zum Neubau) sollte die neue Mannschaft in der App erscheinen.
+
+### Stolperfallen
+
+- Die `id` in `meta/teams.json` muss **exakt** mit dem Ordnernamen unter `teams/` übereinstimmen
+- Die `reihenfolge` muss eindeutig sein (nicht zweimal die gleiche Zahl)
+- Bevor die neue Mannschaft live geht, am besten zuerst die nötigsten Inhalte (Kader, mindestens einen Spieltag) anlegen – sonst zeigt die App leere Bereiche
+
+---
+
+## Neuen Sponsor hinzufügen
+
+**Reihenfolge ist hier wichtig:** Erst die Stammdaten im zentralen Sponsoren-Verzeichnis, dann die Zuordnung zu Mannschaft(en).
+
+### Schritt-für-Schritt
+
+**1. Sponsor-Logo in `data/logos-sponsoren/` ablegen**
+
+Die Logo-Datei (PNG oder JPG) ins Verzeichnis `data/logos-sponsoren/` hochladen.
+
+**2. Eintrag in `content/partners.json` anlegen**
+
+Neuen Eintrag mit eindeutiger ID:
+
+```json
+"neuer-sponsor": {
+  "name": "Neuer Sponsor GmbH",
+  "logo": "data/logos-sponsoren/neuer-sponsor.png",
+  "url": "https://www.neuer-sponsor.de/"
+}
+```
+
+**3. Sponsor einer Mannschaft zuordnen**
+
+In `teams/<mannschaft>/partner.json` die neue ID in die `partner`-Liste aufnehmen:
+
+```json
+{
+  "aktualisiert": "10.05.2026",
+  "mannschaft": "1. Herren",
+  "partner": ["gebr-schmidt", "krieg", "bayer", "neuer-sponsor"]
+}
+```
+
+### Stolperfallen
+
+- Die ID in `partners.json` und in `partner.json` muss **exakt** übereinstimmen
+- Wenn das Logo fehlt oder unter falschem Pfad liegt, zeigt die App statt des Logos die Initialen des Sponsor-Namens (Fallback)
+
+---
+
+## News-Beitrag veröffentlichen
+
+### Schritt-für-Schritt
+
+**1. `content/news.json` öffnen**
+
+**2. Neuen Eintrag in die `news`-Liste einfügen**
+
+Mit den Pflichtfeldern: `title`, `lead`, `cat`, `author`, `sortDate`, `body`.
+
+Beispiel für eine einfache Vereinsleben-News:
+
+```json
+{
+  "title": "Saisonabschlussfeier am 14. Juni",
+  "lead": "Die 1. Herren feiern den 6. Tabellenplatz mit allen Fans im Vereinsheim.",
+  "team": "1. Herren",
+  "cat": "vereinsleben",
+  "author": "Vorstand TuS Esingen",
+  "sortDate": "2026-05-10",
+  "body": [
+    {
+      "type": "text",
+      "text": "Nach einer spannenden Saison laden wir alle Mitglieder, Spielerinnen und Fans zum Saisonabschluss ein. Beginn ist um 18:00 Uhr."
+    }
+  ]
+}
+```
+
+**3. Bei Top-News: `"topNews": true` ergänzen**
+
+Wenn die News oben groß auf der Startseite erscheinen soll.
+
+**4. `aktualisiert`-Datum auf oberster Ebene aktualisieren**
+
+### Tipps für gute News-Beiträge
+
+- **Title kurz halten:** 4-8 Worte, knackig
+- **Lead aussagekräftig:** Wenn jemand nur den Lead liest, soll das wichtigste rüberkommen
+- **Body in mehrere Blöcke aufteilen:** Erst Text, dann Score-Box, dann ein Zitat – das wirkt lebendiger als ein langer Textblock
+- **Bei Spielberichten:** Score-Block direkt am Anfang, dann Bericht-Text
+
+### Stolperfallen
+
+- `body` ist immer eine Liste mit eckigen Klammern `[ ... ]`, auch wenn nur ein einziger Block drin ist
+- `sortDate` ist Pflicht – ohne das Feld erscheint die News in falscher Reihenfolge
+- Bei Spielberichten: immer `matchTeam` und `matchDate` setzen, damit die News nicht doppelt erscheint
+
+---
+
+## Was du **nicht** pflegen musst
+
+Damit dir nichts entgeht, hier die Dinge, die **automatisch** passieren – also kein Handlungsbedarf:
+
+| Was | Wie es passiert |
+|---|---|
+| Liga-Tabelle | Wird live aus den Spielergebnissen berechnet |
+| Spielberichte-News | Werden automatisch aus den Spieltagen erzeugt (auch ohne manuelle News) |
+| Sortierung der News auf der Startseite | Automatisch nach `sortDate` |
+| News-ID, Anzeigedatum, Initialen, Gradient | Werden aus den anderen Feldern abgeleitet |
+| App-Update bei Nutzern | Beim nächsten App-Öffnen automatisch |
+| Service Worker / Cache | Wird beim Versions-Update automatisch erneuert |
+
+Wenn dir etwas in der App fehlt oder falsch aussieht, prüf zuerst, ob die zugrundeliegende Datei stimmt – meistens reicht das.

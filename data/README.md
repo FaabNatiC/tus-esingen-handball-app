@@ -129,14 +129,312 @@ Das funktioniert nur, wenn **alle Spiele eines Spieltags** (nicht nur die TuS-Sp
 
 ---
 
-## Was kommt als Nächstes in dieser Anleitung?
+# Die Stammdaten-Dateien im Detail
 
-In den folgenden Kapiteln geht es Schritt für Schritt um die einzelnen Dateien und Workflows:
+Dieses Kapitel beschreibt die vier Dateien, die selten verändert werden – meistens nur einmal pro Saison oder wenn sich Spieler/Trainer wechseln.
 
-- **Jede Datei im Detail** – welche Felder gibt es, was ist Pflicht, was ist optional
-- **Wöchentliche Spieltag-Pflege** – der häufigste Vorgang
-- **Saisonstart** – neue Saison anlegen
-- **Sonderfälle** – Verlegungen, Wertungen, Korrekturen
-- **GitHub-Crashkurs** – wie du Dateien im Browser bearbeitest
+## `meta/teams.json` – Die Liste aller Mannschaften
 
-Diese Kapitel werden Stück für Stück in dieser Datei ergänzt.
+Diese Datei kennt alle TuS-Mannschaften, die in der App angezeigt werden, und legt deren Reihenfolge fest.
+
+### Beispiel
+
+```json
+{
+  "aktualisiert": "10.05.2026",
+  "teams": [
+    {
+      "id": "1-herren",
+      "name": "1. Herren",
+      "kurzname": "1. H",
+      "reihenfolge": 1
+    },
+    {
+      "id": "1-damen",
+      "name": "1. Damen",
+      "kurzname": "1. D",
+      "reihenfolge": 2
+    },
+    {
+      "id": "md1-jugend",
+      "name": "männlich D1",
+      "kurzname": "mD1",
+      "reihenfolge": 3
+    },
+    {
+      "id": "md2-jugend",
+      "name": "männlich D2",
+      "kurzname": "mD2",
+      "reihenfolge": 4
+    }
+  ]
+}
+```
+
+### Felder
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `aktualisiert` | ja | Datum der letzten Änderung (Format: `DD.MM.YYYY`) |
+| `teams` | ja | Liste aller Mannschaften |
+
+**Pro Mannschaft:**
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `id` | ja | Ordnername unter `teams/` (kleinschreibung, mit Bindestrich) |
+| `name` | ja | Vollständiger Anzeigename in der App |
+| `kurzname` | nein | Kurze Variante für engere Stellen (z.B. Bottom-Nav) |
+| `reihenfolge` | ja | Sortierung in der App (1 = erste, dann 2, 3 ...) |
+
+### Wann du diese Datei änderst
+
+- **Neue Mannschaft kommt dazu:** Neuen Eintrag hinzufügen + Ordner unter `teams/` anlegen
+- **Mannschaft heißt anders:** `name` und/oder `kurzname` ändern
+- **Reihenfolge in der App soll anders sein:** `reihenfolge`-Werte anpassen
+
+### Stolperfallen
+
+- Die `id` muss **exakt** dem Ordnernamen unter `teams/` entsprechen, sonst findet die App die Mannschaft nicht
+- `reihenfolge`-Werte sollten eindeutig sein (nicht zweimal `1`)
+- Nach dem Speichern: Vergiss nicht, das `aktualisiert`-Datum zu ändern
+
+---
+
+## `teams/<id>/info.json` – Stammdaten einer Mannschaft
+
+In dieser Datei stehen die Grunddaten einer Mannschaft – vor allem, **welche Saison gerade aktiv** ist und wie die Mannschaft in der Liga heißt.
+
+### Beispiel (1. Herren)
+
+```json
+{
+  "aktualisiert": "10.05.2026",
+  "name": "1. Herren",
+  "ligaTeamName": "TuS Esingen",
+  "aktuelleSaison": "2025-26",
+  "linkSpielplan": "https://www.handball.net/ligen/handball4all.hamburg.51/spielplan",
+  "linkTabelle": "https://www.handball.net/ligen/handball4all.hamburg.51/tabelle"
+}
+```
+
+### Felder
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `aktualisiert` | ja | Datum der letzten Änderung |
+| `name` | ja | Anzeigename der Mannschaft (gleich wie in `meta/teams.json`) |
+| `ligaTeamName` | ja | Wie die Mannschaft **in der Liga** heißt (siehe Hinweis) |
+| `aktuelleSaison` | ja | Welcher Saison-Ordner gerade aktiv ist (z.B. `"2025-26"`) |
+| `linkSpielplan` | nein | Link zur Liga auf handball.net (für „Auf handball.net ansehen"-Button) |
+| `linkTabelle` | nein | Link zur Tabelle auf handball.net |
+
+### Wichtig: Was ist `ligaTeamName`?
+
+Der `name` ist der Anzeigename in der App („1. Herren"). In der Liga heißt eure Mannschaft aber oft anders – meistens einfach „TuS Esingen", manchmal mit einer Nummer wie „TuS Esingen 2".
+
+**Warum braucht die App das?**
+Die App muss in den Spielergebnissen erkennen, welches Team euer eigenes ist. Sie sucht in den Spieltags-Dateien nach genau diesem Namen.
+
+Beispiele:
+
+| Mannschaft (`name`) | Liga-Name (`ligaTeamName`) |
+|---|---|
+| 1. Herren | TuS Esingen |
+| 1. Damen | TuS Esingen |
+| 2. Herren | TuS Esingen 2 |
+| männlich D1 | TuS Esingen mD1 |
+| männlich D2 | TuS Esingen mD2 |
+
+Schau auf handball.net nach, wie die Mannschaft dort genau geschrieben ist, und übernimm das **exakt** (Groß- und Kleinschreibung, Leerzeichen).
+
+### Wann du diese Datei änderst
+
+- **Saisonwechsel:** `aktuelleSaison` auf die neue Saison umstellen (z.B. von `"2025-26"` auf `"2026-27"`)
+- **Liga-Aufstieg/Abstieg:** Neue `linkSpielplan` und `linkTabelle` einfügen
+- **Liga-Name in der Saison ändert sich:** `ligaTeamName` anpassen
+
+### Stolperfallen
+
+- `aktuelleSaison` muss zu einem Ordnernamen unter `saisons/` passen. Wenn du `"2026-27"` einträgst, aber den Ordner noch nicht angelegt hast, sieht die App nichts mehr.
+- `ligaTeamName` muss **wortgenau** mit dem übereinstimmen, was du in den Spieltags-Dateien als `heim` oder `gast` einträgst. Ein Tippfehler hier macht die Tabellenberechnung kaputt.
+
+---
+
+## `teams/<id>/kader.json` – Spieler und Trainer
+
+In dieser Datei stehen alle Spieler und Trainer einer Mannschaft. Sie wird auf der Mannschafts-Detailseite in der App angezeigt.
+
+### Beispiel (1. Herren, gekürzt)
+
+```json
+{
+  "aktualisiert": "29.04.2026",
+  "mannschaft": "1. Herren",
+  "liga": "Männer Oberliga Hamburg",
+  "trainer": [
+    {
+      "name": "Fabian Wurl",
+      "rolle": "Trainer",
+      "alter": 32,
+      "telefon": "+49 176 66860716",
+      "email": "fabian.wurl@googlemail.com"
+    },
+    {
+      "name": "Yannick Hellmich",
+      "rolle": "Co-Trainer",
+      "alter": 31
+    },
+    {
+      "name": "Michel Göttsche",
+      "rolle": "Physiotherapeut",
+      "alter": 23
+    }
+  ],
+  "spieler": [
+    {
+      "name": "Julian Hammon",
+      "nummer": 16,
+      "position": "Torwart",
+      "alter": 21,
+      "seitJahr": 2022
+    },
+    {
+      "name": "Niklas Richters",
+      "nummer": 14,
+      "position": "Rückraum",
+      "alter": 26,
+      "seitJahr": 2019
+    },
+    {
+      "name": "Matti Theophile",
+      "nummer": 19,
+      "position": "Kreisläufer",
+      "alter": 21,
+      "seitJahr": 2021
+    }
+  ]
+}
+```
+
+### Felder auf oberster Ebene
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `aktualisiert` | ja | Datum der letzten Änderung |
+| `mannschaft` | ja | Anzeigename der Mannschaft |
+| `liga` | ja | Volle Liga-Bezeichnung (z.B. „Männer Oberliga Hamburg") |
+| `trainer` | ja | Liste aller Trainer (kann leer sein: `[]`) |
+| `spieler` | ja | Liste aller Spieler (kann leer sein: `[]`) |
+
+### Pro Trainer
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `name` | ja | Vollständiger Name |
+| `rolle` | ja | z.B. „Trainer", „Co-Trainer", „Physiotherapeut", „Spielertrainer" |
+| `alter` | ja | Alter in Jahren |
+| `telefon` | nein | Telefonnummer (nur bei Hauptkontakten) |
+| `email` | nein | E-Mail (nur bei Hauptkontakten) |
+
+### Pro Spieler
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `name` | ja | Vollständiger Name |
+| `nummer` | ja | Trikotnummer (Zahl, ohne Anführungszeichen) |
+| `position` | ja | z.B. „Torwart", „Außen", „Rückraum", „Kreisläufer" |
+| `alter` | ja | Alter in Jahren |
+| `seitJahr` | ja | Jahr, seit dem der Spieler im Verein ist (Zahl, z.B. `2019`) |
+
+### Wann du diese Datei änderst
+
+- **Neuer Spieler kommt:** Neuen Eintrag in `spieler` ergänzen
+- **Spieler verlässt den Verein:** Eintrag entfernen
+- **Trainer wechselt:** Eintrag in `trainer` aktualisieren oder ergänzen
+- **Saisonwechsel:** Alter aller Spieler/Trainer um 1 erhöhen (sofern Geburtstag vor Saisonstart liegt)
+
+### Stolperfallen
+
+- `nummer` und `alter` und `seitJahr` sind **Zahlen ohne Anführungszeichen**. Also `"nummer": 16`, nicht `"nummer": "16"`.
+- Wenn du Telefonnummern einträgst: Format `+49 176 ...` mit Leerzeichen, in Anführungszeichen
+- Bei leerem Kader: `"spieler": []` (eckige Klammern, leer) – nicht weglassen, sonst kann die Datei nicht gelesen werden
+
+---
+
+## `teams/<id>/training.json` – Trainingszeiten
+
+In dieser Datei stehen die regelmäßigen Trainingszeiten der Mannschaft. Sie werden auf der Mannschafts-Detailseite angezeigt.
+
+### Beispiel (1. Herren)
+
+```json
+{
+  "aktualisiert": "30.04.2026",
+  "mannschaft": "1. Herren",
+  "trainingszeiten": [
+    {
+      "tag": "Mo",
+      "von": "19:00",
+      "bis": "20:30",
+      "art": "Individualtraining",
+      "ort": "neue-kgst"
+    },
+    {
+      "tag": "Di",
+      "von": "19:00",
+      "bis": "20:30",
+      "art": "Hallentraining",
+      "ort": "neue-kgst"
+    },
+    {
+      "tag": "Do",
+      "von": "19:30",
+      "bis": "22:00",
+      "art": "Athletik + Hallentraining",
+      "ort": "neue-kgst"
+    }
+  ]
+}
+```
+
+### Felder auf oberster Ebene
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `aktualisiert` | ja | Datum der letzten Änderung |
+| `mannschaft` | ja | Anzeigename der Mannschaft |
+| `trainingszeiten` | ja | Liste aller Trainings-Slots (kann leer sein: `[]`) |
+
+### Pro Trainings-Slot
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `tag` | ja | Wochentag als Zwei-Buchstaben-Kürzel: `Mo`, `Di`, `Mi`, `Do`, `Fr`, `Sa`, `So` |
+| `von` | ja | Uhrzeit Start im Format `HH:MM` |
+| `bis` | ja | Uhrzeit Ende im Format `HH:MM` |
+| `art` | ja | Art des Trainings (z.B. „Hallentraining", „Athletik", „Individualtraining") |
+| `ort` | ja | ID der Halle (siehe unten) |
+
+### Hallen-IDs
+
+Aktuell verfügbare `ort`-Werte:
+
+| ID | Halle |
+|---|---|
+| `neue-kgst` | Neue KGST-Halle, Tornesch |
+| `alte-kgst` | Alte KGST-Halle, Tornesch |
+
+Wenn eine neue Halle dazukommt, muss sie im App-Code als Hallenname hinterlegt werden – sag in dem Fall im Entwickler-Chat Bescheid.
+
+### Wann du diese Datei änderst
+
+- **Trainingszeit verschiebt sich:** `von` und/oder `bis` anpassen
+- **Neuer Trainings-Slot:** Neuen Eintrag in `trainingszeiten` ergänzen
+- **Trainingspause (z.B. Sommerpause):** Eintrag entfernen oder ganze Liste leeren (`"trainingszeiten": []`)
+
+### Stolperfallen
+
+- Tag-Kürzel müssen genau so geschrieben sein wie oben angegeben (`Mo`, nicht `mo` oder `Montag`)
+- Uhrzeiten immer mit führender Null: `09:00`, nicht `9:00`
+- `ort` muss eine bekannte Hallen-ID sein, sonst zeigt die App den Eintrag ohne Hallennamen

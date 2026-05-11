@@ -977,7 +977,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.7.5";
+const APP_VERSION = "0.7.6";
 const APP_BUILD_DATE = "11.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
@@ -986,6 +986,9 @@ const APP_BUILD_DATE = "11.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
+  { version: "0.7.6", date: "11.05.2026", points: [
+    "Spielorte werden jetzt aus einem zentralen Hallen-Verzeichnis gepflegt. Auf der Spielplan-Seite erscheint die Halle damit auch bei Auswärtsspielen — nicht nur bei Heimspielen."
+  ] },
   { version: "0.7.5", date: "11.05.2026", points: [
     "Im Vereinsspielplan steht jetzt vor der Liga, welche TuS-Mannschaft gespielt hat (z.B. '1. Herren · Oberliga Hamburg'). So lässt sich auf einen Blick erkennen, zu welchem Team eine Spielkarte gehört."
   ] },
@@ -1017,9 +1020,6 @@ const UPDATE_HISTORY = [
   { version: "0.6.18", date: "08.05.2026", points: [
     "Beim App-Start war fälschlich der Tab 'Teams' weiß hervorgehoben, obwohl die App auf der Home-Seite startet. Der korrekte Tab 'Home' wird nun beim Start markiert.",
     "Der Tab 'Home' wird im aktiven Zustand jetzt — wie alle anderen Tabs — mit einem weißen Hintergrund und dunkler, fetter Beschriftung dargestellt."
-  ] },
-  { version: "0.6.17", date: "08.05.2026", points: [
-    "Auf der Home-Seite war die Beschriftung 'Home' in der Menüleiste nicht zu lesen, weil sie in dunkler Schrift auf dunklem Hintergrund angezeigt wurde. Sie erscheint nun in weißer, fetter Schrift und ist gut sichtbar."
   ] }
 ];
 
@@ -1149,41 +1149,43 @@ function berechneTabelleAusSpielen(meta, ligaspiele){
 // Filtert TuS-Spiele aus Liga, Pokal, Test und gibt sie chronologisch sortiert zurück.
 function baueTusSpielplan(meta, ligaspiele, pokalspiele, testspiele){
   var spiele = [];
+  var ligaName = meta.ligaName || meta.liga || '';
+
+  // Hilfsfunktion: Spiel kopieren und halle aus halleId auflösen
+  function aufbereiten(sp, extra){
+    var kopie = Object.assign({}, sp, extra);
+    // halle aus halleId auflösen, falls noch nicht gesetzt
+    if(!kopie.halle && kopie.halleId){
+      kopie.halle = halleIdToText(kopie.halleId);
+    }
+    return kopie;
+  }
 
   // Liga-Spiele: nur TuS-Spiele behalten
   (ligaspiele.spielwochen || []).forEach(function(sw){
     (sw.spiele || []).forEach(function(sp){
       if(sp.heim === 'TuS Esingen' || sp.gast === 'TuS Esingen'){
-        spiele.push(Object.assign({}, sp, {
-          art: 'liga',
-          wettbewerb: meta.liga || ''
-        }));
+        spiele.push(aufbereiten(sp, { art: 'liga', wettbewerb: ligaName }));
       }
     });
   });
 
   // Pokalspiele (alle, da pro Mannschaft separate Datei)
   ((pokalspiele && pokalspiele.spiele) || []).forEach(function(sp){
-    spiele.push(Object.assign({}, sp, {
-      art: 'pokal',
-      wettbewerb: sp.wettbewerb || 'Pokal'
-    }));
+    spiele.push(aufbereiten(sp, { art: 'pokal', wettbewerb: sp.wettbewerb || 'Pokal' }));
   });
 
   // Testspiele (alle, da pro Mannschaft separate Datei)
   ((testspiele && testspiele.spiele) || []).forEach(function(sp){
-    spiele.push(Object.assign({}, sp, {
-      art: 'test',
-      wettbewerb: sp.anlass || 'Testspiel'
-    }));
+    spiele.push(aufbereiten(sp, { art: 'test', wettbewerb: sp.anlass || 'Testspiel' }));
   });
 
   // Chronologisch sortieren
   spiele.sort(function(a,b){ return new Date(a.datum) - new Date(b.datum); });
 
   return {
-    wettbewerb: meta.liga || '',
-    liga: meta.liga || '',
+    wettbewerb: ligaName,
+    liga: ligaName,
     saison: meta.saison || '',
     aktualisiert: ligaspiele.aktualisiert || '',
     quelle: meta.linkSpielplan || '',
@@ -1194,10 +1196,44 @@ function baueTusSpielplan(meta, ligaspiele, pokalspiele, testspiele){
 // Globale Logo-Map - wird in ladeAllesDaten aus meta.json befüllt
 window.LOGOS_MAP = window.LOGOS_MAP || {};
 
+// Zentrales Hallen-Verzeichnis (data/meta/hallen.json)
+// wird beim App-Start einmal geladen. Spiele referenzieren Hallen
+// per halleId; diese Map löst auf Anzeige-Text auf.
+window.HALLEN_MAP = window.HALLEN_MAP || {};
+let hallenLoaded = false;
+
+async function ladeHallen(){
+  if(hallenLoaded) return;
+  try {
+    var cb = '?_=' + Date.now();
+    var res = await fetch(BASE_URL + '/data/meta/hallen.json' + cb);
+    if(!res.ok) throw new Error('hallen.json nicht erreichbar');
+    var data = await res.json();
+    var hallen = data.hallen || data; // sowohl {hallen:{...}} als auch direkt {...} unterstützen
+    window.HALLEN_MAP = hallen;
+    hallenLoaded = true;
+  } catch(e){
+    console.warn('Hallen-Verzeichnis konnte nicht geladen werden:', e);
+    hallenLoaded = true; // nicht endlos versuchen
+  }
+}
+
+// halleId → "Hallenname, Ort" (oder leerer String falls unbekannt)
+function halleIdToText(halleId){
+  if(!halleId) return '';
+  var h = (window.HALLEN_MAP || {})[halleId];
+  if(!h) return ''; // unbekannte ID → kein Text statt Fehler
+  var ort = h.ort || '';
+  return ort ? (h.name + ', ' + ort) : h.name;
+}
+
 async function ladeAllesDaten(teamId) {
   teamId = teamId || currentTeam;
   currentTeam = teamId;
   const cb = '?_=' + Date.now();  // Cache-Buster
+
+  // Sicherstellen, dass Hallen-Verzeichnis geladen ist (für halleId-Auflösung)
+  await ladeHallen();
 
   // UI proaktiv leeren: verhindert, dass beim Mannschaftswechsel die alten Daten
   // stehenbleiben, falls die neuen nicht geladen werden können.
@@ -1886,6 +1922,8 @@ setInterval(tickCountdowns, 60 * 1000);
 // zurück (für renderSpielplan, loadGlobalSpielplan, Countdown-Karten).
 async function ladeTusSpielplanFuerTeam(teamId, cb){
   cb = cb || ('?_=' + Date.now());
+  // Sicherstellen, dass Hallen-Verzeichnis geladen ist
+  await ladeHallen();
   try {
     var infoRes = await fetch(BASE_URL + "/data/teams/" + teamId + "/info.json" + cb);
     if(!infoRes.ok) return null;
@@ -2008,7 +2046,7 @@ function renderSpielplan(data) {
           ${ergebnis}
           <div class="gt"><span>${s.gast}</span>${logo(s.gast)}</div>
         </div>
-        <div class="ghall">${s.halle}</div>
+        <div class="ghall">${s.halle || ''}</div>
         ${hinweis}
       </div>`;
   }
@@ -2271,9 +2309,10 @@ function fillTeamLogos(){
   });
 }
 if(document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function(){ fillTeamLogos(); loadCountdownData(); ladeAllesDaten(); zaehleMannschaften(); updateTeamsTabPlatzierungen(); loadAllNews(); });
+  document.addEventListener('DOMContentLoaded', function(){ fillTeamLogos(); ladeHallen(); loadCountdownData(); ladeAllesDaten(); zaehleMannschaften(); updateTeamsTabPlatzierungen(); loadAllNews(); });
 } else {
   fillTeamLogos();
+  ladeHallen();
   loadCountdownData();
   ladeAllesDaten();
   zaehleMannschaften();
@@ -2483,7 +2522,7 @@ async function loadAutoMatchNews(maxPerTeam, excludeMatches){
         
         var th = g.toreHeim, tg = g.toreGast;
         var result = (th != null && tg != null) ? th + ':' + tg : '';
-        var spielort = g.halle || '';
+        var spielort = g.halle || halleIdToText(g.halleId) || '';
         
         // Sieg/Niederlage/Unentschieden aus Sicht von TuS Esingen (berücksichtigt Wertungen)
         var ourTeamHome = /esingen/i.test(heim);

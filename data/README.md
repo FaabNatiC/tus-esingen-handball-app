@@ -33,7 +33,7 @@ Wenn du nur schnell ein Spielergebnis nachtragen willst, springe direkt zum Kapi
 **Datei-Referenz**
 - [Die Stammdaten-Dateien](#die-stammdaten-dateien-im-detail) – `meta/teams.json`, `info.json`, `kader.json`, `training.json`
 - [Die Inhaltsdateien](#die-inhaltsdateien-im-detail) – `news.json`, `partners.json`, `partner.json`
-- [Die Spielbetrieb-Dateien](#die-spielbetrieb-dateien-im-detail) – `saisons/<saison>/meta.json`, `spieltage/XX-kwNN.json`, `pokalspiele.json`, `testspiele.json`
+- [Die Spielbetrieb-Dateien](#die-spielbetrieb-dateien-im-detail) – `saisons/<saison>/meta.json`, `ligaspiele.json`, `pokalspiele.json`, `testspiele.json`
 
 **Pflege-Workflows**
 - [Wöchentlich: Spielergebnisse eintragen](#wöchentlich-spielergebnisse-eintragen)
@@ -90,10 +90,7 @@ data/
 │   │   └── saisons/
 │   │       ├── 2025-26/           ← ein Ordner pro Saison
 │   │       │   ├── meta.json      ← Liga-Info, Mannschaftsliste
-│   │       │   ├── spieltage/
-│   │       │   │   ├── 01-kw37.json  ← Spieltag 1 (gespielt in KW 37/2025)
-│   │       │   │   ├── 02-kw38.json  ← Spieltag 2 (KW 38/2025)
-│   │       │   │   └── ...
+│   │       │   ├── ligaspiele.json ← alle Liga-Spiele (nach KW gruppiert)
 │   │       │   ├── pokalspiele.json ← alle Pokalspiele dieser Saison
 │   │       │   └── testspiele.json  ← alle Testspiele dieser Saison
 │   │       └── 2026-27/           ← nächste Saison (sobald angelegt)
@@ -105,12 +102,12 @@ data/
 │   └── md2-jugend/
 │       └── (gleiche Struktur)
 │
-├── logos-mannschaften/            ← Vereinslogos der Gegner
+├── logos/mannschaften/            ← Vereinslogos der Gegner
 │   ├── tus-esingen.png
 │   ├── ahrensburg.png
 │   └── ...
 │
-├── logos-sponsoren/               ← Logos der Sponsoren
+├── logos/sponsoren/               ← Logos der Sponsoren
 │   ├── stadtwerke.jpg
 │   ├── schmidt.png
 │   └── ...
@@ -140,10 +137,7 @@ Innerhalb jeder Mannschaft sind die Spielergebnisse **nach Saison getrennt** abg
 teams/1-herren/saisons/
 ├── 2025-26/                   ← Saison 2025/26
 │   ├── meta.json              ← Liga-Info dieser Saison
-│   ├── spieltage/             ← Liga-Spiele
-│   │   ├── 01-kw37.json       ← Spieltag 1, gespielt in KW 37/2025
-│   │   ├── 02-kw38.json
-│   │   └── ...
+│   ├── ligaspiele.json        ← alle Liga-Spiele (nach KW gruppiert)
 │   ├── pokalspiele.json       ← Pokalspiele dieser Saison
 │   └── testspiele.json        ← Testspiele dieser Saison
 └── 2026-27/                   ← Saison 2026/27
@@ -158,7 +152,7 @@ teams/1-herren/saisons/
 
 | Du willst… | Datei |
 |---|---|
-| ein Liga-Spielergebnis eintragen | `teams/<mannschaft>/saisons/<saison>/spieltage/<XX-kwNN>.json` |
+| ein Liga-Spielergebnis eintragen | `teams/<mannschaft>/saisons/<saison>/ligaspiele.json` (in der passenden Spielwoche) |
 | ein Pokalspiel eintragen | `teams/<mannschaft>/saisons/<saison>/pokalspiele.json` |
 | ein Testspiel eintragen | `teams/<mannschaft>/saisons/<saison>/testspiele.json` |
 | eine News veröffentlichen | `content/news.json` |
@@ -679,22 +673,22 @@ In dieser Datei stehen die **Stammdaten** aller Sponsoren des Vereins. Sie wird 
   "aktualisiert": "10.05.2026",
   "stadtwerke-suedholstein": {
     "name": "Stadtwerke Südholstein",
-    "logo": "data/logos-sponsoren/stadtwerke.jpg",
+    "logo": "data/logos/sponsoren/stadtwerke.jpg",
     "url": "https://www.sw-suedholstein.de/"
   },
   "gebr-schmidt": {
     "name": "Gebr. Schmidt GmbH",
-    "logo": "data/logos-sponsoren/schmidt.png",
+    "logo": "data/logos/sponsoren/schmidt.png",
     "url": "https://www.gebr-schmidt.de/"
   },
   "krieg": {
     "name": "Bauunternehmen Krieg",
-    "logo": "data/logos-sponsoren/krieg.png",
+    "logo": "data/logos/sponsoren/krieg.png",
     "url": "https://www.bauunternehmen-krieg.de/"
   },
   "bayer": {
     "name": "Bayer AG",
-    "logo": "data/logos-sponsoren/bayer.png",
+    "logo": "data/logos/sponsoren/bayer.png",
     "url": "https://www.bayer.de/"
   }
 }
@@ -725,7 +719,7 @@ Die Datei ist eine **flache Sammlung** aller Sponsoren mit ihrer ID als Schlüss
 ### Stolperfallen
 
 - Die **ID** (der Schlüssel) muss eindeutig sein und sollte aus Kleinbuchstaben mit Bindestrichen bestehen (z.B. `"stadtwerke-suedholstein"`, nicht `"Stadtwerke Südholstein"`)
-- `logo` ist ein Pfad **innerhalb des Repos**, nicht eine externe URL. Die Logodatei muss vorher in `data/logos-sponsoren/` abgelegt werden.
+- `logo` ist ein Pfad **innerhalb des Repos**, nicht eine externe URL. Die Logodatei muss vorher in `data/logos/sponsoren/` abgelegt werden.
 - `aktualisiert` steht auf oberster Ebene neben den Sponsoren-IDs
 
 ---
@@ -832,7 +826,24 @@ Bei einer Wertung (eine Mannschaft tritt nicht an) bekommt der Sieger 2 Punkte o
 | Feld | Pflicht | Beschreibung |
 |---|---|---|
 | `name` | ja | Name der Mannschaft, **exakt** wie er in den Spielergebnissen verwendet wird |
-| `logo` | ja | Dateiname des Vereinslogos in `data/logos-mannschaften/` |
+| `logo` | ja | Dateiname des **Vereinslogos** in `data/logos/mannschaften/` |
+
+### Logo-Konvention: Ein Logo pro Verein
+
+Mehrere Mannschaften eines Vereins (z.B. „TSV Ellerbek" und „TSV Ellerbek 2") teilen sich **dasselbe Logo**. Das Logo wird pro Verein gepflegt, nicht pro Mannschaft. Konkret heißt das:
+
+- **TSV Ellerbek 2** → `"logo": "tsv-ellerbek.png"` (kein `-2` im Dateinamen!)
+- **HT Norderstedt 2** → `"logo": "ht-norderstedt.png"`
+- **HG Hamburg-Barmbek 2** → `"logo": "hg-hamburg-barmbek.png"`
+
+Dateinamen-Konvention für Vereinslogos:
+- **Kleinbuchstaben**, **Bindestriche** zwischen Wörtern (kein Leerzeichen, kein Underscore)
+- **Keine Mannschaftsnummer** im Dateinamen (kein `-2`, kein `-jugend`)
+- **`.png` mit transparentem Hintergrund** bevorzugt
+
+Beispiele: `tus-esingen.png`, `sg-hamburg-nord.png`, `1-hc-quickborn.png`
+
+So muss bei einem Vereinswechsel oder einer Logo-Aktualisierung nur **eine Datei** geändert werden, und alle Mannschaften dieses Vereins zeigen sofort das neue Logo.
 
 ### Wann du diese Datei änderst
 
@@ -843,104 +854,50 @@ Bei einer Wertung (eine Mannschaft tritt nicht an) bekommt der Sieger 2 Punkte o
 
 ### Stolperfallen
 
-- Der `name` einer Mannschaft muss **exakt** so geschrieben sein wie in den Spieltags-Dateien (`heim`, `gast`). Auch Tippfehler wie „TSV Ellerbeck" statt „TSV Ellerbek" lassen die Tabellenberechnung scheitern.
-- `logo` muss eine Datei sein, die tatsächlich in `data/logos-mannschaften/` liegt. Wenn das Logo fehlt, zeigt die App einen Platzhalter.
+- Der `name` einer Mannschaft muss **exakt** so geschrieben sein wie in den Spielen (`heim`, `gast`). Auch Tippfehler wie „TSV Ellerbeck" statt „TSV Ellerbek" lassen die Tabellenberechnung scheitern.
+- `logo` muss eine Datei sein, die tatsächlich in `data/logos/mannschaften/` liegt. Wenn das Logo fehlt, zeigt die App einen Platzhalter.
 - Falls eine Mannschaft den eigenen Verein darstellt (`"TuS Esingen"`), muss der `name` exakt dem `ligaTeamName` aus `info.json` entsprechen
-- `spieltageGeplant` ist nur ein Richtwert für die App-Anzeige – die tatsächliche Anzahl kommt aus den Dateien in `spieltage/`
+- `spieltageGeplant` ist nur ein Richtwert für die App-Anzeige – die tatsächliche Anzahl kommt aus den Einträgen in `ligaspiele.json`
 
 ---
 
-## `teams/<id>/saisons/<saison>/spieltage/XX-kwNN.json` – Ein einzelner Spieltag
+## `teams/<id>/saisons/<saison>/ligaspiele.json` – Alle Liga-Spiele einer Saison
 
-In dieser Datei stehen **alle Spiele eines Spieltags** einer Liga – also nicht nur die TuS-Spiele, sondern auch die der anderen Mannschaften. Aus diesen Dateien berechnet die App die komplette Tabelle.
+In dieser einen Datei stehen **alle Liga-Spiele einer Saison**, gruppiert nach **Kalenderwoche** (KW). Nicht nur die TuS-Spiele, sondern auch die der anderen Mannschaften – aus dieser Datei berechnet die App die komplette Tabelle.
 
 **Diese Datei wird wöchentlich gepflegt** – das ist der häufigste Vorgang.
 
-### Dateinamen-Konvention
+### Warum nach Kalenderwoche?
 
-Die Dateinamen kombinieren **Spieltag-Nummer** und **Kalenderwoche** der ersten Austragung:
+Spiele werden nach dem **tatsächlichen Spielwochenende** in die passende KW einsortiert. So spiegelt jede KW genau das wider, was real gespielt wurde – auch wenn Spiele verlegt werden:
 
-- `01-kw37.json` = Spieltag 1, ursprünglich angesetzt in KW 37
-- `02-kw38.json` = Spieltag 2, KW 38
-- `05-kw41.json` = Spieltag 5, KW 41
-- `24-kw17.json` = Spieltag 24, KW 17 des Folgejahres
+- Wird ein Spiel vom Spieltag 5 auf eine andere Woche verschoben, taucht es in der KW auf, in der es tatsächlich gespielt wird (nicht mehr in KW 5).
+- Englische Wochen oder Nachhol-Spiele am Donnerstag/Montag landen automatisch in der passenden KW.
 
-**Beide Zahlen sind zweistellig** (`01`, nicht `1`). So bleibt die Sortierung im Repo-Browser korrekt.
+Pro Spiel wird optional noch der offizielle Spieltag aus dem Verband im Feld `spieltag` gespeichert – falls eine spätere App-Funktion danach gruppieren will. Für die Datenpflege ist nur die KW relevant.
 
-Die KW im Dateinamen ist die **ursprünglich angesetzte Spielwoche**. Wenn ein Spiel innerhalb des Spieltags unter der Woche nachgeholt oder verlegt wird, bleibt der Dateiname trotzdem `XX-kwNN.json` – im `datum`-Feld des betroffenen Spiels steht dann das tatsächliche Spieldatum.
-
-> 💡 **Pflege-Tipp:** Auf handball.net kannst du mit dem Filter „Aktuelle Spielwoche" die laufende Spielwoche anzeigen. Die KW der angezeigten Spiele findest du im Dateinamen (z.B. KW 41 → `05-kw41.json`).
-
-### Beispiel (Spieltag 24, 1. Herren)
+### Beispiel (gekürzt, 1. Herren Saison 2025/26)
 
 ```json
 {
-  "spieltag": 24,
-  "spiele": [
+  "saison": "2025/26",
+  "aktualisiert": "26.04.2026",
+  "spielwochen": [
     {
-      "datum": "2026-04-25T17:00:00",
-      "heim": "TSV Uetersen",
-      "gast": "TuS Esingen",
-      "toreHeim": 30,
-      "toreGast": 27,
-      "halle": "Seminarstraße, Uetersen",
-      "status": "finished"
+      "kw": 37,
+      "spiele": [
+        {"datum": "2025-09-13T16:00:00", "heim": "TSV Ellerbek 2", "gast": "1. HC Quickborn", "toreHeim": 25, "toreGast": 21, "status": "finished", "spieltag": 1},
+        {"datum": "2025-09-13T18:30:00", "heim": "TV Fischbek", "gast": "SG Hamburg-Nord 2", "toreHeim": 29, "toreGast": 27, "status": "finished", "spieltag": 1},
+        {"datum": "2025-09-14T17:30:00", "heim": "Ahrensburger TSV", "gast": "HT Norderstedt 2", "toreHeim": 33, "toreGast": 32, "status": "finished", "spieltag": 1}
+      ]
     },
     {
-      "datum": "2026-04-25T17:30:00",
-      "heim": "Ahrensburger TSV",
-      "gast": "FC St. Pauli",
-      "toreHeim": 32,
-      "toreGast": 30,
-      "halle": "Heimgarten, Ahrensburg",
-      "status": "finished"
-    },
-    {
-      "datum": "2026-04-26T15:00:00",
-      "heim": "TV Fischbek",
-      "gast": "TH Eilbeck",
-      "toreHeim": 28,
-      "toreGast": 28,
-      "halle": "Süderelbe, Hamburg",
-      "status": "finished"
-    },
-    {
-      "datum": "2026-04-26T18:00:00",
-      "heim": "TSV Ellerbek 2",
-      "gast": "HSG Elbvororte",
-      "toreHeim": 25,
-      "toreGast": 31,
-      "halle": "Ellerbek, Ellerbek",
-      "status": "finished"
-    },
-    {
-      "datum": "2026-04-26T16:00:00",
-      "heim": "Rellinger TV 2",
-      "gast": "1. HC Quickborn",
-      "toreHeim": 22,
-      "toreGast": 24,
-      "halle": "Egenbüttel, Rellingen",
-      "status": "finished"
-    },
-    {
-      "datum": "2026-04-26T18:30:00",
-      "heim": "HG Hamburg-Barmbek 2",
-      "gast": "HT Norderstedt 2",
-      "toreHeim": null,
-      "toreGast": null,
-      "halle": "Langenfort, Hamburg",
-      "status": "verlegt",
-      "verlegtAuf": "2026-05-10T17:00:00"
-    },
-    {
-      "datum": "2026-04-26T17:00:00",
-      "heim": "SG Hamburg-Nord 2",
-      "gast": "TuS Esingen",
-      "toreHeim": 0,
-      "toreGast": 0,
-      "halle": "Tegelsberg, Hamburg",
-      "status": "wertung-gast",
-      "hinweis": "WG – Hamburg-Nord 2 nicht angetreten"
+      "kw": 17,
+      "spiele": [
+        {"datum": "2026-04-25T17:00:00", "heim": "TSV Uetersen", "gast": "TuS Esingen", "toreHeim": 30, "toreGast": 27, "status": "finished", "spieltag": 24},
+        {"datum": "2026-04-25T16:00:00", "heim": "TSV Ellerbek 2", "gast": "TH Eilbeck", "toreHeim": 0, "toreGast": 0, "status": "wertung-heim", "spieltag": 26},
+        {"datum": "2026-04-26T17:00:00", "heim": "FC St. Pauli", "gast": "HT Norderstedt 2", "toreHeim": 44, "toreGast": 23, "status": "finished", "spieltag": 24}
+      ]
     }
   ]
 }
@@ -950,8 +907,16 @@ Die KW im Dateinamen ist die **ursprünglich angesetzte Spielwoche**. Wenn ein S
 
 | Feld | Pflicht | Beschreibung |
 |---|---|---|
-| `spieltag` | ja | Nummer des Spieltags als Zahl (z.B. `24`) |
-| `spiele` | ja | Liste aller Spiele dieses Spieltags |
+| `saison` | ja | Saison-Bezeichnung (z.B. `"2025/26"`) |
+| `aktualisiert` | ja | Datum der letzten Aktualisierung im Format `TT.MM.JJJJ` |
+| `spielwochen` | ja | Liste aller Spielwochen mit ihren Spielen |
+
+### Pro Spielwoche
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `kw` | ja | Kalenderwoche als Zahl (z.B. `37`). Die App leitet das Jahr aus dem Spieldatum ab. |
+| `spiele` | ja | Liste aller Spiele dieser KW (vom Verein TuS oder anderen Mannschaften) |
 
 ### Pro Spiel
 
@@ -962,10 +927,9 @@ Die KW im Dateinamen ist die **ursprünglich angesetzte Spielwoche**. Wenn ein S
 | `gast` | ja | Gastmannschaft, exakt wie in `meta.json` |
 | `toreHeim` | ja | Tore der Heimmannschaft (Zahl oder `null`, wenn noch nicht gespielt) |
 | `toreGast` | ja | Tore der Gastmannschaft (Zahl oder `null`, wenn noch nicht gespielt) |
-| `halle` | nein | Hallenname und Stadt (wie auf handball.net) |
+| `halle` | nein | Nur bei TuS-Heimspielen: Hallenname und Stadt |
 | `status` | ja | Status des Spiels (siehe unten) |
-| `hinweis` | nein | Freier Hinweistext (z.B. Erklärung einer Wertung) |
-| `verlegtAuf` | nein | Bei verlegten Spielen: neues Datum im ISO-Format |
+| `spieltag` | nein | Offizielle Spieltag-Nummer aus der Liga (falls vorhanden) |
 
 ### Die `status`-Werte
 
@@ -975,16 +939,13 @@ Die KW im Dateinamen ist die **ursprünglich angesetzte Spielwoche**. Wenn ein S
 | `finished` | Spiel wurde gespielt, Ergebnis steht fest. |
 | `wertung-heim` | Wertung **für** die Heimmannschaft, weil Gast nicht angetreten ist. Tore = was in `wertungTore` der Liga-Meta steht. |
 | `wertung-gast` | Wertung **für** die Gastmannschaft, weil Heim nicht angetreten ist. Tore = was in `wertungTore` der Liga-Meta steht. |
-| `verlegt` | Spiel wurde verschoben. Neues Datum steht in `verlegtAuf`. `toreHeim`/`toreGast` bleiben `null`, bis das Spiel gespielt wurde. |
-
-**Wichtig:** Sobald ein verlegtes Spiel gespielt wurde, ändere den `status` auf `"finished"` und trage die Tore ein. Das Feld `verlegtAuf` kann dann gelöscht werden, oder du behältst es als Historie (App ignoriert es bei `finished`).
 
 ### Wie die Tabelle daraus berechnet wird
 
-Die App geht alle Spiele aller Spieltage einer Saison durch und summiert pro Mannschaft:
+Die App geht alle Spiele aller Spielwochen einer Saison durch und summiert pro Mannschaft:
 
 - **Punkte:** 2 pro Sieg, 1 pro Unentschieden, 0 pro Niederlage
-- **Spiele:** Anzahl gewerteter Spiele (alles außer `scheduled` und `verlegt`)
+- **Spiele:** Anzahl gewerteter Spiele (alles außer `scheduled`)
 - **Tore (eigene und gegnerische):** Aus `toreHeim` und `toreGast`
 - **Tordifferenz:** Eigene Tore minus gegnerische Tore
 - **Bei Wertungen:** Punkte gehen an Sieger, Tore aus `wertungTore` der Liga-Meta
@@ -993,8 +954,8 @@ Das passiert **immer live** beim Öffnen der Mannschaftsseite. Du musst die Tabe
 
 ### Wann du diese Datei änderst
 
-- **Spielergebnis nach dem Wochenende eintragen:** `toreHeim`, `toreGast` ausfüllen, `status` auf `"finished"` setzen
-- **Spielverlegung:** `status` auf `"verlegt"` setzen, `verlegtAuf` ergänzen
+- **Spielergebnis nach dem Wochenende eintragen:** `toreHeim`, `toreGast` ausfüllen, `status` auf `"finished"` setzen, `aktualisiert` aktualisieren
+- **Spielverlegung:** Spiel aus der ursprünglichen KW entfernen und in die KW einfügen, in der es tatsächlich gespielt wird. Das `spieltag`-Feld bleibt unverändert.
 - **Wertung wegen Nicht-Antreten:** `status` auf `"wertung-heim"` oder `"wertung-gast"`, Tore aus `wertungTore` eintragen
 - **Tippfehler korrigieren:** Werte direkt anpassen, App rechnet beim nächsten Aufruf neu
 
@@ -1004,11 +965,12 @@ Das passiert **immer live** beim Öffnen der Mannschaftsseite. Du musst die Tabe
 - `toreHeim` und `toreGast` sind **Zahlen ohne Anführungszeichen** oder `null`. Also `"toreHeim": 30`, nicht `"toreHeim": "30"`. Bei nicht gespieltem Status: `"toreHeim": null`.
 - Datum **immer mit Uhrzeit**: `"2026-04-25T17:00:00"`. Wenn die Uhrzeit unbekannt ist, nimm `"00:00:00"` als Platzhalter.
 - Bei Wertungen die Tore-Werte mit dem `wertungTore`-Feld der Liga-Meta abgleichen (typischerweise 0:0)
-- `spieltag`-Nummer in der Datei und im Dateinamen müssen übereinstimmen (`12.json` → `"spieltag": 12`)
+- **Wenn ein Spiel verschoben wird, packe es in die KW der tatsächlichen Austragung** – nicht in die KW, in der es ursprünglich angesetzt war
+- `halle` nur bei TuS-Heimspielen pflegen (bei anderen Spielen ignoriert die App das Feld)
 
-### Spieltage vorbereiten am Saisonanfang
+### Spielwochen vorbereiten am Saisonanfang
 
-Vor Saisonbeginn empfehle ich, **alle Spieltage einer Saison schon als Dateien anzulegen**, mit den fertigen Paarungen aus handball.net, aber `toreHeim: null`, `toreGast: null` und `status: "scheduled"`. So musst du wöchentlich nur die Tore eintragen und den Status auf `"finished"` setzen, statt jedes Mal das ganze Spiel neu zu erfassen.
+Vor Saisonbeginn empfehle ich, **alle Spielwochen einer Saison schon als Einträge anzulegen**, mit den fertigen Paarungen aus dem Liga-Spielplan, aber `toreHeim: null`, `toreGast: null` und `status: "scheduled"`. So musst du wöchentlich nur die Tore eintragen und den Status auf `"finished"` setzen, statt jedes Mal das ganze Spiel neu zu erfassen.
 
 ---
 
@@ -1191,20 +1153,20 @@ Das ist der häufigste Vorgang. Nach jedem Spielwochenende werden die Ergebnisse
 
 ### Schritt-für-Schritt-Anleitung
 
-**1. Spieltag-Datei der Mannschaft öffnen**
+**1. `ligaspiele.json` der Mannschaft öffnen**
 
 Im Repository zur Datei der Mannschaft und Saison navigieren:
 
 ```
-data/teams/<mannschaft>/saisons/<saison>/spieltage/<XX-kwNN>.json
+data/teams/<mannschaft>/saisons/<saison>/ligaspiele.json
 ```
 
-Beispiel: Für Spieltag 24 der 1. Herren in Saison 2025/26 (Spielwoche KW 17):
+Beispiel für die 1. Herren in Saison 2025/26:
 ```
-data/teams/1-herren/saisons/2025-26/spieltage/24-kw17.json
+data/teams/1-herren/saisons/2025-26/ligaspiele.json
 ```
 
-> 💡 **Wie finde ich die richtige Datei?** Auf handball.net Filter „Aktuelle Spielwoche" anwenden – die angezeigte KW findest du im Dateinamen wieder.
+> 💡 **Wie finde ich die richtige Spielwoche?** In der Datei sind alle Spielwochen aufgelistet, gruppiert nach KW. Suche die KW, in der gespielt wurde (z.B. KW 17 für Spiele vom 25./26.04.).
 
 **2. In den Edit-Modus wechseln**
 
@@ -1284,45 +1246,53 @@ Sobald die Ergebnisse committet sind:
 
 ## Spielverlegung eintragen
 
-Manchmal wird ein Spiel verschoben (Krankheit, Halle nicht verfügbar, Vereinsentscheidung). Der **Spieltag bleibt gleich**, nur Datum und Status ändern sich.
+Manchmal wird ein Spiel verschoben (Krankheit, Halle nicht verfügbar, Vereinsentscheidung). In der KW-basierten Struktur wird das Spiel **aus der ursprünglichen KW entfernt und in die KW eingefügt, in der es tatsächlich gespielt wird**.
 
 ### Vorgehen
 
-In der entsprechenden Spieltag-Datei das Spiel finden und folgende Felder anpassen:
+**1. Spiel in der ursprünglichen Spielwoche finden und entfernen**
 
-**1. `status` auf `"verlegt"` setzen**
+Öffne `ligaspiele.json`, suche die Spielwoche mit der ursprünglichen KW und entferne das Spiel aus dem `spiele`-Array.
 
-**2. Neues Datum im Feld `verlegtAuf` ergänzen** (im gleichen Format wie `datum`)
+**2. Spiel in der Ziel-Spielwoche einfügen**
 
-**3. `toreHeim` und `toreGast` bleiben auf `null`**, bis das Spiel tatsächlich gespielt wurde
+Finde die Spielwoche mit der neuen KW (oder lege sie neu an, falls sie noch nicht existiert). Füge das Spiel dort ein mit dem **neuen Datum**.
 
-**Beispiel:**
+**3. Das Feld `spieltag` bleibt unverändert**
 
+Auch wenn das Spiel jetzt in einer anderen KW liegt – die offizielle Spieltag-Nummer aus der Liga ändert sich dadurch nicht.
+
+**Beispiel:** Das Spiel HG Hamburg-Barmbek 2 vs HT Norderstedt 2 von Spieltag 5 (KW 41) wird auf KW 51 verlegt.
+
+**Vorher in KW 41:**
 ```json
 {
-  "datum": "2026-04-25T17:00:00",
-  "heim": "HG Hamburg-Barmbek 2",
-  "gast": "HT Norderstedt 2",
-  "toreHeim": null,
-  "toreGast": null,
-  "halle": "Langenfort, Hamburg",
-  "status": "verlegt",
-  "verlegtAuf": "2026-05-10T17:00:00",
-  "hinweis": "Wegen Hallenwartung verschoben"
+  "kw": 41,
+  "spiele": [
+    {"datum": "2025-10-11T18:30:00", "heim": "HG Hamburg-Barmbek 2", "gast": "HT Norderstedt 2", "toreHeim": null, "toreGast": null, "status": "scheduled", "spieltag": 5},
+    ...
+  ]
 }
 ```
 
-Das Feld `hinweis` ist optional, hilft aber, den Grund festzuhalten.
+**Nachher: aus KW 41 entfernt, in KW 51 eingefügt:**
+```json
+{
+  "kw": 51,
+  "spiele": [
+    {"datum": "2025-12-18T20:30:00", "heim": "HG Hamburg-Barmbek 2", "gast": "HT Norderstedt 2", "toreHeim": null, "toreGast": null, "status": "scheduled", "spieltag": 5}
+  ]
+}
+```
 
 ### Wenn das verlegte Spiel später gespielt wird
 
-Nach dem Nachholspiel:
+Nach dem Nachholspiel ganz normal in der KW, in die du es verschoben hast:
 
 - `status` auf `"finished"` setzen
 - `toreHeim` und `toreGast` eintragen
-- Das Feld `verlegtAuf` kann gelöscht werden (oder bleibt drin – die App ignoriert es bei `"finished"`)
 
-Der ursprüngliche `spieltag` bleibt der Spieltag, an dem das Spiel laut Spielplan ursprünglich gewertet wurde – auch wenn das tatsächliche Datum später war. So bleibt die Tabellenberechnung korrekt.
+Die KW-Sortierung in `ligaspiele.json` muss nicht streng aufsteigend sein – du kannst die KWs in der Reihenfolge halten, die für dich Sinn ergibt. Wichtig ist nur, dass jede KW genau einmal vorkommt.
 
 ---
 
@@ -1405,24 +1375,37 @@ In den neuen Saison-Ordner eine Datei `meta.json` anlegen mit:
 
 Die genauen Felder findest du im Kapitel `teams/<id>/saisons/<saison>/meta.json` weiter oben.
 
-**3. Spieltage anlegen**
+**3. `ligaspiele.json` anlegen**
 
-Für jeden geplanten Spieltag eine Datei in `spieltage/` anlegen, mit Dateinamen im Format `XX-kwNN.json`.
+Eine einzige Datei `ligaspiele.json` anlegen, die alle Spielwochen der Saison enthält.
 
-Beispiel für die ersten Spieltage einer Saison, die im September startet:
-- `01-kw37.json` (Spieltag 1, KW 37)
-- `02-kw38.json` (Spieltag 2, KW 38)
-- ...
-- `24-kw17.json` (Spieltag 24, KW 17 des Folgejahres)
+Grundstruktur:
+```json
+{
+  "saison": "2025/26",
+  "aktualisiert": "01.09.2025",
+  "spielwochen": [
+    {
+      "kw": 37,
+      "spiele": [ ... ]
+    },
+    {
+      "kw": 38,
+      "spiele": [ ... ]
+    }
+  ]
+}
+```
 
-Welche KW jeder Spieltag bekommt, siehst du auf handball.net im Spielplan der Liga (Datum des ersten Spiels des Spieltags → KW).
+Welche KWs zu welchem Spieltag gehören, siehst du im offiziellen Liga-Spielplan (Datum des ersten Spiels des Spieltags → KW).
 
-Pro Datei:
-- Alle Spiele des Spieltags eintragen (mit Mannschaftsnamen, Datum, Halle nur bei TuS-Spielen)
+Pro Spiel in einer Spielwoche:
+- Alle Spiele einer KW eintragen (mit Mannschaftsnamen, Datum, `halle` nur bei TuS-Heimspielen)
 - `toreHeim` und `toreGast` auf `null`
 - `status` auf `"scheduled"`
+- Optional: `spieltag`-Feld mit der offiziellen Spieltag-Nummer aus der Liga
 
-Das ist die meiste Arbeit beim Saisonstart, weil es ~24-26 Dateien pro Mannschaft sind.
+Das ist die meiste Arbeit beim Saisonstart, weil es ~150 Spiele pro Mannschaft sind.
 
 > **Tipp:** Wenn du eine bestehende Spieltag-Datei der vorigen Saison als Vorlage nutzt und Mannschaften/Datum anpasst, geht das deutlich schneller.
 
@@ -1521,7 +1504,7 @@ In den neuen Ordner mindestens diese Dateien:
 
 **4. Saison-Struktur anlegen**
 
-`saisons/<aktuelle-saison>/meta.json` plus mindestens einen ersten Spieltag in `spieltage/01-kwNN.json` (mit der passenden KW als Suffix).
+`saisons/<aktuelle-saison>/meta.json` plus `saisons/<aktuelle-saison>/ligaspiele.json` mit mindestens der ersten Spielwoche.
 
 **5. Ergebnis in der App prüfen**
 
@@ -1541,9 +1524,9 @@ Nach 1-2 Minuten (GitHub Pages braucht Zeit zum Neubau) sollte die neue Mannscha
 
 ### Schritt-für-Schritt
 
-**1. Sponsor-Logo in `data/logos-sponsoren/` ablegen**
+**1. Sponsor-Logo in `data/logos/sponsoren/` ablegen**
 
-Die Logo-Datei (PNG oder JPG) ins Verzeichnis `data/logos-sponsoren/` hochladen.
+Die Logo-Datei (PNG oder JPG) ins Verzeichnis `data/logos/sponsoren/` hochladen.
 
 **2. Eintrag in `content/partners.json` anlegen**
 
@@ -1552,7 +1535,7 @@ Neuen Eintrag mit eindeutiger ID:
 ```json
 "neuer-sponsor": {
   "name": "Neuer Sponsor GmbH",
-  "logo": "data/logos-sponsoren/neuer-sponsor.png",
+  "logo": "data/logos/sponsoren/neuer-sponsor.png",
   "url": "https://www.neuer-sponsor.de/"
 }
 ```
@@ -1695,7 +1678,7 @@ Lege dir den als Bookmark an, damit du jede Woche schnell hinkommst.
 
 ### Eine Datei öffnen und ansehen
 
-1. Im Repository links die Ordnerstruktur durchklicken (z.B. `data` → `teams` → `1-herren` → `saisons` → `2025-26` → `spieltage` → `25.json`)
+1. Im Repository links die Ordnerstruktur durchklicken (z.B. `data` → `teams` → `1-herren` → `saisons` → `2025-26` → `ligaspiele.json`)
 2. Du siehst den Datei-Inhalt mit Zeilennummern
 
 In diesem Modus kannst du nichts ändern – nur lesen.
@@ -1770,10 +1753,10 @@ GitHub erkennt: Hier wird ein neuer Ordner `2026-27/` angelegt mit einer Datei `
 Mehrere Ebenen geht auch:
 
 ```
-2026-27/spieltage/01.json
+2026-27/meta.json
 ```
 
-→ GitHub legt automatisch beide Ordner an.
+→ GitHub legt automatisch den Ordner `2026-27/` an.
 
 ### Eine Datei löschen
 
@@ -1876,17 +1859,17 @@ Wenn es Fehler gibt, zeigt die Seite genau die Zeile an, in der etwas nicht stim
 - Das Logo liegt nicht im richtigen Verzeichnis
 
 **Vorgehen:**
-- Prüfen, ob die Logo-Datei wirklich unter `data/logos-sponsoren/` oder `data/logos-mannschaften/` liegt
+- Prüfen, ob die Logo-Datei wirklich unter `data/logos/sponsoren/` oder `data/logos/mannschaften/` liegt
 - Dateiname auf Groß-/Kleinschreibung prüfen (`Logo.PNG` ≠ `logo.png`)
 
 ### Mannschaft taucht nicht in der Tabelle auf
 
 **Mögliche Ursache:**
-- Der Name der Mannschaft in den Spieltag-Dateien stimmt nicht **exakt** mit dem Namen in `meta.json` der Saison überein
+- Der Name der Mannschaft in den Spielen stimmt nicht **exakt** mit dem Namen in `meta.json` der Saison überein
 - Auch ein einzelnes Leerzeichen oder ein Tippfehler reicht aus
 
 **Vorgehen:**
-- Beide Stellen vergleichen (Spielname in `spieltage/XX-kwNN.json` und in `meta.json`)
+- Beide Stellen vergleichen (Spielname in `ligaspiele.json` und in `meta.json`)
 - Schreibweise angleichen
 
 ### Punktestand stimmt nicht

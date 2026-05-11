@@ -1,13 +1,23 @@
 {
   "saison": "2025/26",
-  "ligaName": "Landesliga",
+  "ligaName": "Frauen Landesliga Gruppe 1",
   "punktesystem": "2-punkte",
-  "wertungTore": {
-    "fuerSieger": 0,
-    "fuerVerlierer": 0
-  },
-  "spieltageGeplant": null,
-  "linkSpielplan": "",
-  "linkTabelle": "",
-  "mannschaften": []
+  "wertungTore": { "fuerSieger": 0, "fuerVerlierer": 0 },
+  "spieltageGeplant": 22,
+  "linkSpielplan": "https://www.handball.net/ligen/handball4all.hamburg.f-ll-221_hhv/spielplan",
+  "linkTabelle": "https://www.handball.net/ligen/handball4all.hamburg.f-ll-221_hhv/tabelle",
+  "mannschaften": [
+    { "name": "TuS Esingen",                  "logo": "tus-esingen.png" },
+    { "name": "1. HC Quickborn",              "logo": "1-hc-quickborn.png" },
+    { "name": "Barmstedter MTV",              "logo": "barmstedter-mtv.png" },
+    { "name": "Eimsbütteler TV 3",            "logo": "eimsbuetteler-tv.png" },
+    { "name": "Elmshorner HT",                "logo": "elmshorner-ht.png" },
+    { "name": "Grün-Weiss Eimsbüttel",        "logo": "gruen-weiss-eimsbuettel.png" },
+    { "name": "HL Buchholz08-Rosengarten 3",  "logo": "hl-buchholz08-rosengarten.png" },
+    { "name": "HSG Elbvororte",               "logo": "hsg-elbvororte.png" },
+    { "name": "HSV/Hamm 02 2",                "logo": "hsv-hamm-02.png" },
+    { "name": "HTS/BW96 Handball",            "logo": "hts-bw96.png" },
+    { "name": "SG Altona 2",                  "logo": "sg-altona.png" },
+    { "name": "SG Hamburg-Nord 2",            "logo": "sg-hamburg-nord.png" }
+  ]
 }

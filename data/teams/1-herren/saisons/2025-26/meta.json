@@ -11,14 +11,14 @@
     { "name": "Ahrensburger TSV",     "logo": "ahrensburger-tsv.png" },
     { "name": "FC St. Pauli",         "logo": "fc-st-pauli.png" },
     { "name": "TV Fischbek",          "logo": "tv-fischbek.png" },
-    { "name": "TSV Ellerbek 2",       "logo": "tsv-ellerbek-2.png" },
+    { "name": "TSV Ellerbek 2",       "logo": "tsv-ellerbek.png" },
     { "name": "HSG Elbvororte",       "logo": "hsg-elbvororte.png" },
     { "name": "TH Eilbeck",           "logo": "th-eilbeck.png" },
-    { "name": "HT Norderstedt 2",     "logo": "ht-norderstedt-2.png" },
+    { "name": "HT Norderstedt 2",     "logo": "ht-norderstedt.png" },
     { "name": "TSV Uetersen",         "logo": "tsv-uetersen.png" },
-    { "name": "SG Hamburg-Nord 2",    "logo": "sg-hamburg-nord-2.png" },
+    { "name": "SG Hamburg-Nord 2",    "logo": "sg-hamburg-nord.png" },
     { "name": "1. HC Quickborn",      "logo": "1-hc-quickborn.png" },
-    { "name": "HG Hamburg-Barmbek 2", "logo": "hg-hamburg-barmbek-2.png" },
-    { "name": "Rellinger TV 2",       "logo": "rellinger-tv-2.png" }
+    { "name": "HG Hamburg-Barmbek 2", "logo": "hg-hamburg-barmbek.png" },
+    { "name": "Rellinger TV 2",       "logo": "rellinger-tv.png" }
   ]
 }

@@ -1,0 +1,13 @@
+{
+  "saison": "2025/26",
+  "ligaName": "Landesliga",
+  "punktesystem": "2-punkte",
+  "wertungTore": {
+    "fuerSieger": 0,
+    "fuerVerlierer": 0
+  },
+  "spieltageGeplant": null,
+  "linkSpielplan": "",
+  "linkTabelle": "",
+  "mannschaften": []
+}

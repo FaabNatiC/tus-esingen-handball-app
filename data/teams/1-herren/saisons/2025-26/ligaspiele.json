@@ -1,0 +1,318 @@
+{
+  "saison": "2025/26",
+  "aktualisiert": "11.05.2026",
+  "spielwochen": [
+    {
+      "spieltag": 1,
+      "kw": 37,
+      "spiele": [
+        {"datum": "2025-09-13T16:00:00", "heim": "TSV Ellerbek 2", "gast": "1. HC Quickborn", "toreHeim": 25, "toreGast": 21, "status": "finished"},
+        {"datum": "2025-09-13T18:00:00", "heim": "HG Hamburg-Barmbek 2", "gast": "Rellinger TV 2", "toreHeim": 25, "toreGast": 23, "status": "finished"},
+        {"datum": "2025-09-13T18:30:00", "heim": "TV Fischbek", "gast": "SG Hamburg-Nord 2", "toreHeim": 29, "toreGast": 27, "status": "finished"},
+        {"datum": "2025-09-13T20:00:00", "heim": "FC St. Pauli", "gast": "HSG Elbvororte", "toreHeim": 28, "toreGast": 24, "status": "finished"},
+        {"datum": "2025-09-14T15:00:00", "heim": "TSV Uetersen", "gast": "TH Eilbeck", "toreHeim": 28, "toreGast": 36, "status": "finished"},
+        {"datum": "2025-09-14T17:30:00", "heim": "Ahrensburger TSV", "gast": "HT Norderstedt 2", "toreHeim": 33, "toreGast": 32, "status": "finished"}
+      ]
+    },
+    {
+      "spieltag": 2,
+      "kw": 38,
+      "spiele": [
+        {"datum": "2025-09-19T20:30:00", "heim": "TuS Esingen", "gast": "HG Hamburg-Barmbek 2", "halle": "Esingen neu, Tornesch", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-09-20T15:00:00", "heim": "Rellinger TV 2", "gast": "TV Fischbek", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-09-20T18:00:00", "heim": "1. HC Quickborn", "gast": "TSV Uetersen", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-09-21T16:00:00", "heim": "HT Norderstedt 2", "gast": "TSV Ellerbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-09-21T18:00:00", "heim": "HSG Elbvororte", "gast": "Ahrensburger TSV", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-09-21T19:15:00", "heim": "SG Hamburg-Nord 2", "gast": "FC St. Pauli", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 3,
+      "kw": 39,
+      "spiele": [
+        {"datum": "2025-09-27T15:00:00", "heim": "TSV Uetersen", "gast": "HT Norderstedt 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-09-27T15:15:00", "heim": "HG Hamburg-Barmbek 2", "gast": "TH Eilbeck", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-09-27T18:30:00", "heim": "TV Fischbek", "gast": "TuS Esingen", "halle": "Süderelbe, Hamburg", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-09-27T20:00:00", "heim": "Rellinger TV 2", "gast": "SG Hamburg-Nord 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-09-28T17:30:00", "heim": "Ahrensburger TSV", "gast": "FC St. Pauli", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-19T20:30:00", "heim": "TSV Ellerbek 2", "gast": "HSG Elbvororte", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 4,
+      "kw": 40,
+      "spiele": [
+        {"datum": "2025-10-04T16:00:00", "heim": "1. HC Quickborn", "gast": "HG Hamburg-Barmbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-10-04T17:00:00", "heim": "TuS Esingen", "gast": "Rellinger TV 2", "halle": "Esingen neu, Tornesch", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-10-04T20:00:00", "heim": "FC St. Pauli", "gast": "TSV Ellerbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-10-04T20:00:00", "heim": "TH Eilbeck", "gast": "TV Fischbek", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-10-04T20:00:00", "heim": "SG Hamburg-Nord 2", "gast": "Ahrensburger TSV", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-10-05T18:00:00", "heim": "HSG Elbvororte", "gast": "TSV Uetersen", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 5,
+      "kw": 41,
+      "spiele": [
+        {"datum": "2025-10-10T20:30:00", "heim": "TV Fischbek", "gast": "1. HC Quickborn", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-10-11T17:00:00", "heim": "TuS Esingen", "gast": "SG Hamburg-Nord 2", "halle": "Esingen neu, Tornesch", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-10-11T17:30:00", "heim": "Rellinger TV 2", "gast": "TH Eilbeck", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-10-11T18:00:00", "heim": "TSV Ellerbek 2", "gast": "Ahrensburger TSV", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-10-12T17:00:00", "heim": "TSV Uetersen", "gast": "FC St. Pauli", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-12-18T20:30:00", "heim": "HG Hamburg-Barmbek 2", "gast": "HT Norderstedt 2", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 6,
+      "kw": 44,
+      "spiele": [
+        {"datum": "2025-11-01T18:00:00", "heim": "SG Hamburg-Nord 2", "gast": "TSV Ellerbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-01T20:00:00", "heim": "TH Eilbeck", "gast": "TuS Esingen", "halle": "Steinhauerdamm, Hamburg", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-02T16:00:00", "heim": "HT Norderstedt 2", "gast": "TV Fischbek", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-02T17:30:00", "heim": "Ahrensburger TSV", "gast": "TSV Uetersen", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-02T18:00:00", "heim": "HSG Elbvororte", "gast": "HG Hamburg-Barmbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-10T20:00:00", "heim": "1. HC Quickborn", "gast": "Rellinger TV 2", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 7,
+      "kw": 45,
+      "spiele": [
+        {"datum": "2025-11-08T18:00:00", "heim": "HG Hamburg-Barmbek 2", "gast": "FC St. Pauli", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-08T18:30:00", "heim": "TV Fischbek", "gast": "HSG Elbvororte", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-08T19:00:00", "heim": "TuS Esingen", "gast": "1. HC Quickborn", "halle": "Esingen neu, Tornesch", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-08T20:00:00", "heim": "TH Eilbeck", "gast": "SG Hamburg-Nord 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-09T19:00:00", "heim": "Rellinger TV 2", "gast": "HT Norderstedt 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-01T17:00:00", "heim": "TSV Uetersen", "gast": "TSV Ellerbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 8,
+      "kw": 46,
+      "spiele": [
+        {"datum": "2025-11-15T20:00:00", "heim": "FC St. Pauli", "gast": "TV Fischbek", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-16T14:00:00", "heim": "1. HC Quickborn", "gast": "TH Eilbeck", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-16T14:00:00", "heim": "HT Norderstedt 2", "gast": "TuS Esingen", "halle": "Schulzentrum Süd 2, Norderstedt", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-16T17:00:00", "heim": "TSV Uetersen", "gast": "SG Hamburg-Nord 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-16T17:30:00", "heim": "Ahrensburger TSV", "gast": "HG Hamburg-Barmbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-16T18:00:00", "heim": "HSG Elbvororte", "gast": "Rellinger TV 2", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 9,
+      "kw": 47,
+      "spiele": [
+        {"datum": "2025-11-22T15:15:00", "heim": "Rellinger TV 2", "gast": "FC St. Pauli", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-22T17:00:00", "heim": "TuS Esingen", "gast": "HSG Elbvororte", "halle": "Esingen neu, Tornesch", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-22T18:00:00", "heim": "HG Hamburg-Barmbek 2", "gast": "TSV Ellerbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-22T18:30:00", "heim": "TV Fischbek", "gast": "Ahrensburger TSV", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-23T18:00:00", "heim": "TH Eilbeck", "gast": "HT Norderstedt 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-23T18:00:00", "heim": "SG Hamburg-Nord 2", "gast": "1. HC Quickborn", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 10,
+      "kw": 48,
+      "spiele": [
+        {"datum": "2025-11-29T16:00:00", "heim": "TSV Ellerbek 2", "gast": "TV Fischbek", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-29T18:00:00", "heim": "HT Norderstedt 2", "gast": "1. HC Quickborn", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-30T17:00:00", "heim": "TSV Uetersen", "gast": "HG Hamburg-Barmbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-30T17:30:00", "heim": "Ahrensburger TSV", "gast": "Rellinger TV 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-30T18:00:00", "heim": "HSG Elbvororte", "gast": "TH Eilbeck", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-11-30T18:00:00", "heim": "FC St. Pauli", "gast": "TuS Esingen", "halle": "Budapester Straße, Hamburg", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 11,
+      "kw": 49,
+      "spiele": [
+        {"datum": "2025-12-06T17:00:00", "heim": "TuS Esingen", "gast": "Ahrensburger TSV", "halle": "Esingen neu, Tornesch", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-12-06T18:00:00", "heim": "1. HC Quickborn", "gast": "HSG Elbvororte", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-12-06T18:00:00", "heim": "SG Hamburg-Nord 2", "gast": "HT Norderstedt 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-12-06T18:30:00", "heim": "TV Fischbek", "gast": "TSV Uetersen", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-12-06T20:00:00", "heim": "TH Eilbeck", "gast": "FC St. Pauli", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-12-07T19:30:00", "heim": "Rellinger TV 2", "gast": "TSV Ellerbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 12,
+      "kw": 50,
+      "spiele": [
+        {"datum": "2025-12-13T16:00:00", "heim": "TSV Ellerbek 2", "gast": "TuS Esingen", "halle": "Ellerbek, Ellerbek", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-12-13T18:00:00", "heim": "HSG Elbvororte", "gast": "HT Norderstedt 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-12-13T18:00:00", "heim": "FC St. Pauli", "gast": "1. HC Quickborn", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-12-13T19:00:00", "heim": "HG Hamburg-Barmbek 2", "gast": "SG Hamburg-Nord 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-12-14T17:00:00", "heim": "TSV Uetersen", "gast": "Rellinger TV 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2025-12-14T17:30:00", "heim": "Ahrensburger TSV", "gast": "TH Eilbeck", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 13,
+      "kw": 7,
+      "spiele": [
+        {"datum": "2026-02-13T20:30:00", "heim": "HT Norderstedt 2", "gast": "FC St. Pauli", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-23T20:30:00", "heim": "TH Eilbeck", "gast": "TSV Ellerbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-08T16:00:00", "heim": "SG Hamburg-Nord 2", "gast": "HSG Elbvororte", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-10T19:30:00", "heim": "TuS Esingen", "gast": "TSV Uetersen", "halle": "Esingen alt, Tornesch", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-19T20:30:00", "heim": "TV Fischbek", "gast": "HG Hamburg-Barmbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-24T20:00:00", "heim": "1. HC Quickborn", "gast": "Ahrensburger TSV", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 14,
+      "kw": 3,
+      "spiele": [
+        {"datum": "2026-01-17T15:15:00", "heim": "Rellinger TV 2", "gast": "HG Hamburg-Barmbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-01-17T16:00:00", "heim": "1. HC Quickborn", "gast": "TSV Ellerbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-01-17T18:00:00", "heim": "HSG Elbvororte", "gast": "FC St. Pauli", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-01-18T19:15:00", "heim": "SG Hamburg-Nord 2", "gast": "TV Fischbek", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-01-18T20:00:00", "heim": "HT Norderstedt 2", "gast": "Ahrensburger TSV", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-19T20:30:00", "heim": "TH Eilbeck", "gast": "TSV Uetersen", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 15,
+      "kw": 4,
+      "spiele": [
+        {"datum": "2026-01-24T16:00:00", "heim": "TSV Ellerbek 2", "gast": "HT Norderstedt 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-01-24T18:00:00", "heim": "HG Hamburg-Barmbek 2", "gast": "TuS Esingen", "halle": "Langenfort, Hamburg", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-01-24T18:30:00", "heim": "TV Fischbek", "gast": "Rellinger TV 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-01-24T18:30:00", "heim": "FC St. Pauli", "gast": "SG Hamburg-Nord 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-01-24T18:45:00", "heim": "TSV Uetersen", "gast": "1. HC Quickborn", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-01-25T17:30:00", "heim": "Ahrensburger TSV", "gast": "HSG Elbvororte", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 16,
+      "kw": 5,
+      "spiele": [
+        {"datum": "2025-09-27T16:00:00", "heim": "HSG Elbvororte", "gast": "TSV Ellerbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-01-31T17:00:00", "heim": "TuS Esingen", "gast": "TV Fischbek", "halle": "Esingen neu, Tornesch", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-01-31T18:00:00", "heim": "FC St. Pauli", "gast": "Ahrensburger TSV", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-01-31T20:00:00", "heim": "TH Eilbeck", "gast": "HG Hamburg-Barmbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-01T18:00:00", "heim": "HT Norderstedt 2", "gast": "TSV Uetersen", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-06T20:30:00", "heim": "SG Hamburg-Nord 2", "gast": "Rellinger TV 2", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 17,
+      "kw": 6,
+      "spiele": [
+        {"datum": "2026-02-06T20:30:00", "heim": "TV Fischbek", "gast": "TH Eilbeck", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-07T16:00:00", "heim": "TSV Ellerbek 2", "gast": "FC St. Pauli", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-07T18:30:00", "heim": "HG Hamburg-Barmbek 2", "gast": "1. HC Quickborn", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-07T20:00:00", "heim": "Rellinger TV 2", "gast": "TuS Esingen", "halle": "Egenbüttel, Rellingen", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-08T17:00:00", "heim": "TSV Uetersen", "gast": "HSG Elbvororte", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-08T17:30:00", "heim": "Ahrensburger TSV", "gast": "SG Hamburg-Nord 2", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 18,
+      "kw": 7,
+      "spiele": [
+        {"datum": "2026-02-14T16:00:00", "heim": "1. HC Quickborn", "gast": "TV Fischbek", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-14T18:00:00", "heim": "SG Hamburg-Nord 2", "gast": "TuS Esingen", "halle": "Tegelsbarg, Hamburg", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-15T17:30:00", "heim": "Ahrensburger TSV", "gast": "TSV Ellerbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-15T18:00:00", "heim": "TH Eilbeck", "gast": "Rellinger TV 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-15T18:00:00", "heim": "HT Norderstedt 2", "gast": "HG Hamburg-Barmbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-15T20:00:00", "heim": "FC St. Pauli", "gast": "TSV Uetersen", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 19,
+      "kw": 8,
+      "spiele": [
+        {"datum": "2025-11-02T16:00:00", "heim": "Rellinger TV 2", "gast": "1. HC Quickborn", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-21T17:00:00", "heim": "TuS Esingen", "gast": "TH Eilbeck", "halle": "Esingen neu, Tornesch", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-21T18:00:00", "heim": "TSV Ellerbek 2", "gast": "SG Hamburg-Nord 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-21T18:30:00", "heim": "TV Fischbek", "gast": "HT Norderstedt 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-21T19:00:00", "heim": "HG Hamburg-Barmbek 2", "gast": "HSG Elbvororte", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-22T17:00:00", "heim": "TSV Uetersen", "gast": "Ahrensburger TSV", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 20,
+      "kw": 9,
+      "spiele": [
+        {"datum": "2025-11-08T16:00:00", "heim": "TSV Ellerbek 2", "gast": "TSV Uetersen", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-26T20:30:00", "heim": "HSG Elbvororte", "gast": "TV Fischbek", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-28T15:00:00", "heim": "HT Norderstedt 2", "gast": "Rellinger TV 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-02-28T15:45:00", "heim": "SG Hamburg-Nord 2", "gast": "TH Eilbeck", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-01T16:00:00", "heim": "FC St. Pauli", "gast": "HG Hamburg-Barmbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-07T16:00:00", "heim": "1. HC Quickborn", "gast": "TuS Esingen", "halle": "Comenius-Sporthalle, Quickborn", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 21,
+      "kw": 11,
+      "spiele": [
+        {"datum": "2026-03-14T17:00:00", "heim": "TuS Esingen", "gast": "HT Norderstedt 2", "halle": "Esingen neu, Tornesch", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-14T18:00:00", "heim": "HG Hamburg-Barmbek 2", "gast": "Ahrensburger TSV", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-14T18:00:00", "heim": "SG Hamburg-Nord 2", "gast": "TSV Uetersen", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-14T18:30:00", "heim": "TV Fischbek", "gast": "FC St. Pauli", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-14T20:00:00", "heim": "TH Eilbeck", "gast": "1. HC Quickborn", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-15T18:30:00", "heim": "Rellinger TV 2", "gast": "HSG Elbvororte", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 22,
+      "kw": 12,
+      "spiele": [
+        {"datum": "2026-03-21T14:45:00", "heim": "HT Norderstedt 2", "gast": "TH Eilbeck", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-21T16:00:00", "heim": "TSV Ellerbek 2", "gast": "HG Hamburg-Barmbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-21T16:00:00", "heim": "1. HC Quickborn", "gast": "SG Hamburg-Nord 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-22T17:30:00", "heim": "Ahrensburger TSV", "gast": "TV Fischbek", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-22T18:00:00", "heim": "HSG Elbvororte", "gast": "TuS Esingen", "halle": "Blankenese, Hamburg", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-22T20:00:00", "heim": "FC St. Pauli", "gast": "Rellinger TV 2", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 23,
+      "kw": 13,
+      "spiele": [
+        {"datum": "2026-03-28T17:00:00", "heim": "TuS Esingen", "gast": "FC St. Pauli", "halle": "Esingen neu, Tornesch", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-28T18:00:00", "heim": "1. HC Quickborn", "gast": "HT Norderstedt 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-28T18:30:00", "heim": "HG Hamburg-Barmbek 2", "gast": "TSV Uetersen", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-28T18:30:00", "heim": "TV Fischbek", "gast": "TSV Ellerbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-28T20:00:00", "heim": "TH Eilbeck", "gast": "HSG Elbvororte", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-03-28T20:00:00", "heim": "Rellinger TV 2", "gast": "Ahrensburger TSV", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 24,
+      "kw": 15,
+      "spiele": [
+        {"datum": "2026-04-11T16:00:00", "heim": "TSV Ellerbek 2", "gast": "Rellinger TV 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-04-11T20:00:00", "heim": "FC St. Pauli", "gast": "TH Eilbeck", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-04-12T14:00:00", "heim": "HT Norderstedt 2", "gast": "SG Hamburg-Nord 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-04-12T17:00:00", "heim": "TSV Uetersen", "gast": "TV Fischbek", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-04-12T17:30:00", "heim": "Ahrensburger TSV", "gast": "TuS Esingen", "halle": "Heimgarten, Ahrensburg", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-04-12T18:00:00", "heim": "HSG Elbvororte", "gast": "1. HC Quickborn", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 25,
+      "kw": 16,
+      "spiele": [
+        {"datum": "2026-04-18T16:00:00", "heim": "1. HC Quickborn", "gast": "FC St. Pauli", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-04-18T17:00:00", "heim": "TuS Esingen", "gast": "TSV Ellerbek 2", "halle": "Esingen neu, Tornesch", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-04-18T17:30:00", "heim": "Rellinger TV 2", "gast": "TSV Uetersen", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-04-18T18:00:00", "heim": "TH Eilbeck", "gast": "Ahrensburger TSV", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-04-18T20:00:00", "heim": "SG Hamburg-Nord 2", "gast": "HG Hamburg-Barmbek 2", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-04-19T18:00:00", "heim": "HT Norderstedt 2", "gast": "HSG Elbvororte", "toreHeim": null, "toreGast": null, "status": "scheduled"}
+      ]
+    },
+    {
+      "spieltag": 26,
+      "kw": 17,
+      "spiele": [
+        {"datum": "2026-04-25T15:15:00", "heim": "HG Hamburg-Barmbek 2", "gast": "TV Fischbek", "toreHeim": 25, "toreGast": 26, "status": "finished"},
+        {"datum": "2026-04-25T16:00:00", "heim": "TSV Ellerbek 2", "gast": "TH Eilbeck", "toreHeim": null, "toreGast": null, "status": "scheduled"},
+        {"datum": "2026-04-25T17:00:00", "heim": "TSV Uetersen", "gast": "TuS Esingen", "halle": "Seminarstraße, Uetersen", "toreHeim": 30, "toreGast": 27, "status": "finished"},
+        {"datum": "2026-04-25T18:00:00", "heim": "FC St. Pauli", "gast": "HT Norderstedt 2", "toreHeim": 44, "toreGast": 23, "status": "finished"},
+        {"datum": "2026-04-26T17:30:00", "heim": "Ahrensburger TSV", "gast": "1. HC Quickborn", "toreHeim": 35, "toreGast": 27, "status": "finished"},
+        {"datum": "2026-04-26T18:00:00", "heim": "HSG Elbvororte", "gast": "SG Hamburg-Nord 2", "toreHeim": 41, "toreGast": 37, "status": "finished"}
+      ]
+    }
+  ]
+}

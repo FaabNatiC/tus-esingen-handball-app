@@ -977,7 +977,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.7.4";
+const APP_VERSION = "0.7.5";
 const APP_BUILD_DATE = "11.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
@@ -986,6 +986,9 @@ const APP_BUILD_DATE = "11.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
+  { version: "0.7.5", date: "11.05.2026", points: [
+    "Im Vereinsspielplan steht jetzt vor der Liga, welche TuS-Mannschaft gespielt hat (z.B. '1. Herren · Oberliga Hamburg'). So lässt sich auf einen Blick erkennen, zu welchem Team eine Spielkarte gehört."
+  ] },
   { version: "0.7.4", date: "11.05.2026", points: [
     "Zurückgezogene Mannschaften werden in der Tabelle jetzt korrekt mit 0 Punkten und 0:0 Toren am Ende geführt, ihre Spiele werden für alle Beteiligten aus der Wertung genommen.",
     "Unter der Tabelle erscheint ein kurzer Hinweis, welche Mannschaften zurückgezogen wurden."
@@ -1017,12 +1020,6 @@ const UPDATE_HISTORY = [
   ] },
   { version: "0.6.17", date: "08.05.2026", points: [
     "Auf der Home-Seite war die Beschriftung 'Home' in der Menüleiste nicht zu lesen, weil sie in dunkler Schrift auf dunklem Hintergrund angezeigt wurde. Sie erscheint nun in weißer, fetter Schrift und ist gut sichtbar."
-  ] },
-  { version: "0.6.16", date: "08.05.2026", points: [
-    "Die Menüleiste wurde umsortiert: Der Tab 'Teams' mit einem Trikot-Symbol ist jetzt ganz links. Das TuS-Logo in der Mitte ist jetzt der 'Home'-Tab.",
-    "Die App startet jetzt immer auf der Home-Seite, also direkt beim TuS-Logo in der Mitte.",
-    "Beim Tippen auf die Update-Info springt die Übersicht nicht mehr — der neueste Eintrag steht ja sowieso ganz oben.",
-    "Die untere Menüleiste verdeckt nun nicht mehr den Inhalt am Seitenende — beim Scrollen ist genug Platz unten frei."
   ] }
 ];
 
@@ -2121,8 +2118,9 @@ async function loadGlobalSpielplan(force) {
 
   function cardUpcoming(item) {
     const s = item.spiel;
+    const ligaLabel = item.teamName ? (item.teamName + ' · ' + item.liga) : item.liga;
     return '<div class="gc">' +
-      '<div class="gh"><span class="lb">' + item.liga + '</span><span>' + fmtFull(s.datum) + '</span></div>' +
+      '<div class="gh"><span class="lb">' + ligaLabel + '</span><span>' + fmtFull(s.datum) + '</span></div>' +
       '<div class="gts">' +
         '<div class="gt">' + logo(s.heim) + '<span>' + s.heim + '</span></div>' +
         '<div class="gs up">' + fmtUpcoming(s.datum) + '</div>' +
@@ -2136,8 +2134,9 @@ async function loadGlobalSpielplan(force) {
     const cls = outcome === 'sieg' ? 'gc rw' :
                 outcome === 'niederlage' ? 'gc rl' :
                 outcome === 'unentschieden' ? 'gc rd' : 'gc';
+    const ligaLabel = item.teamName ? (item.teamName + ' · ' + item.liga) : item.liga;
     return '<div class="' + cls + '">' +
-      '<div class="gh"><span class="lb">' + item.liga + '</span><span>' + fmtFull(s.datum) + '</span></div>' +
+      '<div class="gh"><span class="lb">' + ligaLabel + '</span><span>' + fmtFull(s.datum) + '</span></div>' +
       '<div class="gts">' +
         '<div class="gt">' + logo(s.heim) + '<span>' + s.heim + '</span></div>' +
         '<div class="gs">' + s.toreHeim + ':' + s.toreGast + '</div>' +

@@ -307,7 +307,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tname span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1;}
 .tbl tr.hl td{background:#f5f5f5;} .pts{font-weight:700;}
 .upd{font-size:10px;color:#666;text-align:right;padding:4px 14px 6px;}
-.ext-btn{display:block;margin:4px 14px 14px;padding:12px;background:#1a1a1a;color:white;text-align:center;border-radius:12px;font-size:13px;font-weight:700;text-decoration:none;}
+.ext-btn{display:block;margin:4px 14px 14px;padding:8px 12px;background:#1a1a1a;color:white;text-align:center;border-radius:10px;font-size:11px;font-weight:600;text-decoration:none;}
 .ev{display:flex;gap:14px;padding:13px 16px;border-bottom:1px solid #f0f0f0;}
 .ev-d{background:#f0f0f0;border-radius:10px;padding:8px 12px;text-align:center;flex-shrink:0;min-width:52px;}
 .ev-day{font-size:22px;font-weight:700;} .ev-mo{font-size:11px;color:#666;}
@@ -695,7 +695,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
   <div class="sec">Datenquelle</div>
   <div style="padding:14px 16px;font-size:13px;line-height:1.6;color:#444;">
-    Spielpläne und Tabellen werden automatisch über die offizielle Plattform <strong>handball.net</strong> aktualisiert. Vereinsdaten, News und Termine pflegt der Verein selbst.
+    Spielpläne, Tabellen, Vereinsdaten, News und Termine werden vom Verein gepflegt.
   </div>
 
   <div class="sec">Kontakt</div>
@@ -809,7 +809,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="tc"><div class="ti-logo da"><img class="tus-logo-img" alt="TuS"></div><div><div class="tn">2. Damen</div><div class="ts">Bezirksliga</div></div><span class="cv">›</span></div>
   <div class="sg">Jugend männlich</div>
   <div class="tc"><div class="ti-logo jm"><img class="tus-logo-img" alt="TuS"></div><div><div class="tn">männlich A</div><div class="ts">Bezirksstaffel</div></div><span class="jg-badge">Jg. 07/08</span><span class="cv">›</span></div>
-  <div class="tc"><div class="ti-logo jm"><img class="tus-logo-img" alt="TuS"></div><div><div class="tn">männlich B</div><div class="ts">Bezirksstaffel · Endrunde ✓</div></div><span class="jg-badge">Jg. 09/10</span><span class="cv">›</span></div>
   <div class="tc"><div class="ti-logo jm"><img class="tus-logo-img" alt="TuS"></div><div><div class="tn">männlich C</div><div class="ts">Landesliga</div></div><span class="jg-badge">Jg. 11/12</span><span class="cv">›</span></div>
   <div class="tc" onclick="openTeam('md1-jugend')"><div class="ti-logo jm"><img class="tus-logo-img" alt="TuS"></div><div><div class="tn">männlich D1</div><div class="ts">Landesliga · Platz 2</div></div><span class="jg-badge">Jg. 13/14</span><span class="cv">›</span></div>
   <div class="tc" onclick="openTeam('md2-jugend')"><div class="ti-logo jm"><img class="tus-logo-img" alt="TuS"></div><div><div class="tn">männlich D2</div><div class="ts">Kreisliga · Platz 3</div></div><span class="jg-badge">Jg. 13/14</span><span class="cv">›</span></div>
@@ -963,7 +962,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.7.0";
+const APP_VERSION = "0.7.1";
 const APP_BUILD_DATE = "11.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
@@ -972,6 +971,10 @@ const APP_BUILD_DATE = "11.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
+  { version: "0.7.1", date: "11.05.2026", points: [
+    "Die Buttons 'Spielplan auf handball.net' und 'Tabelle auf handball.net' werden kompakter dargestellt.",
+    "Hinweise auf handball.net als Datenquelle wurden entfernt, da Spielpläne und Tabellen jetzt direkt vom Verein gepflegt werden."
+  ] },
   { version: "0.7.0", date: "11.05.2026", points: [
     "Großer interner Umbau: Die App liest jetzt die Spiele aus der neuen Datenstruktur. Die Tabelle wird live aus den Spielergebnissen berechnet, statt sie separat zu pflegen.",
     "Aktuell ist nur die 1. Herren-Mannschaft auf die neue Struktur umgestellt. 1. Damen und Jugend-Mannschaften folgen in den nächsten Updates und sind temporär nicht verfügbar."
@@ -1007,12 +1010,6 @@ const UPDATE_HISTORY = [
     "Das TuS-Logo unten in der Mitte ragt jetzt deutlicher aus der Menüleiste heraus.",
     "Der Schriftzug 'Teams' hat jetzt mehr Abstand zum Logo, damit beides nicht aneinanderklebt.",
     "Im aktiven Zustand füllt das Logo den weißen Innenkreis komplett aus, sodass kein weißer Ring mehr zu sehen ist."
-  ] },
-  { version: "0.6.12", date: "08.05.2026", points: [
-    "Die Update-Info am oberen Rand kommt jetzt zuverlässig - auch dann, wenn die App im Hintergrund aktualisiert wurde, während sie geschlossen war.",
-    "Das TuS-Logo unten in der Mitte ist jetzt deutlich größer und ragt sichtbarer aus der Menüleiste heraus. Die Welle in der Leiste passt sich proportional an.",
-    "Der Schriftzug 'Teams' steht jetzt exakt auf gleicher Höhe wie die anderen Beschriftungen in der Menüleiste.",
-    "Der schmale Rand um das TuS-Logo bleibt jetzt auch im aktiven Zustand schwarz, nur die Innenfläche wird weiß."
   ] }
 ];
 
@@ -1572,7 +1569,7 @@ function renderTabelle(data) {
   });
   if(tblEl) tblEl.innerHTML = rows;
 
-  if(updEl) updEl.textContent = "Stand: " + data.aktualisiert + " · handball.net";
+  if(updEl) updEl.textContent = "Stand: " + data.aktualisiert;
 
   // Detail-Tabelle: Platz/Punkte/Tordiff (eigener Verein) und Liga-Header
   const eigen = data.tabelle.find(t => t.highlight) || data.tabelle.find(t => t.verein === "TuS Esingen");
@@ -1991,7 +1988,7 @@ function renderSpielplan(data) {
   }
 
   // Stand-Zeile + Link
-  if(detStand) detStand.textContent = "Stand: " + (data.aktualisiert || '') + " · handball.net · " + data.spiele.length + " Spiele";
+  if(detStand) detStand.textContent = "Stand: " + (data.aktualisiert || '') + " · " + data.spiele.length + " Spiele";
 }
 
 // ── Globaler Spielplan-Tab ──────────────────────────────────────────────────

@@ -1222,7 +1222,7 @@ async function ladeAllesDaten(teamId) {
     // Im alten Format verpacken, damit renderTabelle() unverändert funktioniert
     var tabelle = {
       aktualisiert: ligaspiele.aktualisiert || '',
-      liga: meta.liga || '',
+      liga: meta.ligaName || meta.liga || '',
       saison: meta.saison || '',
       quelle: meta.linkTabelle || '',
       tabelle: tabelleArr
@@ -1239,7 +1239,7 @@ async function ladeAllesDaten(teamId) {
     // 6. TEAMS-Map aktualisieren (für externe Links und Liga-Name)
     if(TEAMS[teamId]){
       TEAMS[teamId].name          = info.name || TEAMS[teamId].name;
-      TEAMS[teamId].liga          = meta.liga || TEAMS[teamId].liga;
+      TEAMS[teamId].liga          = meta.ligaName || meta.liga || TEAMS[teamId].liga;
       TEAMS[teamId].saison        = meta.saison || TEAMS[teamId].saison;
       TEAMS[teamId].linkSpielplan = meta.linkSpielplan || '';
       TEAMS[teamId].linkTabelle   = meta.linkTabelle || '';
@@ -2140,11 +2140,11 @@ function zaehleMannschaften(){
   });
 }
 
-// Ergänzt in der Teams-Übersicht den aktuellen Tabellenplatz hinter
-// dem Liga-Namen (z.B. "Landesliga · Platz 3"). Läuft parallel für alle
-// Mannschaften und schreibt das Ergebnis ins DOM, sobald es verfügbar ist.
-// Mannschaften ohne Liga-Daten (404, leere Spielwochen) behalten ihren
-// Originaltext ohne Platzangabe.
+// Ergänzt in der Teams-Übersicht den Liga-Namen + aktuellen Tabellenplatz
+// dynamisch aus meta.json (Liga) und ligaspiele.json (Berechnung Platz).
+// Läuft parallel für alle Mannschaften und schreibt das Ergebnis ins DOM,
+// sobald es verfügbar ist. Bei fehlenden Daten oder Fehler bleibt der
+// Fallback-Text aus data-liga stehen.
 async function updateTeamsTabPlatzierungen(){
   var teamsPage = document.getElementById('p-teams');
   if(!teamsPage) return;
@@ -2156,7 +2156,7 @@ async function updateTeamsTabPlatzierungen(){
     if(!teamId || teamId === 'minis') return;
     var tsEl = kachel.querySelector('.ts');
     if(!tsEl) return;
-    var liga = tsEl.getAttribute('data-liga') || tsEl.textContent;
+    var fallbackLiga = tsEl.getAttribute('data-liga') || tsEl.textContent;
 
     (async function(){
       try {
@@ -2176,25 +2176,40 @@ async function updateTeamsTabPlatzierungen(){
         ]);
         var meta = results[0];
         var ligaspiele = results[1];
-        if(!meta || !ligaspiele) return;
 
-        // Nur berechnen wenn es überhaupt Spiele gibt
+        // Liga-Name aus meta.json (überschreibt Fallback aus HTML, wenn vorhanden)
+        var ligaText = fallbackLiga;
+        if(meta && meta.ligaName){
+          ligaText = meta.ligaName;
+        }
+
+        // Falls keine ligaspiele.json oder keine Spiele: nur Liga-Name (ohne Platz) setzen
+        if(!meta || !ligaspiele){
+          tsEl.textContent = ligaText;
+          return;
+        }
+
         var hatSpiele = (ligaspiele.spielwochen || []).some(function(sw){
           return (sw.spiele || []).some(function(sp){
             return sp.status === 'finished' || sp.status === 'wertung-heim' || sp.status === 'wertung-gast';
           });
         });
-        if(!hatSpiele) return;
+        if(!hatSpiele){
+          tsEl.textContent = ligaText;
+          return;
+        }
 
         // Tabelle berechnen und eigene Position finden
         var tabelle = berechneTabelleAusSpielen(meta, ligaspiele);
         var eigener = tabelle.find(function(t){ return t.verein === ligaTeamName; });
-        if(!eigener || !eigener.platz) return;
+        if(!eigener || !eigener.platz){
+          tsEl.textContent = ligaText;
+          return;
+        }
 
-        // DOM aktualisieren
-        tsEl.textContent = liga + ' · Platz ' + eigener.platz;
+        tsEl.textContent = ligaText + ' · Platz ' + eigener.platz;
       } catch(e){
-        // Bei Fehlern den Original-Text einfach stehen lassen
+        // Bei Fehlern den Fallback-Text einfach stehen lassen
         console.warn('Platzberechnung für ' + teamId + ' fehlgeschlagen:', e);
       }
     })();

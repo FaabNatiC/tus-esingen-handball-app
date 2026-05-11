@@ -1500,16 +1500,23 @@ function resolveLogo(teamname, logoFromData){
   return LOCAL_LOGOS_BASE + logoFromData;
 }
 
-// Logo-HTML mit Auto-Fallback bei 404 (Bild nicht im Repo)
+// Logo-HTML mit Auto-Fallback bei 404 (Bild nicht im Repo).
+// Statt komplexem onerror-Inline-Code nutzen wir einen einfachen Handler,
+// der das Bild bei Fehler durch CSS-Klassen unsichtbar macht und stattdessen
+// die Platzhalter-Hintergrundfarbe des Elternelements zeigt.
 function logoHtml(teamname, logoFromData, size){
   size = size || 26;
   const url = resolveLogo(teamname, logoFromData);
-  const placeholder = '<div class="tlogo-placeholder" style="width:' + size + 'px;height:' + size + 'px;background:#e5e5e5;border-radius:50%;display:inline-block;"></div>';
-  if(!url) return placeholder;
-  // onerror tauscht das Bild gegen einen Platzhalter, wenn die Datei fehlt
-  return '<img src="' + url + '" alt="' + (teamname || '') + '" class="tlogo" '
-    + 'style="width:' + size + 'px;height:' + size + 'px;object-fit:contain;border-radius:50%;" '
-    + 'onerror="this.outerHTML=\'' + placeholder.replace(/'/g, "\\'") + '\'">';
+  const baseStyle = 'width:' + size + 'px;height:' + size + 'px;background:#e5e5e5;border-radius:50%;display:inline-block;vertical-align:middle;';
+  if(!url) {
+    return '<span class="tlogo-placeholder" style="' + baseStyle + '"></span>';
+  }
+  // Wrapper-span mit Platzhalter-Hintergrund. Wenn das Bild lädt, überdeckt es ihn.
+  // Wenn nicht, bleibt der graue Kreis sichtbar (Bild wird via onerror entfernt).
+  const imgStyle = 'width:' + size + 'px;height:' + size + 'px;object-fit:contain;border-radius:50%;display:block;';
+  return '<span class="tlogo-wrap" style="' + baseStyle + 'overflow:hidden;">'
+    + '<img src="' + url + '" alt="" style="' + imgStyle + '" onerror="this.style.display=\'none\'">'
+    + '</span>';
 }
 
 function renderTabelle(data) {

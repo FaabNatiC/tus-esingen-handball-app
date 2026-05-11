@@ -2,16 +2,16 @@
   "gebr-schmidt": {
     "name": "Gebr. Schmidt GmbH",
     "url": "https://www.gebr-schmidt.com/",
-    "logo": "data/logos/gebr-schmidt.jpg"
+    "logo": "data/logos/sponsoren/gebr-schmidt.jpg"
   },
   "krieg": {
     "name": "KRIEG Bausanierung GmbH",
     "url": "https://bausanierung-krieg.de/",
-    "logo": "data/logos/krieg.jpg"
+    "logo": "data/logos/sponsoren/krieg.jpg"
   },
   "bayer": {
     "name": "Hausverwaltung Bayer GmbH",
     "url": "https://www.bayer-hausverwaltung.de/",
-    "logo": "data/logos/bayer.jpg"
+    "logo": "data/logos/sponsoren/bayer.jpg"
   }
 }

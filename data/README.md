@@ -438,3 +438,263 @@ Wenn eine neue Halle dazukommt, muss sie im App-Code als Hallenname hinterlegt w
 - Tag-Kürzel müssen genau so geschrieben sein wie oben angegeben (`Mo`, nicht `mo` oder `Montag`)
 - Uhrzeiten immer mit führender Null: `09:00`, nicht `9:00`
 - `ort` muss eine bekannte Hallen-ID sein, sonst zeigt die App den Eintrag ohne Hallennamen
+
+---
+
+# Die Inhaltsdateien im Detail
+
+Dieses Kapitel beschreibt die Dateien, in denen die App-übergreifenden Inhalte gepflegt werden: News auf der Startseite, Hauptsponsoren und Mannschaftssponsoren.
+
+## `content/news.json` – News-Beiträge
+
+In dieser Datei stehen alle manuell gepflegten News-Beiträge, die auf der Startseite erscheinen. Spielergebnisse als „News" werden automatisch aus den Spieltagen generiert – die musst du hier **nicht** zusätzlich eintragen.
+
+### Beispiel (eine einfache News + eine mit Score-Box)
+
+```json
+{
+  "aktualisiert": "10.05.2026",
+  "news": [
+    {
+      "id": "saisonabschluss-2025-26",
+      "title": "Saisonabschlussfeier am 14. Juni",
+      "lead": "Die 1. Herren feiern den 6. Tabellenplatz mit allen Fans im Vereinsheim.",
+      "team": "1. Herren",
+      "cat": "vereinsleben",
+      "catCl": "cat-vereinsleben",
+      "gradient": "linear-gradient(135deg, #1a1a1a 0%, #444 100%)",
+      "author": "Vorstand TuS Esingen",
+      "authorIni": "TuS",
+      "date": "10. Mai 2026",
+      "sortDate": "2026-05-10",
+      "topNews": false,
+      "body": [
+        {
+          "type": "text",
+          "text": "Nach einer spannenden Saison laden wir alle Mitglieder, Spielerinnen und Fans zum Saisonabschluss in das Vereinsheim ein. Beginn ist um 18:00 Uhr."
+        },
+        {
+          "type": "quote",
+          "text": "Diese Saison war ein wichtiger Schritt für unsere Mannschaft.",
+          "author": "Fabian Wurl, Trainer 1. Herren"
+        }
+      ]
+    },
+    {
+      "id": "sieg-uetersen-25-04",
+      "title": "Wichtiger Sieg gegen Uetersen",
+      "lead": "Die 1. Herren gewinnen souverän mit 30:27 in Uetersen.",
+      "team": "1. Herren",
+      "cat": "spielbericht",
+      "catCl": "cat-spielbericht",
+      "gradient": "linear-gradient(135deg, #1a1a1a 0%, #2d4f10 60%, #639922 100%)",
+      "author": "Fabian Wurl",
+      "authorIni": "FW",
+      "date": "26. April 2026",
+      "sortDate": "2026-04-26",
+      "topNews": true,
+      "matchTeam": "1-herren",
+      "matchDate": "2026-04-25",
+      "body": [
+        {
+          "type": "score",
+          "home": "TSV Uetersen",
+          "guest": "TuS Esingen",
+          "result": "27:30",
+          "liga": "Männer Oberliga Hamburg",
+          "outcome": "Sieg"
+        },
+        {
+          "type": "text",
+          "text": "In einem hart umkämpften Auswärtsspiel setzten sich die Esinger Herren in der zweiten Halbzeit deutlich ab. Besonders die starke Defensive bereitete dem TSV Probleme."
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Felder auf oberster Ebene
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `aktualisiert` | ja | Datum der letzten Änderung |
+| `news` | ja | Liste aller News-Einträge (kann leer sein: `[]`) |
+
+### Pro News-Eintrag
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `id` | ja | Eindeutige ID dieser News (Kurz-Slug, z.B. `"saisonabschluss-2025-26"`) |
+| `title` | ja | Hauptüberschrift der News |
+| `lead` | ja | Kurzer einleitender Satz (1-2 Zeilen), wird unter dem Titel angezeigt |
+| `team` | nein | Zugehörige Mannschaft (z.B. `"1. Herren"`). Wird als Tag angezeigt. |
+| `cat` | ja | Kategorie der News (siehe Tabelle unten) |
+| `catCl` | ja | CSS-Klasse zur Kategorie (siehe Tabelle unten) |
+| `gradient` | ja | CSS-Farbverlauf für das Hero-Bild |
+| `author` | ja | Anzeigename des Autors |
+| `authorIni` | ja | Initialen des Autors (max. 3 Zeichen) oder `"TuS"` für das Vereinslogo |
+| `date` | ja | Anzeigedatum auf Deutsch (z.B. `"26. April 2026"`) |
+| `sortDate` | ja | Sortierdatum im Format `YYYY-MM-DD` (für korrekte Reihenfolge) |
+| `topNews` | nein | `true` = wird ganz oben groß als Top-News angezeigt |
+| `matchTeam` | nein | Bei Spielberichten: Mannschafts-ID (z.B. `"1-herren"`). Verhindert doppelte News. |
+| `matchDate` | nein | Bei Spielberichten: Spieldatum (Format `YYYY-MM-DD`) |
+| `body` | ja | Liste aller Inhalts-Blöcke der News (siehe unten) |
+
+### Mögliche Kategorien
+
+| `cat` | `catCl` | Bedeutung |
+|---|---|---|
+| `spielbericht` | `cat-spielbericht` | Bericht über ein gespieltes Match |
+| `vereinsleben` | `cat-vereinsleben` | Veranstaltungen, Feiern, Termine |
+| `transfer` | `cat-transfer` | Spieler-Wechsel, neue Trainer |
+| `ankuendigung` | `cat-ankuendigung` | Wichtige Mitteilungen |
+
+Wenn eine neue Kategorie nötig wird, muss sie im App-Code als CSS-Klasse hinterlegt werden – sag im Entwickler-Chat Bescheid.
+
+### Body-Blöcke
+
+Der Inhalt einer News besteht aus mehreren Blöcken. Jeder Block hat ein `type`-Feld:
+
+**Text-Block:**
+```json
+{
+  "type": "text",
+  "text": "Hier steht der Fließtext..."
+}
+```
+
+**Score-Block (Spielergebnis):**
+```json
+{
+  "type": "score",
+  "home": "TSV Uetersen",
+  "guest": "TuS Esingen",
+  "result": "27:30",
+  "liga": "Männer Oberliga Hamburg",
+  "outcome": "Sieg"
+}
+```
+
+Mögliche `outcome`-Werte: `"Sieg"`, `"Niederlage"`, `"Unentschieden"` (aus TuS-Sicht). Bestimmt die Hintergrundfarbe der Score-Box.
+
+**Zitat-Block:**
+```json
+{
+  "type": "quote",
+  "text": "Diese Saison war ein wichtiger Schritt für uns.",
+  "author": "Fabian Wurl, Trainer"
+}
+```
+
+### Wann du diese Datei änderst
+
+- **Neue News veröffentlichen:** Neuen Eintrag in `news` ergänzen (oben oder unten, egal – die App sortiert nach `sortDate`)
+- **News korrigieren:** Eintrag mit derselben `id` bearbeiten
+- **News löschen:** Eintrag aus der Liste entfernen
+
+### Stolperfallen
+
+- `sortDate` ist Pflicht – ohne dieses Feld wird die News falsch einsortiert
+- `id` muss **eindeutig** sein – keine zwei News mit derselben ID
+- `body` ist immer eine **Liste**, auch wenn nur ein Text-Block drin ist
+- Bei `matchTeam`: ID exakt wie in `meta/teams.json` (z.B. `"1-herren"`, nicht `"1. Herren"`)
+- `gradient` ist CSS-Code – wenn unsicher, kopier den aus einer anderen News
+
+---
+
+## `content/partners.json` – Hauptsponsoren
+
+In dieser Datei stehen die **Stammdaten** aller Sponsoren des Vereins. Sie wird sowohl für die Hauptsponsoren auf der Startseite als auch von den Mannschafts-Sponsoren (`teams/<id>/partner.json`) verwendet.
+
+### Beispiel
+
+```json
+{
+  "aktualisiert": "10.05.2026",
+  "stadtwerke-suedholstein": {
+    "name": "Stadtwerke Südholstein",
+    "logo": "data/logos/stadtwerke.jpg",
+    "url": "https://www.sw-suedholstein.de/"
+  },
+  "gebr-schmidt": {
+    "name": "Gebr. Schmidt GmbH",
+    "logo": "data/logos/schmidt.png",
+    "url": "https://www.gebr-schmidt.de/"
+  },
+  "krieg": {
+    "name": "Bauunternehmen Krieg",
+    "logo": "data/logos/krieg.png",
+    "url": "https://www.bauunternehmen-krieg.de/"
+  },
+  "bayer": {
+    "name": "Bayer AG",
+    "logo": "data/logos/bayer.png",
+    "url": "https://www.bayer.de/"
+  }
+}
+```
+
+### Struktur
+
+Die Datei ist eine **flache Sammlung** aller Sponsoren mit ihrer ID als Schlüssel. Pro Sponsor:
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `name` | ja | Vollständiger Name des Sponsors |
+| `logo` | ja | Pfad zur Logo-Datei (relativ zur App, also z.B. `"data/logos/..."`) |
+| `url` | ja | Webseite des Sponsors |
+
+**Plus auf oberster Ebene:**
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `aktualisiert` | ja | Datum der letzten Änderung |
+
+### Wann du diese Datei änderst
+
+- **Neuer Sponsor:** Neuen Eintrag mit eindeutiger ID hinzufügen
+- **Sponsor wechselt Logo/Webseite:** Werte beim bestehenden Eintrag aktualisieren
+- **Sponsor verlässt den Verein:** Eintrag entfernen (vorher prüfen, ob er noch in einer `teams/<id>/partner.json` referenziert wird)
+
+### Stolperfallen
+
+- Die **ID** (der Schlüssel) muss eindeutig sein und sollte aus Kleinbuchstaben mit Bindestrichen bestehen (z.B. `"stadtwerke-suedholstein"`, nicht `"Stadtwerke Südholstein"`)
+- `logo` ist ein Pfad **innerhalb des Repos**, nicht eine externe URL. Die Logodatei muss vorher in `data/logos/` abgelegt werden.
+- `aktualisiert` steht auf oberster Ebene neben den Sponsoren-IDs
+
+---
+
+## `teams/<id>/partner.json` – Mannschaftssponsoren
+
+Diese Datei listet auf, welche Sponsoren bei einer Mannschaft auf der Detailseite angezeigt werden. Sie enthält **nur die IDs** der Sponsoren – die Details werden aus `content/partners.json` geladen.
+
+### Beispiel (1. Herren)
+
+```json
+{
+  "aktualisiert": "30.04.2026",
+  "mannschaft": "1. Herren",
+  "partner": ["gebr-schmidt", "krieg", "bayer"]
+}
+```
+
+### Felder
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `aktualisiert` | ja | Datum der letzten Änderung |
+| `mannschaft` | ja | Anzeigename der Mannschaft |
+| `partner` | ja | Liste von Sponsoren-IDs (kann leer sein: `[]`) |
+
+### Wann du diese Datei änderst
+
+- **Mannschaft bekommt einen neuen Sponsor:** ID zur `partner`-Liste hinzufügen
+- **Sponsor zieht sich aus dieser Mannschaft zurück:** ID aus der Liste entfernen
+- **Reihenfolge in der App anpassen:** IDs in der gewünschten Reihenfolge sortieren
+
+### Stolperfallen
+
+- Die IDs müssen **exakt** den Schlüsseln in `content/partners.json` entsprechen. Tippfehler → der Sponsor wird nicht angezeigt.
+- Falls die `partner`-Liste leer ist, wird in der App der gesamte Mannschaftssponsoren-Bereich ausgeblendet
+- Wenn ein Sponsor neu dazukommt, muss er **zuerst** in `content/partners.json` angelegt werden, dann kann er hier referenziert werden

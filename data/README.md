@@ -1497,3 +1497,362 @@ Damit dir nichts entgeht, hier die Dinge, die **automatisch** passieren – also
 | Service Worker / Cache | Wird beim Versions-Update automatisch erneuert |
 
 Wenn dir etwas in der App fehlt oder falsch aussieht, prüf zuerst, ob die zugrundeliegende Datei stimmt – meistens reicht das.
+
+---
+
+# GitHub-Crashkurs für Pfleger
+
+Dieser Teil richtet sich an alle, die noch nie oder nur wenig mit GitHub gearbeitet haben. Hier lernst du die wichtigsten Handgriffe, die du für die Datenpflege brauchst – nicht mehr, nicht weniger.
+
+Wenn du tiefer einsteigen willst (z.B. lokale Bearbeitung mit eigenem Editor, Git-Branches, Pull Requests), findest du dazu viele Tutorials online. Für die Daten-Pflege der App reicht das, was hier steht, vollständig aus.
+
+---
+
+## Was ist GitHub eigentlich?
+
+GitHub ist eine Webseite, auf der Code und Dateien gespeichert werden. Für die App-Pflege musst du nur drei Dinge wissen:
+
+1. **Repository** ist der „Container" für alle Dateien der App. Bei uns heißt das Repository `tus-esingen-handball-app`.
+2. **Commit** ist eine Speicherung. Jede Änderung wird als Commit festgehalten – mit Datum, Autor und einer kurzen Beschreibung.
+3. **GitHub Pages** ist der „Server", auf dem die App live läuft. Sobald du etwas commitest, wird die App automatisch innerhalb von 1-2 Minuten neu gebaut und ist für alle Nutzer aktualisiert.
+
+Das war's. Du brauchst kein lokales Programm zu installieren, keinen Editor zu lernen – alles passiert im Browser.
+
+---
+
+## Vorbereitung
+
+### 1. GitHub-Account anlegen
+
+- Auf [github.com](https://github.com) gehen
+- Auf „Sign up" klicken und einen Account anlegen (E-Mail, Passwort, Benutzername wählen)
+- E-Mail-Bestätigung per Mail durchführen
+
+### 2. Zugriff auf das Repository
+
+Damit du Dateien bearbeiten kannst, muss dein Account als **Collaborator** zum Repository hinzugefügt werden. Das macht der Admin (FaabNatiC). Sag im Pfleger-Chat Bescheid mit deinem GitHub-Benutzernamen, dann bekommst du eine Einladung.
+
+Sobald du eingeladen bist:
+- Auf den Link in der E-Mail klicken
+- Auf „Accept invitation" klicken
+- Du landest im Repository und kannst nun Dateien bearbeiten
+
+### 3. Repository in den Favoriten / Bookmarks
+
+Direkter Link zum Repository:
+```
+https://github.com/FaabNatiC/tus-esingen-handball-app
+```
+
+Lege dir den als Bookmark an, damit du jede Woche schnell hinkommst.
+
+---
+
+## Die wichtigsten Vorgänge
+
+### Eine Datei öffnen und ansehen
+
+1. Im Repository links die Ordnerstruktur durchklicken (z.B. `data` → `teams` → `1-herren` → `saisons` → `2025-26` → `spieltage` → `25.json`)
+2. Du siehst den Datei-Inhalt mit Zeilennummern
+
+In diesem Modus kannst du nichts ändern – nur lesen.
+
+### Eine Datei bearbeiten
+
+1. Datei öffnen (siehe oben)
+2. Rechts oben auf das **Bleistift-Symbol** (✏️) klicken
+3. Der Editor öffnet sich, du kannst direkt im Text Änderungen vornehmen
+4. Wenn fertig: nach unten scrollen zum Commit-Bereich (siehe nächster Abschnitt)
+
+> **Tipp:** Wenn du die Datei nur prüfen willst, ohne zu ändern, klick nicht auf den Bleistift – sondern schließ das Tab einfach. Es passiert nichts.
+
+### Eine Änderung speichern (Commit)
+
+Am Ende des Edit-Modus steht ein Commit-Formular:
+
+1. **Erste Zeile:** Kurze Beschreibung der Änderung (max. ~60 Zeichen)
+2. **Optional:** Längere Beschreibung im Textfeld darunter
+3. Auf „Commit changes" klicken
+
+**Beispiele für gute Commit-Messages:**
+
+```
+Spieltag 25 1. Herren: Ergebnis Esingen vs Fischbek eingetragen
+```
+```
+Tippfehler korrigiert: TSV Ellerbek statt TSV Ellerbeck
+```
+```
+Saisonabschluss-News veröffentlicht
+```
+```
+Neuer Spieler im Kader: Max Mustermann (#22)
+```
+
+**Was nicht gut ist:**
+
+```
+Update
+```
+```
+asdf
+```
+```
+fixed
+```
+
+Gute Commit-Messages helfen dir und den anderen Pflegern, später nachzuvollziehen, was wann geändert wurde.
+
+### Eine neue Datei anlegen
+
+Es gibt zwei Wege:
+
+**Über den „Add file"-Button:**
+1. In den Ordner navigieren, wo die neue Datei rein soll
+2. Oben rechts auf „Add file" → „Create new file" klicken
+3. Dateinamen eingeben (z.B. `26.json`)
+4. Inhalt einfügen
+5. Commit-Message schreiben, „Commit changes"
+
+**Mit Schrägstrich für neue Ordner:**
+
+Wenn du eine Datei in einem **neuen Ordner** anlegen willst, schreibst du den Ordnernamen einfach in den Dateinamen vor die Datei mit einem Schrägstrich:
+
+```
+2026-27/meta.json
+```
+
+GitHub erkennt: Hier wird ein neuer Ordner `2026-27/` angelegt mit einer Datei `meta.json` darin.
+
+Mehrere Ebenen geht auch:
+
+```
+2026-27/spieltage/01.json
+```
+
+→ GitHub legt automatisch beide Ordner an.
+
+### Eine Datei löschen
+
+1. Datei öffnen
+2. Rechts oben auf das **Mülleimer-Symbol** klicken (neben dem Bleistift)
+3. Commit-Message schreiben, „Commit changes"
+
+> **Vorsicht:** Im Web-Editor gibt es keinen Papierkorb. Eine gelöschte Datei ist über die Git-Historie noch wiederherstellbar, aber das ist nicht trivial. Falls du versehentlich was Wichtiges gelöscht hast, **nicht weiterarbeiten** und im Pfleger-Chat melden.
+
+---
+
+## JSON richtig schreiben
+
+Alle Daten-Dateien in der App sind im JSON-Format. JSON hat ein paar Regeln, die wichtig sind – Tippfehler hier sind die häufigste Ursache für Probleme.
+
+### Die Regeln auf einen Blick
+
+**1. Strings stehen immer in doppelten Anführungszeichen**
+
+✅ Richtig: `"name": "Fabian Wurl"`
+❌ Falsch: `name: Fabian Wurl`
+❌ Falsch: `'name': 'Fabian Wurl'` (einfache Anführungszeichen)
+
+**2. Zahlen stehen ohne Anführungszeichen**
+
+✅ Richtig: `"toreHeim": 28`
+❌ Falsch: `"toreHeim": "28"` (das wäre ein String, kein Zahl-Wert)
+
+**3. Wahrheitswerte: `true` und `false` ohne Anführungszeichen**
+
+✅ Richtig: `"topNews": true`
+❌ Falsch: `"topNews": "true"`
+
+**4. Leere Werte: `null` ohne Anführungszeichen**
+
+✅ Richtig: `"toreHeim": null`
+❌ Falsch: `"toreHeim": "null"`
+
+**5. Kommas trennen Einträge – aber kein Komma nach dem letzten Eintrag**
+
+✅ Richtig:
+```json
+{
+  "name": "Fabian",
+  "alter": 32
+}
+```
+
+❌ Falsch (Komma nach dem letzten Eintrag):
+```json
+{
+  "name": "Fabian",
+  "alter": 32,
+}
+```
+
+**6. Geschwungene Klammern `{ }` umschließen Objekte, eckige Klammern `[ ]` umschließen Listen**
+
+```json
+{
+  "trainer": [
+    { "name": "Fabian", "alter": 32 },
+    { "name": "Yannick", "alter": 31 }
+  ]
+}
+```
+
+### Validität prüfen
+
+Wenn du nicht sicher bist, ob deine JSON-Datei korrekt ist:
+
+1. Den kompletten Inhalt kopieren
+2. Auf [jsonlint.com](https://jsonlint.com) einfügen
+3. Auf „Validate JSON" klicken
+
+Wenn es Fehler gibt, zeigt die Seite genau die Zeile an, in der etwas nicht stimmt.
+
+> **Wichtig:** Validität immer **vor dem Commit** prüfen. Wenn eine kaputte JSON-Datei live geht, kann die App diese Datei nicht mehr lesen und zeigt eventuell leere Bereiche.
+
+---
+
+## Häufige Fehler und ihre Bedeutung
+
+### „Unable to load data" oder leerer Bereich in der App
+
+**Mögliche Ursachen:**
+- Eine JSON-Datei ist syntaktisch kaputt (Komma vergessen, Anführungszeichen falsch)
+- Eine Datei wurde versehentlich gelöscht
+- Ein Pfad in einer Datei verweist auf etwas, das nicht existiert
+
+**Vorgehen:**
+1. Im Repository die zuletzt geänderten Dateien prüfen
+2. Auf [jsonlint.com](https://jsonlint.com) durchchecken
+3. Falls unklar: Im Pfleger-Chat melden
+
+### Logo wird nicht angezeigt
+
+**Mögliche Ursachen:**
+- Der Dateiname im JSON stimmt nicht mit der echten Datei überein (z.B. Tippfehler oder falsche Endung)
+- Das Logo liegt nicht im richtigen Verzeichnis
+
+**Vorgehen:**
+- Prüfen, ob die Logo-Datei wirklich unter `data/logos-sponsoren/` oder `data/logos-mannschaften/` liegt
+- Dateiname auf Groß-/Kleinschreibung prüfen (`Logo.PNG` ≠ `logo.png`)
+
+### Mannschaft taucht nicht in der Tabelle auf
+
+**Mögliche Ursache:**
+- Der Name der Mannschaft in den Spieltag-Dateien stimmt nicht **exakt** mit dem Namen in `meta.json` der Saison überein
+- Auch ein einzelnes Leerzeichen oder ein Tippfehler reicht aus
+
+**Vorgehen:**
+- Beide Stellen vergleichen (Spielname in `spieltage/XX.json` und in `meta.json`)
+- Schreibweise angleichen
+
+### Punktestand stimmt nicht
+
+**Mögliche Ursache:**
+- Ein Spiel hat `status: "scheduled"`, obwohl es schon gespielt wurde
+- Bei einer Wertung wurde `status: "finished"` gesetzt statt `"wertung-heim"` / `"wertung-gast"`
+
+**Vorgehen:**
+- Alle Spiele der Saison durchgehen und Status prüfen
+
+---
+
+## Wie sehe ich, dass mein Commit live ist?
+
+Nach einem Commit dauert es ein paar Minuten, bis die Änderung in der App sichtbar ist. So kannst du den Fortschritt verfolgen:
+
+### Im Repository
+
+- Auf der Hauptseite des Repositories ganz oben siehst du die zuletzt committeten Änderungen mit Datum und Uhrzeit
+- Im Tab „Actions" siehst du den GitHub-Pages-Build-Prozess: gelber Punkt = läuft, grünes Häkchen = fertig, rotes Kreuz = Fehler
+
+### In der App
+
+- Öffne die App im Browser (am besten in einem Inkognito-Fenster, damit kein alter Cache stört)
+- Beim nächsten Öffnen siehst du deine Änderung
+
+Wenn du **schon eine installierte App** auf dem Handy hast: Beim nächsten Öffnen merkt die App, dass eine neue Version da ist, und lädt sie nach. Das kann ein paar Sekunden dauern.
+
+---
+
+## Konflikte: Wenn zwei Pfleger gleichzeitig editieren
+
+Es kann passieren, dass zwei Pfleger zur gleichen Zeit dieselbe Datei bearbeiten. GitHub fängt das ab und zeigt eine **Merge-Konflikt-Warnung**, wenn der zweite seinen Commit absenden will.
+
+### Vorgehen bei Konflikten
+
+Über den Web-Editor sind Merge-Konflikte schwer aufzulösen. Wenn das passiert:
+
+1. **Nichts speichern, nicht in Panik geraten**
+2. Im Pfleger-Chat melden
+3. Mit dem anderen Pfleger absprechen, wer welche Änderung übernimmt
+
+### Konflikte vermeiden
+
+Die einfachste Lösung: Klare Aufgabenverteilung. Beispiel:
+
+- Pfleger A pflegt die Herren-Mannschaften
+- Pfleger B pflegt die Damen-Mannschaften
+- Pfleger C pflegt die Jugend-Mannschaften
+
+Wenn ihr außerdem grob zur gleichen Uhrzeit pflegt (z.B. Sonntagabend ab 20 Uhr) und kurz im Pfleger-Chat ankündigt, was ihr gerade macht („Ich starte mit den Herren"), sind Konflikte praktisch ausgeschlossen.
+
+---
+
+## Was tun, wenn was schiefgeht?
+
+Manchmal merkst du nach einem Commit, dass die App nicht mehr richtig funktioniert. Keine Panik – kein Schaden ist endgültig.
+
+### Sofort-Maßnahme: Den Commit rückgängig machen
+
+1. Im Repository auf „Commits" gehen (oben rechts, neben dem Branch-Selector)
+2. Den problematischen Commit finden
+3. Auf den Commit klicken
+4. Rechts oben auf „Revert" – das erzeugt einen neuen Commit, der die alte Änderung rückgängig macht
+
+Wenn du dir unsicher bist, ob du den richtigen Commit revertest – **lieber im Pfleger-Chat fragen**, statt blind weiterzuklicken.
+
+### Wenn die App ganz kaputt ist
+
+Sofort im Entwickler-Chat melden mit:
+- Was hast du zuletzt geändert?
+- Wann (ungefähr) war das?
+- Was siehst du in der App?
+
+Der Entwickler kann dann zur letzten funktionierenden Version zurückrollen.
+
+---
+
+## Weiterführende Links
+
+- **GitHub Docs für Web-Editor:** [docs.github.com/en/repositories](https://docs.github.com/en/repositories/working-with-files/managing-files/editing-files)
+- **JSON-Validator:** [jsonlint.com](https://jsonlint.com)
+- **Markdown-Spickzettel** (für News-Texte mit Formatierung): [markdownguide.org/cheat-sheet](https://www.markdownguide.org/cheat-sheet/)
+
+---
+
+# Letzte Hinweise
+
+## Wer hat Zugriff auf was?
+
+| Rolle | Was sie tun |
+|---|---|
+| **Pfleger** (du) | Daten bearbeiten, Spielergebnisse eintragen, News schreiben |
+| **Admin** (FaabNatiC) | Neue Pfleger einladen, Repository-Struktur ändern |
+| **Entwickler** (FaabNatiC) | App-Code anpassen, neue Features hinzufügen |
+
+Aktuell sind Admin und Entwickler dieselbe Person. Wenn du nicht weißt, ob etwas Pfleger- oder Entwickler-Arbeit ist – frag im Chat.
+
+## Wo bekomme ich Hilfe?
+
+**Bei Fragen zur Datenpflege:**
+- Im Pfleger-Chat (WhatsApp / Signal / Slack – je nach Vereinbarung)
+- Bei akuten Problemen: direkt FaabNatiC anrufen
+
+**Bei Bugs in der App:**
+- Im Entwickler-Chat melden
+- In der App auf den Daumen-runter-Button bei „App-Updates" tippen (falls verfügbar)
+
+## Vorschläge zur Anleitung
+
+Diese Anleitung wird mit der Zeit besser. Wenn dir etwas unklar ist oder ein Workflow nicht beschrieben ist – **sag Bescheid**. Wir können hier jederzeit etwas ergänzen oder umformulieren.

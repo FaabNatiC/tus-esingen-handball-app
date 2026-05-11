@@ -31,7 +31,7 @@ Wenn du nur schnell ein Spielergebnis nachtragen willst, springe direkt zum Kapi
 - [Wie wird die Tabelle berechnet?](#wie-wird-die-tabelle-berechnet)
 
 **Datei-Referenz**
-- [Die Stammdaten-Dateien](#die-stammdaten-dateien-im-detail) – `meta/teams.json`, `info.json`, `kader.json`, `training.json`
+- [Die Stammdaten-Dateien](#die-stammdaten-dateien-im-detail) – `meta/teams.json`, `meta/hallen.json`, `info.json`, `kader.json`, `training.json`
 - [Die Inhaltsdateien](#die-inhaltsdateien-im-detail) – `news.json`, `partners.json`, `partner.json`
 - [Die Spielbetrieb-Dateien](#die-spielbetrieb-dateien-im-detail) – `saisons/<saison>/meta.json`, `ligaspiele.json`, `pokalspiele.json`, `testspiele.json`
 
@@ -44,6 +44,7 @@ Wenn du nur schnell ein Spielergebnis nachtragen willst, springe direkt zum Kapi
 - [Saisonstart: Neue Saison anlegen](#saisonstart-neue-saison-anlegen)
 - [Saisonende: Was passiert mit alten Daten?](#saisonende-was-passiert-mit-alten-daten)
 - [Neue Mannschaft zur App hinzufügen](#neue-mannschaft-zur-app-hinzufügen)
+- [Neue Halle ergänzen](#neue-halle-ergänzen)
 - [Neuen Sponsor hinzufügen](#neuen-sponsor-hinzufügen)
 - [News-Beitrag veröffentlichen](#news-beitrag-veröffentlichen)
 - [Was du **nicht** pflegen musst](#was-du-nicht-pflegen-musst)
@@ -75,8 +76,10 @@ data/
 ├── README.md                      ← diese Anleitung
 │
 ├── meta/
-│   └── teams.json                 ← Liste aller TuS-Mannschaften
-│                                    (Reihenfolge in der App)
+│   ├── teams.json                 ← Liste aller TuS-Mannschaften
+│   │                                (Reihenfolge in der App)
+│   └── hallen.json                ← Zentrales Hallen-Verzeichnis
+│                                    (alle Spielhallen mit Adressen)
 │
 ├── content/
 │   ├── news.json                  ← News-Beiträge auf der Startseite
@@ -245,6 +248,91 @@ Diese Datei kennt alle TuS-Mannschaften, die in der App angezeigt werden, und le
 - Die `id` muss **exakt** dem Ordnernamen unter `teams/` entsprechen, sonst findet die App die Mannschaft nicht
 - `reihenfolge`-Werte sollten eindeutig sein (nicht zweimal `1`)
 - Nach dem Speichern: Vergiss nicht, das `aktualisiert`-Datum zu ändern
+
+---
+
+## `meta/hallen.json` – Zentrales Hallen-Verzeichnis
+
+In dieser Datei stehen **alle Sport- und Spielhallen**, in denen Liga-, Pokal- und Testspiele ausgetragen werden. Jedes Spiel in `ligaspiele.json` (und entsprechend `pokalspiele.json`/`testspiele.json`) verweist über das Feld `halleId` auf einen Eintrag aus dieser Datei.
+
+So musst du eine Halle nur **einmal** pflegen – Adresse, Ort etc. werden für alle Spiele in dieser Halle automatisch übernommen.
+
+> 💡 **Achtung – nicht verwechseln:**
+> Die **Trainingshallen des TuS Esingen** (Neue KGST, Alte KGST etc.) stehen NICHT in dieser Datei. Diese werden separat in der jeweiligen `training.json` einer Mannschaft mit eigenen IDs (`neue-kgst`, `alte-kgst`) gepflegt. Hier in `hallen.json` geht es nur um die Spielhallen aller Vereine der Hamburger Ligen.
+
+### Beispiel (gekürzt)
+
+```json
+{
+  "_doc": "Zentrales Hallen-Verzeichnis. Der Schlüssel ist die offizielle Hallennummer des Hamburger Handball-Verbands (HHV).",
+  "hallen": {
+    "150441": {
+      "name": "Esingen neu",
+      "adresse": "Klaus-Groth-Straße 11",
+      "plz": "25436",
+      "ort": "Tornesch"
+    },
+    "150442": {
+      "name": "Esingen alt",
+      "adresse": "Klaus-Groth-Straße 11",
+      "plz": "25436",
+      "ort": "Tornesch"
+    },
+    "150311": {
+      "name": "Lüttkoppel",
+      "adresse": "Lüttkoppel 1",
+      "plz": "22335",
+      "ort": "Hamburg"
+    }
+  }
+}
+```
+
+### Felder auf oberster Ebene
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `_doc` | nein | Kommentar, was die Datei tut – wird von der App ignoriert |
+| `hallen` | ja | Objekt mit allen Hallen, Schlüssel = Hallennummer, Wert = Halle |
+
+### Pro Halle
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `name` | ja | Anzeigename der Halle (z.B. `"Esingen neu"`) |
+| `adresse` | nein | Straße + Hausnummer (für künftige Google-Maps-Integration) |
+| `plz` | nein | Postleitzahl (5-stellig, als String) |
+| `ort` | ja | Stadt/Ort (wird neben dem Namen in der App angezeigt: „Esingen neu, Tornesch") |
+
+### Warum die Hallennummer als Schlüssel?
+
+Der Schlüssel jedes Eintrags ist die **offizielle Hallennummer des Hamburger Handball-Verbands (HHV)**. Beispiele:
+
+- `150441` = Esingen neu, Tornesch
+- `150442` = Esingen alt, Tornesch
+- `150311` = Lüttkoppel, Hamburg
+
+Diese Nummern sind vom Verband vergeben und **dauerhaft stabil**. Selbst wenn eine Halle umbenannt wird oder die Adresse sich ändert, bleibt die Nummer dieselbe – damit sind alle bestehenden `halleId`-Verweise in den `ligaspiele.json`-Dateien zukunftssicher.
+
+Wo findet man die Hallennummer? Auf [handball.net](https://www.handball.net/) → Halle suchen → die 6-stellige „Hallennummer" auf der Detailseite.
+
+### Wie die Halle in der App erscheint
+
+Im Spielplan zeigt die App pro Spiel den Anzeigetext **„Name, Ort"** (z.B. „Esingen neu, Tornesch"). Andere Felder (`adresse`, `plz`) werden aktuell nicht angezeigt, sind aber für zukünftige Features (z.B. Klick → Google Maps) vorgesehen.
+
+### Wann du diese Datei änderst
+
+- **Neue Halle taucht im Spielplan auf** (z.B. weil ein Aufsteiger in eine bisher unbekannte Halle einlädt): Eintrag mit der HHV-Hallennummer ergänzen
+- **Halle bekommt neue Adresse:** Adresse aktualisieren – die Hallennummer bleibt gleich
+- **Schreibfehler im Namen:** Name korrigieren
+- **Halle wird nicht mehr genutzt:** Einfach drin lassen – die App lädt den Eintrag nur, wenn ein Spiel ihn referenziert
+
+### Stolperfallen
+
+- Die `halleId` in den `ligaspiele.json`-Dateien muss **exakt** dem Schlüssel in `hallen.json` entsprechen (mit Anführungszeichen, als String: `"150441"`)
+- Hallennummer **immer als String** in Anführungszeichen, nicht als Zahl: `"150441"` nicht `150441`
+- Wenn eine `halleId` in `hallen.json` nicht gefunden wird, bleibt die Halle in der App **leer** (kein Fehler, aber die Info fehlt)
+- PLZ als String mit Anführungszeichen: `"25436"` (nicht `25436` als Zahl, weil sonst führende Nullen wegfallen würden)
 
 ---
 
@@ -471,6 +559,9 @@ Aktuell verfügbare `ort`-Werte:
 |---|---|
 | `neue-kgst` | Neue KGST-Halle, Tornesch |
 | `alte-kgst` | Alte KGST-Halle, Tornesch |
+
+> ⚠️ **Nicht verwechseln mit den Hallennummern aus `meta/hallen.json`!**
+> Die Trainings-Hallen-IDs (`neue-kgst`, `alte-kgst`) sind getrennt von den HHV-Hallennummern (`150441`, `150442` etc.), die im Spielbetrieb verwendet werden. Beim Pflegen der Trainingszeiten verwendest du `neue-kgst`/`alte-kgst`. Beim Pflegen der Spielergebnisse die Hallennummer aus `meta/hallen.json`.
 
 Wenn eine neue Halle dazukommt, muss sie im App-Code als Hallenname hinterlegt werden – sag in dem Fall im Entwickler-Chat Bescheid.
 
@@ -924,22 +1015,24 @@ Pro Spiel wird optional noch der offizielle Spieltag aus dem Verband im Feld `sp
     {
       "kw": 37,
       "spiele": [
-        {"datum": "2025-09-13T16:00:00", "heim": "TSV Ellerbek 2", "gast": "1. HC Quickborn", "toreHeim": 25, "toreGast": 21, "status": "finished", "spieltag": 1},
-        {"datum": "2025-09-13T18:30:00", "heim": "TV Fischbek", "gast": "SG Hamburg-Nord 2", "toreHeim": 29, "toreGast": 27, "status": "finished", "spieltag": 1},
-        {"datum": "2025-09-14T17:30:00", "heim": "Ahrensburger TSV", "gast": "HT Norderstedt 2", "toreHeim": 33, "toreGast": 32, "status": "finished", "spieltag": 1}
+        {"datum": "2025-09-13T16:00:00", "heim": "TSV Ellerbek 2", "gast": "1. HC Quickborn", "halleId": "150421", "toreHeim": 25, "toreGast": 21, "status": "finished", "spieltag": 1},
+        {"datum": "2025-09-13T18:30:00", "heim": "TV Fischbek", "gast": "SG Hamburg-Nord 2", "halleId": "150605", "toreHeim": 29, "toreGast": 27, "status": "finished", "spieltag": 1},
+        {"datum": "2025-09-14T17:30:00", "heim": "Ahrensburger TSV", "gast": "HT Norderstedt 2", "halleId": "150391", "toreHeim": 33, "toreGast": 32, "status": "finished", "spieltag": 1}
       ]
     },
     {
       "kw": 17,
       "spiele": [
-        {"datum": "2026-04-25T17:00:00", "heim": "TSV Uetersen", "gast": "TuS Esingen", "toreHeim": 30, "toreGast": 27, "status": "finished", "spieltag": 24},
-        {"datum": "2026-04-25T16:00:00", "heim": "TSV Ellerbek 2", "gast": "TH Eilbeck", "toreHeim": 0, "toreGast": 0, "status": "wertung-heim", "spieltag": 26},
-        {"datum": "2026-04-26T17:00:00", "heim": "FC St. Pauli", "gast": "HT Norderstedt 2", "toreHeim": 44, "toreGast": 23, "status": "finished", "spieltag": 24}
+        {"datum": "2026-04-25T17:00:00", "heim": "TSV Uetersen", "gast": "TuS Esingen", "halleId": "150445", "toreHeim": 30, "toreGast": 27, "status": "finished", "spieltag": 24},
+        {"datum": "2026-04-25T16:00:00", "heim": "TSV Ellerbek 2", "gast": "TH Eilbeck", "halleId": "150421", "toreHeim": 0, "toreGast": 0, "status": "wertung-heim", "spieltag": 26},
+        {"datum": "2026-04-26T17:00:00", "heim": "FC St. Pauli", "gast": "HT Norderstedt 2", "halleId": "150201", "toreHeim": 44, "toreGast": 23, "status": "finished", "spieltag": 24}
       ]
     }
   ]
 }
 ```
+
+> 💡 Jedes Spiel sollte **auf einer einzigen Zeile** stehen – das macht die Datei deutlich kompakter und leichter lesbar als ein eingerückter JSON-Block pro Spiel.
 
 ### Felder auf oberster Ebene
 
@@ -963,9 +1056,9 @@ Pro Spiel wird optional noch der offizielle Spieltag aus dem Verband im Feld `sp
 | `datum` | ja | Datum und Uhrzeit im ISO-Format: `YYYY-MM-DDTHH:MM:SS` |
 | `heim` | ja | Heimmannschaft, exakt wie in `meta.json` |
 | `gast` | ja | Gastmannschaft, exakt wie in `meta.json` |
+| `halleId` | nein | HHV-Hallennummer aus `meta/hallen.json` (als String, z.B. `"150441"`). Wenn gesetzt, zeigt die App auf der Spielplan-Seite die Halle an. |
 | `toreHeim` | ja | Tore der Heimmannschaft (Zahl oder `null`, wenn noch nicht gespielt) |
 | `toreGast` | ja | Tore der Gastmannschaft (Zahl oder `null`, wenn noch nicht gespielt) |
-| `halle` | nein | Nur bei TuS-Heimspielen: Hallenname und Stadt |
 | `status` | ja | Status des Spiels (siehe unten) |
 | `spieltag` | nein | Offizielle Spieltag-Nummer aus der Liga (falls vorhanden) |
 
@@ -1004,7 +1097,7 @@ Das passiert **immer live** beim Öffnen der Mannschaftsseite. Du musst die Tabe
 - Datum **immer mit Uhrzeit**: `"2026-04-25T17:00:00"`. Wenn die Uhrzeit unbekannt ist, nimm `"00:00:00"` als Platzhalter.
 - Bei Wertungen die Tore-Werte mit dem `wertungTore`-Feld der Liga-Meta abgleichen (typischerweise 0:0)
 - **Wenn ein Spiel verschoben wird, packe es in die KW der tatsächlichen Austragung** – nicht in die KW, in der es ursprünglich angesetzt war
-- `halle` nur bei TuS-Heimspielen pflegen (bei anderen Spielen ignoriert die App das Feld)
+- `halleId` ist eine **HHV-Hallennummer als String** (`"150441"`, nicht als Zahl). Wenn die Halle noch nicht in `meta/hallen.json` existiert, vorher dort ergänzen — sonst bleibt die Halle in der App leer.
 
 ### Spielwochen vorbereiten am Saisonanfang
 
@@ -1028,9 +1121,9 @@ Pokalspiele gehören nicht zur Liga und zählen nicht für die Tabelle. Sie werd
       "datum": "2025-09-12T19:00:00",
       "heim": "TuS Esingen",
       "gast": "TSV Ellerbek 2",
+      "halleId": "150441",
       "toreHeim": 28,
       "toreGast": 25,
-      "halle": "Esingen neu, Tornesch",
       "status": "finished"
     },
     {
@@ -1039,9 +1132,9 @@ Pokalspiele gehören nicht zur Liga und zählen nicht für die Tabelle. Sie werd
       "datum": "2026-01-10T17:00:00",
       "heim": "TuS Esingen",
       "gast": "HT Norderstedt 2",
+      "halleId": "150441",
       "toreHeim": 30,
       "toreGast": 26,
-      "halle": "Esingen neu, Tornesch",
       "status": "finished"
     },
     {
@@ -1050,9 +1143,9 @@ Pokalspiele gehören nicht zur Liga und zählen nicht für die Tabelle. Sie werd
       "datum": "2026-03-15T19:00:00",
       "heim": "FC St. Pauli",
       "gast": "TuS Esingen",
+      "halleId": "150201",
       "toreHeim": null,
       "toreGast": null,
-      "halle": "Budapester Straße, Hamburg",
       "status": "scheduled"
     }
   ]
@@ -1075,9 +1168,9 @@ Pokalspiele gehören nicht zur Liga und zählen nicht für die Tabelle. Sie werd
 | `datum` | ja | Datum und Uhrzeit im ISO-Format |
 | `heim` | ja | Heimmannschaft |
 | `gast` | ja | Gastmannschaft |
+| `halleId` | nein | HHV-Hallennummer aus `meta/hallen.json` (als String, z.B. `"150441"`) |
 | `toreHeim` | ja | Tore Heim (Zahl oder `null`, wenn noch nicht gespielt) |
 | `toreGast` | ja | Tore Gast (Zahl oder `null`, wenn noch nicht gespielt) |
-| `halle` | nein | Hallenname und Stadt |
 | `status` | ja | `"scheduled"` oder `"finished"` |
 
 ### Wann du diese Datei änderst
@@ -1109,9 +1202,9 @@ Testspiele (auch „Freundschaftsspiele") werden saisonweise getrennt gepflegt. 
       "datum": "2025-08-23T17:00:00",
       "heim": "TuS Esingen",
       "gast": "Ahrensburger TSV",
+      "halleId": "150441",
       "toreHeim": 26,
       "toreGast": 28,
-      "halle": "Esingen neu, Tornesch",
       "status": "finished"
     },
     {
@@ -1119,9 +1212,9 @@ Testspiele (auch „Freundschaftsspiele") werden saisonweise getrennt gepflegt. 
       "datum": "2025-08-30T17:00:00",
       "heim": "TuS Esingen",
       "gast": "TV Fischbek",
+      "halleId": "150441",
       "toreHeim": 28,
       "toreGast": 24,
-      "halle": "Esingen neu, Tornesch",
       "status": "finished"
     },
     {
@@ -1129,9 +1222,9 @@ Testspiele (auch „Freundschaftsspiele") werden saisonweise getrennt gepflegt. 
       "datum": "2026-01-05T19:00:00",
       "heim": "HSG Pinnau",
       "gast": "TuS Esingen",
+      "halleId": "150431",
       "toreHeim": null,
       "toreGast": null,
-      "halle": "Pinneberg, Sporthalle",
       "status": "scheduled"
     }
   ]
@@ -1153,9 +1246,9 @@ Testspiele (auch „Freundschaftsspiele") werden saisonweise getrennt gepflegt. 
 | `datum` | ja | Datum und Uhrzeit im ISO-Format |
 | `heim` | ja | Heimmannschaft |
 | `gast` | ja | Gastmannschaft |
+| `halleId` | nein | HHV-Hallennummer aus `meta/hallen.json` (als String, z.B. `"150441"`) |
 | `toreHeim` | ja | Tore Heim (Zahl oder `null`, wenn noch nicht gespielt) |
 | `toreGast` | ja | Tore Gast (Zahl oder `null`, wenn noch nicht gespielt) |
-| `halle` | nein | Hallenname und Stadt |
 | `status` | ja | `"scheduled"` oder `"finished"` |
 
 ### Wann du diese Datei änderst
@@ -1224,9 +1317,9 @@ Für jedes gespielte Spiel **drei Werte** anpassen:
   "datum": "2026-05-02T17:00:00",
   "heim": "TuS Esingen",
   "gast": "TV Fischbek",
+  "halleId": "150441",
   "toreHeim": null,
   "toreGast": null,
-  "halle": "Esingen neu, Tornesch",
   "status": "scheduled"
 }
 ```
@@ -1237,9 +1330,9 @@ Für jedes gespielte Spiel **drei Werte** anpassen:
   "datum": "2026-05-02T17:00:00",
   "heim": "TuS Esingen",
   "gast": "TV Fischbek",
+  "halleId": "150441",
   "toreHeim": 28,
   "toreGast": 25,
-  "halle": "Esingen neu, Tornesch",
   "status": "finished"
 }
 ```
@@ -1353,9 +1446,9 @@ In der Spieltag-Datei das betreffende Spiel anpassen:
   "datum": "2026-04-26T17:00:00",
   "heim": "SG Hamburg-Nord 2",
   "gast": "TuS Esingen",
+  "halleId": "150301",
   "toreHeim": 0,
   "toreGast": 0,
-  "halle": "Tegelsberg, Hamburg",
   "status": "wertung-gast",
   "hinweis": "WG – Hamburg-Nord 2 nicht angetreten"
 }
@@ -1553,6 +1646,48 @@ Nach 1-2 Minuten (GitHub Pages braucht Zeit zum Neubau) sollte die neue Mannscha
 - Die `id` in `meta/teams.json` muss **exakt** mit dem Ordnernamen unter `teams/` übereinstimmen
 - Die `reihenfolge` muss eindeutig sein (nicht zweimal die gleiche Zahl)
 - Bevor die neue Mannschaft live geht, am besten zuerst die nötigsten Inhalte (Kader, mindestens einen Spieltag) anlegen – sonst zeigt die App leere Bereiche
+
+---
+
+## Neue Halle ergänzen
+
+Wenn ein Spielplan eine Halle enthält, die noch nicht in `data/meta/hallen.json` steht, musst du sie ergänzen. Sonst bleibt die Halle in der App leer.
+
+### Schritt-für-Schritt
+
+**1. HHV-Hallennummer herausfinden**
+
+Geh auf [handball.net](https://www.handball.net/), such die Halle und öffne die Detailseite. Die 6-stellige „Hallennummer" steht dort prominent (beginnt typischerweise mit `150`).
+
+Beispiel: Esingen neu → Hallennummer `150441`.
+
+**2. Eintrag in `data/meta/hallen.json` ergänzen**
+
+Im `hallen`-Objekt einen neuen Eintrag einfügen, sortiert nach Hallennummer:
+
+```json
+"150441": {
+  "name": "Esingen neu",
+  "adresse": "Klaus-Groth-Straße 11",
+  "plz": "25436",
+  "ort": "Tornesch"
+}
+```
+
+**3. In den Spielen `halleId` setzen**
+
+In den betroffenen `ligaspiele.json`-/`pokalspiele.json`-/`testspiele.json`-Einträgen das Feld `halleId` mit der Hallennummer als String setzen:
+
+```json
+"halleId": "150441"
+```
+
+### Stolperfallen
+
+- Hallennummer **als String in Anführungszeichen**: `"150441"`, nicht als Zahl `150441`
+- PLZ ebenfalls als String: `"25436"` (sonst gehen führende Nullen verloren)
+- Der `name` ist der **Anzeigename**, kein technischer Schlüssel – darf Leerzeichen, Umlaute und Sonderzeichen enthalten
+- Wenn dieselbe Halle mehrfach in der HHV-Liste vorkommt (z.B. „Schenefeld, Halle A" und „Halle B"), haben beide unterschiedliche Hallennummern – also zwei getrennte Einträge anlegen
 
 ---
 

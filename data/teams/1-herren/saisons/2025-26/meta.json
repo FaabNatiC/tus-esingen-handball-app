@@ -1,0 +1,24 @@
+{
+  "saison": "2025/26",
+  "liga": "Männer Oberliga Hamburg",
+  "punkteSystem": "2-punkte",
+  "wertungTore": { "fuerSieger": 0, "fuerVerlierer": 0 },
+  "spieltageGeplant": 24,
+  "linkSpielplan": "https://www.handball.net/ligen/handball4all.hamburg.m-ol-100_hhv/spielplan?dateFrom=2025-07-01&dateTo=2026-06-30",
+  "linkTabelle": "https://www.handball.net/ligen/handball4all.hamburg.m-ol-100_hhv/tabelle",
+  "mannschaften": [
+    { "name": "TuS Esingen",          "logo": "tus-esingen.png" },
+    { "name": "Ahrensburger TSV",     "logo": "ahrensburger-tsv.png" },
+    { "name": "FC St. Pauli",         "logo": "fc-st-pauli.png" },
+    { "name": "TV Fischbek",          "logo": "tv-fischbek.png" },
+    { "name": "TSV Ellerbek 2",       "logo": "tsv-ellerbek-2.png" },
+    { "name": "HSG Elbvororte",       "logo": "hsg-elbvororte.png" },
+    { "name": "TH Eilbeck",           "logo": "th-eilbeck.png" },
+    { "name": "HT Norderstedt 2",     "logo": "ht-norderstedt-2.png" },
+    { "name": "TSV Uetersen",         "logo": "tsv-uetersen.png" },
+    { "name": "SG Hamburg-Nord 2",    "logo": "sg-hamburg-nord-2.png" },
+    { "name": "1. HC Quickborn",      "logo": "1-hc-quickborn.png" },
+    { "name": "HG Hamburg-Barmbek 2", "logo": "hg-hamburg-barmbek-2.png" },
+    { "name": "Rellinger TV 2",       "logo": "rellinger-tv-2.png" }
+  ]
+}

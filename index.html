@@ -908,6 +908,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <tbody id="tabelle-body"></tbody>
     </table></div>
     <div class="upd" id="tabelle-upd">Lade Daten…</div>
+    <div id="tabelle-hinweise" style="display:none;padding:0 14px 8px;font-size:11px;color:#888;font-style:italic;line-height:1.5;"></div>
     <a class="ext-btn" id="dt-tab-link" href="#" target="_blank">Aktuelle Tabelle auf handball.net →</a>
   </div>
 </div>
@@ -976,7 +977,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.7.3";
+const APP_VERSION = "0.7.4";
 const APP_BUILD_DATE = "11.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
@@ -985,6 +986,10 @@ const APP_BUILD_DATE = "11.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
+  { version: "0.7.4", date: "11.05.2026", points: [
+    "Zurückgezogene Mannschaften werden in der Tabelle jetzt korrekt mit 0 Punkten und 0:0 Toren am Ende geführt, ihre Spiele werden für alle Beteiligten aus der Wertung genommen.",
+    "Unter der Tabelle erscheint ein kurzer Hinweis, welche Mannschaften zurückgezogen wurden."
+  ] },
   { version: "0.7.3", date: "11.05.2026", points: [
     "Im Teams-Bereich wird hinter der Liga jetzt automatisch der aktuelle Tabellenplatz angezeigt (z.B. 'Landesliga · Platz 3'), sobald für die Mannschaft Liga-Spiele gepflegt sind."
   ] },
@@ -1018,9 +1023,6 @@ const UPDATE_HISTORY = [
     "Die App startet jetzt immer auf der Home-Seite, also direkt beim TuS-Logo in der Mitte.",
     "Beim Tippen auf die Update-Info springt die Übersicht nicht mehr — der neueste Eintrag steht ja sowieso ganz oben.",
     "Die untere Menüleiste verdeckt nun nicht mehr den Inhalt am Seitenende — beim Scrollen ist genug Platz unten frei."
-  ] },
-  { version: "0.6.15", date: "08.05.2026", points: [
-    "Ein technisches Problem hat verhindert, dass die Update-Info zuverlässig erscheint. Das ist behoben — beim nächsten Update wird sie wirklich angezeigt."
   ] }
 ];
 
@@ -1045,13 +1047,20 @@ const UPDATE_HISTORY = [
 // Ausgabe: Array von Tabellen-Einträgen im alten Format, sortiert nach Punkten/Tordiff
 function berechneTabelleAusSpielen(meta, ligaspiele){
   var teams = {};
+  // Liste der zurückgezogenen Mannschaften (für schnellen Lookup)
+  var zurueckgezogenSet = {};
+  (meta.zurueckgezogen || []).forEach(function(name){
+    zurueckgezogenSet[name] = true;
+  });
+
   // Initialisiere alle Mannschaften aus meta
   (meta.mannschaften || []).forEach(function(m){
     teams[m.name] = {
       verein: m.name,
       logo: m.logo || null,
       spiele: 0, siege: 0, unentschieden: 0, niederlagen: 0,
-      toreFuer: 0, toreGegen: 0
+      toreFuer: 0, toreGegen: 0,
+      zurueckgezogen: !!zurueckgezogenSet[m.name]
     };
   });
 
@@ -1059,6 +1068,7 @@ function berechneTabelleAusSpielen(meta, ligaspiele){
   function buche(name, eigeneT, gegneT, ergebnis){
     var t = teams[name];
     if(!t) return; // Fremde Mannschaft (sollte bei sauberer meta nicht passieren)
+    if(t.zurueckgezogen) return; // Spiele zurückgezogener Mannschaften nicht zählen
     t.spiele++;
     t.toreFuer  += eigeneT;
     t.toreGegen += gegneT;
@@ -1079,6 +1089,11 @@ function berechneTabelleAusSpielen(meta, ligaspiele){
       var isWertungHeim = sp.status === 'wertung-heim'; // Heim gewinnt durch Wertung
       var isWertungGast = sp.status === 'wertung-gast'; // Gast gewinnt durch Wertung
       if(!isFinished && !isWertungHeim && !isWertungGast) return;
+
+      // Spiel komplett überspringen, wenn eine der beiden Mannschaften zurückgezogen ist
+      // (handball.net-konform: alle Spiele zurückgezogener Mannschaften werden gestrichen,
+      // auch für die Gegner)
+      if(zurueckgezogenSet[sp.heim] || zurueckgezogenSet[sp.gast]) return;
 
       if(isWertungHeim){
         buche(sp.heim, wertungToreSieger,   wertungToreVerlierer, 'sieg');
@@ -1112,6 +1127,8 @@ function berechneTabelleAusSpielen(meta, ligaspiele){
     return t;
   });
   arr.sort(function(a,b){
+    // Zurückgezogene Mannschaften immer ans Ende
+    if(a.zurueckgezogen !== b.zurueckgezogen) return a.zurueckgezogen ? 1 : -1;
     // Hauptkriterium: Punkte (Plus-Minus)
     var aPunkte = 2*a.siege + a.unentschieden;
     var bPunkte = 2*b.siege + b.unentschieden;
@@ -1225,6 +1242,7 @@ async function ladeAllesDaten(teamId) {
       liga: meta.ligaName || meta.liga || '',
       saison: meta.saison || '',
       quelle: meta.linkTabelle || '',
+      hinweise: meta.hinweise || [],
       tabelle: tabelleArr
     };
 
@@ -1556,6 +1574,9 @@ function renderTabelle(data) {
         '<div class="st"><div class="sv">--</div><div class="sl">Tordiff.</div></div>';
     }
     if(detLiga) detLiga.textContent = (data && data.liga) || 'Liga';
+    // Hinweise-Block auch zurücksetzen
+    var hinweiseElEmpty = document.getElementById('tabelle-hinweise');
+    if(hinweiseElEmpty){ hinweiseElEmpty.innerHTML = ''; hinweiseElEmpty.style.display = 'none'; }
     return;
   }
 
@@ -1563,6 +1584,16 @@ function renderTabelle(data) {
   data.tabelle.forEach(t => {
     const hl = t.highlight ? ' hl' : '';
     const logo = logoHtml(t.verein, t.logo, 20);
+    // Zurückgezogene Mannschaften: dezenter Stil, alle Werte 0
+    if(t.zurueckgezogen){
+      rows += `<tr class="zurueckgezogen" style="opacity:0.55;">
+        <td class="pos">${t.platz}</td>
+        <td class="tname"><span style="display:flex;align-items:center;gap:6px;">${logo}${t.verein}</span></td>
+        <td>0</td><td>0</td><td>0</td><td>0</td>
+        <td>0</td><td class="pts">0:0</td>
+      </tr>`;
+      return;
+    }
     // Unentschieden aus den anderen Werten ableiten, falls nicht in der Tabelle vorhanden:
     // Sp - S - N = U (handball.net liefert U nicht im Standard-JSON mit)
     const unen = (t.unentschieden != null) ? t.unentschieden : Math.max(0, (t.spiele || 0) - (t.siege || 0) - (t.niederlagen || 0));
@@ -1581,6 +1612,21 @@ function renderTabelle(data) {
   if(tblEl) tblEl.innerHTML = rows;
 
   if(updEl) updEl.textContent = "Stand: " + data.aktualisiert;
+
+  // Hinweise zur Tabelle (z.B. zurückgezogene Mannschaften) anzeigen
+  const hinweiseEl = document.getElementById('tabelle-hinweise');
+  if(hinweiseEl){
+    var hinweise = data.hinweise || [];
+    if(hinweise.length > 0){
+      hinweiseEl.innerHTML = hinweise.map(function(h){
+        return '<div>' + h + '</div>';
+      }).join('');
+      hinweiseEl.style.display = '';
+    } else {
+      hinweiseEl.innerHTML = '';
+      hinweiseEl.style.display = 'none';
+    }
+  }
 
   // Detail-Tabelle: Platz/Punkte/Tordiff (eigener Verein) und Liga-Header
   const eigen = data.tabelle.find(t => t.highlight) || data.tabelle.find(t => t.verein === "TuS Esingen");

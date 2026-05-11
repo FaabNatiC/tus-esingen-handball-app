@@ -114,40 +114,6 @@
       ]
     },
     {
-      "id": "mb-jugend-endrunde",
-      "topNews": true,
-      "sortDate": "2026-04-17",
-      "matchTeam": "",
-      "matchDate": "",
-      "cat": "Jugend männlich",
-      "catCl": "jm",
-      "team": "männlich B",
-      "gradient": "linear-gradient(135deg,#5a9bd4 0%,#3a7ab5 100%)",
-      "title": "mB Jugend qualifiziert sich für die Endrunde",
-      "author": "Jugendabteilung",
-      "authorIni": "TuS",
-      "lead": "Großer Erfolg für den Nachwuchs: Die männliche B-Jugend hat sich für die Endrunde der Bezirksstaffel qualifiziert!",
-      "body": [
-        {
-          "type": "text",
-          "text": "Mit einem souveränen 31:22-Sieg gegen den MTV Elmshorn hat sich die männliche B-Jugend das begehrte Endrunden-Ticket gesichert."
-        },
-        {
-          "type": "score",
-          "home": "TuS Esingen",
-          "guest": "MTV Elmshorn",
-          "result": "31:22",
-          "liga": "mB Jugend Bezirksstaffel · Qualifikation",
-          "outcome": "Sieg"
-        },
-        {
-          "type": "quote",
-          "text": "Ich bin unglaublich stolz auf die Jungs. Die Endrunde ist verdient!",
-          "author": "Dennis Böhm, Jugendtrainer"
-        }
-      ]
-    },
-    {
       "id": "dummy-jhv-2026",
       "topNews": false,
       "sortDate": "2026-04-15",

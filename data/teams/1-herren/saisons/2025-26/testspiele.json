@@ -1,0 +1,25 @@
+{
+  "aktualisiert": "11.05.2026",
+  "spiele": [
+    {
+      "anlass": "Vorbereitung Saison 2025/26",
+      "datum": "2025-08-30T17:00:00",
+      "heim": "TuS Esingen",
+      "gast": "TV Fischbek",
+      "toreHeim": 28,
+      "toreGast": 24,
+      "halle": "Esingen neu, Tornesch",
+      "status": "finished"
+    },
+    {
+      "anlass": "Vorbereitung Saison 2025/26",
+      "datum": "2025-09-06T16:00:00",
+      "heim": "TSV Ellerbek 2",
+      "gast": "TuS Esingen",
+      "toreHeim": 31,
+      "toreGast": 27,
+      "halle": "Ellerbek, Ellerbek",
+      "status": "finished"
+    }
+  ]
+}

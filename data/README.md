@@ -66,6 +66,11 @@ data/
 │   ├── ahrensburg.png
 │   └── ...
 │
+├── logos-sponsoren/               ← Logos der Sponsoren
+│   ├── stadtwerke.jpg
+│   ├── schmidt.png
+│   └── ...
+│
 └── archive/                       ← alte Saisons (optional)
     └── ...
 ```
@@ -449,25 +454,21 @@ Dieses Kapitel beschreibt die Dateien, in denen die App-übergreifenden Inhalte 
 
 In dieser Datei stehen alle manuell gepflegten News-Beiträge, die auf der Startseite erscheinen. Spielergebnisse als „News" werden automatisch aus den Spieltagen generiert – die musst du hier **nicht** zusätzlich eintragen.
 
-### Beispiel (eine einfache News + eine mit Score-Box)
+> ✨ **Gut zu wissen:** Du musst nur wenige Felder ausfüllen. Vieles, das früher manuell eingetragen werden musste (eindeutige ID, Anzeigedatum auf Deutsch, CSS-Klasse, Farbverlauf, Autor-Initialen), ergänzt die App automatisch aus deinen Angaben.
+
+### Beispiel: Einfache News über das Vereinsleben
 
 ```json
 {
   "aktualisiert": "10.05.2026",
   "news": [
     {
-      "id": "saisonabschluss-2025-26",
       "title": "Saisonabschlussfeier am 14. Juni",
       "lead": "Die 1. Herren feiern den 6. Tabellenplatz mit allen Fans im Vereinsheim.",
       "team": "1. Herren",
       "cat": "vereinsleben",
-      "catCl": "cat-vereinsleben",
-      "gradient": "linear-gradient(135deg, #1a1a1a 0%, #444 100%)",
       "author": "Vorstand TuS Esingen",
-      "authorIni": "TuS",
-      "date": "10. Mai 2026",
       "sortDate": "2026-05-10",
-      "topNews": false,
       "body": [
         {
           "type": "text",
@@ -479,36 +480,36 @@ In dieser Datei stehen alle manuell gepflegten News-Beiträge, die auf der Start
           "author": "Fabian Wurl, Trainer 1. Herren"
         }
       ]
+    }
+  ]
+}
+```
+
+### Beispiel: Spielbericht mit Score-Box als Top-News
+
+```json
+{
+  "title": "Wichtiger Sieg gegen Uetersen",
+  "lead": "Die 1. Herren gewinnen souverän mit 30:27 in Uetersen.",
+  "team": "1. Herren",
+  "cat": "spielbericht",
+  "author": "Fabian Wurl",
+  "sortDate": "2026-04-26",
+  "topNews": true,
+  "matchTeam": "1-herren",
+  "matchDate": "2026-04-25",
+  "body": [
+    {
+      "type": "score",
+      "home": "TSV Uetersen",
+      "guest": "TuS Esingen",
+      "result": "27:30",
+      "liga": "Männer Oberliga Hamburg",
+      "outcome": "Sieg"
     },
     {
-      "id": "sieg-uetersen-25-04",
-      "title": "Wichtiger Sieg gegen Uetersen",
-      "lead": "Die 1. Herren gewinnen souverän mit 30:27 in Uetersen.",
-      "team": "1. Herren",
-      "cat": "spielbericht",
-      "catCl": "cat-spielbericht",
-      "gradient": "linear-gradient(135deg, #1a1a1a 0%, #2d4f10 60%, #639922 100%)",
-      "author": "Fabian Wurl",
-      "authorIni": "FW",
-      "date": "26. April 2026",
-      "sortDate": "2026-04-26",
-      "topNews": true,
-      "matchTeam": "1-herren",
-      "matchDate": "2026-04-25",
-      "body": [
-        {
-          "type": "score",
-          "home": "TSV Uetersen",
-          "guest": "TuS Esingen",
-          "result": "27:30",
-          "liga": "Männer Oberliga Hamburg",
-          "outcome": "Sieg"
-        },
-        {
-          "type": "text",
-          "text": "In einem hart umkämpften Auswärtsspiel setzten sich die Esinger Herren in der zweiten Halbzeit deutlich ab. Besonders die starke Defensive bereitete dem TSV Probleme."
-        }
-      ]
+      "type": "text",
+      "text": "In einem hart umkämpften Auswärtsspiel setzten sich die Esinger Herren in der zweiten Halbzeit deutlich ab. Besonders die starke Defensive bereitete dem TSV Probleme."
     }
   ]
 }
@@ -521,34 +522,52 @@ In dieser Datei stehen alle manuell gepflegten News-Beiträge, die auf der Start
 | `aktualisiert` | ja | Datum der letzten Änderung |
 | `news` | ja | Liste aller News-Einträge (kann leer sein: `[]`) |
 
-### Pro News-Eintrag
+### Pflichtfelder pro News-Eintrag
 
-| Feld | Pflicht | Beschreibung |
+Diese Felder musst du immer ausfüllen:
+
+| Feld | Beschreibung |
+|---|---|
+| `title` | Hauptüberschrift der News |
+| `lead` | Kurzer einleitender Satz (1-2 Zeilen), wird unter dem Titel angezeigt |
+| `cat` | Kategorie der News (siehe Tabelle unten) |
+| `author` | Anzeigename des Autors |
+| `sortDate` | Sortier- und Anzeigedatum im Format `YYYY-MM-DD` |
+| `body` | Liste aller Inhalts-Blöcke der News (siehe unten) |
+
+### Optionale Felder
+
+Diese Felder sind nützlich, aber nicht zwingend:
+
+| Feld | Wann verwenden | Beschreibung |
 |---|---|---|
-| `id` | ja | Eindeutige ID dieser News (Kurz-Slug, z.B. `"saisonabschluss-2025-26"`) |
-| `title` | ja | Hauptüberschrift der News |
-| `lead` | ja | Kurzer einleitender Satz (1-2 Zeilen), wird unter dem Titel angezeigt |
-| `team` | nein | Zugehörige Mannschaft (z.B. `"1. Herren"`). Wird als Tag angezeigt. |
-| `cat` | ja | Kategorie der News (siehe Tabelle unten) |
-| `catCl` | ja | CSS-Klasse zur Kategorie (siehe Tabelle unten) |
-| `gradient` | ja | CSS-Farbverlauf für das Hero-Bild |
-| `author` | ja | Anzeigename des Autors |
-| `authorIni` | ja | Initialen des Autors (max. 3 Zeichen) oder `"TuS"` für das Vereinslogo |
-| `date` | ja | Anzeigedatum auf Deutsch (z.B. `"26. April 2026"`) |
-| `sortDate` | ja | Sortierdatum im Format `YYYY-MM-DD` (für korrekte Reihenfolge) |
-| `topNews` | nein | `true` = wird ganz oben groß als Top-News angezeigt |
-| `matchTeam` | nein | Bei Spielberichten: Mannschafts-ID (z.B. `"1-herren"`). Verhindert doppelte News. |
-| `matchDate` | nein | Bei Spielberichten: Spieldatum (Format `YYYY-MM-DD`) |
-| `body` | ja | Liste aller Inhalts-Blöcke der News (siehe unten) |
+| `team` | Wenn News zu einer Mannschaft gehört | z.B. `"1. Herren"`. Wird als farbiger Tag angezeigt. |
+| `topNews` | Wenn News ganz oben groß erscheinen soll | `true` oder `false` (Standard: `false`) |
+| `matchTeam` | Bei Spielberichten | Mannschafts-ID (z.B. `"1-herren"`). Verhindert, dass die automatische Spielbericht-News doppelt erscheint. |
+| `matchDate` | Bei Spielberichten | Spieldatum im Format `YYYY-MM-DD` (gleicher Tag wie das Spiel) |
+
+### Felder, die du **nicht** ausfüllen musst
+
+Die App ergänzt folgende Felder automatisch aus deinen Angaben:
+
+| Feld | Wird abgeleitet aus |
+|---|---|
+| `id` | `sortDate` + Slug aus `title` (z.B. `"2026-04-26-wichtiger-sieg-gegen-uetersen"`) |
+| `date` | `sortDate` → deutsches Anzeigedatum (z.B. `"26. April 2026"`) |
+| `catCl` | `cat` → CSS-Klasse (z.B. `"cat-spielbericht"`) |
+| `authorIni` | `author` → Initialen (z.B. `"Fabian Wurl"` → `"FW"`). Bei Vereinsnamen wie „Vorstand TuS Esingen" wird automatisch das Vereinslogo statt der Initialen angezeigt. |
+| `gradient` | Bei Spielberichten: aus dem `outcome` der Score-Box (grün bei Sieg, rot bei Niederlage, orange bei Unentschieden). Bei allen anderen News: dunkler Default-Verlauf. |
+
+> 💡 Wenn du eines dieser Felder doch manuell setzen willst (z.B. einen eigenen Gradient für eine besondere News), funktioniert das weiterhin – die App überschreibt manuell gesetzte Werte nie.
 
 ### Mögliche Kategorien
 
-| `cat` | `catCl` | Bedeutung |
-|---|---|---|
-| `spielbericht` | `cat-spielbericht` | Bericht über ein gespieltes Match |
-| `vereinsleben` | `cat-vereinsleben` | Veranstaltungen, Feiern, Termine |
-| `transfer` | `cat-transfer` | Spieler-Wechsel, neue Trainer |
-| `ankuendigung` | `cat-ankuendigung` | Wichtige Mitteilungen |
+| `cat` | Bedeutung |
+|---|---|
+| `spielbericht` | Bericht über ein gespieltes Match |
+| `vereinsleben` | Veranstaltungen, Feiern, Termine |
+| `transfer` | Spieler-Wechsel, neue Trainer |
+| `ankuendigung` | Wichtige Mitteilungen |
 
 Wenn eine neue Kategorie nötig wird, muss sie im App-Code als CSS-Klasse hinterlegt werden – sag im Entwickler-Chat Bescheid.
 
@@ -576,7 +595,7 @@ Der Inhalt einer News besteht aus mehreren Blöcken. Jeder Block hat ein `type`-
 }
 ```
 
-Mögliche `outcome`-Werte: `"Sieg"`, `"Niederlage"`, `"Unentschieden"` (aus TuS-Sicht). Bestimmt die Hintergrundfarbe der Score-Box.
+Mögliche `outcome`-Werte: `"Sieg"`, `"Niederlage"`, `"Unentschieden"` (aus TuS-Sicht). Bestimmt die Hintergrundfarbe der Score-Box **und** des Hero-Bereichs der News.
 
 **Zitat-Block:**
 ```json
@@ -590,16 +609,15 @@ Mögliche `outcome`-Werte: `"Sieg"`, `"Niederlage"`, `"Unentschieden"` (aus TuS-
 ### Wann du diese Datei änderst
 
 - **Neue News veröffentlichen:** Neuen Eintrag in `news` ergänzen (oben oder unten, egal – die App sortiert nach `sortDate`)
-- **News korrigieren:** Eintrag mit derselben `id` bearbeiten
+- **News korrigieren:** Eintrag bearbeiten
 - **News löschen:** Eintrag aus der Liste entfernen
 
 ### Stolperfallen
 
 - `sortDate` ist Pflicht – ohne dieses Feld wird die News falsch einsortiert
-- `id` muss **eindeutig** sein – keine zwei News mit derselben ID
 - `body` ist immer eine **Liste**, auch wenn nur ein Text-Block drin ist
 - Bei `matchTeam`: ID exakt wie in `meta/teams.json` (z.B. `"1-herren"`, nicht `"1. Herren"`)
-- `gradient` ist CSS-Code – wenn unsicher, kopier den aus einer anderen News
+- Wenn du einen Spielbericht schreibst, **immer** `matchTeam` und `matchDate` setzen – sonst kann die App nicht erkennen, dass es zu einem konkreten Spiel gehört, und zeigt eventuell zwei News zum selben Spiel an
 
 ---
 
@@ -614,22 +632,22 @@ In dieser Datei stehen die **Stammdaten** aller Sponsoren des Vereins. Sie wird 
   "aktualisiert": "10.05.2026",
   "stadtwerke-suedholstein": {
     "name": "Stadtwerke Südholstein",
-    "logo": "data/logos/stadtwerke.jpg",
+    "logo": "data/logos-sponsoren/stadtwerke.jpg",
     "url": "https://www.sw-suedholstein.de/"
   },
   "gebr-schmidt": {
     "name": "Gebr. Schmidt GmbH",
-    "logo": "data/logos/schmidt.png",
+    "logo": "data/logos-sponsoren/schmidt.png",
     "url": "https://www.gebr-schmidt.de/"
   },
   "krieg": {
     "name": "Bauunternehmen Krieg",
-    "logo": "data/logos/krieg.png",
+    "logo": "data/logos-sponsoren/krieg.png",
     "url": "https://www.bauunternehmen-krieg.de/"
   },
   "bayer": {
     "name": "Bayer AG",
-    "logo": "data/logos/bayer.png",
+    "logo": "data/logos-sponsoren/bayer.png",
     "url": "https://www.bayer.de/"
   }
 }
@@ -660,7 +678,7 @@ Die Datei ist eine **flache Sammlung** aller Sponsoren mit ihrer ID als Schlüss
 ### Stolperfallen
 
 - Die **ID** (der Schlüssel) muss eindeutig sein und sollte aus Kleinbuchstaben mit Bindestrichen bestehen (z.B. `"stadtwerke-suedholstein"`, nicht `"Stadtwerke Südholstein"`)
-- `logo` ist ein Pfad **innerhalb des Repos**, nicht eine externe URL. Die Logodatei muss vorher in `data/logos/` abgelegt werden.
+- `logo` ist ein Pfad **innerhalb des Repos**, nicht eine externe URL. Die Logodatei muss vorher in `data/logos-sponsoren/` abgelegt werden.
 - `aktualisiert` steht auf oberster Ebene neben den Sponsoren-IDs
 
 ---
@@ -698,3 +716,337 @@ Diese Datei listet auf, welche Sponsoren bei einer Mannschaft auf der Detailseit
 - Die IDs müssen **exakt** den Schlüsseln in `content/partners.json` entsprechen. Tippfehler → der Sponsor wird nicht angezeigt.
 - Falls die `partner`-Liste leer ist, wird in der App der gesamte Mannschaftssponsoren-Bereich ausgeblendet
 - Wenn ein Sponsor neu dazukommt, muss er **zuerst** in `content/partners.json` angelegt werden, dann kann er hier referenziert werden
+
+---
+
+# Die Spielbetrieb-Dateien im Detail
+
+Dieses Kapitel beschreibt die Dateien, in denen Spielergebnisse gepflegt werden. **Diese Dateien werden am häufigsten verändert** – meistens wöchentlich nach den Spielen am Wochenende.
+
+## `teams/<id>/saisons/<saison>/meta.json` – Liga-Stammdaten einer Saison
+
+Diese Datei beschreibt die **Liga und Saison** einer Mannschaft: In welcher Liga wird gespielt, welche Mannschaften nehmen teil, wie viele Spieltage sind geplant, welches Punktesystem gilt. Sie wird einmal pro Saison angelegt und bei Bedarf erweitert (z.B. wenn eine neue Mannschaft in die Liga kommt).
+
+### Beispiel (1. Herren, Saison 2025/26)
+
+```json
+{
+  "saison": "2025/26",
+  "liga": "Männer Oberliga Hamburg",
+  "punkteSystem": "2-punkte",
+  "wertungTore": { "fuerSieger": 0, "fuerVerlierer": 0 },
+  "spieltageGeplant": 26,
+  "linkSpielplan": "https://www.handball.net/ligen/handball4all.hamburg.51/spielplan",
+  "linkTabelle": "https://www.handball.net/ligen/handball4all.hamburg.51/tabelle",
+  "mannschaften": [
+    { "name": "TuS Esingen",          "logo": "tus-esingen.png" },
+    { "name": "Ahrensburger TSV",      "logo": "ahrensburg.png" },
+    { "name": "FC St. Pauli",          "logo": "st-pauli.png" },
+    { "name": "TV Fischbek",           "logo": "fischbek.png" },
+    { "name": "TSV Ellerbek 2",        "logo": "ellerbek-2.png" },
+    { "name": "HSG Elbvororte",        "logo": "elbvororte.png" },
+    { "name": "TH Eilbeck",            "logo": "eilbeck.png" },
+    { "name": "HT Norderstedt 2",      "logo": "norderstedt-2.png" },
+    { "name": "TSV Uetersen",          "logo": "uetersen.png" },
+    { "name": "SG Hamburg-Nord 2",     "logo": "hh-nord-2.png" },
+    { "name": "1. HC Quickborn",       "logo": "quickborn.png" },
+    { "name": "HG Hamburg-Barmbek 2",  "logo": "barmbek-2.png" },
+    { "name": "Rellinger TV 2",        "logo": "rellingen-2.png" }
+  ]
+}
+```
+
+### Felder
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `saison` | ja | Anzeige-Bezeichnung der Saison (z.B. `"2025/26"`) |
+| `liga` | ja | Vollständiger Liga-Name |
+| `punkteSystem` | ja | Aktuell nur `"2-punkte"` unterstützt (Sieg=2, Unentschieden=1, Niederlage=0) |
+| `wertungTore` | ja | Wie viele Tore werden bei einer Wertung (z.B. nicht angetretener Gegner) angerechnet (siehe unten) |
+| `spieltageGeplant` | ja | Anzahl der Spieltage in der Saison (z.B. 26 bei 14 Mannschaften mit Hin- und Rückrunde) |
+| `linkSpielplan` | nein | Link zur Liga auf handball.net |
+| `linkTabelle` | nein | Link zur Tabelle auf handball.net |
+| `mannschaften` | ja | Liste aller Mannschaften der Liga (siehe unten) |
+
+### Das Feld `wertungTore`
+
+Bei einer Wertung (eine Mannschaft tritt nicht an) bekommt der Sieger 2 Punkte ohne dass tatsächlich gespielt wurde. Dieses Feld legt fest, mit wie vielen Toren das Spiel in die Tabellenberechnung eingeht:
+
+```json
+"wertungTore": { "fuerSieger": 0, "fuerVerlierer": 0 }
+```
+
+- **Aktuell für eure Ligen:** `0:0` – also kein Einfluss auf die Tordifferenz
+- Manche Verbände werten anders (z.B. `10:0`) – prüfe das beim ersten Anlegen der Saison
+
+### Pro Mannschaft
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `name` | ja | Name der Mannschaft, **exakt** wie er in den Spielergebnissen verwendet wird |
+| `logo` | ja | Dateiname des Vereinslogos in `data/logos-mannschaften/` |
+
+### Wann du diese Datei änderst
+
+- **Saisonstart:** Datei wird neu angelegt (oder aus letzter Saison kopiert und angepasst)
+- **Neue Mannschaft kommt in die Liga (Aufsteiger):** Eintrag in `mannschaften` ergänzen
+- **Mannschaft zieht sich zurück:** Eintrag entfernen
+- **Liga heißt anders / Saison-Bezeichnung ändert sich:** entsprechende Felder anpassen
+
+### Stolperfallen
+
+- Der `name` einer Mannschaft muss **exakt** so geschrieben sein wie in den Spieltags-Dateien (`heim`, `gast`). Auch Tippfehler wie „TSV Ellerbeck" statt „TSV Ellerbek" lassen die Tabellenberechnung scheitern.
+- `logo` muss eine Datei sein, die tatsächlich in `data/logos-mannschaften/` liegt. Wenn das Logo fehlt, zeigt die App einen Platzhalter.
+- Falls eine Mannschaft den eigenen Verein darstellt (`"TuS Esingen"`), muss der `name` exakt dem `ligaTeamName` aus `info.json` entsprechen
+- `spieltageGeplant` ist nur ein Richtwert für die App-Anzeige – die tatsächliche Anzahl kommt aus den Dateien in `spieltage/`
+
+---
+
+## `teams/<id>/saisons/<saison>/spieltage/XX.json` – Ein einzelner Spieltag
+
+In dieser Datei stehen **alle Spiele eines Spieltags** einer Liga – also nicht nur die TuS-Spiele, sondern auch die der anderen Mannschaften. Aus diesen Dateien berechnet die App die komplette Tabelle.
+
+**Diese Datei wird wöchentlich gepflegt** – das ist der häufigste Vorgang.
+
+### Dateinamen-Konvention
+
+Die Dateinamen entsprechen der **Spieltag-Nummer mit führender Null**:
+
+- `01.json` = Spieltag 1
+- `02.json` = Spieltag 2
+- `12.json` = Spieltag 12
+- `26.json` = Spieltag 26
+
+So wird die Reihenfolge im Repo-Browser automatisch korrekt sortiert.
+
+### Beispiel (Spieltag 24, 1. Herren)
+
+```json
+{
+  "spieltag": 24,
+  "spiele": [
+    {
+      "datum": "2026-04-25T17:00:00",
+      "heim": "TSV Uetersen",
+      "gast": "TuS Esingen",
+      "toreHeim": 30,
+      "toreGast": 27,
+      "halle": "Seminarstraße, Uetersen",
+      "status": "finished"
+    },
+    {
+      "datum": "2026-04-25T17:30:00",
+      "heim": "Ahrensburger TSV",
+      "gast": "FC St. Pauli",
+      "toreHeim": 32,
+      "toreGast": 30,
+      "halle": "Heimgarten, Ahrensburg",
+      "status": "finished"
+    },
+    {
+      "datum": "2026-04-26T15:00:00",
+      "heim": "TV Fischbek",
+      "gast": "TH Eilbeck",
+      "toreHeim": 28,
+      "toreGast": 28,
+      "halle": "Süderelbe, Hamburg",
+      "status": "finished"
+    },
+    {
+      "datum": "2026-04-26T18:00:00",
+      "heim": "TSV Ellerbek 2",
+      "gast": "HSG Elbvororte",
+      "toreHeim": 25,
+      "toreGast": 31,
+      "halle": "Ellerbek, Ellerbek",
+      "status": "finished"
+    },
+    {
+      "datum": "2026-04-26T16:00:00",
+      "heim": "Rellinger TV 2",
+      "gast": "1. HC Quickborn",
+      "toreHeim": 22,
+      "toreGast": 24,
+      "halle": "Egenbüttel, Rellingen",
+      "status": "finished"
+    },
+    {
+      "datum": "2026-04-26T18:30:00",
+      "heim": "HG Hamburg-Barmbek 2",
+      "gast": "HT Norderstedt 2",
+      "toreHeim": null,
+      "toreGast": null,
+      "halle": "Langenfort, Hamburg",
+      "status": "verlegt",
+      "verlegtAuf": "2026-05-10T17:00:00"
+    },
+    {
+      "datum": "2026-04-26T17:00:00",
+      "heim": "SG Hamburg-Nord 2",
+      "gast": "TuS Esingen",
+      "toreHeim": 0,
+      "toreGast": 0,
+      "halle": "Tegelsberg, Hamburg",
+      "status": "wertung-gast",
+      "hinweis": "WG – Hamburg-Nord 2 nicht angetreten"
+    }
+  ]
+}
+```
+
+### Felder auf oberster Ebene
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `spieltag` | ja | Nummer des Spieltags als Zahl (z.B. `24`) |
+| `spiele` | ja | Liste aller Spiele dieses Spieltags |
+
+### Pro Spiel
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `datum` | ja | Datum und Uhrzeit im ISO-Format: `YYYY-MM-DDTHH:MM:SS` |
+| `heim` | ja | Heimmannschaft, exakt wie in `meta.json` |
+| `gast` | ja | Gastmannschaft, exakt wie in `meta.json` |
+| `toreHeim` | ja | Tore der Heimmannschaft (Zahl oder `null`, wenn noch nicht gespielt) |
+| `toreGast` | ja | Tore der Gastmannschaft (Zahl oder `null`, wenn noch nicht gespielt) |
+| `halle` | nein | Hallenname und Stadt (wie auf handball.net) |
+| `status` | ja | Status des Spiels (siehe unten) |
+| `hinweis` | nein | Freier Hinweistext (z.B. Erklärung einer Wertung) |
+| `verlegtAuf` | nein | Bei verlegten Spielen: neues Datum im ISO-Format |
+
+### Die `status`-Werte
+
+| Status | Bedeutung |
+|---|---|
+| `scheduled` | Spiel ist angesetzt, noch nicht gespielt. `toreHeim` und `toreGast` sind `null`. |
+| `finished` | Spiel wurde gespielt, Ergebnis steht fest. |
+| `wertung-heim` | Wertung **für** die Heimmannschaft, weil Gast nicht angetreten ist. Tore = was in `wertungTore` der Liga-Meta steht. |
+| `wertung-gast` | Wertung **für** die Gastmannschaft, weil Heim nicht angetreten ist. Tore = was in `wertungTore` der Liga-Meta steht. |
+| `verlegt` | Spiel wurde verschoben. Neues Datum steht in `verlegtAuf`. `toreHeim`/`toreGast` bleiben `null`, bis das Spiel gespielt wurde. |
+
+**Wichtig:** Sobald ein verlegtes Spiel gespielt wurde, ändere den `status` auf `"finished"` und trage die Tore ein. Das Feld `verlegtAuf` kann dann gelöscht werden, oder du behältst es als Historie (App ignoriert es bei `finished`).
+
+### Wie die Tabelle daraus berechnet wird
+
+Die App geht alle Spiele aller Spieltage einer Saison durch und summiert pro Mannschaft:
+
+- **Punkte:** 2 pro Sieg, 1 pro Unentschieden, 0 pro Niederlage
+- **Spiele:** Anzahl gewerteter Spiele (alles außer `scheduled` und `verlegt`)
+- **Tore (eigene und gegnerische):** Aus `toreHeim` und `toreGast`
+- **Tordifferenz:** Eigene Tore minus gegnerische Tore
+- **Bei Wertungen:** Punkte gehen an Sieger, Tore aus `wertungTore` der Liga-Meta
+
+Das passiert **immer live** beim Öffnen der Mannschaftsseite. Du musst die Tabelle nie irgendwo pflegen.
+
+### Wann du diese Datei änderst
+
+- **Spielergebnis nach dem Wochenende eintragen:** `toreHeim`, `toreGast` ausfüllen, `status` auf `"finished"` setzen
+- **Spielverlegung:** `status` auf `"verlegt"` setzen, `verlegtAuf` ergänzen
+- **Wertung wegen Nicht-Antreten:** `status` auf `"wertung-heim"` oder `"wertung-gast"`, Tore aus `wertungTore` eintragen
+- **Tippfehler korrigieren:** Werte direkt anpassen, App rechnet beim nächsten Aufruf neu
+
+### Stolperfallen
+
+- **`heim` und `gast` müssen exakt wie in `meta.json` geschrieben sein** – sonst wird das Spiel nicht in die Tabelle gerechnet
+- `toreHeim` und `toreGast` sind **Zahlen ohne Anführungszeichen** oder `null`. Also `"toreHeim": 30`, nicht `"toreHeim": "30"`. Bei nicht gespieltem Status: `"toreHeim": null`.
+- Datum **immer mit Uhrzeit**: `"2026-04-25T17:00:00"`. Wenn die Uhrzeit unbekannt ist, nimm `"00:00:00"` als Platzhalter.
+- Bei Wertungen die Tore-Werte mit dem `wertungTore`-Feld der Liga-Meta abgleichen (typischerweise 0:0)
+- `spieltag`-Nummer in der Datei und im Dateinamen müssen übereinstimmen (`12.json` → `"spieltag": 12`)
+
+### Spieltage vorbereiten am Saisonanfang
+
+Vor Saisonbeginn empfehle ich, **alle Spieltage einer Saison schon als Dateien anzulegen**, mit den fertigen Paarungen aus handball.net, aber `toreHeim: null`, `toreGast: null` und `status: "scheduled"`. So musst du wöchentlich nur die Tore eintragen und den Status auf `"finished"` setzen, statt jedes Mal das ganze Spiel neu zu erfassen.
+
+---
+
+## `teams/<id>/sonderspiele.json` – Pokal- und Testspiele
+
+Pokal- und Testspiele gehören nicht zur Liga und zählen nicht für die Tabelle. Sie werden in einer **separaten Datei pro Mannschaft** gepflegt – saisonübergreifend, weil sie selten sind.
+
+### Beispiel (1. Herren)
+
+```json
+{
+  "aktualisiert": "10.05.2026",
+  "spiele": [
+    {
+      "art": "pokal",
+      "wettbewerb": "Männer Pokal Hamburg",
+      "datum": "2026-09-12T19:00:00",
+      "heim": "TuS Esingen",
+      "gast": "TSV Ellerbek 2",
+      "toreHeim": null,
+      "toreGast": null,
+      "halle": "Esingen neu, Tornesch",
+      "status": "scheduled"
+    },
+    {
+      "art": "pokal",
+      "wettbewerb": "Männer Pokal Hamburg",
+      "datum": "2026-01-10T17:00:00",
+      "heim": "TuS Esingen",
+      "gast": "HT Norderstedt 2",
+      "toreHeim": 30,
+      "toreGast": 26,
+      "halle": "Esingen neu, Tornesch",
+      "status": "finished"
+    },
+    {
+      "art": "test",
+      "datum": "2026-08-23T17:00:00",
+      "heim": "TuS Esingen",
+      "gast": "Ahrensburger TSV",
+      "toreHeim": null,
+      "toreGast": null,
+      "halle": "Esingen neu, Tornesch",
+      "status": "scheduled"
+    },
+    {
+      "art": "test",
+      "datum": "2025-08-30T17:00:00",
+      "heim": "TuS Esingen",
+      "gast": "TV Fischbek",
+      "toreHeim": 28,
+      "toreGast": 24,
+      "halle": "Esingen neu, Tornesch",
+      "status": "finished"
+    }
+  ]
+}
+```
+
+### Felder
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `aktualisiert` | ja | Datum der letzten Änderung |
+| `spiele` | ja | Liste aller Sonderspiele (kann leer sein: `[]`) |
+
+### Pro Spiel
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `art` | ja | `"pokal"` oder `"test"` |
+| `wettbewerb` | nein | Wettbewerbsname (nur bei Pokalspielen sinnvoll, z.B. `"Männer Pokal Hamburg"`) |
+| `datum` | ja | Datum und Uhrzeit im ISO-Format |
+| `heim` | ja | Heimmannschaft |
+| `gast` | ja | Gastmannschaft |
+| `toreHeim` | ja | Tore Heim (Zahl oder `null`) |
+| `toreGast` | ja | Tore Gast (Zahl oder `null`) |
+| `halle` | nein | Hallenname und Stadt |
+| `status` | ja | `"scheduled"` oder `"finished"` |
+
+### Wann du diese Datei änderst
+
+- **Neuer Pokalauftritt steht an:** Neuen Eintrag mit `"art": "pokal"` und `status: "scheduled"`
+- **Testspiel in der Sommerpause:** Neuen Eintrag mit `"art": "test"` und `status: "scheduled"`
+- **Ergebnis nach dem Spiel:** `toreHeim`, `toreGast`, `status` auf `"finished"`
+- **Saisonende:** Alte Spiele bleiben drin als Historie (oder werden ins Archiv verschoben, falls die Datei zu lang wird)
+
+### Stolperfallen
+
+- Pokal- und Testspiele werden **nicht** für die Liga-Tabelle gewertet
+- Im Gegensatz zur Liga-Spielplan-Datei gibt es hier **keinen Status für Wertungen** – ein nicht angetretenes Testspiel wird einfach aus der Liste entfernt oder als `"finished"` mit 0:0 geführt
+- `art` kann aktuell nur `"pokal"` oder `"test"` sein. Falls ein neuer Wettbewerbstyp gebraucht wird (z.B. Freundschaftsspiel-Turnier), sag im Entwickler-Chat Bescheid

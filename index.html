@@ -597,7 +597,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="burger-overlay" id="burgerOverlay" onclick="closeBurger()"></div>
   <div class="burger-panel" id="burgerPanel">
     <div class="burger-hdr">
-      <div class="hdr-logo" style="width:36px;height:36px;"><img src="" data-src-rel="data/logos/mannschaften/tus-esingen.png" alt="TuS"></div>
+      <div class="hdr-logo" style="width:36px;height:36px;"><img src="" data-src-rel="icons/tus-esingen.png" alt="TuS"></div>
       <div style="flex:1"><div style="font-size:14px;font-weight:700;color:white;">TuS Esingen</div><div style="font-size:10px;color:rgba(255,255,255,.5);">Handball · Abteilung</div></div>
       <button class="burger-close" onclick="closeBurger()">✕</button>
     </div>
@@ -623,7 +623,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 
 <div class="hdr" id="main-hdr">
-  <div class="hdr-logo"><img src="" data-src-rel="data/logos/mannschaften/tus-esingen.png" alt="TuS"></div>
+  <div class="hdr-logo"><img src="" data-src-rel="icons/tus-esingen.png" alt="TuS"></div>
   <div><div class="hdr-name">TuS Esingen e.V.</div><div class="hdr-sub">Handball · Abteilung</div></div>
   <div class="hdr-sponsor" aria-label="Hauptsponsor">
     <img class="hdr-sponsor-logo" src="" data-src-rel="data/logos/sponsoren/stadtwerke-weiss.png" alt="Hauptsponsor">
@@ -936,14 +936,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="bnav" id="bnav">
   <button class="bt" onclick="nav('teams',this)"><span class="bt-ic">👕</span><span class="bt-lb">Teams</span></button>
   <button class="bt" onclick="nav('spielplan',this)"><span class="bt-ic">🤾</span><span class="bt-lb">Spielplan</span></button>
-  <button class="bt bt-home on" onclick="nav('news',this)"><span class="bt-ic" aria-hidden="true"></span><span class="bt-logo"><img src="data/logos/mannschaften/tus-esingen.png" alt="TuS"></span><span class="bt-lb">Home</span></button>
+  <button class="bt bt-home on" onclick="nav('news',this)"><span class="bt-ic" aria-hidden="true"></span><span class="bt-logo"><img src="icons/tus-esingen.png" alt="TuS"></span><span class="bt-lb">Home</span></button>
   <button class="bt" onclick="nav('termine',this)"><span class="bt-ic">📆</span><span class="bt-lb">Termine</span></button>
   <button class="bt" onclick="nav('hallen',this)"><span class="bt-ic">📍</span><span class="bt-lb">Anfahrt</span></button>
 </div>
 </div><!-- /phone -->
 
 <script>
-var LOGO="data/logos/mannschaften/tus-esingen.png";
+var LOGO="icons/tus-esingen.png";
 
 // Mannschafts-Konfiguration: zentrale Stelle für alle Teams
 // linkSpielplan / linkTabelle werden aus data/teams-config.json gelesen (zur Laufzeit)
@@ -2103,7 +2103,7 @@ function fillTeamLogos(){
   // TuS-Logo aus dem Repo: relativer Pfad funktioniert auf GitHub Pages
   var imgs = document.querySelectorAll('.tus-logo-img');
   imgs.forEach(function(img){
-    if(img && !img.src) img.src = "data/logos/mannschaften/tus-esingen.png";
+    if(img && !img.src) img.src = "icons/tus-esingen.png";
   });
 }
 if(document.readyState === 'loading') {

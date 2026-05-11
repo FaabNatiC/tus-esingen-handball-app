@@ -7,7 +7,7 @@
       "spiele": [
         {"datum": "2025-09-13T16:00:00", "heim": "Rellinger TV", "gast": "TSC Wellingsbüttel", "toreHeim": 31, "toreGast": 14, "status": "finished", "spieltag": 1},
         {"datum": "2025-09-13T17:30:00", "heim": "SC Alstertal-Langenhorn", "gast": "HT Norderstedt", "toreHeim": 21, "toreGast": 36, "status": "finished", "spieltag": 1},
-        {"datum": "2025-09-14T13:15:00", "heim": "TSV Uetersen", "gast": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "toreHeim": 16, "toreGast": 38, "status": "finished", "spieltag": 1},
+        {"datum": "2025-09-14T13:15:00", "heim": "TSV Uetersen", "gast": "SG HHD/AMTV 2", "toreHeim": 16, "toreGast": 38, "status": "finished", "spieltag": 1},
         {"datum": "2025-09-14T14:00:00", "heim": "TuS Esingen", "gast": "Ahrensburger TSV", "halle": "Esingen neu, Tornesch", "toreHeim": 12, "toreGast": 21, "status": "finished", "spieltag": 1},
         {"datum": "2025-09-14T15:00:00", "heim": "SG Hamburg-Nord 3", "gast": "Niendorfer TSV", "toreHeim": 28, "toreGast": 27, "status": "finished", "spieltag": 1}
       ]
@@ -19,14 +19,14 @@
         {"datum": "2025-09-20T16:00:00", "heim": "TSC Wellingsbüttel", "gast": "SC Alstertal-Langenhorn", "toreHeim": 22, "toreGast": 31, "status": "finished", "spieltag": 2},
         {"datum": "2025-09-21T10:00:00", "heim": "HT Norderstedt", "gast": "TuS Esingen", "toreHeim": 22, "toreGast": 15, "status": "finished", "spieltag": 2},
         {"datum": "2025-09-21T13:45:00", "heim": "Ahrensburger TSV", "gast": "SG Hamburg-Nord 3", "toreHeim": 40, "toreGast": 20, "status": "finished", "spieltag": 2},
-        {"datum": "2025-09-21T14:00:00", "heim": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "gast": "Rellinger TV", "toreHeim": 17, "toreGast": 32, "status": "finished", "spieltag": 2}
+        {"datum": "2025-09-21T14:00:00", "heim": "SG HHD/AMTV 2", "gast": "Rellinger TV", "toreHeim": 17, "toreGast": 32, "status": "finished", "spieltag": 2}
       ]
     },
     {
       "kw": 39,
       "spiele": [
         {"datum": "2025-09-27T14:30:00", "heim": "Rellinger TV", "gast": "Niendorfer TSV", "toreHeim": 25, "toreGast": 18, "status": "finished", "spieltag": 3},
-        {"datum": "2025-09-27T18:45:00", "heim": "SC Alstertal-Langenhorn", "gast": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "toreHeim": 31, "toreGast": 23, "status": "finished", "spieltag": 3},
+        {"datum": "2025-09-27T18:45:00", "heim": "SC Alstertal-Langenhorn", "gast": "SG HHD/AMTV 2", "toreHeim": 31, "toreGast": 23, "status": "finished", "spieltag": 3},
         {"datum": "2025-09-28T13:30:00", "heim": "SG Hamburg-Nord 3", "gast": "TSV Uetersen", "toreHeim": 23, "toreGast": 25, "status": "finished", "spieltag": 3},
         {"datum": "2025-09-28T13:45:00", "heim": "Ahrensburger TSV", "gast": "HT Norderstedt", "toreHeim": 31, "toreGast": 19, "status": "finished", "spieltag": 3},
         {"datum": "2025-09-28T15:00:00", "heim": "TuS Esingen", "gast": "TSC Wellingsbüttel", "halle": "Esingen neu, Tornesch", "toreHeim": 19, "toreGast": 18, "status": "finished", "spieltag": 3}
@@ -35,7 +35,7 @@
     {
       "kw": 41,
       "spiele": [
-        {"datum": "2025-10-11T14:00:00", "heim": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "gast": "TuS Esingen", "toreHeim": 15, "toreGast": 25, "status": "finished", "spieltag": 4},
+        {"datum": "2025-10-11T14:00:00", "heim": "SG HHD/AMTV 2", "gast": "TuS Esingen", "toreHeim": 15, "toreGast": 25, "status": "finished", "spieltag": 4},
         {"datum": "2025-10-11T14:30:00", "heim": "TSC Wellingsbüttel", "gast": "Ahrensburger TSV", "toreHeim": 19, "toreGast": 32, "status": "finished", "spieltag": 4},
         {"datum": "2025-10-12T11:30:00", "heim": "HT Norderstedt", "gast": "SG Hamburg-Nord 3", "toreHeim": 47, "toreGast": 30, "status": "finished", "spieltag": 4},
         {"datum": "2025-10-12T13:15:00", "heim": "TSV Uetersen", "gast": "Rellinger TV", "toreHeim": 22, "toreGast": 58, "status": "finished", "spieltag": 4},
@@ -52,7 +52,7 @@
       "kw": 45,
       "spiele": [
         {"datum": "2025-11-09T10:00:00", "heim": "HT Norderstedt", "gast": "TSC Wellingsbüttel", "toreHeim": 35, "toreGast": 18, "status": "finished", "spieltag": 5},
-        {"datum": "2025-11-09T13:45:00", "heim": "Ahrensburger TSV", "gast": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "toreHeim": 26, "toreGast": 20, "status": "finished", "spieltag": 5},
+        {"datum": "2025-11-09T13:45:00", "heim": "Ahrensburger TSV", "gast": "SG HHD/AMTV 2", "toreHeim": 26, "toreGast": 20, "status": "finished", "spieltag": 5},
         {"datum": "2025-11-09T15:15:00", "heim": "Rellinger TV", "gast": "SG Hamburg-Nord 3", "toreHeim": 61, "toreGast": 16, "status": "finished", "spieltag": 5},
         {"datum": "2025-11-09T17:00:00", "heim": "TuS Esingen", "gast": "Niendorfer TSV", "halle": "Esingen neu, Tornesch", "toreHeim": 22, "toreGast": 16, "status": "finished", "spieltag": 5}
       ]
@@ -60,7 +60,7 @@
     {
       "kw": 46,
       "spiele": [
-        {"datum": "2025-11-15T15:00:00", "heim": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "gast": "HT Norderstedt", "toreHeim": 12, "toreGast": 37, "status": "finished", "spieltag": 6},
+        {"datum": "2025-11-15T15:00:00", "heim": "SG HHD/AMTV 2", "gast": "HT Norderstedt", "toreHeim": 12, "toreGast": 37, "status": "finished", "spieltag": 6},
         {"datum": "2025-11-16T12:45:00", "heim": "Rellinger TV", "gast": "SC Alstertal-Langenhorn", "toreHeim": 29, "toreGast": 21, "status": "finished", "spieltag": 6},
         {"datum": "2025-11-16T13:15:00", "heim": "TSV Uetersen", "gast": "TuS Esingen", "toreHeim": 11, "toreGast": 25, "status": "finished", "spieltag": 6},
         {"datum": "2025-11-16T14:00:00", "heim": "SG Hamburg-Nord 3", "gast": "TSC Wellingsbüttel", "toreHeim": 24, "toreGast": 20, "status": "finished", "spieltag": 6},
@@ -71,7 +71,7 @@
       "kw": 47,
       "spiele": [
         {"datum": "2025-11-22T12:45:00", "heim": "HT Norderstedt", "gast": "Niendorfer TSV", "toreHeim": 38, "toreGast": 28, "status": "finished", "spieltag": 7},
-        {"datum": "2025-11-22T15:00:00", "heim": "TSC Wellingsbüttel", "gast": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "toreHeim": 28, "toreGast": 18, "status": "finished", "spieltag": 7},
+        {"datum": "2025-11-22T15:00:00", "heim": "TSC Wellingsbüttel", "gast": "SG HHD/AMTV 2", "toreHeim": 28, "toreGast": 18, "status": "finished", "spieltag": 7},
         {"datum": "2025-11-22T17:30:00", "heim": "SC Alstertal-Langenhorn", "gast": "SG Hamburg-Nord 3", "toreHeim": 49, "toreGast": 24, "status": "finished", "spieltag": 7},
         {"datum": "2025-11-23T13:45:00", "heim": "Ahrensburger TSV", "gast": "TSV Uetersen", "toreHeim": 34, "toreGast": 12, "status": "finished", "spieltag": 7},
         {"datum": "2025-11-23T15:00:00", "heim": "TuS Esingen", "gast": "Rellinger TV", "halle": "Esingen neu, Tornesch", "toreHeim": 15, "toreGast": 19, "status": "finished", "spieltag": 7}
@@ -82,7 +82,7 @@
       "spiele": [
         {"datum": "2025-11-29T13:45:00", "heim": "Niendorfer TSV", "gast": "TSC Wellingsbüttel", "toreHeim": 32, "toreGast": 30, "status": "finished", "spieltag": 8},
         {"datum": "2025-11-30T12:00:00", "heim": "Rellinger TV", "gast": "Ahrensburger TSV", "toreHeim": 24, "toreGast": 27, "status": "finished", "spieltag": 8},
-        {"datum": "2025-11-30T12:15:00", "heim": "SG Hamburg-Nord 3", "gast": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "toreHeim": 22, "toreGast": 25, "status": "finished", "spieltag": 8},
+        {"datum": "2025-11-30T12:15:00", "heim": "SG Hamburg-Nord 3", "gast": "SG HHD/AMTV 2", "toreHeim": 22, "toreGast": 25, "status": "finished", "spieltag": 8},
         {"datum": "2025-11-30T13:15:00", "heim": "SC Alstertal-Langenhorn", "gast": "TuS Esingen", "toreHeim": 19, "toreGast": 18, "status": "finished", "spieltag": 8},
         {"datum": "2025-11-30T15:15:00", "heim": "TSV Uetersen", "gast": "HT Norderstedt", "toreHeim": 23, "toreGast": 40, "status": "finished", "spieltag": 8}
       ]
@@ -90,7 +90,7 @@
     {
       "kw": 49,
       "spiele": [
-        {"datum": "2025-12-06T16:00:00", "heim": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "gast": "Niendorfer TSV", "toreHeim": 18, "toreGast": 43, "status": "finished", "spieltag": 9},
+        {"datum": "2025-12-06T16:00:00", "heim": "SG HHD/AMTV 2", "gast": "Niendorfer TSV", "toreHeim": 18, "toreGast": 43, "status": "finished", "spieltag": 9},
         {"datum": "2025-12-06T19:30:00", "heim": "HT Norderstedt", "gast": "Rellinger TV", "toreHeim": 38, "toreGast": 24, "status": "finished", "spieltag": 9},
         {"datum": "2025-12-07T15:00:00", "heim": "TuS Esingen", "gast": "SG Hamburg-Nord 3", "halle": "Esingen neu, Tornesch", "toreHeim": 0, "toreGast": 0, "status": "wertung-heim", "spieltag": 9},
         {"datum": "2025-12-07T16:30:00", "heim": "TSC Wellingsbüttel", "gast": "TSV Uetersen", "toreHeim": 34, "toreGast": 16, "status": "finished", "spieltag": 9},
@@ -101,7 +101,7 @@
       "kw": 50,
       "spiele": [
         {"datum": "2025-12-13T12:30:00", "heim": "TSC Wellingsbüttel", "gast": "Rellinger TV", "toreHeim": 24, "toreGast": 29, "status": "finished", "spieltag": 10},
-        {"datum": "2025-12-13T14:00:00", "heim": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "gast": "TSV Uetersen", "toreHeim": 0, "toreGast": 0, "status": "wertung-heim", "spieltag": 10},
+        {"datum": "2025-12-13T14:00:00", "heim": "SG HHD/AMTV 2", "gast": "TSV Uetersen", "toreHeim": 0, "toreGast": 0, "status": "wertung-heim", "spieltag": 10},
         {"datum": "2025-12-13T16:00:00", "heim": "HT Norderstedt", "gast": "SC Alstertal-Langenhorn", "toreHeim": 30, "toreGast": 20, "status": "finished", "spieltag": 10},
         {"datum": "2025-12-13T18:30:00", "heim": "Niendorfer TSV", "gast": "SG Hamburg-Nord 3", "toreHeim": 45, "toreGast": 15, "status": "finished", "spieltag": 10},
         {"datum": "2025-12-14T13:45:00", "heim": "Ahrensburger TSV", "gast": "TuS Esingen", "toreHeim": 16, "toreGast": 15, "status": "finished", "spieltag": 10}
@@ -110,7 +110,7 @@
     {
       "kw": 3,
       "spiele": [
-        {"datum": "2026-01-17T11:15:00", "heim": "Rellinger TV", "gast": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "toreHeim": 36, "toreGast": 24, "status": "finished", "spieltag": 11},
+        {"datum": "2026-01-17T11:15:00", "heim": "Rellinger TV", "gast": "SG HHD/AMTV 2", "toreHeim": 36, "toreGast": 24, "status": "finished", "spieltag": 11},
         {"datum": "2026-01-18T12:45:00", "heim": "SC Alstertal-Langenhorn", "gast": "TSC Wellingsbüttel", "toreHeim": 31, "toreGast": 28, "status": "finished", "spieltag": 11},
         {"datum": "2026-01-18T15:00:00", "heim": "TuS Esingen", "gast": "HT Norderstedt", "halle": "Esingen neu, Tornesch", "toreHeim": 22, "toreGast": 26, "status": "finished", "spieltag": 11}
       ]
@@ -118,7 +118,7 @@
     {
       "kw": 4,
       "spiele": [
-        {"datum": "2026-01-24T12:00:00", "heim": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "gast": "SC Alstertal-Langenhorn", "toreHeim": 16, "toreGast": 28, "status": "finished", "spieltag": 12},
+        {"datum": "2026-01-24T12:00:00", "heim": "SG HHD/AMTV 2", "gast": "SC Alstertal-Langenhorn", "toreHeim": 16, "toreGast": 28, "status": "finished", "spieltag": 12},
         {"datum": "2026-01-24T16:30:00", "heim": "TSC Wellingsbüttel", "gast": "TuS Esingen", "toreHeim": 19, "toreGast": 18, "status": "finished", "spieltag": 12},
         {"datum": "2026-01-25T15:00:00", "heim": "Niendorfer TSV", "gast": "Rellinger TV", "toreHeim": 29, "toreGast": 33, "status": "finished", "spieltag": 12},
         {"datum": "2026-01-25T18:00:00", "heim": "HT Norderstedt", "gast": "Ahrensburger TSV", "toreHeim": 31, "toreGast": 24, "status": "finished", "spieltag": 12}
@@ -135,14 +135,14 @@
       "kw": 7,
       "spiele": [
         {"datum": "2026-02-14T14:45:00", "heim": "TSC Wellingsbüttel", "gast": "HT Norderstedt", "toreHeim": 21, "toreGast": 32, "status": "finished", "spieltag": 14},
-        {"datum": "2026-02-14T16:00:00", "heim": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "gast": "Ahrensburger TSV", "toreHeim": 25, "toreGast": 33, "status": "finished", "spieltag": 14},
+        {"datum": "2026-02-14T16:00:00", "heim": "SG HHD/AMTV 2", "gast": "Ahrensburger TSV", "toreHeim": 25, "toreGast": 33, "status": "finished", "spieltag": 14},
         {"datum": "2026-02-15T16:00:00", "heim": "Niendorfer TSV", "gast": "TuS Esingen", "toreHeim": 30, "toreGast": 27, "status": "finished", "spieltag": 14}
       ]
     },
     {
       "kw": 8,
       "spiele": [
-        {"datum": "2026-02-21T13:00:00", "heim": "HT Norderstedt", "gast": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "toreHeim": 39, "toreGast": 16, "status": "finished", "spieltag": 15},
+        {"datum": "2026-02-21T13:00:00", "heim": "HT Norderstedt", "gast": "SG HHD/AMTV 2", "toreHeim": 39, "toreGast": 16, "status": "finished", "spieltag": 15},
         {"datum": "2026-02-21T18:45:00", "heim": "SC Alstertal-Langenhorn", "gast": "Rellinger TV", "toreHeim": 32, "toreGast": 32, "status": "finished", "spieltag": 15},
         {"datum": "2026-02-22T13:30:00", "heim": "Niendorfer TSV", "gast": "Ahrensburger TSV", "toreHeim": 0, "toreGast": 0, "status": "wertung-gast", "spieltag": 6}
       ]
@@ -150,7 +150,7 @@
     {
       "kw": 12,
       "spiele": [
-        {"datum": "2026-03-21T13:00:00", "heim": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "gast": "TSC Wellingsbüttel", "toreHeim": 21, "toreGast": 21, "status": "finished", "spieltag": 16},
+        {"datum": "2026-03-21T13:00:00", "heim": "SG HHD/AMTV 2", "gast": "TSC Wellingsbüttel", "toreHeim": 21, "toreGast": 21, "status": "finished", "spieltag": 16},
         {"datum": "2026-03-21T16:00:00", "heim": "Niendorfer TSV", "gast": "HT Norderstedt", "toreHeim": 24, "toreGast": 37, "status": "finished", "spieltag": 16},
         {"datum": "2026-03-22T12:30:00", "heim": "Rellinger TV", "gast": "TuS Esingen", "toreHeim": 19, "toreGast": 18, "status": "finished", "spieltag": 16}
       ]
@@ -158,7 +158,7 @@
     {
       "kw": 13,
       "spiele": [
-        {"datum": "2026-03-28T13:30:00", "heim": "TuS Esingen", "gast": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "halle": "Esingen neu, Tornesch", "toreHeim": 19, "toreGast": 11, "status": "finished", "spieltag": 13}
+        {"datum": "2026-03-28T13:30:00", "heim": "TuS Esingen", "gast": "SG HHD/AMTV 2", "halle": "Esingen neu, Tornesch", "toreHeim": 19, "toreGast": 11, "status": "finished", "spieltag": 13}
       ]
     },
     {
@@ -173,7 +173,7 @@
       "kw": 17,
       "spiele": [
         {"datum": "2026-04-25T10:30:00", "heim": "Rellinger TV", "gast": "HT Norderstedt", "toreHeim": 25, "toreGast": 31, "status": "finished", "spieltag": 18},
-        {"datum": "2026-04-25T14:00:00", "heim": "Niendorfer TSV", "gast": "SG Hamburg Handball-Deerns/AMTV Hamburg 2", "toreHeim": 39, "toreGast": 26, "status": "finished", "spieltag": 18},
+        {"datum": "2026-04-25T14:00:00", "heim": "Niendorfer TSV", "gast": "SG HHD/AMTV 2", "toreHeim": 39, "toreGast": 26, "status": "finished", "spieltag": 18},
         {"datum": "2026-04-25T15:45:00", "heim": "SC Alstertal-Langenhorn", "gast": "Ahrensburger TSV", "toreHeim": 0, "toreGast": 0, "status": "wertung-heim", "spieltag": 18}
       ]
     }

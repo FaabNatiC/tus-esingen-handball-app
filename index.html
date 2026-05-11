@@ -1500,29 +1500,25 @@ function resolveLogo(teamname, logoFromData){
   return LOCAL_LOGOS_BASE + logoFromData;
 }
 
-// Logo-HTML: zeigt das Logo „frei" an (ohne grauen Hintergrund).
-// Wenn das Bild nicht geladen werden kann (404), wird es per onerror ausgeblendet
-// und ein grauer runder Platzhalter (Geschwister-Element) wird stattdessen sichtbar.
-// Beide Varianten haben exakt die gleiche Größe (quadratischer Container).
+// Logo-HTML: zeigt ein <img class="tlogo">-Element an.
+// Wenn das Bild geladen werden kann, wird es normal angezeigt.
+// Wenn nicht (404), wird es per onerror als grauer runder Platzhalter
+// gestylt — gleiche Größe, gleiche Position, kein Layout-Sprung.
 function logoHtml(teamname, logoFromData, size){
   size = size || 26;
   const url = resolveLogo(teamname, logoFromData);
-  // Container ist immer quadratisch. min-width/min-height verhindern Verzerrung
-  // in Flex- oder Table-Layouts.
-  const containerStyle = 'display:inline-block;width:' + size + 'px;height:' + size + 'px;'
-    + 'min-width:' + size + 'px;min-height:' + size + 'px;'
-    + 'flex-shrink:0;vertical-align:middle;position:relative;';
+  // Onerror-Handler: src entfernen, weißen/Bild-Inhalt durch grauen Kreis ersetzen.
+  // alt='' verhindert, dass der Alt-Text als Text angezeigt wird, wenn das Bild fehlt.
+  // Stil-Override für den Fallback: Hintergrund grau, kein Border, kein Bild-Inhalt.
+  const onerror = "this.onerror=null;this.removeAttribute('src');this.style.background='#e5e5e5';this.style.border='none';";
   if(!url) {
-    // Kein Logo → grauer runder Platzhalter
-    return '<span style="' + containerStyle + 'background:#e5e5e5;border-radius:50%;"></span>';
+    // Kein Logo bekannt → direkt als grauer Kreis rendern (keine Bild-Anfrage)
+    return '<img class="tlogo" alt="" '
+      + 'style="width:' + size + 'px;height:' + size + 'px;background:#e5e5e5;border:none;">';
   }
-  // Logo da → Bild „frei" anzeigen mit object-fit:contain
-  // Bei 404 versteckt onerror das Bild und macht den Container zum grauen Kreis sichtbar.
-  const imgStyle = 'display:block;width:100%;height:100%;object-fit:contain;';
-  const onerror = "this.style.display='none';this.parentNode.style.background='#e5e5e5';this.parentNode.style.borderRadius='50%';";
-  return '<span style="' + containerStyle + '">'
-    + '<img src="' + url + '" alt="" style="' + imgStyle + '" onerror="' + onerror + '">'
-    + '</span>';
+  return '<img class="tlogo" src="' + url + '" alt="" '
+    + 'style="width:' + size + 'px;height:' + size + 'px;" '
+    + 'onerror="' + onerror + '">';
 }
 
 function renderTabelle(data) {

@@ -62,7 +62,7 @@
       "ort": "Hamburg"
     },
     "150251": {
-      "name": "Bergstraße/Wedel",
+      "name": "Bergstraße",
       "adresse": "Bergstraße",
       "plz": "22880",
       "ort": "Wedel"
@@ -146,7 +146,7 @@
       "ort": "Elmshorn"
     },
     "150421": {
-      "name": "Ellerbek",
+      "name": "Rugenbergener Mühlenweg",
       "adresse": "Rugenbergener Mühlenweg",
       "plz": "25474",
       "ort": "Ellerbek"
@@ -194,13 +194,13 @@
       "ort": "Quickborn"
     },
     "150471": {
-      "name": "Bickbargen/Halstenbek",
+      "name": "Bickbargen",
       "adresse": "Bickbargen 111",
       "plz": "25469",
       "ort": "Halstenbek"
     },
     "150472": {
-      "name": "Schenefeld, Halle A",
+      "name": "Achter de Weiden",
       "adresse": "Achter de Weiden 91",
       "plz": "22869",
       "ort": "Schenefeld"

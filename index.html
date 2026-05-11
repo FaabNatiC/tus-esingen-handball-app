@@ -266,7 +266,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .gs.up{font-size:11px;color:#999;background:none;border:1px solid #ddd;font-weight:500;text-align:center;}
 .ghall{font-size:9px;color:#666;text-align:center;margin-top:5px;}
 .ghint{font-size:9px;color:#666;text-align:center;margin-top:4px;font-style:italic;}
-.tlogo{border-radius:50%;object-fit:contain;background:white;border:1px solid #eee;flex-shrink:0;display:block;}
+.tlogo{object-fit:contain;flex-shrink:0;display:block;}
 .tini{background:#1a1a1a;color:white;display:flex;align-items:center;justify-content:center;font-weight:700;border:none;}
 .sg{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;padding:10px 16px 5px;background:#f5f5f5;border-top:1px solid #eee;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;}
 .sg-count{font-weight:700;color:#aaa;font-size:10px;}
@@ -1177,6 +1177,14 @@ async function ladeAllesDaten(teamId) {
   currentTeam = teamId;
   const cb = '?_=' + Date.now();  // Cache-Buster
 
+  // UI proaktiv leeren: verhindert, dass beim Mannschaftswechsel die alten Daten
+  // stehenbleiben, falls die neuen nicht geladen werden können.
+  renderKader(null);
+  renderTabelle(null);
+  renderSpielplan(null);
+  renderTraining(null);
+  renderPartner(null);
+
   try {
     // 1. info.json laden (welche Saison ist aktuell?)
     const infoRes = await fetch(BASE_URL + "/data/teams/" + teamId + "/info.json" + cb);
@@ -1378,6 +1386,8 @@ function renderTraining(data) {
 
 // ── Kader rendern ──────────────────────────────────────────────────────────
 function renderKader(data) {
+  // Null-safe: bei null/leeren Daten leere Anzeige rendern
+  data = data || {};
   const pos_order = ["Torwart","Außen","Rückraum","Kreisläufer"];
   const spieler = (data.spieler || []).sort((a,b) => {
     const pi = pos_order.indexOf(a.position) - pos_order.indexOf(b.position);
@@ -1501,21 +1511,20 @@ function resolveLogo(teamname, logoFromData){
 }
 
 // Logo-HTML: zeigt ein <img class="tlogo">-Element an.
-// Wenn das Bild geladen werden kann, wird es normal angezeigt.
-// Wenn nicht (404), wird es per onerror als grauer runder Platzhalter
-// gestylt — gleiche Größe, gleiche Position, kein Layout-Sprung.
+// Logos werden vollständig angezeigt (object-fit:contain), quadratischer Container,
+// kein Rahmen, kein weißer Hintergrund, einheitliche Größe.
+// Bei fehlendem Bild (404): graues Quadrat als Platzhalter.
 function logoHtml(teamname, logoFromData, size){
   size = size || 26;
   const url = resolveLogo(teamname, logoFromData);
-  // Transparentes 1x1-Pixel als Fallback-src (vermeidet das "kaputtes Bild"-Icon)
+  // Transparentes 1x1-Pixel als Fallback-src (vermeidet "kaputtes Bild"-Icon)
   const blankPx = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
-  // Onerror-Handler: src durch transparentes Pixel ersetzen, Element als grauer
-  // Kreis stylen. Element bleibt sichtbar als runder grauer Platzhalter.
-  const onerror = "this.onerror=null;this.src='" + blankPx + "';this.style.background='#e5e5e5';this.style.border='none';";
+  // Onerror-Handler: src durch transparentes Pixel ersetzen, grauer Hintergrund.
+  const onerror = "this.onerror=null;this.src='" + blankPx + "';this.style.background='#e5e5e5';";
   if(!url) {
-    // Kein Logo bekannt → direkt als grauer Kreis rendern (kein Bild-Request)
+    // Kein Logo bekannt → direkt als graues Quadrat rendern (kein Request)
     return '<img class="tlogo" alt="" src="' + blankPx + '" '
-      + 'style="width:' + size + 'px;height:' + size + 'px;background:#e5e5e5;border:none;">';
+      + 'style="width:' + size + 'px;height:' + size + 'px;background:#e5e5e5;">';
   }
   return '<img class="tlogo" src="' + url + '" alt="" '
     + 'style="width:' + size + 'px;height:' + size + 'px;" '
@@ -1523,6 +1532,25 @@ function logoHtml(teamname, logoFromData, size){
 }
 
 function renderTabelle(data) {
+  // Null-safe: bei fehlenden Daten freundliche Meldung anzeigen
+  const tblEl = document.getElementById('tabelle-body');
+  const updEl = document.getElementById('tabelle-upd');
+  const detStats = document.getElementById('dt-tab-stats');
+  const detLiga = document.getElementById('dt-tab-liga');
+
+  if(!data || !Array.isArray(data.tabelle) || data.tabelle.length === 0) {
+    if(tblEl) tblEl.innerHTML = '<tr><td colspan="8" style="padding:24px 16px;color:#999;text-align:center;font-size:13px;">Tabelle ist aktuell nicht verfügbar.</td></tr>';
+    if(updEl) updEl.textContent = '';
+    if(detStats) {
+      detStats.innerHTML =
+        '<div class="st"><div class="sv">--</div><div class="sl">Platz</div></div>' +
+        '<div class="st"><div class="sv">--</div><div class="sl">Punkte</div></div>' +
+        '<div class="st"><div class="sv">--</div><div class="sl">Tordiff.</div></div>';
+    }
+    if(detLiga) detLiga.textContent = (data && data.liga) || 'Liga';
+    return;
+  }
+
   let rows = '';
   data.tabelle.forEach(t => {
     const hl = t.highlight ? ' hl' : '';
@@ -1542,15 +1570,12 @@ function renderTabelle(data) {
       <td>${t.diff}</td><td class="pts">${pktStr}</td>
     </tr>`;
   });
-  const tblEl = document.getElementById('tabelle-body');
   if(tblEl) tblEl.innerHTML = rows;
 
-  const updEl = document.getElementById('tabelle-upd');
   if(updEl) updEl.textContent = "Stand: " + data.aktualisiert + " · handball.net";
 
   // Detail-Tabelle: Platz/Punkte/Tordiff (eigener Verein) und Liga-Header
   const eigen = data.tabelle.find(t => t.highlight) || data.tabelle.find(t => t.verein === "TuS Esingen");
-  const detStats = document.getElementById('dt-tab-stats');
   if(detStats && eigen) {
     const eUnen = (eigen.unentschieden != null) ? eigen.unentschieden : Math.max(0, (eigen.spiele || 0) - (eigen.siege || 0) - (eigen.niederlagen || 0));
     const ePlus  = 2 * (eigen.siege || 0) + eUnen;
@@ -1560,7 +1585,6 @@ function renderTabelle(data) {
       '<div class="st"><div class="sv">' + ePlus + ':' + eMinus + '</div><div class="sl">Punkte</div></div>' +
       '<div class="st"><div class="sv">' + eigen.diff + '</div><div class="sl">Tordiff.</div></div>';
   }
-  const detLiga = document.getElementById('dt-tab-liga');
   if(detLiga) detLiga.textContent = (data.liga || 'Liga') + ' · ' + (data.saison || '');
 }
 
@@ -1852,6 +1876,23 @@ async function loadCountdownData(){
 }
 
 function renderSpielplan(data) {
+  // Null-safe: bei fehlenden Daten freundliche Meldung
+  const detSpiele = document.getElementById('dt-sp-spiele');
+  const detStats = document.getElementById('dt-sp-stats');
+  const detStand = document.getElementById('dt-sp-stand');
+
+  if(!data || !data.spiele) {
+    if(detSpiele) detSpiele.innerHTML = '<div style="padding:24px 16px;color:#999;text-align:center;font-size:13px;">Spielplan ist aktuell nicht verfügbar.</div>';
+    if(detStats) {
+      detStats.innerHTML =
+        '<div class="st"><div class="sv">--</div><div class="sl">Siege</div></div>' +
+        '<div class="st"><div class="sv">--</div><div class="sl">Unentschieden</div></div>' +
+        '<div class="st"><div class="sv">--</div><div class="sl">Niederlagen</div></div>';
+    }
+    if(detStand) detStand.textContent = '';
+    return;
+  }
+
   // Beide Eingabeformate auf flache Liste normalisieren
   data = normalizeSpielplan(data);
 
@@ -1926,7 +1967,6 @@ function renderSpielplan(data) {
   // Hier nur noch den Detail-Spielplan-Reiter befüllen:
 
   // Detail-Spielplan (im Mannschafts-Tab "Spielplan") befüllen
-  const detSpiele = document.getElementById('dt-sp-spiele');
   if(detSpiele) {
     // Alle Spiele zeigen: erst die anstehenden, dann die gespielten (neueste zuerst)
     const alle = data.spiele.slice().sort((a,b) => new Date(b.datum) - new Date(a.datum));
@@ -1934,7 +1974,6 @@ function renderSpielplan(data) {
   }
 
   // Statistik im Detail-Spielplan: Siege/Unentschieden/Niederlagen
-  const detStats = document.getElementById('dt-sp-stats');
   if(detStats) {
     let siege=0, unen=0, niederl=0;
     data.spiele.forEach(s => {
@@ -1952,7 +1991,6 @@ function renderSpielplan(data) {
   }
 
   // Stand-Zeile + Link
-  const detStand = document.getElementById('dt-sp-stand');
   if(detStand) detStand.textContent = "Stand: " + (data.aktualisiert || '') + " · handball.net · " + data.spiele.length + " Spiele";
 }
 

@@ -947,11 +947,14 @@ var LOGO="data/logos/tus-esingen.png";
 
 // Mannschafts-Konfiguration: zentrale Stelle für alle Teams
 // linkSpielplan / linkTabelle werden aus data/teams-config.json gelesen (zur Laufzeit)
+// TEAMS wird beim App-Start aus data/meta/teams.json + info.json je Mannschaft befüllt.
+// Initialer Inhalt sind Fallback-Defaults, falls das Laden fehlschlägt.
+// Schema pro Eintrag: { name, liga, saison, linkSpielplan, linkTabelle }
 const TEAMS = {
-  '1-herren':  { name: '1. Herren',          liga: 'Männer Oberliga',                              saison: '2025/26', linkSpielplan: '', linkTabelle: '' },
-  '1-damen':   { name: '1. Damen',           liga: 'Frauen Landesliga Gr. 1',                      saison: '2025/26', linkSpielplan: '', linkTabelle: '' },
-  'md1-jugend':{ name: 'männlich D1',        liga: 'männliche Jugend D Landesliga Gruppe 1 (461)', saison: '2025/26', linkSpielplan: '', linkTabelle: '' },
-  'md2-jugend':{ name: 'männlich D2',        liga: 'männliche Jugend D Kreisliga Gruppe 1 (466)',  saison: '2025/26', linkSpielplan: '', linkTabelle: '' }
+  '1-herren':  { name: '1. Herren',   liga: 'Männer Oberliga Hamburg',                       saison: '2025/26', linkSpielplan: '', linkTabelle: '' },
+  '1-damen':   { name: '1. Damen',    liga: 'Frauen Landesliga Gr. 1',                       saison: '2025/26', linkSpielplan: '', linkTabelle: '' },
+  'md1-jugend':{ name: 'männlich D1', liga: 'männliche Jugend D Landesliga Gruppe 1 (461)',  saison: '2025/26', linkSpielplan: '', linkTabelle: '' },
+  'md2-jugend':{ name: 'männlich D2', liga: 'männliche Jugend D Kreisliga Gruppe 1 (466)',   saison: '2025/26', linkSpielplan: '', linkTabelle: '' }
 };
 const FALLBACK_LINK = 'https://www.handball.net/vereine/handball4all.hamburg.1404/spielplan';
 let currentTeam = '1-herren';
@@ -960,8 +963,8 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.20";
-const APP_BUILD_DATE = "08.05.2026";
+const APP_VERSION = "0.7.0";
+const APP_BUILD_DATE = "11.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
 // Wird im Burger-Menü unter "App-Updates" angezeigt und gibt der App-Banner-
@@ -969,7 +972,11 @@ const APP_BUILD_DATE = "08.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
-  { version: "0.6.20", date: "11.05.2026", points: [
+  { version: "0.7.0", date: "11.05.2026", points: [
+    "Großer interner Umbau: Die App liest jetzt die Spiele aus der neuen Datenstruktur. Die Tabelle wird live aus den Spielergebnissen berechnet, statt sie separat zu pflegen.",
+    "Aktuell ist nur die 1. Herren-Mannschaft auf die neue Struktur umgestellt. 1. Damen und Jugend-Mannschaften folgen in den nächsten Updates und sind temporär nicht verfügbar."
+  ] },
+  { version: "0.6.20", date: "09.05.2026", points: [
     "Interne Verbesserungen, die die Pflege von News-Beiträgen einfacher machen. Für die Nutzung der App ändert sich nichts."
   ] },
   { version: "0.6.19", date: "08.05.2026", points: [
@@ -1006,58 +1013,234 @@ const UPDATE_HISTORY = [
     "Das TuS-Logo unten in der Mitte ist jetzt deutlich größer und ragt sichtbarer aus der Menüleiste heraus. Die Welle in der Leiste passt sich proportional an.",
     "Der Schriftzug 'Teams' steht jetzt exakt auf gleicher Höhe wie die anderen Beschriftungen in der Menüleiste.",
     "Der schmale Rand um das TuS-Logo bleibt jetzt auch im aktiven Zustand schwarz, nur die Innenfläche wird weiß."
-  ] },
-  { version: "0.6.11", date: "08.05.2026", points: [
-    "Die Update-Info oben am Rand erscheint jetzt zuverlässig, wenn die App eine neue Version geladen hat.",
-    "In der Menüleiste unten wölbt sich die Mitte jetzt sanft nach oben und das TuS-Logo ragt leicht aus der Leiste heraus. Der Schriftzug 'Teams' steht wieder auf gleicher Höhe wie die anderen Beschriftungen.",
-    "Das Etikett 'Testspiel' an der linken Kachelkante hat jetzt etwas mehr Abstand zum Rand, damit es harmonischer wirkt."
   ] }
 ];
 
-// Globale Logo-Map - wird in ladeAllesDaten aus tabelle.json befüllt
+// ═══════════════════════════════════════════════════════════════════════════
+// NEUE DATEN-ARCHITEKTUR (ab Version 0.7.0)
+// ═══════════════════════════════════════════════════════════════════════════
+// Pro Mannschaft:
+//   data/teams/<id>/info.json                  - Stammdaten + aktuelleSaison
+//   data/teams/<id>/kader.json                 - Spieler und Trainer
+//   data/teams/<id>/training.json              - Trainingszeiten
+//   data/teams/<id>/partner.json               - Sponsoren
+//   data/teams/<id>/saisons/<saison>/meta.json - Liga-Info, Mannschaftsliste
+//   data/teams/<id>/saisons/<saison>/ligaspiele.json   - Alle Liga-Spiele
+//   data/teams/<id>/saisons/<saison>/pokalspiele.json  - Pokalspiele
+//   data/teams/<id>/saisons/<saison>/testspiele.json   - Testspiele
+//
+// Die App berechnet die Tabelle live aus ligaspiele.json.
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Tabelle aus Liga-Spielen berechnen.
+// Eingabe: meta (mit Mannschaftsliste, wertungTore) + ligaspiele (mit allen Spielen)
+// Ausgabe: Array von Tabellen-Einträgen im alten Format, sortiert nach Punkten/Tordiff
+function berechneTabelleAusSpielen(meta, ligaspiele){
+  var teams = {};
+  // Initialisiere alle Mannschaften aus meta
+  (meta.mannschaften || []).forEach(function(m){
+    teams[m.name] = {
+      verein: m.name,
+      logo: m.logo || null,
+      spiele: 0, siege: 0, unentschieden: 0, niederlagen: 0,
+      toreFuer: 0, toreGegen: 0
+    };
+  });
+
+  // Hilfsfunktion: ein Spielresultat verbuchen
+  function buche(name, eigeneT, gegneT, ergebnis){
+    var t = teams[name];
+    if(!t) return; // Fremde Mannschaft (sollte bei sauberer meta nicht passieren)
+    t.spiele++;
+    t.toreFuer  += eigeneT;
+    t.toreGegen += gegneT;
+    if(ergebnis === 'sieg') t.siege++;
+    else if(ergebnis === 'niederlage') t.niederlagen++;
+    else if(ergebnis === 'unentschieden') t.unentschieden++;
+  }
+
+  // Wertungstore aus meta
+  var wertungToreSieger   = (meta.wertungTore && meta.wertungTore.fuerSieger)   || 0;
+  var wertungToreVerlierer= (meta.wertungTore && meta.wertungTore.fuerVerlierer)|| 0;
+
+  // Alle Spiele durchgehen
+  (ligaspiele.spielwochen || []).forEach(function(sw){
+    (sw.spiele || []).forEach(function(sp){
+      // Nur abgeschlossene Spiele zählen
+      var isFinished = sp.status === 'finished';
+      var isWertungHeim = sp.status === 'wertung-heim'; // Heim gewinnt durch Wertung
+      var isWertungGast = sp.status === 'wertung-gast'; // Gast gewinnt durch Wertung
+      if(!isFinished && !isWertungHeim && !isWertungGast) return;
+
+      if(isWertungHeim){
+        buche(sp.heim, wertungToreSieger,   wertungToreVerlierer, 'sieg');
+        buche(sp.gast, wertungToreVerlierer, wertungToreSieger,   'niederlage');
+      } else if(isWertungGast){
+        buche(sp.heim, wertungToreVerlierer, wertungToreSieger,   'niederlage');
+        buche(sp.gast, wertungToreSieger,    wertungToreVerlierer,'sieg');
+      } else {
+        // Reguläres Spiel
+        var th = sp.toreHeim || 0;
+        var tg = sp.toreGast || 0;
+        if(th === tg){
+          buche(sp.heim, th, tg, 'unentschieden');
+          buche(sp.gast, tg, th, 'unentschieden');
+        } else if(th > tg){
+          buche(sp.heim, th, tg, 'sieg');
+          buche(sp.gast, tg, th, 'niederlage');
+        } else {
+          buche(sp.heim, th, tg, 'niederlage');
+          buche(sp.gast, tg, th, 'sieg');
+        }
+      }
+    });
+  });
+
+  // In Array umwandeln und sortieren
+  var arr = Object.keys(teams).map(function(name){
+    var t = teams[name];
+    t.diff = t.toreFuer - t.toreGegen;
+    t.tore = t.toreFuer + ':' + t.toreGegen;
+    return t;
+  });
+  arr.sort(function(a,b){
+    // Hauptkriterium: Punkte (Plus-Minus)
+    var aPunkte = 2*a.siege + a.unentschieden;
+    var bPunkte = 2*b.siege + b.unentschieden;
+    if(aPunkte !== bPunkte) return bPunkte - aPunkte;
+    // Tordifferenz
+    if(a.diff !== b.diff) return b.diff - a.diff;
+    // Mehr Tore geschossen
+    if(a.toreFuer !== b.toreFuer) return b.toreFuer - a.toreFuer;
+    // Alphabetisch als Tie-Breaker
+    return a.verein.localeCompare(b.verein);
+  });
+  // Platz vergeben
+  arr.forEach(function(t, i){
+    t.platz = i + 1;
+    if(t.verein === 'TuS Esingen') t.highlight = true;
+  });
+  return arr;
+}
+
+// Spielplan im alten Format aus neuen Daten zusammenbauen.
+// Filtert TuS-Spiele aus Liga, Pokal, Test und gibt sie chronologisch sortiert zurück.
+function baueTusSpielplan(meta, ligaspiele, pokalspiele, testspiele){
+  var spiele = [];
+
+  // Liga-Spiele: nur TuS-Spiele behalten
+  (ligaspiele.spielwochen || []).forEach(function(sw){
+    (sw.spiele || []).forEach(function(sp){
+      if(sp.heim === 'TuS Esingen' || sp.gast === 'TuS Esingen'){
+        spiele.push(Object.assign({}, sp, {
+          art: 'liga',
+          wettbewerb: meta.liga || ''
+        }));
+      }
+    });
+  });
+
+  // Pokalspiele (alle, da pro Mannschaft separate Datei)
+  ((pokalspiele && pokalspiele.spiele) || []).forEach(function(sp){
+    spiele.push(Object.assign({}, sp, {
+      art: 'pokal',
+      wettbewerb: sp.wettbewerb || 'Pokal'
+    }));
+  });
+
+  // Testspiele (alle, da pro Mannschaft separate Datei)
+  ((testspiele && testspiele.spiele) || []).forEach(function(sp){
+    spiele.push(Object.assign({}, sp, {
+      art: 'test',
+      wettbewerb: sp.anlass || 'Testspiel'
+    }));
+  });
+
+  // Chronologisch sortieren
+  spiele.sort(function(a,b){ return new Date(a.datum) - new Date(b.datum); });
+
+  return {
+    wettbewerb: meta.liga || '',
+    liga: meta.liga || '',
+    saison: meta.saison || '',
+    aktualisiert: ligaspiele.aktualisiert || '',
+    quelle: meta.linkSpielplan || '',
+    spiele: spiele
+  };
+}
+
+// Globale Logo-Map - wird in ladeAllesDaten aus meta.json befüllt
 window.LOGOS_MAP = window.LOGOS_MAP || {};
 
 async function ladeAllesDaten(teamId) {
   teamId = teamId || currentTeam;
   currentTeam = teamId;
   const cb = '?_=' + Date.now();  // Cache-Buster
+
   try {
-    const [kaderRes, tabelleRes, spielplanRes] = await Promise.all([
-      fetch(BASE_URL + "/data/" + teamId + "/kader.json" + cb),
-      fetch(BASE_URL + "/data/" + teamId + "/tabelle.json" + cb),
-      fetch(BASE_URL + "/data/" + teamId + "/spielplan.json" + cb)
+    // 1. info.json laden (welche Saison ist aktuell?)
+    const infoRes = await fetch(BASE_URL + "/data/teams/" + teamId + "/info.json" + cb);
+    if(!infoRes.ok) throw new Error("info.json nicht gefunden für " + teamId);
+    const info = await infoRes.json();
+    const saison = info.aktuelleSaison; // z.B. "2025-26"
+
+    // 2. Saison-Stammdaten + Spiele parallel laden
+    const saisonBase = BASE_URL + "/data/teams/" + teamId + "/saisons/" + saison;
+    const [kaderRes, metaRes, ligaspieleRes, pokalRes, testRes] = await Promise.all([
+      fetch(BASE_URL + "/data/teams/" + teamId + "/kader.json" + cb),
+      fetch(saisonBase + "/meta.json" + cb),
+      fetch(saisonBase + "/ligaspiele.json" + cb),
+      fetch(saisonBase + "/pokalspiele.json" + cb),
+      fetch(saisonBase + "/testspiele.json" + cb)
     ]);
-    const kader    = await kaderRes.json();
-    const tabelle  = await tabelleRes.json();
-    const spielplan= await spielplanRes.json();
 
-    // Logos aus der Tabelle in globale Map übernehmen, damit Spielplan sie nutzen kann
-    if(tabelle.tabelle) {
-      tabelle.tabelle.forEach(function(t){
-        if(t.verein && t.logo) window.LOGOS_MAP[t.verein] = t.logo;
-      });
-    }
+    const kader      = await kaderRes.json();
+    const meta       = await metaRes.json();
+    const ligaspiele = await ligaspieleRes.json();
+    const pokalspiele= pokalRes.ok ? await pokalRes.json() : { spiele: [] };
+    const testspiele = testRes.ok  ? await testRes.json()  : { spiele: [] };
 
-    // Externe Links aus den JSONs in TEAMS-Map merken
-    // tabelle.json kann ein Feld "quelle" enthalten = handball.net Tabellen-URL
-    // spielplan.json kann ein Feld "quelle" enthalten = handball.net Spielplan-URL
+    // 3. Tabelle live berechnen
+    var tabelleArr = berechneTabelleAusSpielen(meta, ligaspiele);
+
+    // Im alten Format verpacken, damit renderTabelle() unverändert funktioniert
+    var tabelle = {
+      aktualisiert: ligaspiele.aktualisiert || '',
+      liga: meta.liga || '',
+      saison: meta.saison || '',
+      quelle: meta.linkTabelle || '',
+      tabelle: tabelleArr
+    };
+
+    // 4. Spielplan im alten Format aus neuen Daten bauen
+    var spielplan = baueTusSpielplan(meta, ligaspiele, pokalspiele, testspiele);
+
+    // 5. Logos aus meta in globale Map übernehmen
+    (meta.mannschaften || []).forEach(function(m){
+      if(m.name && m.logo) window.LOGOS_MAP[m.name] = m.logo;
+    });
+
+    // 6. TEAMS-Map aktualisieren (für externe Links und Liga-Name)
     if(TEAMS[teamId]){
-      if(typeof tabelle.quelle === 'string')   TEAMS[teamId].linkTabelle   = tabelle.quelle;
-      if(typeof spielplan.quelle === 'string') TEAMS[teamId].linkSpielplan = spielplan.quelle;
+      TEAMS[teamId].name          = info.name || TEAMS[teamId].name;
+      TEAMS[teamId].liga          = meta.liga || TEAMS[teamId].liga;
+      TEAMS[teamId].saison        = meta.saison || TEAMS[teamId].saison;
+      TEAMS[teamId].linkSpielplan = meta.linkSpielplan || '';
+      TEAMS[teamId].linkTabelle   = meta.linkTabelle || '';
     }
-    // Falls die Mannschaftsseite gerade offen ist: Links direkt aktualisieren
     var spLink  = document.getElementById('dt-sp-link');
     var tabLink = document.getElementById('dt-tab-link');
     if(spLink  && TEAMS[teamId]) spLink.href  = TEAMS[teamId].linkSpielplan || FALLBACK_LINK;
     if(tabLink && TEAMS[teamId]) tabLink.href = TEAMS[teamId].linkTabelle   || FALLBACK_LINK;
 
+    // 7. Rendern
     renderKader(kader);
     renderTabelle(tabelle);
     renderSpielplan(spielplan);
 
-    // Trainingszeiten separat & fehlertolerant laden
+    // 8. Trainingszeiten separat & fehlertolerant laden
     try {
-      const trainingRes = await fetch(BASE_URL + "/data/" + teamId + "/training.json" + cb);
+      const trainingRes = await fetch(BASE_URL + "/data/teams/" + teamId + "/training.json" + cb);
       if(trainingRes.ok) {
         const training = await trainingRes.json();
         renderTraining(training);
@@ -1068,10 +1251,10 @@ async function ladeAllesDaten(teamId) {
       renderTraining(null);
     }
 
-    // Partner separat & fehlertolerant laden
+    // 9. Partner separat & fehlertolerant laden
     try {
-      await ladePartnersDB(); // Globale DB einmalig holen
-      const partnerRes = await fetch(BASE_URL + "/data/" + teamId + "/partner.json" + cb);
+      await ladePartnersDB();
+      const partnerRes = await fetch(BASE_URL + "/data/teams/" + teamId + "/partner.json" + cb);
       if(partnerRes.ok) {
         const partner = await partnerRes.json();
         renderPartner(partner);
@@ -1082,9 +1265,9 @@ async function ladeAllesDaten(teamId) {
       renderPartner(null);
     }
 
-    console.log("✅ Daten geladen (" + teamId + "):", kader.aktualisiert);
+    console.log("✅ Daten geladen (" + teamId + "):", saison, "aktualisiert:", ligaspiele.aktualisiert);
   } catch(e) {
-    console.warn("⚠️ Daten konnten nicht geladen werden:", e);
+    console.warn("⚠️ Daten konnten nicht geladen werden für " + teamId + ":", e);
   }
 }
 
@@ -1128,7 +1311,7 @@ async function ladePartnersDB() {
   if(window.PARTNERS_DB) return window.PARTNERS_DB;
   try {
     const cb = '?_=' + Date.now();
-    const res = await fetch(BASE_URL + "/data/partners.json" + cb);
+    const res = await fetch(BASE_URL + "/data/content/partners.json" + cb);
     if(res.ok) {
       window.PARTNERS_DB = await res.json();
     }
@@ -1308,7 +1491,13 @@ function renderTabelle(data) {
   let rows = '';
   data.tabelle.forEach(t => {
     const hl = t.highlight ? ' hl' : '';
-    const logo = t.logo ? `<img src="${LOGO_BASE}${t.logo}" style="width:20px;height:20px;object-fit:contain;border-radius:50%;">` : '';
+    // Wenn das Logo wie ein lokaler Dateiname aussieht (kurze Namen ohne UUID),
+    // zeigen wir einen neutralen Platzhalter, bis die lokalen Logos verfügbar sind.
+    // UUID-Pattern: 8-4-4-4-12 Hex-Zeichen
+    const isUuid = t.logo && /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\.(png|jpe?g)$/.test(t.logo);
+    const logo = isUuid
+      ? `<img src="${LOGO_BASE}${t.logo}" style="width:20px;height:20px;object-fit:contain;border-radius:50%;">`
+      : '<div style="width:20px;height:20px;background:#e5e5e5;border-radius:50%;display:inline-block;"></div>';
     // Unentschieden aus den anderen Werten ableiten, falls nicht in der Tabelle vorhanden:
     // Sp - S - N = U (handball.net liefert U nicht im Standard-JSON mit)
     const unen = (t.unentschieden != null) ? t.unentschieden : Math.max(0, (t.spiele || 0) - (t.siege || 0) - (t.niederlagen || 0));
@@ -1356,19 +1545,29 @@ function renderTabelle(data) {
 // Berücksichtigt auch Wertungen (Hinweis 'WG' = Wertung gegen Gast, 'WH' = Wertung gegen Heim).
 // Bei Wertungen ist das Ergebnis trotz 0:0 fest entschieden.
 function tusOutcome(s){
-  if(!s || s.status !== 'finished') return null;
+  if(!s) return null;
+  // Neue Wertungs-Status aus der neuen Struktur
+  if(s.status === 'wertung-heim'){
+    // Heim gewinnt durch Wertung
+    var tusIstHeim1 = (s.heim || '').indexOf('TuS Esingen') === 0;
+    return tusIstHeim1 ? 'sieg' : 'niederlage';
+  }
+  if(s.status === 'wertung-gast'){
+    // Gast gewinnt durch Wertung
+    var tusIstHeim2 = (s.heim || '').indexOf('TuS Esingen') === 0;
+    return tusIstHeim2 ? 'niederlage' : 'sieg';
+  }
+  if(s.status !== 'finished') return null;
   if(s.toreHeim == null || s.toreGast == null) return null;
   var tusIstHeim = (s.heim || '').indexOf('TuS Esingen') === 0;
-  // Wertungen aus dem Hinweistext lesen (case-insensitive, deckt 'WG', 'WH' und ausgeschriebene Varianten ab)
+  // Legacy: Wertungen aus dem alten Hinweistext lesen (für Übergangszeit / Fallback)
   var hinweis = (s.hinweis || '').toLowerCase();
   var wertungGegenGast = hinweis.indexOf('wg') !== -1 || hinweis.indexOf('wertung gegen gast') !== -1;
   var wertungGegenHeim = hinweis.indexOf('wh') !== -1 || hinweis.indexOf('wertung gegen heim') !== -1;
   if(wertungGegenGast){
-    // Heim gewinnt automatisch, Gast verliert
     return tusIstHeim ? 'sieg' : 'niederlage';
   }
   if(wertungGegenHeim){
-    // Gast gewinnt automatisch, Heim verliert
     return tusIstHeim ? 'niederlage' : 'sieg';
   }
   // Reguläres Ergebnis nach Toren
@@ -1576,24 +1775,50 @@ setInterval(tickCountdowns, 60 * 1000);
 // allem anderen, damit die Karten so früh wie möglich erscheinen.
 // Befüllt denselben Cache wie loadGlobalSpielplan, sodass keine doppelten
 // Fetches passieren.
+
+// Helper: TuS-Spielplan für eine Mannschaft aus neuer Struktur laden.
+// Lädt info.json (für aktuelle Saison) + meta.json + ligaspiele.json
+// + pokalspiele.json + testspiele.json und gibt das alte spielplan.json-Format
+// zurück (für renderSpielplan, loadGlobalSpielplan, Countdown-Karten).
+async function ladeTusSpielplanFuerTeam(teamId, cb){
+  cb = cb || ('?_=' + Date.now());
+  try {
+    var infoRes = await fetch(BASE_URL + "/data/teams/" + teamId + "/info.json" + cb);
+    if(!infoRes.ok) return null;
+    var info = await infoRes.json();
+    var saison = info.aktuelleSaison;
+    var saisonBase = BASE_URL + "/data/teams/" + teamId + "/saisons/" + saison;
+
+    var [metaRes, ligaRes, pokalRes, testRes] = await Promise.all([
+      fetch(saisonBase + "/meta.json" + cb),
+      fetch(saisonBase + "/ligaspiele.json" + cb),
+      fetch(saisonBase + "/pokalspiele.json" + cb),
+      fetch(saisonBase + "/testspiele.json" + cb)
+    ]);
+    if(!metaRes.ok || !ligaRes.ok) return null;
+    var meta       = await metaRes.json();
+    var ligaspiele = await ligaRes.json();
+    var pokalspiele= pokalRes.ok ? await pokalRes.json() : { spiele: [] };
+    var testspiele = testRes.ok  ? await testRes.json()  : { spiele: [] };
+
+    return baueTusSpielplan(meta, ligaspiele, pokalspiele, testspiele);
+  } catch(e){
+    console.warn('Spielplan-Laden fehlgeschlagen für ' + teamId, e);
+    return null;
+  }
+}
+
 async function loadCountdownData(){
   var teamIds = ['1-herren', '1-damen'];
   var cb = '?_=' + Date.now();
   window.spielplaeneCache = window.spielplaeneCache || {};
 
-  await Promise.all(teamIds.map(function(tid){
-    return fetch(BASE_URL + "/data/" + tid + "/spielplan.json" + cb)
-      .then(function(r){ return r.ok ? r.json() : null; })
-      .then(function(data){
-        if(data){
-          window.spielplaeneCache[tid] = normalizeSpielplan(data);
-          // Sobald ein Spielplan da ist: zugehörige Karte sofort rendern
-          renderCountdownCard(tid);
-        } else {
-          renderCountdownCard(tid);
-        }
-      })
-      .catch(function(){ renderCountdownCard(tid); });
+  await Promise.all(teamIds.map(async function(tid){
+    var data = await ladeTusSpielplanFuerTeam(tid, cb);
+    if(data){
+      window.spielplaeneCache[tid] = normalizeSpielplan(data);
+    }
+    renderCountdownCard(tid);
   }));
 }
 
@@ -1640,7 +1865,12 @@ function renderSpielplan(data) {
 
   function logo(name) {
     const f = LOGOS[name];
-    return f ? `<img src="${LOGO_BASE}${f}" class="tlogo" style="width:26px;height:26px;">` : `<div class="tlogo" style="width:26px;height:26px;background:#eee;"></div>`;
+    if(!f) return `<div class="tlogo" style="width:26px;height:26px;background:#eee;"></div>`;
+    // Nur handball.net-UUID-Logos verwenden, sonst neutraler Platzhalter
+    const isUuid = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\.(png|jpe?g)$/.test(f);
+    return isUuid
+      ? `<img src="${LOGO_BASE}${f}" class="tlogo" style="width:26px;height:26px;">`
+      : `<div class="tlogo" style="width:26px;height:26px;background:#eee;"></div>`;
   }
 
   function formatDatum(iso) {
@@ -1741,13 +1971,12 @@ async function loadGlobalSpielplan(force) {
   const cb = '?_=' + Date.now();
   const LOGO_BASE = "https://www.handball.net/files/clubs/logos/";
 
-  // Hole für jede Mannschaft den Spielplan parallel
+  // Hole für jede Mannschaft den Spielplan parallel (neue Struktur)
   const ergebnisse = await Promise.allSettled(
-    teamIds.map(tid =>
-      fetch(BASE_URL + "/data/" + tid + "/spielplan.json" + cb)
-        .then(r => r.ok ? r.json() : null)
-        .then(data => ({ teamId: tid, data: data }))
-    )
+    teamIds.map(async tid => {
+      const data = await ladeTusSpielplanFuerTeam(tid, cb);
+      return { teamId: tid, data: data };
+    })
   );
 
   const now = new Date();
@@ -1789,6 +2018,8 @@ async function loadGlobalSpielplan(force) {
   function logo(teamname) {
     const id = (window.LOGOS_MAP || {})[teamname];
     if (!id) return '<div class="tlogo" style="width:26px;height:26px;background:#e5e5e5;border-radius:50%;display:inline-block;"></div>';
+    const isUuid = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\.(png|jpe?g)$/.test(id);
+    if (!isUuid) return '<div class="tlogo" style="width:26px;height:26px;background:#e5e5e5;border-radius:50%;display:inline-block;"></div>';
     return '<img src="' + LOGO_BASE + id + '" alt="" class="tlogo" style="width:26px;height:26px;">';
   }
 
@@ -2056,10 +2287,8 @@ async function loadAutoMatchNews(maxPerTeam, excludeMatches){
   
   await Promise.allSettled(teamIds.map(async function(tid){
     try {
-      var res = await fetch(BASE_URL + "/data/" + tid + "/spielplan.json" + cb);
-      if(!res.ok) return;
-      var data = await res.json();
-      // Beide Eingabeformate auf flache Liste normalisieren
+      var data = await ladeTusSpielplanFuerTeam(tid, cb);
+      if(!data) return;
       data = normalizeSpielplan(data);
       var games = (data && data.spiele) ? data.spiele : (Array.isArray(data) ? data : []);
       
@@ -2302,14 +2531,17 @@ async function preloadTeamLogos(){
   var cb = "?_=" + Date.now();
   await Promise.allSettled(teamIds.map(async function(tid){
     try {
-      var res = await fetch(BASE_URL + "/data/" + tid + "/tabelle.json" + cb);
-      if(!res.ok) return;
-      var data = await res.json();
-      if(data && data.tabelle){
-        data.tabelle.forEach(function(t){
-          if(t.verein && t.logo) window.LOGOS_MAP[t.verein] = t.logo;
-        });
-      }
+      // Erst info.json laden für aktuelle Saison
+      var infoRes = await fetch(BASE_URL + "/data/teams/" + tid + "/info.json" + cb);
+      if(!infoRes.ok) return;
+      var info = await infoRes.json();
+      // Dann meta.json der Saison laden (enthält Mannschaftsliste mit Logos)
+      var metaRes = await fetch(BASE_URL + "/data/teams/" + tid + "/saisons/" + info.aktuelleSaison + "/meta.json" + cb);
+      if(!metaRes.ok) return;
+      var meta = await metaRes.json();
+      (meta.mannschaften || []).forEach(function(m){
+        if(m.name && m.logo) window.LOGOS_MAP[m.name] = m.logo;
+      });
     } catch(e){}
   }));
 }
@@ -2388,7 +2620,7 @@ async function loadAllNews(){
   
   var manualNews = [];
   try {
-    var res = await fetch(BASE_URL + "/data/news.json?_=" + Date.now());
+    var res = await fetch(BASE_URL + "/data/content/news.json?_=" + Date.now());
     if(res.ok){
       var data = await res.json();
       manualNews = (data && data.news) ? data.news : [];

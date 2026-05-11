@@ -5,278 +5,278 @@
     {
       "kw": 37,
       "spiele": [
-        {"datum": "2025-09-14T14:00:00", "heim": "HSG Elbvororte", "gast": "Barmstedter MTV", "toreHeim": 24, "toreGast": 19, "status": "finished", "spieltag": 1},
-        {"datum": "2025-09-14T14:00:00", "heim": "HSV/Hamm 02 2", "gast": "SG Hamburg-Nord 2", "toreHeim": 26, "toreGast": 22, "status": "finished", "spieltag": 1},
-        {"datum": "2025-09-14T14:00:00", "heim": "Eimsbütteler TV 3", "gast": "HTS/BW96 Handball", "toreHeim": 24, "toreGast": 17, "status": "finished", "spieltag": 1},
-        {"datum": "2025-09-14T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "Elmshorner HT", "toreHeim": 33, "toreGast": 23, "status": "finished", "spieltag": 1}
+        {"datum": "2025-09-14T14:00:00", "heim": "HSG Elbvororte", "gast": "Barmstedter MTV", "halleId": "blankenese", "toreHeim": 24, "toreGast": 19, "status": "finished", "spieltag": 1},
+        {"datum": "2025-09-14T14:00:00", "heim": "HSV/Hamm 02 2", "gast": "SG Hamburg-Nord 2", "halleId": "sorbenstrasse", "toreHeim": 26, "toreGast": 22, "status": "finished", "spieltag": 1},
+        {"datum": "2025-09-14T14:00:00", "heim": "Eimsbütteler TV 3", "gast": "HTS/BW96 Handball", "halleId": "hohe-weide", "toreHeim": 24, "toreGast": 17, "status": "finished", "spieltag": 1},
+        {"datum": "2025-09-14T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "Elmshorner HT", "halleId": "nenndorf", "toreHeim": 33, "toreGast": 23, "status": "finished", "spieltag": 1}
       ]
     },
     {
       "kw": 38,
       "spiele": [
-        {"datum": "2025-09-20T15:00:00", "heim": "SG Altona 2", "gast": "HSV/Hamm 02 2", "toreHeim": 29, "toreGast": 28, "status": "finished", "spieltag": 2},
-        {"datum": "2025-09-20T17:00:00", "heim": "Elmshorner HT", "gast": "Grün-Weiss Eimsbüttel", "toreHeim": 21, "toreGast": 26, "status": "finished", "spieltag": 2},
-        {"datum": "2025-09-20T20:00:00", "heim": "1. HC Quickborn", "gast": "Eimsbütteler TV 3", "toreHeim": 18, "toreGast": 29, "status": "finished", "spieltag": 2},
-        {"datum": "2025-09-21T19:00:00", "heim": "HTS/BW96 Handball", "gast": "TuS Esingen", "toreHeim": 20, "toreGast": 25, "status": "finished", "spieltag": 2}
+        {"datum": "2025-09-20T15:00:00", "heim": "SG Altona 2", "gast": "HSV/Hamm 02 2", "halleId": "eckernfoerder-strasse", "toreHeim": 29, "toreGast": 28, "status": "finished", "spieltag": 2},
+        {"datum": "2025-09-20T17:00:00", "heim": "Elmshorner HT", "gast": "Grün-Weiss Eimsbüttel", "halleId": "olympiahalle", "toreHeim": 21, "toreGast": 26, "status": "finished", "spieltag": 2},
+        {"datum": "2025-09-20T20:00:00", "heim": "1. HC Quickborn", "gast": "Eimsbütteler TV 3", "halleId": "lilli-henoch-halle", "toreHeim": 18, "toreGast": 29, "status": "finished", "spieltag": 2},
+        {"datum": "2025-09-21T19:00:00", "heim": "HTS/BW96 Handball", "gast": "TuS Esingen", "halleId": "schenefeld-halle-b", "toreHeim": 20, "toreGast": 25, "status": "finished", "spieltag": 2}
       ]
     },
     {
       "kw": 39,
       "spiele": [
-        {"datum": "2025-09-27T15:00:00", "heim": "TuS Esingen", "gast": "1. HC Quickborn", "halle": "Esingen neu, Tornesch", "toreHeim": 19, "toreGast": 22, "status": "finished", "spieltag": 3},
-        {"datum": "2025-09-27T16:45:00", "heim": "Barmstedter MTV", "gast": "SG Hamburg-Nord 2", "toreHeim": 30, "toreGast": 22, "status": "finished", "spieltag": 3},
-        {"datum": "2025-09-27T18:00:00", "heim": "HSV/Hamm 02 2", "gast": "HTS/BW96 Handball", "toreHeim": 27, "toreGast": 23, "status": "finished", "spieltag": 3},
-        {"datum": "2025-09-27T18:00:00", "heim": "Eimsbütteler TV 3", "gast": "Elmshorner HT", "toreHeim": 25, "toreGast": 27, "status": "finished", "spieltag": 3},
-        {"datum": "2025-09-28T16:00:00", "heim": "HSG Elbvororte", "gast": "SG Altona 2", "toreHeim": 22, "toreGast": 17, "status": "finished", "spieltag": 3},
-        {"datum": "2025-09-28T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "Grün-Weiss Eimsbüttel", "toreHeim": 20, "toreGast": 23, "status": "finished", "spieltag": 3}
+        {"datum": "2025-09-27T15:00:00", "heim": "TuS Esingen", "gast": "1. HC Quickborn", "halleId": "esingen-neu", "toreHeim": 19, "toreGast": 22, "status": "finished", "spieltag": 3},
+        {"datum": "2025-09-27T16:45:00", "heim": "Barmstedter MTV", "gast": "SG Hamburg-Nord 2", "halleId": "barmstedt", "toreHeim": 30, "toreGast": 22, "status": "finished", "spieltag": 3},
+        {"datum": "2025-09-27T18:00:00", "heim": "HSV/Hamm 02 2", "gast": "HTS/BW96 Handball", "halleId": "sorbenstrasse", "toreHeim": 27, "toreGast": 23, "status": "finished", "spieltag": 3},
+        {"datum": "2025-09-27T18:00:00", "heim": "Eimsbütteler TV 3", "gast": "Elmshorner HT", "halleId": "hohe-weide", "toreHeim": 25, "toreGast": 27, "status": "finished", "spieltag": 3},
+        {"datum": "2025-09-28T16:00:00", "heim": "HSG Elbvororte", "gast": "SG Altona 2", "halleId": "bergstrasse-wedel", "toreHeim": 22, "toreGast": 17, "status": "finished", "spieltag": 3},
+        {"datum": "2025-09-28T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "Grün-Weiss Eimsbüttel", "halleId": "nenndorf", "toreHeim": 20, "toreGast": 23, "status": "finished", "spieltag": 3}
       ]
     },
     {
       "kw": 40,
       "spiele": [
-        {"datum": "2025-10-04T17:00:00", "heim": "Elmshorner HT", "gast": "TuS Esingen", "toreHeim": 21, "toreGast": 20, "status": "finished", "spieltag": 4},
-        {"datum": "2025-10-04T18:00:00", "heim": "1. HC Quickborn", "gast": "HSV/Hamm 02 2", "toreHeim": 22, "toreGast": 24, "status": "finished", "spieltag": 4},
-        {"datum": "2025-10-05T17:15:00", "heim": "HTS/BW96 Handball", "gast": "HSG Elbvororte", "toreHeim": 19, "toreGast": 18, "status": "finished", "spieltag": 4},
-        {"datum": "2025-10-05T18:00:00", "heim": "SG Hamburg-Nord 2", "gast": "HL Buchholz08-Rosengarten 3", "toreHeim": 23, "toreGast": 30, "status": "finished", "spieltag": 4}
+        {"datum": "2025-10-04T17:00:00", "heim": "Elmshorner HT", "gast": "TuS Esingen", "halleId": "olympiahalle", "toreHeim": 21, "toreGast": 20, "status": "finished", "spieltag": 4},
+        {"datum": "2025-10-04T18:00:00", "heim": "1. HC Quickborn", "gast": "HSV/Hamm 02 2", "halleId": "lilli-henoch-halle", "toreHeim": 22, "toreGast": 24, "status": "finished", "spieltag": 4},
+        {"datum": "2025-10-05T17:15:00", "heim": "HTS/BW96 Handball", "gast": "HSG Elbvororte", "halleId": "schenefeld-halle-b", "toreHeim": 19, "toreGast": 18, "status": "finished", "spieltag": 4},
+        {"datum": "2025-10-05T18:00:00", "heim": "SG Hamburg-Nord 2", "gast": "HL Buchholz08-Rosengarten 3", "halleId": "tegelsbarg", "toreHeim": 23, "toreGast": 30, "status": "finished", "spieltag": 4}
       ]
     },
     {
       "kw": 41,
       "spiele": [
-        {"datum": "2025-10-07T20:30:00", "heim": "Barmstedter MTV", "gast": "HL Buchholz08-Rosengarten 3", "toreHeim": 23, "toreGast": 16, "status": "finished", "spieltag": 2},
-        {"datum": "2025-10-12T15:30:00", "heim": "SG Hamburg-Nord 2", "gast": "SG Altona 2", "toreHeim": 28, "toreGast": 25, "status": "finished", "spieltag": 5},
-        {"datum": "2025-10-12T16:00:00", "heim": "HSG Elbvororte", "gast": "1. HC Quickborn", "toreHeim": 21, "toreGast": 21, "status": "finished", "spieltag": 5},
-        {"datum": "2025-10-12T16:00:00", "heim": "HSV/Hamm 02 2", "gast": "Elmshorner HT", "toreHeim": 34, "toreGast": 23, "status": "finished", "spieltag": 5},
-        {"datum": "2025-10-12T16:45:00", "heim": "Barmstedter MTV", "gast": "HTS/BW96 Handball", "toreHeim": 28, "toreGast": 19, "status": "finished", "spieltag": 5}
+        {"datum": "2025-10-07T20:30:00", "heim": "Barmstedter MTV", "gast": "HL Buchholz08-Rosengarten 3", "halleId": "barmstedt", "toreHeim": 23, "toreGast": 16, "status": "finished", "spieltag": 2},
+        {"datum": "2025-10-12T15:30:00", "heim": "SG Hamburg-Nord 2", "gast": "SG Altona 2", "halleId": "gruetzmuehlenweg", "toreHeim": 28, "toreGast": 25, "status": "finished", "spieltag": 5},
+        {"datum": "2025-10-12T16:00:00", "heim": "HSG Elbvororte", "gast": "1. HC Quickborn", "halleId": "blankenese", "toreHeim": 21, "toreGast": 21, "status": "finished", "spieltag": 5},
+        {"datum": "2025-10-12T16:00:00", "heim": "HSV/Hamm 02 2", "gast": "Elmshorner HT", "halleId": "sorbenstrasse", "toreHeim": 34, "toreGast": 23, "status": "finished", "spieltag": 5},
+        {"datum": "2025-10-12T16:45:00", "heim": "Barmstedter MTV", "gast": "HTS/BW96 Handball", "halleId": "barmstedt", "toreHeim": 28, "toreGast": 19, "status": "finished", "spieltag": 5}
       ]
     },
     {
       "kw": 42,
       "spiele": [
-        {"datum": "2025-10-16T20:30:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "Eimsbütteler TV 3", "toreHeim": 24, "toreGast": 23, "status": "finished", "spieltag": 4},
-        {"datum": "2025-10-18T15:00:00", "heim": "TuS Esingen", "gast": "Grün-Weiss Eimsbüttel", "halle": "Esingen neu, Tornesch", "toreHeim": 23, "toreGast": 25, "status": "finished", "spieltag": 5},
-        {"datum": "2025-10-18T16:45:00", "heim": "Barmstedter MTV", "gast": "HSV/Hamm 02 2", "toreHeim": 38, "toreGast": 25, "status": "finished", "spieltag": 11}
+        {"datum": "2025-10-16T20:30:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "Eimsbütteler TV 3", "halleId": "wegenkamp", "toreHeim": 24, "toreGast": 23, "status": "finished", "spieltag": 4},
+        {"datum": "2025-10-18T15:00:00", "heim": "TuS Esingen", "gast": "Grün-Weiss Eimsbüttel", "halleId": "esingen-neu", "toreHeim": 23, "toreGast": 25, "status": "finished", "spieltag": 5},
+        {"datum": "2025-10-18T16:45:00", "heim": "Barmstedter MTV", "gast": "HSV/Hamm 02 2", "halleId": "barmstedt", "toreHeim": 38, "toreGast": 25, "status": "finished", "spieltag": 11}
       ]
     },
     {
       "kw": 43,
       "spiele": [
-        {"datum": "2025-10-25T16:00:00", "heim": "TuS Esingen", "gast": "SG Altona 2", "halle": "Esingen neu, Tornesch", "toreHeim": 48, "toreGast": 18, "status": "finished", "spieltag": 1}
+        {"datum": "2025-10-25T16:00:00", "heim": "TuS Esingen", "gast": "SG Altona 2", "halleId": "esingen-neu", "toreHeim": 48, "toreGast": 18, "status": "finished", "spieltag": 1}
       ]
     },
     {
       "kw": 44,
       "spiele": [
-        {"datum": "2025-11-01T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "Eimsbütteler TV 3", "toreHeim": 35, "toreGast": 29, "status": "finished", "spieltag": 5},
-        {"datum": "2025-11-02T16:00:00", "heim": "SG Hamburg-Nord 2", "gast": "HSG Elbvororte", "toreHeim": 28, "toreGast": 22, "status": "finished", "spieltag": 2}
+        {"datum": "2025-11-01T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "Eimsbütteler TV 3", "halleId": "nenndorf", "toreHeim": 35, "toreGast": 29, "status": "finished", "spieltag": 5},
+        {"datum": "2025-11-02T16:00:00", "heim": "SG Hamburg-Nord 2", "gast": "HSG Elbvororte", "halleId": "tegelsbarg", "toreHeim": 28, "toreGast": 22, "status": "finished", "spieltag": 2}
       ]
     },
     {
       "kw": 45,
       "spiele": [
-        {"datum": "2025-11-08T15:00:00", "heim": "1. HC Quickborn", "gast": "Barmstedter MTV", "toreHeim": 22, "toreGast": 25, "status": "finished", "spieltag": 6},
-        {"datum": "2025-11-08T17:00:00", "heim": "Elmshorner HT", "gast": "HSG Elbvororte", "toreHeim": 25, "toreGast": 21, "status": "finished", "spieltag": 6},
-        {"datum": "2025-11-08T18:00:00", "heim": "HTS/BW96 Handball", "gast": "SG Hamburg-Nord 2", "toreHeim": 26, "toreGast": 27, "status": "finished", "spieltag": 6},
-        {"datum": "2025-11-08T18:00:00", "heim": "SG Altona 2", "gast": "HL Buchholz08-Rosengarten 3", "toreHeim": 23, "toreGast": 30, "status": "finished", "spieltag": 6}
+        {"datum": "2025-11-08T15:00:00", "heim": "1. HC Quickborn", "gast": "Barmstedter MTV", "halleId": "lilli-henoch-halle", "toreHeim": 22, "toreGast": 25, "status": "finished", "spieltag": 6},
+        {"datum": "2025-11-08T17:00:00", "heim": "Elmshorner HT", "gast": "HSG Elbvororte", "halleId": "olympiahalle", "toreHeim": 25, "toreGast": 21, "status": "finished", "spieltag": 6},
+        {"datum": "2025-11-08T18:00:00", "heim": "HTS/BW96 Handball", "gast": "SG Hamburg-Nord 2", "halleId": "schenefeld-halle-a", "toreHeim": 26, "toreGast": 27, "status": "finished", "spieltag": 6},
+        {"datum": "2025-11-08T18:00:00", "heim": "SG Altona 2", "gast": "HL Buchholz08-Rosengarten 3", "halleId": "eckernfoerder-strasse", "toreHeim": 23, "toreGast": 30, "status": "finished", "spieltag": 6}
       ]
     },
     {
       "kw": 46,
       "spiele": [
-        {"datum": "2025-11-13T20:30:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "1. HC Quickborn", "toreHeim": 20, "toreGast": 24, "status": "finished", "spieltag": 1},
-        {"datum": "2025-11-15T16:45:00", "heim": "Barmstedter MTV", "gast": "Elmshorner HT", "toreHeim": 33, "toreGast": 18, "status": "finished", "spieltag": 7},
-        {"datum": "2025-11-15T18:00:00", "heim": "SG Altona 2", "gast": "HTS/BW96 Handball", "toreHeim": 30, "toreGast": 31, "status": "finished", "spieltag": 7},
-        {"datum": "2025-11-15T18:00:00", "heim": "HSV/Hamm 02 2", "gast": "Eimsbütteler TV 3", "toreHeim": 32, "toreGast": 30, "status": "finished", "spieltag": 7},
-        {"datum": "2025-11-16T15:00:00", "heim": "TuS Esingen", "gast": "HL Buchholz08-Rosengarten 3", "halle": "Esingen neu, Tornesch", "toreHeim": 32, "toreGast": 31, "status": "finished", "spieltag": 7},
-        {"datum": "2025-11-16T16:00:00", "heim": "HSG Elbvororte", "gast": "Grün-Weiss Eimsbüttel", "toreHeim": 20, "toreGast": 21, "status": "finished", "spieltag": 7},
-        {"datum": "2025-11-16T18:00:00", "heim": "SG Hamburg-Nord 2", "gast": "1. HC Quickborn", "toreHeim": 20, "toreGast": 24, "status": "finished", "spieltag": 7}
+        {"datum": "2025-11-13T20:30:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "1. HC Quickborn", "halleId": "wegenkamp", "toreHeim": 20, "toreGast": 24, "status": "finished", "spieltag": 1},
+        {"datum": "2025-11-15T16:45:00", "heim": "Barmstedter MTV", "gast": "Elmshorner HT", "halleId": "barmstedt", "toreHeim": 33, "toreGast": 18, "status": "finished", "spieltag": 7},
+        {"datum": "2025-11-15T18:00:00", "heim": "SG Altona 2", "gast": "HTS/BW96 Handball", "halleId": "eckernfoerder-strasse", "toreHeim": 30, "toreGast": 31, "status": "finished", "spieltag": 7},
+        {"datum": "2025-11-15T18:00:00", "heim": "HSV/Hamm 02 2", "gast": "Eimsbütteler TV 3", "halleId": "sorbenstrasse", "toreHeim": 32, "toreGast": 30, "status": "finished", "spieltag": 7},
+        {"datum": "2025-11-16T15:00:00", "heim": "TuS Esingen", "gast": "HL Buchholz08-Rosengarten 3", "halleId": "esingen-neu", "toreHeim": 32, "toreGast": 31, "status": "finished", "spieltag": 7},
+        {"datum": "2025-11-16T16:00:00", "heim": "HSG Elbvororte", "gast": "Grün-Weiss Eimsbüttel", "halleId": "blankenese", "toreHeim": 20, "toreGast": 21, "status": "finished", "spieltag": 7},
+        {"datum": "2025-11-16T18:00:00", "heim": "SG Hamburg-Nord 2", "gast": "1. HC Quickborn", "halleId": "tegelsbarg", "toreHeim": 20, "toreGast": 24, "status": "finished", "spieltag": 7}
       ]
     },
     {
       "kw": 47,
       "spiele": [
-        {"datum": "2025-11-20T20:30:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "HSV/Hamm 02 2", "toreHeim": 25, "toreGast": 22, "status": "finished", "spieltag": 6},
-        {"datum": "2025-11-22T15:00:00", "heim": "TuS Esingen", "gast": "HSV/Hamm 02 2", "halle": "Esingen neu, Tornesch", "toreHeim": 30, "toreGast": 23, "status": "finished", "spieltag": 8},
-        {"datum": "2025-11-22T17:00:00", "heim": "Elmshorner HT", "gast": "SG Hamburg-Nord 2", "toreHeim": 25, "toreGast": 25, "status": "finished", "spieltag": 8},
-        {"datum": "2025-11-22T18:00:00", "heim": "1. HC Quickborn", "gast": "SG Altona 2", "toreHeim": 37, "toreGast": 20, "status": "finished", "spieltag": 8},
-        {"datum": "2025-11-23T15:00:00", "heim": "Eimsbütteler TV 3", "gast": "HSG Elbvororte", "toreHeim": 30, "toreGast": 28, "status": "finished", "spieltag": 8},
-        {"datum": "2025-11-23T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "Barmstedter MTV", "toreHeim": 27, "toreGast": 32, "status": "finished", "spieltag": 8},
-        {"datum": "2025-11-23T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "HTS/BW96 Handball", "toreHeim": 32, "toreGast": 26, "status": "finished", "spieltag": 8}
+        {"datum": "2025-11-20T20:30:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "HSV/Hamm 02 2", "halleId": "wegenkamp", "toreHeim": 25, "toreGast": 22, "status": "finished", "spieltag": 6},
+        {"datum": "2025-11-22T15:00:00", "heim": "TuS Esingen", "gast": "HSV/Hamm 02 2", "halleId": "esingen-neu", "toreHeim": 30, "toreGast": 23, "status": "finished", "spieltag": 8},
+        {"datum": "2025-11-22T17:00:00", "heim": "Elmshorner HT", "gast": "SG Hamburg-Nord 2", "halleId": "olympiahalle", "toreHeim": 25, "toreGast": 25, "status": "finished", "spieltag": 8},
+        {"datum": "2025-11-22T18:00:00", "heim": "1. HC Quickborn", "gast": "SG Altona 2", "halleId": "heidkampstrasse", "toreHeim": 37, "toreGast": 20, "status": "finished", "spieltag": 8},
+        {"datum": "2025-11-23T15:00:00", "heim": "Eimsbütteler TV 3", "gast": "HSG Elbvororte", "halleId": "wegenkamp", "toreHeim": 30, "toreGast": 28, "status": "finished", "spieltag": 8},
+        {"datum": "2025-11-23T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "Barmstedter MTV", "halleId": "wegenkamp", "toreHeim": 27, "toreGast": 32, "status": "finished", "spieltag": 8},
+        {"datum": "2025-11-23T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "HTS/BW96 Handball", "halleId": "nenndorf", "toreHeim": 32, "toreGast": 26, "status": "finished", "spieltag": 8}
       ]
     },
     {
       "kw": 48,
       "spiele": [
-        {"datum": "2025-11-29T14:00:00", "heim": "1. HC Quickborn", "gast": "HTS/BW96 Handball", "toreHeim": 23, "toreGast": 26, "status": "finished", "spieltag": 20},
-        {"datum": "2025-11-29T16:00:00", "heim": "HSV/Hamm 02 2", "gast": "HL Buchholz08-Rosengarten 3", "toreHeim": 28, "toreGast": 31, "status": "finished", "spieltag": 9},
-        {"datum": "2025-11-29T16:45:00", "heim": "Barmstedter MTV", "gast": "Eimsbütteler TV 3", "toreHeim": 32, "toreGast": 26, "status": "finished", "spieltag": 9},
-        {"datum": "2025-11-30T14:00:00", "heim": "HSG Elbvororte", "gast": "TuS Esingen", "toreHeim": 26, "toreGast": 29, "status": "finished", "spieltag": 9},
-        {"datum": "2025-11-30T15:30:00", "heim": "SG Hamburg-Nord 2", "gast": "Grün-Weiss Eimsbüttel", "toreHeim": 21, "toreGast": 32, "status": "finished", "spieltag": 9},
-        {"datum": "2025-11-30T18:00:00", "heim": "SG Altona 2", "gast": "Elmshorner HT", "toreHeim": 25, "toreGast": 20, "status": "finished", "spieltag": 9}
+        {"datum": "2025-11-29T14:00:00", "heim": "1. HC Quickborn", "gast": "HTS/BW96 Handball", "halleId": "lilli-henoch-halle", "toreHeim": 23, "toreGast": 26, "status": "finished", "spieltag": 20},
+        {"datum": "2025-11-29T16:00:00", "heim": "HSV/Hamm 02 2", "gast": "HL Buchholz08-Rosengarten 3", "halleId": "sorbenstrasse", "toreHeim": 28, "toreGast": 31, "status": "finished", "spieltag": 9},
+        {"datum": "2025-11-29T16:45:00", "heim": "Barmstedter MTV", "gast": "Eimsbütteler TV 3", "halleId": "barmstedt", "toreHeim": 32, "toreGast": 26, "status": "finished", "spieltag": 9},
+        {"datum": "2025-11-30T14:00:00", "heim": "HSG Elbvororte", "gast": "TuS Esingen", "halleId": "blankenese", "toreHeim": 26, "toreGast": 29, "status": "finished", "spieltag": 9},
+        {"datum": "2025-11-30T15:30:00", "heim": "SG Hamburg-Nord 2", "gast": "Grün-Weiss Eimsbüttel", "halleId": "gruetzmuehlenweg", "toreHeim": 21, "toreGast": 32, "status": "finished", "spieltag": 9},
+        {"datum": "2025-11-30T18:00:00", "heim": "SG Altona 2", "gast": "Elmshorner HT", "halleId": "eckernfoerder-strasse", "toreHeim": 25, "toreGast": 20, "status": "finished", "spieltag": 9}
       ]
     },
     {
       "kw": 49,
       "spiele": [
-        {"datum": "2025-12-03T18:50:00", "heim": "Eimsbütteler TV 3", "gast": "TuS Esingen", "toreHeim": 33, "toreGast": 25, "status": "finished", "spieltag": 6},
-        {"datum": "2025-12-06T15:00:00", "heim": "TuS Esingen", "gast": "Barmstedter MTV", "halle": "Esingen neu, Tornesch", "toreHeim": 37, "toreGast": 28, "status": "finished", "spieltag": 10},
-        {"datum": "2025-12-06T16:00:00", "heim": "HSV/Hamm 02 2", "gast": "HSG Elbvororte", "toreHeim": 29, "toreGast": 19, "status": "finished", "spieltag": 10},
-        {"datum": "2025-12-06T17:00:00", "heim": "Elmshorner HT", "gast": "HTS/BW96 Handball", "toreHeim": 21, "toreGast": 20, "status": "finished", "spieltag": 10},
-        {"datum": "2025-12-07T14:30:00", "heim": "Eimsbütteler TV 3", "gast": "SG Hamburg-Nord 2", "toreHeim": 28, "toreGast": 24, "status": "finished", "spieltag": 10},
-        {"datum": "2025-12-07T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "SG Altona 2", "toreHeim": 23, "toreGast": 13, "status": "finished", "spieltag": 10},
-        {"datum": "2025-12-07T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "1. HC Quickborn", "toreHeim": 25, "toreGast": 25, "status": "finished", "spieltag": 10}
+        {"datum": "2025-12-03T18:50:00", "heim": "Eimsbütteler TV 3", "gast": "TuS Esingen", "halleId": "christian-foerster-strasse", "toreHeim": 33, "toreGast": 25, "status": "finished", "spieltag": 6},
+        {"datum": "2025-12-06T15:00:00", "heim": "TuS Esingen", "gast": "Barmstedter MTV", "halleId": "esingen-neu", "toreHeim": 37, "toreGast": 28, "status": "finished", "spieltag": 10},
+        {"datum": "2025-12-06T16:00:00", "heim": "HSV/Hamm 02 2", "gast": "HSG Elbvororte", "halleId": "sorbenstrasse", "toreHeim": 29, "toreGast": 19, "status": "finished", "spieltag": 10},
+        {"datum": "2025-12-06T17:00:00", "heim": "Elmshorner HT", "gast": "HTS/BW96 Handball", "halleId": "olympiahalle", "toreHeim": 21, "toreGast": 20, "status": "finished", "spieltag": 10},
+        {"datum": "2025-12-07T14:30:00", "heim": "Eimsbütteler TV 3", "gast": "SG Hamburg-Nord 2", "halleId": "hohe-weide", "toreHeim": 28, "toreGast": 24, "status": "finished", "spieltag": 10},
+        {"datum": "2025-12-07T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "SG Altona 2", "halleId": "brehmweg", "toreHeim": 23, "toreGast": 13, "status": "finished", "spieltag": 10},
+        {"datum": "2025-12-07T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "1. HC Quickborn", "halleId": "nenndorf", "toreHeim": 25, "toreGast": 25, "status": "finished", "spieltag": 10}
       ]
     },
     {
       "kw": 50,
       "spiele": [
-        {"datum": "2025-12-13T14:00:00", "heim": "1. HC Quickborn", "gast": "Elmshorner HT", "toreHeim": 28, "toreGast": 22, "status": "finished", "spieltag": 11},
-        {"datum": "2025-12-13T14:00:00", "heim": "HSG Elbvororte", "gast": "HL Buchholz08-Rosengarten 3", "toreHeim": 29, "toreGast": 35, "status": "finished", "spieltag": 11},
-        {"datum": "2025-12-14T15:30:00", "heim": "SG Hamburg-Nord 2", "gast": "TuS Esingen", "toreHeim": 38, "toreGast": 44, "status": "finished", "spieltag": 11},
-        {"datum": "2025-12-14T18:00:00", "heim": "SG Altona 2", "gast": "Eimsbütteler TV 3", "toreHeim": 22, "toreGast": 34, "status": "finished", "spieltag": 11}
+        {"datum": "2025-12-13T14:00:00", "heim": "1. HC Quickborn", "gast": "Elmshorner HT", "halleId": "lilli-henoch-halle", "toreHeim": 28, "toreGast": 22, "status": "finished", "spieltag": 11},
+        {"datum": "2025-12-13T14:00:00", "heim": "HSG Elbvororte", "gast": "HL Buchholz08-Rosengarten 3", "halleId": "bergstrasse-wedel", "toreHeim": 29, "toreGast": 35, "status": "finished", "spieltag": 11},
+        {"datum": "2025-12-14T15:30:00", "heim": "SG Hamburg-Nord 2", "gast": "TuS Esingen", "halleId": "gruetzmuehlenweg", "toreHeim": 38, "toreGast": 44, "status": "finished", "spieltag": 11},
+        {"datum": "2025-12-14T18:00:00", "heim": "SG Altona 2", "gast": "Eimsbütteler TV 3", "halleId": "eckernfoerder-strasse", "toreHeim": 22, "toreGast": 34, "status": "finished", "spieltag": 11}
       ]
     },
     {
       "kw": 51,
       "spiele": [
-        {"datum": "2025-12-20T16:00:00", "heim": "SG Altona 2", "gast": "Barmstedter MTV", "toreHeim": 32, "toreGast": 36, "status": "finished", "spieltag": 4}
+        {"datum": "2025-12-20T16:00:00", "heim": "SG Altona 2", "gast": "Barmstedter MTV", "halleId": "eckernfoerder-strasse", "toreHeim": 32, "toreGast": 36, "status": "finished", "spieltag": 4}
       ]
     },
     {
       "kw": 3,
       "spiele": [
-        {"datum": "2026-01-17T17:00:00", "heim": "Elmshorner HT", "gast": "HL Buchholz08-Rosengarten 3", "toreHeim": 23, "toreGast": 29, "status": "finished", "spieltag": 12},
-        {"datum": "2026-01-17T17:15:00", "heim": "Barmstedter MTV", "gast": "HSG Elbvororte", "toreHeim": 30, "toreGast": 28, "status": "finished", "spieltag": 12},
-        {"datum": "2026-01-17T18:00:00", "heim": "1. HC Quickborn", "gast": "Grün-Weiss Eimsbüttel", "toreHeim": 18, "toreGast": 24, "status": "finished", "spieltag": 12},
-        {"datum": "2026-01-18T13:00:00", "heim": "HTS/BW96 Handball", "gast": "Eimsbütteler TV 3", "toreHeim": 23, "toreGast": 29, "status": "finished", "spieltag": 12},
-        {"datum": "2026-01-18T15:30:00", "heim": "SG Hamburg-Nord 2", "gast": "HSV/Hamm 02 2", "toreHeim": 26, "toreGast": 32, "status": "finished", "spieltag": 12}
+        {"datum": "2026-01-17T17:00:00", "heim": "Elmshorner HT", "gast": "HL Buchholz08-Rosengarten 3", "halleId": "olympiahalle", "toreHeim": 23, "toreGast": 29, "status": "finished", "spieltag": 12},
+        {"datum": "2026-01-17T17:15:00", "heim": "Barmstedter MTV", "gast": "HSG Elbvororte", "halleId": "barmstedt", "toreHeim": 30, "toreGast": 28, "status": "finished", "spieltag": 12},
+        {"datum": "2026-01-17T18:00:00", "heim": "1. HC Quickborn", "gast": "Grün-Weiss Eimsbüttel", "halleId": "lilli-henoch-halle", "toreHeim": 18, "toreGast": 24, "status": "finished", "spieltag": 12},
+        {"datum": "2026-01-18T13:00:00", "heim": "HTS/BW96 Handball", "gast": "Eimsbütteler TV 3", "halleId": "schenefeld-halle-b", "toreHeim": 23, "toreGast": 29, "status": "finished", "spieltag": 12},
+        {"datum": "2026-01-18T15:30:00", "heim": "SG Hamburg-Nord 2", "gast": "HSV/Hamm 02 2", "halleId": "gruetzmuehlenweg", "toreHeim": 26, "toreGast": 32, "status": "finished", "spieltag": 12}
       ]
     },
     {
       "kw": 4,
       "spiele": [
-        {"datum": "2026-01-24T14:00:00", "heim": "HSV/Hamm 02 2", "gast": "SG Altona 2", "toreHeim": 32, "toreGast": 21, "status": "finished", "spieltag": 13},
-        {"datum": "2026-01-24T15:00:00", "heim": "TuS Esingen", "gast": "HTS/BW96 Handball", "halle": "Esingen neu, Tornesch", "toreHeim": 34, "toreGast": 18, "status": "finished", "spieltag": 13},
-        {"datum": "2026-01-24T16:00:00", "heim": "HSG Elbvororte", "gast": "SG Hamburg-Nord 2", "toreHeim": 24, "toreGast": 20, "status": "finished", "spieltag": 13},
-        {"datum": "2026-01-24T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "Barmstedter MTV", "toreHeim": 27, "toreGast": 24, "status": "finished", "spieltag": 13},
-        {"datum": "2026-01-25T16:15:00", "heim": "Eimsbütteler TV 3", "gast": "1. HC Quickborn", "toreHeim": 27, "toreGast": 22, "status": "finished", "spieltag": 13},
-        {"datum": "2026-01-25T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "Elmshorner HT", "toreHeim": 31, "toreGast": 14, "status": "finished", "spieltag": 13}
+        {"datum": "2026-01-24T14:00:00", "heim": "HSV/Hamm 02 2", "gast": "SG Altona 2", "halleId": "sorbenstrasse", "toreHeim": 32, "toreGast": 21, "status": "finished", "spieltag": 13},
+        {"datum": "2026-01-24T15:00:00", "heim": "TuS Esingen", "gast": "HTS/BW96 Handball", "halleId": "esingen-neu", "toreHeim": 34, "toreGast": 18, "status": "finished", "spieltag": 13},
+        {"datum": "2026-01-24T16:00:00", "heim": "HSG Elbvororte", "gast": "SG Hamburg-Nord 2", "halleId": "bergstrasse-wedel", "toreHeim": 24, "toreGast": 20, "status": "finished", "spieltag": 13},
+        {"datum": "2026-01-24T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "Barmstedter MTV", "halleId": "klecken", "toreHeim": 27, "toreGast": 24, "status": "finished", "spieltag": 13},
+        {"datum": "2026-01-25T16:15:00", "heim": "Eimsbütteler TV 3", "gast": "1. HC Quickborn", "halleId": "hohe-weide", "toreHeim": 27, "toreGast": 22, "status": "finished", "spieltag": 13},
+        {"datum": "2026-01-25T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "Elmshorner HT", "halleId": "eidelstedter-brook", "toreHeim": 31, "toreGast": 14, "status": "finished", "spieltag": 13}
       ]
     },
     {
       "kw": 5,
       "spiele": [
-        {"datum": "2026-01-29T20:30:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "HTS/BW96 Handball", "toreHeim": 28, "toreGast": 30, "status": "finished", "spieltag": 11}
+        {"datum": "2026-01-29T20:30:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "HTS/BW96 Handball", "halleId": "wegenkamp", "toreHeim": 28, "toreGast": 30, "status": "finished", "spieltag": 11}
       ]
     },
     {
       "kw": 6,
       "spiele": [
-        {"datum": "2026-02-07T14:15:00", "heim": "SG Hamburg-Nord 2", "gast": "Barmstedter MTV", "toreHeim": 36, "toreGast": 25, "status": "finished", "spieltag": 14},
-        {"datum": "2026-02-07T17:00:00", "heim": "Elmshorner HT", "gast": "Eimsbütteler TV 3", "toreHeim": 28, "toreGast": 30, "status": "finished", "spieltag": 14},
-        {"datum": "2026-02-08T12:00:00", "heim": "SG Altona 2", "gast": "HSG Elbvororte", "toreHeim": 22, "toreGast": 30, "status": "finished", "spieltag": 14},
-        {"datum": "2026-02-08T14:30:00", "heim": "HTS/BW96 Handball", "gast": "HSV/Hamm 02 2", "toreHeim": 24, "toreGast": 30, "status": "finished", "spieltag": 14},
-        {"datum": "2026-02-08T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "HL Buchholz08-Rosengarten 3", "toreHeim": 27, "toreGast": 32, "status": "finished", "spieltag": 14}
+        {"datum": "2026-02-07T14:15:00", "heim": "SG Hamburg-Nord 2", "gast": "Barmstedter MTV", "halleId": "ohlstedt", "toreHeim": 36, "toreGast": 25, "status": "finished", "spieltag": 14},
+        {"datum": "2026-02-07T17:00:00", "heim": "Elmshorner HT", "gast": "Eimsbütteler TV 3", "halleId": "olympiahalle", "toreHeim": 28, "toreGast": 30, "status": "finished", "spieltag": 14},
+        {"datum": "2026-02-08T12:00:00", "heim": "SG Altona 2", "gast": "HSG Elbvororte", "halleId": "blankenese", "toreHeim": 22, "toreGast": 30, "status": "finished", "spieltag": 14},
+        {"datum": "2026-02-08T14:30:00", "heim": "HTS/BW96 Handball", "gast": "HSV/Hamm 02 2", "halleId": "schenefeld-halle-b", "toreHeim": 24, "toreGast": 30, "status": "finished", "spieltag": 14},
+        {"datum": "2026-02-08T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "HL Buchholz08-Rosengarten 3", "halleId": "wegenkamp", "toreHeim": 27, "toreGast": 32, "status": "finished", "spieltag": 14}
       ]
     },
     {
       "kw": 7,
       "spiele": [
-        {"datum": "2026-02-14T15:00:00", "heim": "TuS Esingen", "gast": "Elmshorner HT", "halle": "Esingen neu, Tornesch", "toreHeim": 27, "toreGast": 27, "status": "finished", "spieltag": 15},
-        {"datum": "2026-02-14T16:00:00", "heim": "HSG Elbvororte", "gast": "HTS/BW96 Handball", "toreHeim": 20, "toreGast": 24, "status": "finished", "spieltag": 15},
-        {"datum": "2026-02-14T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "SG Hamburg-Nord 2", "toreHeim": 29, "toreGast": 29, "status": "finished", "spieltag": 15},
-        {"datum": "2026-02-14T18:00:00", "heim": "HSV/Hamm 02 2", "gast": "1. HC Quickborn", "toreHeim": 23, "toreGast": 25, "status": "finished", "spieltag": 15},
-        {"datum": "2026-02-15T16:00:00", "heim": "Eimsbütteler TV 3", "gast": "Grün-Weiss Eimsbüttel", "toreHeim": 35, "toreGast": 34, "status": "finished", "spieltag": 15}
+        {"datum": "2026-02-14T15:00:00", "heim": "TuS Esingen", "gast": "Elmshorner HT", "halleId": "esingen-neu", "toreHeim": 27, "toreGast": 27, "status": "finished", "spieltag": 15},
+        {"datum": "2026-02-14T16:00:00", "heim": "HSG Elbvororte", "gast": "HTS/BW96 Handball", "halleId": "bergstrasse-wedel", "toreHeim": 20, "toreGast": 24, "status": "finished", "spieltag": 15},
+        {"datum": "2026-02-14T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "SG Hamburg-Nord 2", "halleId": "klecken", "toreHeim": 29, "toreGast": 29, "status": "finished", "spieltag": 15},
+        {"datum": "2026-02-14T18:00:00", "heim": "HSV/Hamm 02 2", "gast": "1. HC Quickborn", "halleId": "sorbenstrasse", "toreHeim": 23, "toreGast": 25, "status": "finished", "spieltag": 15},
+        {"datum": "2026-02-15T16:00:00", "heim": "Eimsbütteler TV 3", "gast": "Grün-Weiss Eimsbüttel", "halleId": "hohe-weide", "toreHeim": 35, "toreGast": 34, "status": "finished", "spieltag": 15}
       ]
     },
     {
       "kw": 8,
       "spiele": [
-        {"datum": "2026-02-21T14:00:00", "heim": "SG Altona 2", "gast": "SG Hamburg-Nord 2", "toreHeim": 25, "toreGast": 35, "status": "finished", "spieltag": 16},
-        {"datum": "2026-02-21T14:00:00", "heim": "Eimsbütteler TV 3", "gast": "HL Buchholz08-Rosengarten 3", "toreHeim": 31, "toreGast": 23, "status": "finished", "spieltag": 16},
-        {"datum": "2026-02-21T17:00:00", "heim": "Elmshorner HT", "gast": "HSV/Hamm 02 2", "toreHeim": 22, "toreGast": 29, "status": "finished", "spieltag": 16},
-        {"datum": "2026-02-21T18:00:00", "heim": "1. HC Quickborn", "gast": "HSG Elbvororte", "toreHeim": 19, "toreGast": 22, "status": "finished", "spieltag": 16},
-        {"datum": "2026-02-22T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "TuS Esingen", "toreHeim": 26, "toreGast": 46, "status": "finished", "spieltag": 16}
+        {"datum": "2026-02-21T14:00:00", "heim": "SG Altona 2", "gast": "SG Hamburg-Nord 2", "halleId": "neuwiedenthal", "toreHeim": 25, "toreGast": 35, "status": "finished", "spieltag": 16},
+        {"datum": "2026-02-21T14:00:00", "heim": "Eimsbütteler TV 3", "gast": "HL Buchholz08-Rosengarten 3", "halleId": "hohe-weide", "toreHeim": 31, "toreGast": 23, "status": "finished", "spieltag": 16},
+        {"datum": "2026-02-21T17:00:00", "heim": "Elmshorner HT", "gast": "HSV/Hamm 02 2", "halleId": "olympiahalle", "toreHeim": 22, "toreGast": 29, "status": "finished", "spieltag": 16},
+        {"datum": "2026-02-21T18:00:00", "heim": "1. HC Quickborn", "gast": "HSG Elbvororte", "halleId": "comenius-sporthalle", "toreHeim": 19, "toreGast": 22, "status": "finished", "spieltag": 16},
+        {"datum": "2026-02-22T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "TuS Esingen", "halleId": "wegenkamp", "toreHeim": 26, "toreGast": 46, "status": "finished", "spieltag": 16}
       ]
     },
     {
       "kw": 9,
       "spiele": [
-        {"datum": "2026-02-26T20:00:00", "heim": "SG Altona 2", "gast": "TuS Esingen", "toreHeim": 30, "toreGast": 24, "status": "finished", "spieltag": 12}
+        {"datum": "2026-02-26T20:00:00", "heim": "SG Altona 2", "gast": "TuS Esingen", "halleId": "eckernfoerder-strasse", "toreHeim": 30, "toreGast": 24, "status": "finished", "spieltag": 12}
       ]
     },
     {
       "kw": 10,
       "spiele": [
-        {"datum": "2026-03-07T18:00:00", "heim": "1. HC Quickborn", "gast": "TuS Esingen", "toreHeim": 23, "toreGast": 30, "status": "finished", "spieltag": 14},
-        {"datum": "2026-03-08T16:45:00", "heim": "Barmstedter MTV", "gast": "SG Altona 2", "toreHeim": 29, "toreGast": 24, "status": "finished", "spieltag": 15}
+        {"datum": "2026-03-07T18:00:00", "heim": "1. HC Quickborn", "gast": "TuS Esingen", "halleId": "comenius-sporthalle", "toreHeim": 23, "toreGast": 30, "status": "finished", "spieltag": 14},
+        {"datum": "2026-03-08T16:45:00", "heim": "Barmstedter MTV", "gast": "SG Altona 2", "halleId": "barmstedt", "toreHeim": 29, "toreGast": 24, "status": "finished", "spieltag": 15}
       ]
     },
     {
       "kw": 11,
       "spiele": [
-        {"datum": "2026-03-14T15:00:00", "heim": "TuS Esingen", "gast": "Eimsbütteler TV 3", "halle": "Esingen neu, Tornesch", "toreHeim": 35, "toreGast": 28, "status": "finished", "spieltag": 17},
-        {"datum": "2026-03-14T16:00:00", "heim": "SG Hamburg-Nord 2", "gast": "HTS/BW96 Handball", "toreHeim": 27, "toreGast": 23, "status": "finished", "spieltag": 17},
-        {"datum": "2026-03-14T20:00:00", "heim": "HSV/Hamm 02 2", "gast": "Grün-Weiss Eimsbüttel", "toreHeim": 35, "toreGast": 26, "status": "finished", "spieltag": 17},
-        {"datum": "2026-03-15T16:15:00", "heim": "HSG Elbvororte", "gast": "Elmshorner HT", "toreHeim": 31, "toreGast": 26, "status": "finished", "spieltag": 17},
-        {"datum": "2026-03-15T16:45:00", "heim": "Barmstedter MTV", "gast": "1. HC Quickborn", "toreHeim": 31, "toreGast": 28, "status": "finished", "spieltag": 17},
-        {"datum": "2026-03-15T18:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "SG Altona 2", "toreHeim": 29, "toreGast": 29, "status": "finished", "spieltag": 17}
+        {"datum": "2026-03-14T15:00:00", "heim": "TuS Esingen", "gast": "Eimsbütteler TV 3", "halleId": "esingen-neu", "toreHeim": 35, "toreGast": 28, "status": "finished", "spieltag": 17},
+        {"datum": "2026-03-14T16:00:00", "heim": "SG Hamburg-Nord 2", "gast": "HTS/BW96 Handball", "halleId": "tegelsbarg", "toreHeim": 27, "toreGast": 23, "status": "finished", "spieltag": 17},
+        {"datum": "2026-03-14T20:00:00", "heim": "HSV/Hamm 02 2", "gast": "Grün-Weiss Eimsbüttel", "halleId": "sorbenstrasse", "toreHeim": 35, "toreGast": 26, "status": "finished", "spieltag": 17},
+        {"datum": "2026-03-15T16:15:00", "heim": "HSG Elbvororte", "gast": "Elmshorner HT", "halleId": "blankenese", "toreHeim": 31, "toreGast": 26, "status": "finished", "spieltag": 17},
+        {"datum": "2026-03-15T16:45:00", "heim": "Barmstedter MTV", "gast": "1. HC Quickborn", "halleId": "barmstedt", "toreHeim": 31, "toreGast": 28, "status": "finished", "spieltag": 17},
+        {"datum": "2026-03-15T18:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "SG Altona 2", "halleId": "nordheidehalle", "toreHeim": 29, "toreGast": 29, "status": "finished", "spieltag": 17}
       ]
     },
     {
       "kw": 12,
       "spiele": [
-        {"datum": "2026-03-21T11:00:00", "heim": "HTS/BW96 Handball", "gast": "SG Altona 2", "toreHeim": 18, "toreGast": 17, "status": "finished", "spieltag": 18},
-        {"datum": "2026-03-21T16:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "TuS Esingen", "toreHeim": 30, "toreGast": 32, "status": "finished", "spieltag": 18},
-        {"datum": "2026-03-21T17:00:00", "heim": "Elmshorner HT", "gast": "Barmstedter MTV", "toreHeim": 22, "toreGast": 29, "status": "finished", "spieltag": 18},
-        {"datum": "2026-03-21T18:00:00", "heim": "1. HC Quickborn", "gast": "SG Hamburg-Nord 2", "toreHeim": 24, "toreGast": 27, "status": "finished", "spieltag": 18},
-        {"datum": "2026-03-22T16:00:00", "heim": "Eimsbütteler TV 3", "gast": "HSV/Hamm 02 2", "toreHeim": 41, "toreGast": 20, "status": "finished", "spieltag": 18},
-        {"datum": "2026-03-22T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "HSG Elbvororte", "toreHeim": 22, "toreGast": 25, "status": "finished", "spieltag": 18}
+        {"datum": "2026-03-21T11:00:00", "heim": "HTS/BW96 Handball", "gast": "SG Altona 2", "halleId": "schenefeld-halle-a", "toreHeim": 18, "toreGast": 17, "status": "finished", "spieltag": 18},
+        {"datum": "2026-03-21T16:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "TuS Esingen", "halleId": "nordheidehalle", "toreHeim": 30, "toreGast": 32, "status": "finished", "spieltag": 18},
+        {"datum": "2026-03-21T17:00:00", "heim": "Elmshorner HT", "gast": "Barmstedter MTV", "halleId": "olympiahalle", "toreHeim": 22, "toreGast": 29, "status": "finished", "spieltag": 18},
+        {"datum": "2026-03-21T18:00:00", "heim": "1. HC Quickborn", "gast": "SG Hamburg-Nord 2", "halleId": "lilli-henoch-halle", "toreHeim": 24, "toreGast": 27, "status": "finished", "spieltag": 18},
+        {"datum": "2026-03-22T16:00:00", "heim": "Eimsbütteler TV 3", "gast": "HSV/Hamm 02 2", "halleId": "hohe-weide", "toreHeim": 41, "toreGast": 20, "status": "finished", "spieltag": 18},
+        {"datum": "2026-03-22T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "HSG Elbvororte", "halleId": "wegenkamp", "toreHeim": 22, "toreGast": 25, "status": "finished", "spieltag": 18}
       ]
     },
     {
       "kw": 13,
       "spiele": [
-        {"datum": "2026-03-28T16:45:00", "heim": "Barmstedter MTV", "gast": "Grün-Weiss Eimsbüttel", "toreHeim": 23, "toreGast": 23, "status": "finished", "spieltag": 19},
-        {"datum": "2026-03-29T16:00:00", "heim": "HSV/Hamm 02 2", "gast": "TuS Esingen", "toreHeim": 26, "toreGast": 34, "status": "finished", "spieltag": 19},
-        {"datum": "2026-03-29T16:00:00", "heim": "HSG Elbvororte", "gast": "Eimsbütteler TV 3", "toreHeim": 35, "toreGast": 37, "status": "finished", "spieltag": 19},
-        {"datum": "2026-03-29T18:00:00", "heim": "SG Hamburg-Nord 2", "gast": "Elmshorner HT", "toreHeim": 29, "toreGast": 27, "status": "finished", "spieltag": 19}
+        {"datum": "2026-03-28T16:45:00", "heim": "Barmstedter MTV", "gast": "Grün-Weiss Eimsbüttel", "halleId": "barmstedt", "toreHeim": 23, "toreGast": 23, "status": "finished", "spieltag": 19},
+        {"datum": "2026-03-29T16:00:00", "heim": "HSV/Hamm 02 2", "gast": "TuS Esingen", "halleId": "sorbenstrasse", "toreHeim": 26, "toreGast": 34, "status": "finished", "spieltag": 19},
+        {"datum": "2026-03-29T16:00:00", "heim": "HSG Elbvororte", "gast": "Eimsbütteler TV 3", "halleId": "blankenese", "toreHeim": 35, "toreGast": 37, "status": "finished", "spieltag": 19},
+        {"datum": "2026-03-29T18:00:00", "heim": "SG Hamburg-Nord 2", "gast": "Elmshorner HT", "halleId": "tegelsbarg", "toreHeim": 29, "toreGast": 27, "status": "finished", "spieltag": 19}
       ]
     },
     {
       "kw": 15,
       "spiele": [
-        {"datum": "2026-04-11T15:00:00", "heim": "TuS Esingen", "gast": "HSG Elbvororte", "halle": "Esingen neu, Tornesch", "toreHeim": 29, "toreGast": 32, "status": "finished", "spieltag": 20},
-        {"datum": "2026-04-11T16:00:00", "heim": "HTS/BW96 Handball", "gast": "1. HC Quickborn", "toreHeim": 24, "toreGast": 25, "status": "finished", "spieltag": 9},
-        {"datum": "2026-04-11T16:00:00", "heim": "Eimsbütteler TV 3", "gast": "Barmstedter MTV", "toreHeim": 21, "toreGast": 20, "status": "finished", "spieltag": 20},
-        {"datum": "2026-04-11T17:00:00", "heim": "Elmshorner HT", "gast": "SG Altona 2", "toreHeim": 20, "toreGast": 23, "status": "finished", "spieltag": 20},
-        {"datum": "2026-04-12T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "SG Hamburg-Nord 2", "toreHeim": 25, "toreGast": 26, "status": "finished", "spieltag": 20},
-        {"datum": "2026-04-12T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "HSV/Hamm 02 2", "toreHeim": 26, "toreGast": 32, "status": "finished", "spieltag": 20}
+        {"datum": "2026-04-11T15:00:00", "heim": "TuS Esingen", "gast": "HSG Elbvororte", "halleId": "esingen-neu", "toreHeim": 29, "toreGast": 32, "status": "finished", "spieltag": 20},
+        {"datum": "2026-04-11T16:00:00", "heim": "HTS/BW96 Handball", "gast": "1. HC Quickborn", "halleId": "schenefeld-halle-b", "toreHeim": 24, "toreGast": 25, "status": "finished", "spieltag": 9},
+        {"datum": "2026-04-11T16:00:00", "heim": "Eimsbütteler TV 3", "gast": "Barmstedter MTV", "halleId": "hohe-weide", "toreHeim": 21, "toreGast": 20, "status": "finished", "spieltag": 20},
+        {"datum": "2026-04-11T17:00:00", "heim": "Elmshorner HT", "gast": "SG Altona 2", "halleId": "olympiahalle", "toreHeim": 20, "toreGast": 23, "status": "finished", "spieltag": 20},
+        {"datum": "2026-04-12T17:00:00", "heim": "Grün-Weiss Eimsbüttel", "gast": "SG Hamburg-Nord 2", "halleId": "wegenkamp", "toreHeim": 25, "toreGast": 26, "status": "finished", "spieltag": 20},
+        {"datum": "2026-04-12T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "HSV/Hamm 02 2", "halleId": "klecken", "toreHeim": 26, "toreGast": 32, "status": "finished", "spieltag": 20}
       ]
     },
     {
       "kw": 16,
       "spiele": [
-        {"datum": "2026-04-14T20:15:00", "heim": "HTS/BW96 Handball", "gast": "HL Buchholz08-Rosengarten 3", "toreHeim": 0, "toreGast": 0, "status": "wertung-gast", "spieltag": 19},
-        {"datum": "2026-04-16T20:00:00", "heim": "SG Altona 2", "gast": "1. HC Quickborn", "toreHeim": 28, "toreGast": 30, "status": "finished", "spieltag": 19},
-        {"datum": "2026-04-18T16:45:00", "heim": "Barmstedter MTV", "gast": "TuS Esingen", "toreHeim": 35, "toreGast": 28, "status": "finished", "spieltag": 21},
-        {"datum": "2026-04-18T17:00:00", "heim": "HTS/BW96 Handball", "gast": "Elmshorner HT", "toreHeim": 31, "toreGast": 16, "status": "finished", "spieltag": 21},
-        {"datum": "2026-04-18T18:00:00", "heim": "1. HC Quickborn", "gast": "HL Buchholz08-Rosengarten 3", "toreHeim": 0, "toreGast": 0, "status": "wertung-heim", "spieltag": 21},
-        {"datum": "2026-04-19T14:00:00", "heim": "SG Hamburg-Nord 2", "gast": "Eimsbütteler TV 3", "toreHeim": 19, "toreGast": 33, "status": "finished", "spieltag": 21},
-        {"datum": "2026-04-19T16:00:00", "heim": "HSG Elbvororte", "gast": "HSV/Hamm 02 2", "toreHeim": 25, "toreGast": 31, "status": "finished", "spieltag": 21},
-        {"datum": "2026-04-19T16:00:00", "heim": "SG Altona 2", "gast": "Grün-Weiss Eimsbüttel", "toreHeim": 18, "toreGast": 25, "status": "finished", "spieltag": 21}
+        {"datum": "2026-04-14T20:15:00", "heim": "HTS/BW96 Handball", "gast": "HL Buchholz08-Rosengarten 3", "halleId": "schenefeld-halle-a", "toreHeim": 0, "toreGast": 0, "status": "wertung-gast", "spieltag": 19},
+        {"datum": "2026-04-16T20:00:00", "heim": "SG Altona 2", "gast": "1. HC Quickborn", "halleId": "eckernfoerder-strasse", "toreHeim": 28, "toreGast": 30, "status": "finished", "spieltag": 19},
+        {"datum": "2026-04-18T16:45:00", "heim": "Barmstedter MTV", "gast": "TuS Esingen", "halleId": "barmstedt", "toreHeim": 35, "toreGast": 28, "status": "finished", "spieltag": 21},
+        {"datum": "2026-04-18T17:00:00", "heim": "HTS/BW96 Handball", "gast": "Elmshorner HT", "halleId": "bickbargen-halstenbek", "toreHeim": 31, "toreGast": 16, "status": "finished", "spieltag": 21},
+        {"datum": "2026-04-18T18:00:00", "heim": "1. HC Quickborn", "gast": "HL Buchholz08-Rosengarten 3", "halleId": "lilli-henoch-halle", "toreHeim": 0, "toreGast": 0, "status": "wertung-heim", "spieltag": 21},
+        {"datum": "2026-04-19T14:00:00", "heim": "SG Hamburg-Nord 2", "gast": "Eimsbütteler TV 3", "halleId": "tegelsbarg", "toreHeim": 19, "toreGast": 33, "status": "finished", "spieltag": 21},
+        {"datum": "2026-04-19T16:00:00", "heim": "HSG Elbvororte", "gast": "HSV/Hamm 02 2", "halleId": "blankenese", "toreHeim": 25, "toreGast": 31, "status": "finished", "spieltag": 21},
+        {"datum": "2026-04-19T16:00:00", "heim": "SG Altona 2", "gast": "Grün-Weiss Eimsbüttel", "halleId": "eckernfoerder-strasse", "toreHeim": 18, "toreGast": 25, "status": "finished", "spieltag": 21}
       ]
     },
     {
       "kw": 17,
       "spiele": [
-        {"datum": "2026-04-20T20:00:00", "heim": "HTS/BW96 Handball", "gast": "Barmstedter MTV", "toreHeim": 21, "toreGast": 33, "status": "finished", "spieltag": 16},
-        {"datum": "2026-04-25T14:00:00", "heim": "Eimsbütteler TV 3", "gast": "SG Altona 2", "toreHeim": 33, "toreGast": 24, "status": "finished", "spieltag": 22},
-        {"datum": "2026-04-25T15:00:00", "heim": "TuS Esingen", "gast": "SG Hamburg-Nord 2", "halle": "Esingen neu, Tornesch", "toreHeim": 40, "toreGast": 29, "status": "finished", "spieltag": 22},
-        {"datum": "2026-04-25T16:00:00", "heim": "HSV/Hamm 02 2", "gast": "Barmstedter MTV", "toreHeim": 29, "toreGast": 23, "status": "finished", "spieltag": 22},
-        {"datum": "2026-04-25T17:00:00", "heim": "Elmshorner HT", "gast": "1. HC Quickborn", "toreHeim": 18, "toreGast": 23, "status": "finished", "spieltag": 22},
-        {"datum": "2026-04-26T13:15:00", "heim": "HTS/BW96 Handball", "gast": "Grün-Weiss Eimsbüttel", "toreHeim": 21, "toreGast": 22, "status": "finished", "spieltag": 22},
-        {"datum": "2026-04-26T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "HSG Elbvororte", "toreHeim": 20, "toreGast": 25, "status": "finished", "spieltag": 22}
+        {"datum": "2026-04-20T20:00:00", "heim": "HTS/BW96 Handball", "gast": "Barmstedter MTV", "halleId": "bickbargen-halstenbek", "toreHeim": 21, "toreGast": 33, "status": "finished", "spieltag": 16},
+        {"datum": "2026-04-25T14:00:00", "heim": "Eimsbütteler TV 3", "gast": "SG Altona 2", "halleId": "hohe-weide", "toreHeim": 33, "toreGast": 24, "status": "finished", "spieltag": 22},
+        {"datum": "2026-04-25T15:00:00", "heim": "TuS Esingen", "gast": "SG Hamburg-Nord 2", "halleId": "esingen-neu", "toreHeim": 40, "toreGast": 29, "status": "finished", "spieltag": 22},
+        {"datum": "2026-04-25T16:00:00", "heim": "HSV/Hamm 02 2", "gast": "Barmstedter MTV", "halleId": "sorbenstrasse", "toreHeim": 29, "toreGast": 23, "status": "finished", "spieltag": 22},
+        {"datum": "2026-04-25T17:00:00", "heim": "Elmshorner HT", "gast": "1. HC Quickborn", "halleId": "olympiahalle", "toreHeim": 18, "toreGast": 23, "status": "finished", "spieltag": 22},
+        {"datum": "2026-04-26T13:15:00", "heim": "HTS/BW96 Handball", "gast": "Grün-Weiss Eimsbüttel", "halleId": "schenefeld-halle-b", "toreHeim": 21, "toreGast": 22, "status": "finished", "spieltag": 22},
+        {"datum": "2026-04-26T17:00:00", "heim": "HL Buchholz08-Rosengarten 3", "gast": "HSG Elbvororte", "halleId": "klecken", "toreHeim": 20, "toreGast": 25, "status": "finished", "spieltag": 22}
       ]
     }
   ]

@@ -18,7 +18,50 @@ Diese Anleitung zeigt dir:
 - **Wie du mit Sonderfällen umgehst** – Verlegungen, Wertungen, Korrekturen
 - **Wie GitHub für Anfänger funktioniert** – falls du dich noch nicht auskennst
 
-Wenn du nur schnell ein Spielergebnis nachtragen willst, springe direkt zum Kapitel **„Wöchentliche Pflege: Spielergebnisse eintragen"** (kommt in einer späteren Etappe).
+Wenn du nur schnell ein Spielergebnis nachtragen willst, springe direkt zum Kapitel [„Wöchentlich: Spielergebnisse eintragen"](#wöchentlich-spielergebnisse-eintragen).
+
+---
+
+## Inhaltsverzeichnis
+
+**Grundlagen**
+- [Wie die Daten aufgebaut sind](#wie-die-daten-aufgebaut-sind)
+- [Wie Saisons organisiert sind](#wie-saisons-organisiert-sind)
+- [Wo finde ich was?](#wo-finde-ich-was)
+- [Wie wird die Tabelle berechnet?](#wie-wird-die-tabelle-berechnet)
+
+**Datei-Referenz**
+- [Die Stammdaten-Dateien](#die-stammdaten-dateien-im-detail) – `meta/teams.json`, `info.json`, `kader.json`, `training.json`
+- [Die Inhaltsdateien](#die-inhaltsdateien-im-detail) – `news.json`, `partners.json`, `partner.json`
+- [Die Spielbetrieb-Dateien](#die-spielbetrieb-dateien-im-detail) – `saisons/<saison>/meta.json`, `spieltage/XX.json`, `pokalspiele.json`, `testspiele.json`
+
+**Pflege-Workflows**
+- [Wöchentlich: Spielergebnisse eintragen](#wöchentlich-spielergebnisse-eintragen)
+- [Spielverlegung eintragen](#spielverlegung-eintragen)
+- [Wertung wegen Nicht-Antreten](#wertung-wegen-nicht-antreten)
+- [Tippfehler korrigieren](#tippfehler-korrigieren)
+- [Saisonstart: Neue Saison anlegen](#saisonstart-neue-saison-anlegen)
+- [Saisonende: Was passiert mit alten Daten?](#saisonende-was-passiert-mit-alten-daten)
+- [Neue Mannschaft zur App hinzufügen](#neue-mannschaft-zur-app-hinzufügen)
+- [Neuen Sponsor hinzufügen](#neuen-sponsor-hinzufügen)
+- [News-Beitrag veröffentlichen](#news-beitrag-veröffentlichen)
+- [Was du **nicht** pflegen musst](#was-du-nicht-pflegen-musst)
+
+**GitHub-Crashkurs für Pfleger**
+- [Was ist GitHub eigentlich?](#was-ist-github-eigentlich)
+- [Vorbereitung](#vorbereitung)
+- [Die wichtigsten Vorgänge](#die-wichtigsten-vorgänge)
+- [JSON richtig schreiben](#json-richtig-schreiben)
+- [Häufige Fehler und ihre Bedeutung](#häufige-fehler-und-ihre-bedeutung)
+- [Wie sehe ich, dass mein Commit live ist?](#wie-sehe-ich-dass-mein-commit-live-ist)
+- [Konflikte: Wenn zwei Pfleger gleichzeitig editieren](#konflikte-wenn-zwei-pfleger-gleichzeitig-editieren)
+- [Was tun, wenn was schiefgeht?](#was-tun-wenn-was-schiefgeht)
+- [Weiterführende Links](#weiterführende-links)
+
+**Letzte Hinweise**
+- [Wer hat Zugriff auf was?](#wer-hat-zugriff-auf-was)
+- [Wo bekomme ich Hilfe?](#wo-bekomme-ich-hilfe)
+- [Vorschläge zur Anleitung](#vorschläge-zur-anleitung)
 
 ---
 
@@ -44,14 +87,15 @@ data/
 │   │   ├── kader.json             ← Spieler und Trainer
 │   │   ├── training.json          ← Trainingszeiten
 │   │   ├── partner.json           ← Mannschaftssponsoren
-│   │   ├── sonderspiele.json      ← Pokal- und Testspiele
 │   │   └── saisons/
 │   │       ├── 2025-26/           ← ein Ordner pro Saison
 │   │       │   ├── meta.json      ← Liga-Info, Mannschaftsliste
-│   │       │   └── spieltage/
-│   │       │       ├── 01.json    ← Spieltag 1 mit allen Spielen
-│   │       │       ├── 02.json    ← Spieltag 2
-│   │       │       └── ...
+│   │       │   ├── spieltage/
+│   │       │   │   ├── 01.json    ← Spieltag 1 mit allen Liga-Spielen
+│   │       │   │   ├── 02.json    ← Spieltag 2
+│   │       │   │   └── ...
+│   │       │   ├── pokalspiele.json ← alle Pokalspiele dieser Saison
+│   │       │   └── testspiele.json  ← alle Testspiele dieser Saison
 │   │       └── 2026-27/           ← nächste Saison (sobald angelegt)
 │   │           └── ...
 │   ├── 1-damen/
@@ -94,13 +138,15 @@ Innerhalb jeder Mannschaft sind die Spielergebnisse **nach Saison getrennt** abg
 
 ```
 teams/1-herren/saisons/
-├── 2025-26/           ← Saison 2025/26
-│   ├── meta.json      ← Liga-Info dieser Saison
-│   └── spieltage/
-│       ├── 01.json
-│       ├── 02.json
-│       └── ...
-└── 2026-27/           ← Saison 2026/27
+├── 2025-26/                   ← Saison 2025/26
+│   ├── meta.json              ← Liga-Info dieser Saison
+│   ├── spieltage/             ← Liga-Spiele
+│   │   ├── 01.json
+│   │   ├── 02.json
+│   │   └── ...
+│   ├── pokalspiele.json       ← Pokalspiele dieser Saison
+│   └── testspiele.json        ← Testspiele dieser Saison
+└── 2026-27/                   ← Saison 2026/27
     └── ...
 ```
 
@@ -112,8 +158,9 @@ teams/1-herren/saisons/
 
 | Du willst… | Datei |
 |---|---|
-| ein Spielergebnis eintragen | `teams/<mannschaft>/saisons/<saison>/spieltage/<XX>.json` |
-| einen Pokalspiel-Termin nachtragen | `teams/<mannschaft>/sonderspiele.json` |
+| ein Liga-Spielergebnis eintragen | `teams/<mannschaft>/saisons/<saison>/spieltage/<XX>.json` |
+| ein Pokalspiel eintragen | `teams/<mannschaft>/saisons/<saison>/pokalspiele.json` |
+| ein Testspiel eintragen | `teams/<mannschaft>/saisons/<saison>/testspiele.json` |
 | eine News veröffentlichen | `content/news.json` |
 | einen neuen Spieler im Kader ergänzen | `teams/<mannschaft>/kader.json` |
 | Trainingszeiten ändern | `teams/<mannschaft>/training.json` |
@@ -961,30 +1008,30 @@ Vor Saisonbeginn empfehle ich, **alle Spieltage einer Saison schon als Dateien a
 
 ---
 
-## `teams/<id>/sonderspiele.json` – Pokal- und Testspiele
+## `teams/<id>/saisons/<saison>/pokalspiele.json` – Pokalspiele einer Saison
 
-Pokal- und Testspiele gehören nicht zur Liga und zählen nicht für die Tabelle. Sie werden in einer **separaten Datei pro Mannschaft** gepflegt – saisonübergreifend, weil sie selten sind.
+Pokalspiele gehören nicht zur Liga und zählen nicht für die Tabelle. Sie werden saisonweise getrennt gepflegt – pro Saison eine Datei.
 
-### Beispiel (1. Herren)
+### Beispiel (1. Herren, Saison 2025/26)
 
 ```json
 {
   "aktualisiert": "10.05.2026",
   "spiele": [
     {
-      "art": "pokal",
       "wettbewerb": "Männer Pokal Hamburg",
-      "datum": "2026-09-12T19:00:00",
+      "runde": "1. Runde",
+      "datum": "2025-09-12T19:00:00",
       "heim": "TuS Esingen",
       "gast": "TSV Ellerbek 2",
-      "toreHeim": null,
-      "toreGast": null,
+      "toreHeim": 28,
+      "toreGast": 25,
       "halle": "Esingen neu, Tornesch",
-      "status": "scheduled"
+      "status": "finished"
     },
     {
-      "art": "pokal",
       "wettbewerb": "Männer Pokal Hamburg",
+      "runde": "Achtelfinale",
       "datum": "2026-01-10T17:00:00",
       "heim": "TuS Esingen",
       "gast": "HT Norderstedt 2",
@@ -994,17 +1041,77 @@ Pokal- und Testspiele gehören nicht zur Liga und zählen nicht für die Tabelle
       "status": "finished"
     },
     {
-      "art": "test",
-      "datum": "2026-08-23T17:00:00",
-      "heim": "TuS Esingen",
-      "gast": "Ahrensburger TSV",
+      "wettbewerb": "Männer Pokal Hamburg",
+      "runde": "Viertelfinale",
+      "datum": "2026-03-15T19:00:00",
+      "heim": "FC St. Pauli",
+      "gast": "TuS Esingen",
       "toreHeim": null,
       "toreGast": null,
-      "halle": "Esingen neu, Tornesch",
+      "halle": "Budapester Straße, Hamburg",
       "status": "scheduled"
+    }
+  ]
+}
+```
+
+### Felder auf oberster Ebene
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `aktualisiert` | ja | Datum der letzten Änderung |
+| `spiele` | ja | Liste aller Pokalspiele dieser Saison (kann leer sein: `[]`) |
+
+### Pro Spiel
+
+| Feld | Pflicht | Beschreibung |
+|---|---|---|
+| `wettbewerb` | ja | Wettbewerbsname (z.B. `"Männer Pokal Hamburg"`, `"DHB-Pokal"`) |
+| `runde` | nein | Pokalrunde (z.B. `"1. Runde"`, `"Achtelfinale"`, `"Halbfinale"`, `"Finale"`) |
+| `datum` | ja | Datum und Uhrzeit im ISO-Format |
+| `heim` | ja | Heimmannschaft |
+| `gast` | ja | Gastmannschaft |
+| `toreHeim` | ja | Tore Heim (Zahl oder `null`, wenn noch nicht gespielt) |
+| `toreGast` | ja | Tore Gast (Zahl oder `null`, wenn noch nicht gespielt) |
+| `halle` | nein | Hallenname und Stadt |
+| `status` | ja | `"scheduled"` oder `"finished"` |
+
+### Wann du diese Datei änderst
+
+- **Neuer Pokalauftritt steht an:** Neuen Eintrag mit `status: "scheduled"` ergänzen
+- **Ergebnis nach dem Spiel:** `toreHeim`, `toreGast`, `status` auf `"finished"`
+- **Pokalrunde ändert sich:** Beim Weiterkommen entsteht ein neues Spiel für die nächste Runde
+
+### Stolperfallen
+
+- Pokalspiele werden **nicht** für die Liga-Tabelle gewertet
+- Es gibt **keinen Status für Wertungen** im KO-System – ein Forfait wird einfach als `"finished"` mit 0:0 (oder verbandsspezifischer Wertung) eingetragen
+- Bei Saisonwechsel: Neue Saison bedeutet neue `pokalspiele.json`. Alte Saison bleibt im alten Saison-Ordner als Historie
+
+---
+
+## `teams/<id>/saisons/<saison>/testspiele.json` – Testspiele einer Saison
+
+Testspiele (auch „Freundschaftsspiele") werden saisonweise getrennt gepflegt. Sie zählen nicht für Liga oder Pokal und dienen zur Vorbereitung oder Trainingsergänzung.
+
+### Beispiel (1. Herren, Saison 2025/26)
+
+```json
+{
+  "aktualisiert": "10.05.2026",
+  "spiele": [
+    {
+      "anlass": "Vorbereitung Saison 2025/26",
+      "datum": "2025-08-23T17:00:00",
+      "heim": "TuS Esingen",
+      "gast": "Ahrensburger TSV",
+      "toreHeim": 26,
+      "toreGast": 28,
+      "halle": "Esingen neu, Tornesch",
+      "status": "finished"
     },
     {
-      "art": "test",
+      "anlass": "Vorbereitung Saison 2025/26",
       "datum": "2025-08-30T17:00:00",
       "heim": "TuS Esingen",
       "gast": "TV Fischbek",
@@ -1012,44 +1119,51 @@ Pokal- und Testspiele gehören nicht zur Liga und zählen nicht für die Tabelle
       "toreGast": 24,
       "halle": "Esingen neu, Tornesch",
       "status": "finished"
+    },
+    {
+      "anlass": "Wintervorbereitung",
+      "datum": "2026-01-05T19:00:00",
+      "heim": "HSG Pinnau",
+      "gast": "TuS Esingen",
+      "toreHeim": null,
+      "toreGast": null,
+      "halle": "Pinneberg, Sporthalle",
+      "status": "scheduled"
     }
   ]
 }
 ```
 
-### Felder
+### Felder auf oberster Ebene
 
 | Feld | Pflicht | Beschreibung |
 |---|---|---|
 | `aktualisiert` | ja | Datum der letzten Änderung |
-| `spiele` | ja | Liste aller Sonderspiele (kann leer sein: `[]`) |
+| `spiele` | ja | Liste aller Testspiele dieser Saison (kann leer sein: `[]`) |
 
 ### Pro Spiel
 
 | Feld | Pflicht | Beschreibung |
 |---|---|---|
-| `art` | ja | `"pokal"` oder `"test"` |
-| `wettbewerb` | nein | Wettbewerbsname (nur bei Pokalspielen sinnvoll, z.B. `"Männer Pokal Hamburg"`) |
+| `anlass` | nein | Anlass des Testspiels (z.B. `"Vorbereitung Saison 2025/26"`, `"Wintervorbereitung"`, `"Trainingslager"`) |
 | `datum` | ja | Datum und Uhrzeit im ISO-Format |
 | `heim` | ja | Heimmannschaft |
 | `gast` | ja | Gastmannschaft |
-| `toreHeim` | ja | Tore Heim (Zahl oder `null`) |
-| `toreGast` | ja | Tore Gast (Zahl oder `null`) |
+| `toreHeim` | ja | Tore Heim (Zahl oder `null`, wenn noch nicht gespielt) |
+| `toreGast` | ja | Tore Gast (Zahl oder `null`, wenn noch nicht gespielt) |
 | `halle` | nein | Hallenname und Stadt |
 | `status` | ja | `"scheduled"` oder `"finished"` |
 
 ### Wann du diese Datei änderst
 
-- **Neuer Pokalauftritt steht an:** Neuen Eintrag mit `"art": "pokal"` und `status: "scheduled"`
-- **Testspiel in der Sommerpause:** Neuen Eintrag mit `"art": "test"` und `status: "scheduled"`
+- **Neues Testspiel:** Neuen Eintrag mit `status: "scheduled"` ergänzen
 - **Ergebnis nach dem Spiel:** `toreHeim`, `toreGast`, `status` auf `"finished"`
-- **Saisonende:** Alte Spiele bleiben drin als Historie (oder werden ins Archiv verschoben, falls die Datei zu lang wird)
+- **Testspiel wird abgesagt:** Eintrag aus der Liste entfernen (Testspiele tauchen sonst nirgendwo auf, daher kein „cancelled"-Status nötig)
 
 ### Stolperfallen
 
-- Pokal- und Testspiele werden **nicht** für die Liga-Tabelle gewertet
-- Im Gegensatz zur Liga-Spielplan-Datei gibt es hier **keinen Status für Wertungen** – ein nicht angetretenes Testspiel wird einfach aus der Liste entfernt oder als `"finished"` mit 0:0 geführt
-- `art` kann aktuell nur `"pokal"` oder `"test"` sein. Falls ein neuer Wettbewerbstyp gebraucht wird (z.B. Freundschaftsspiel-Turnier), sag im Entwickler-Chat Bescheid
+- Testspiele werden **nicht** für die Liga-Tabelle gewertet
+- Im Gegensatz zu Liga- und Pokalspielen gibt es **keinen Wertungs-Status** – ein nicht zustandegekommenes Testspiel wird einfach entfernt
 
 ---
 
@@ -1298,18 +1412,33 @@ Das ist die meiste Arbeit beim Saisonstart, weil es ~26 Dateien pro Mannschaft s
 
 > **Tipp:** Wenn du eine bestehende Spieltag-Datei der vorigen Saison als Vorlage nutzt und Mannschaften/Datum anpasst, geht das deutlich schneller.
 
-**4. `info.json` der Mannschaft aktualisieren**
+**4. Leere `pokalspiele.json` und `testspiele.json` anlegen**
+
+Im neuen Saison-Ordner zwei zusätzliche Dateien anlegen:
+
+```json
+{
+  "aktualisiert": "2026-08-01",
+  "spiele": []
+}
+```
+
+Auch wenn noch keine Pokal- oder Testspiele bekannt sind: Die Dateien sollten von Anfang an existieren (mit leerem `spiele`-Array). So vermeidet die App Fehler beim Laden, und Pfleger wissen, wo sie später Spiele eintragen sollen.
+
+Sobald die ersten Testspiele in der Sommervorbereitung anstehen, werden sie in die `testspiele.json` eingetragen. Pokalauslosung erfolgt meist etwas später im Verband.
+
+**5. `info.json` der Mannschaft aktualisieren**
 
 Die `aktuelleSaison` in der `info.json` umstellen auf die neue Saison – aber **erst, wenn alle Spieltage angelegt sind**. Solange die alte Saison noch laufende Spiele hat, bleibt die alte Saison aktiv.
 
-**5. Kader für die neue Saison prüfen**
+**6. Kader für die neue Saison prüfen**
 
 Die `kader.json` durchgehen:
 - Spieler, die den Verein verlassen haben: entfernen
 - Neue Spieler: ergänzen
 - Bei allen anderen: `alter` um 1 erhöhen (sofern Geburtstag vor Saisonstart liegt)
 
-**6. Trainingszeiten anpassen**
+**7. Trainingszeiten anpassen**
 
 Wenn sich die Trainingszeiten ändern, `training.json` aktualisieren.
 

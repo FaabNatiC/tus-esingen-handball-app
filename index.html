@@ -960,7 +960,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.6.19";
+const APP_VERSION = "0.6.20";
 const APP_BUILD_DATE = "08.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
@@ -969,6 +969,9 @@ const APP_BUILD_DATE = "08.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
+  { version: "0.6.20", date: "09.05.2026", points: [
+    "Interne Verbesserungen, die die Pflege von News-Beiträgen einfacher machen. Für die Nutzung der App ändert sich nichts."
+  ] },
   { version: "0.6.19", date: "08.05.2026", points: [
     "Das TuS-Logo in der Menüleiste ist nun größer, wenn der 'Home'-Tab aktiv ist. Auf anderen Tabs wird es kleiner dargestellt — so wird der jeweils aktive Bereich klarer hervorgehoben."
   ] },
@@ -1008,13 +1011,6 @@ const UPDATE_HISTORY = [
     "Die Update-Info oben am Rand erscheint jetzt zuverlässig, wenn die App eine neue Version geladen hat.",
     "In der Menüleiste unten wölbt sich die Mitte jetzt sanft nach oben und das TuS-Logo ragt leicht aus der Leiste heraus. Der Schriftzug 'Teams' steht wieder auf gleicher Höhe wie die anderen Beschriftungen.",
     "Das Etikett 'Testspiel' an der linken Kachelkante hat jetzt etwas mehr Abstand zum Rand, damit es harmonischer wirkt."
-  ] },
-  { version: "0.6.10", date: "08.05.2026", points: [
-    "Der Zurück-Pfeil auf der 'Alle News'-Seite führt jetzt zuverlässig zurück zur Startseite.",
-    "Die einzelnen Änderungen pro Update werden jetzt als übersichtliche Liste angezeigt statt als langer Fließtext.",
-    "Das 'Neu'-Etikett bei der aktuellen Version ist jetzt blau statt grün.",
-    "Das Symbol für 'App-Updates' im Menü wurde geändert, damit es sich besser von anderen Symbolen abhebt.",
-    "Das TuS-Logo unten in der Menüleiste beim Tab 'Teams' ist jetzt etwas größer und wird leicht hervorgehoben."
   ] }
 ];
 
@@ -2319,6 +2315,73 @@ async function preloadTeamLogos(){
 }
 
 // News laden: manuelle aus news.json + automatische Spielbericht-News
+// ── News-Normalisierung ────────────────────────────────────────────────────
+// Diese Helper-Funktionen ergänzen fehlende Felder in News-Einträgen
+// automatisch, damit Redakteure nur die echten Pflichtfelder eintragen
+// müssen (title, lead, cat, author, sortDate, body).
+//
+// Wenn ein Feld in der news.json bereits gesetzt ist, wird es übernommen
+// (Manuelles überschreibt Automatik). Nur fehlende Felder werden ergänzt.
+
+// id aus sortDate + Title-Slug erzeugen
+// Beispiel: "Wichtiger Sieg gegen Uetersen" + "2026-04-26"
+//        → "2026-04-26-wichtiger-sieg-gegen-uetersen"
+function newsGenerateId(n){
+  var slug = (n.title || 'news')
+    .toLowerCase()
+    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss')
+    .replace(/[^a-z0-9]+/g,'-')
+    .replace(/^-+|-+$/g,'')
+    .slice(0,40);
+  return (n.sortDate || 'undated') + '-' + slug;
+}
+
+// Initialen aus Autor-Namen ableiten
+// "Fabian Wurl" → "FW", "Vorstand TuS Esingen" → "TuS"
+function newsDeriveAuthorIni(author){
+  if(!author) return '?';
+  // Spezialfälle: Vereinsname → TuS-Logo
+  if(/^(TuS|Vorstand|Geschäftsstelle|Verein)/i.test(author)) return 'TuS';
+  // Initialen aus max. 2 Wörtern
+  return author.split(' ')
+    .filter(function(w){ return w.length > 0; })
+    .slice(0,2)
+    .map(function(w){ return w.charAt(0); })
+    .join('')
+    .toUpperCase();
+}
+
+// Gradient aus Kategorie und ggf. Score-Outcome ableiten
+// - Spielbericht mit Score-Box: Farbe nach Sieg/Niederlage/Unentschieden
+// - Alle anderen Kategorien: einheitlicher dunkler Default
+function newsDeriveGradient(n){
+  // Bei Spielberichten: prüfe ob im body eine Score-Box mit outcome ist
+  if(n.cat === 'spielbericht' && Array.isArray(n.body)){
+    var scoreBlock = n.body.find(function(b){ return b.type === 'score'; });
+    if(scoreBlock && scoreBlock.outcome){
+      if(scoreBlock.outcome === 'Sieg'){
+        return 'linear-gradient(135deg, #1a1a1a 0%, #2d4f10 60%, #639922 100%)';
+      } else if(scoreBlock.outcome === 'Niederlage'){
+        return 'linear-gradient(135deg, #1a1a1a 0%, #5a1818 60%, #A32D2D 100%)';
+      } else if(scoreBlock.outcome === 'Unentschieden'){
+        return 'linear-gradient(135deg, #1a1a1a 0%, #6b3d10 60%, #BA7517 100%)';
+      }
+    }
+  }
+  // Default für alle anderen News (vereinsleben, transfer, ankuendigung, ...)
+  return 'linear-gradient(135deg, #1a1a1a 0%, #444 100%)';
+}
+
+// Hauptfunktion: News-Eintrag mit Auto-Feldern anreichern
+function newsNormalize(n){
+  if(!n.id)        n.id        = newsGenerateId(n);
+  if(!n.date && n.sortDate) n.date = formatGermanDate(n.sortDate);
+  if(!n.catCl && n.cat)     n.catCl = 'cat-' + n.cat;
+  if(!n.authorIni)          n.authorIni = newsDeriveAuthorIni(n.author);
+  if(!n.gradient)           n.gradient  = newsDeriveGradient(n);
+  return n;
+}
+
 async function loadAllNews(){
   // Logos parallel im Hintergrund laden (nicht blockierend)
   preloadTeamLogos();
@@ -2334,12 +2397,8 @@ async function loadAllNews(){
     console.warn('news.json konnte nicht geladen werden', e);
   }
   
-  // Wenn keine manuelles 'date' gesetzt: aus sortDate generieren (deutsch)
-  manualNews.forEach(function(n){
-    if(!n.date && n.sortDate){
-      n.date = formatGermanDate(n.sortDate);
-    }
-  });
+  // Fehlende Felder automatisch ergänzen (id, date, catCl, authorIni, gradient)
+  manualNews.forEach(newsNormalize);
   
   // Set aus "teamId|YYYY-MM-DD" für alle Spiele, die manuell behandelt sind
   var excludeMatches = new Set();

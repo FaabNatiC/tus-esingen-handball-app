@@ -1,6 +1,6 @@
 {
   "saison": "2025/26",
-  "ligaName": "Oberliga Hamburg",
+  "ligaName": "weibliche Jugend B Oberliga",
   "wertungTore": { "fuerSieger": 0, "fuerVerlierer": 0 },
   "spieltageGeplant": 18,
   "linkSpielplan": "https://www.handball.net/ligen/handball4all.hamburg.wb-ol-520_hhv/spielplan",
@@ -12,7 +12,7 @@
     { "name": "Niendorfer TSV",                             "logo": "niendorfer-tsv.png" },
     { "name": "Rellinger TV",                               "logo": "rellinger-tv.png" },
     { "name": "SC Alstertal-Langenhorn",                    "logo": "sc-alstertal-langenhorn.png" },
-    { "name": "SG Hamburg Handball-Deerns/AMTV Hamburg 2",  "logo": "sg-hamburg-handball-deerns.png" },
+    { "name": "SG HHD/AMTV 2",  "logo": "sg-hhd-amtv.png" },
     { "name": "SG Hamburg-Nord 3",                          "logo": "sg-hamburg-nord.png" },
     { "name": "TSC Wellingsbüttel",                         "logo": "tsc-wellingsbuettel.png" },
     { "name": "TSV Uetersen",                               "logo": "tsv-uetersen.png" }

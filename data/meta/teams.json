@@ -1,0 +1,19 @@
+{
+  "teams": [
+    { "id": "1-herren",   "name": "1. Herren",   "kategorie": "Herren" },
+    { "id": "2-herren",   "name": "2. Herren",   "kategorie": "Herren" },
+    { "id": "3-herren",   "name": "3. Herren",   "kategorie": "Herren" },
+    { "id": "1-damen",    "name": "1. Damen",    "kategorie": "Damen" },
+    { "id": "2-damen",    "name": "2. Damen",    "kategorie": "Damen" },
+    { "id": "mb-jugend",  "name": "männlich B",  "kategorie": "Jugend männlich" },
+    { "id": "mc-jugend",  "name": "männlich C",  "kategorie": "Jugend männlich" },
+    { "id": "md1-jugend", "name": "männlich D1", "kategorie": "Jugend männlich" },
+    { "id": "md2-jugend", "name": "männlich D2", "kategorie": "Jugend männlich" },
+    { "id": "me1-jugend", "name": "männlich E1", "kategorie": "Jugend männlich" },
+    { "id": "me2-jugend", "name": "männlich E2", "kategorie": "Jugend männlich" },
+    { "id": "wb-jugend",  "name": "weiblich B",  "kategorie": "Jugend weiblich" },
+    { "id": "wd-jugend",  "name": "weiblich D",  "kategorie": "Jugend weiblich" },
+    { "id": "we-jugend",  "name": "weiblich E",  "kategorie": "Jugend weiblich" },
+    { "id": "minis",      "name": "Minis",       "kategorie": "Nachwuchs" }
+  ]
+}

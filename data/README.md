@@ -39,6 +39,7 @@ Wenn du nur schnell ein Spielergebnis nachtragen willst, springe direkt zum Kapi
 - [Wöchentlich: Spielergebnisse eintragen](#wöchentlich-spielergebnisse-eintragen)
 - [Spielverlegung eintragen](#spielverlegung-eintragen)
 - [Wertung wegen Nicht-Antreten](#wertung-wegen-nicht-antreten)
+- [Mannschaft zieht sich zurück](#zurückgezogene-mannschaften-zurueckgezogen-und-hinweise)
 - [Tippfehler korrigieren](#tippfehler-korrigieren)
 - [Saisonstart: Neue Saison anlegen](#saisonstart-neue-saison-anlegen)
 - [Saisonende: Was passiert mit alten Daten?](#saisonende-was-passiert-mit-alten-daten)
@@ -104,7 +105,7 @@ data/
 │
 ├── logos/mannschaften/            ← Vereinslogos der Gegner
 │   ├── tus-esingen.png
-│   ├── ahrensburg.png
+│   ├── ahrensburger-tsv.png
 │   └── ...
 │
 ├── logos/sponsoren/               ← Logos der Sponsoren
@@ -773,41 +774,43 @@ Diese Datei beschreibt die **Liga und Saison** einer Mannschaft: In welcher Liga
 ```json
 {
   "saison": "2025/26",
-  "liga": "Männer Oberliga Hamburg",
-  "punkteSystem": "2-punkte",
+  "ligaName": "Oberliga Hamburg",
   "wertungTore": { "fuerSieger": 0, "fuerVerlierer": 0 },
   "spieltageGeplant": 26,
-  "linkSpielplan": "https://www.handball.net/ligen/handball4all.hamburg.51/spielplan",
-  "linkTabelle": "https://www.handball.net/ligen/handball4all.hamburg.51/tabelle",
+  "linkSpielplan": "https://www.handball.net/ligen/handball4all.hamburg.m-ol-100_hhv/spielplan",
+  "linkTabelle": "https://www.handball.net/ligen/handball4all.hamburg.m-ol-100_hhv/tabelle",
   "mannschaften": [
     { "name": "TuS Esingen",          "logo": "tus-esingen.png" },
-    { "name": "Ahrensburger TSV",      "logo": "ahrensburg.png" },
-    { "name": "FC St. Pauli",          "logo": "st-pauli.png" },
-    { "name": "TV Fischbek",           "logo": "fischbek.png" },
-    { "name": "TSV Ellerbek 2",        "logo": "ellerbek-2.png" },
-    { "name": "HSG Elbvororte",        "logo": "elbvororte.png" },
-    { "name": "TH Eilbeck",            "logo": "eilbeck.png" },
-    { "name": "HT Norderstedt 2",      "logo": "norderstedt-2.png" },
-    { "name": "TSV Uetersen",          "logo": "uetersen.png" },
-    { "name": "SG Hamburg-Nord 2",     "logo": "hh-nord-2.png" },
-    { "name": "1. HC Quickborn",       "logo": "quickborn.png" },
-    { "name": "HG Hamburg-Barmbek 2",  "logo": "barmbek-2.png" },
-    { "name": "Rellinger TV 2",        "logo": "rellingen-2.png" }
+    { "name": "Ahrensburger TSV",     "logo": "ahrensburger-tsv.png" },
+    { "name": "FC St. Pauli",         "logo": "fc-st-pauli.png" },
+    { "name": "TV Fischbek",          "logo": "tv-fischbek.png" },
+    { "name": "TSV Ellerbek 2",       "logo": "tsv-ellerbek.png" },
+    { "name": "HSG Elbvororte",       "logo": "hsg-elbvororte.png" },
+    { "name": "TH Eilbeck",           "logo": "th-eilbeck.png" },
+    { "name": "HT Norderstedt 2",     "logo": "ht-norderstedt.png" },
+    { "name": "TSV Uetersen",         "logo": "tsv-uetersen.png" },
+    { "name": "SG Hamburg-Nord 2",    "logo": "sg-hamburg-nord.png" },
+    { "name": "1. HC Quickborn",      "logo": "1-hc-quickborn.png" },
+    { "name": "HG Hamburg-Barmbek 2", "logo": "hg-hamburg-barmbek.png" },
+    { "name": "Rellinger TV 2",       "logo": "rellinger-tv.png" }
   ]
 }
 ```
+
+> 💡 **Optionale Felder:** Wenn Mannschaften zurückgezogen werden, gibt es zusätzlich `zurueckgezogen` und `hinweise`. Siehe Abschnitt [„Zurückgezogene Mannschaften"](#zurückgezogene-mannschaften-zurueckgezogen-und-hinweise) weiter unten.
 
 ### Felder
 
 | Feld | Pflicht | Beschreibung |
 |---|---|---|
 | `saison` | ja | Anzeige-Bezeichnung der Saison (z.B. `"2025/26"`) |
-| `liga` | ja | Vollständiger Liga-Name |
-| `punkteSystem` | ja | Aktuell nur `"2-punkte"` unterstützt (Sieg=2, Unentschieden=1, Niederlage=0) |
+| `ligaName` | ja | Vollständiger Liga-Name (z.B. `"Oberliga Hamburg"`) |
 | `wertungTore` | ja | Wie viele Tore werden bei einer Wertung (z.B. nicht angetretener Gegner) angerechnet (siehe unten) |
 | `spieltageGeplant` | ja | Anzahl der Spieltage in der Saison (z.B. 26 bei 14 Mannschaften mit Hin- und Rückrunde) |
 | `linkSpielplan` | nein | Link zur Liga auf handball.net |
 | `linkTabelle` | nein | Link zur Tabelle auf handball.net |
+| `zurueckgezogen` | nein | Liste der Mannschaftsnamen, die im Saisonverlauf zurückgezogen wurden (siehe unten) |
+| `hinweise` | nein | Liste freier Hinweistexte, die unter der Tabelle in der App erscheinen |
 | `mannschaften` | ja | Liste aller Mannschaften der Liga (siehe unten) |
 
 ### Das Feld `wertungTore`
@@ -820,6 +823,41 @@ Bei einer Wertung (eine Mannschaft tritt nicht an) bekommt der Sieger 2 Punkte o
 
 - **Aktuell für eure Ligen:** `0:0` – also kein Einfluss auf die Tordifferenz
 - Manche Verbände werten anders (z.B. `10:0`) – prüfe das beim ersten Anlegen der Saison
+
+### Zurückgezogene Mannschaften (`zurueckgezogen` und `hinweise`)
+
+Wenn ein Verein im Laufe der Saison zurückgezogen wird, **bleibt er in der `mannschaften`-Liste**, wird aber zusätzlich in `zurueckgezogen` aufgeführt. Die App behandelt das dann handball.net-konform:
+
+- Alle Spiele der zurückgezogenen Mannschaft werden aus der Wertung genommen – auch für die Gegner (Punkte und Tore aus diesen Spielen zählen für niemanden)
+- Die Mannschaft erscheint am Ende der Tabelle mit `0` Spielen, `0:0` Punkten und `0:0` Toren
+- Unter der Tabelle erscheint der freie Hinweistext aus `hinweise`
+
+**Beispiel:**
+
+```json
+{
+  "saison": "2025/26",
+  "ligaName": "weibliche Jugend B Oberliga",
+  "wertungTore": { "fuerSieger": 0, "fuerVerlierer": 0 },
+  "spieltageGeplant": 18,
+  "zurueckgezogen": ["TSV Uetersen", "SG Hamburg-Nord 3"],
+  "hinweise": [
+    "TSV Uetersen zurückgezogen.",
+    "SG Hamburg-Nord 3 zurückgezogen."
+  ],
+  "mannschaften": [
+    { "name": "TuS Esingen",       "logo": "tus-esingen.png" },
+    { "name": "TSV Uetersen",      "logo": "tsv-uetersen.png" },
+    { "name": "SG Hamburg-Nord 3", "logo": "sg-hamburg-nord.png" }
+  ]
+}
+```
+
+**Stolperfallen:**
+- Die Namen in `zurueckgezogen` müssen **exakt** mit den Namen in `mannschaften[].name` übereinstimmen – auch jedes Leerzeichen muss stimmen
+- `hinweise` ist eine **Liste von Strings** (jede Zeile separat unter der Tabelle)
+- Die Spiele in `ligaspiele.json` müssen **nicht** angepasst werden – die App filtert sie automatisch
+- Wenn keine Mannschaft zurückgezogen wurde, lass beide Felder einfach weg – die App verhält sich dann wie immer
 
 ### Pro Mannschaft
 
@@ -849,7 +887,7 @@ So muss bei einem Vereinswechsel oder einer Logo-Aktualisierung nur **eine Datei
 
 - **Saisonstart:** Datei wird neu angelegt (oder aus letzter Saison kopiert und angepasst)
 - **Neue Mannschaft kommt in die Liga (Aufsteiger):** Eintrag in `mannschaften` ergänzen
-- **Mannschaft zieht sich zurück:** Eintrag entfernen
+- **Mannschaft zieht sich während der Saison zurück:** Eintrag in `mannschaften` **lassen** und zusätzlich Namen in `zurueckgezogen`-Liste eintragen + passenden Hinweistext in `hinweise` ergänzen
 - **Liga heißt anders / Saison-Bezeichnung ändert sich:** entsprechende Felder anpassen
 
 ### Stolperfallen

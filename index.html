@@ -977,7 +977,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.7.6";
+const APP_VERSION = "0.7.7";
 const APP_BUILD_DATE = "11.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
@@ -986,6 +986,10 @@ const APP_BUILD_DATE = "11.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
+  { version: "0.7.7", date: "11.05.2026", points: [
+    "Mannschaftsseiten kannst du jetzt durchwischen: links/rechts wechselt zwischen Team, Kader, Spielplan und Tabelle.",
+    "Vom linken Rand nach rechts wischen geht zurück — funktioniert in News, Updates, „Über diese App\u201c und auf Mannschaftsseiten."
+  ] },
   { version: "0.7.6", date: "11.05.2026", points: [
     "Spielorte werden jetzt aus einem zentralen Hallen-Verzeichnis gepflegt. Auf der Spielplan-Seite erscheint die Halle damit auch bei Auswärtsspielen — nicht nur bei Heimspielen."
   ] },
@@ -1016,10 +1020,6 @@ const UPDATE_HISTORY = [
   ] },
   { version: "0.6.19", date: "08.05.2026", points: [
     "Das TuS-Logo in der Menüleiste ist nun größer, wenn der 'Home'-Tab aktiv ist. Auf anderen Tabs wird es kleiner dargestellt — so wird der jeweils aktive Bereich klarer hervorgehoben."
-  ] },
-  { version: "0.6.18", date: "08.05.2026", points: [
-    "Beim App-Start war fälschlich der Tab 'Teams' weiß hervorgehoben, obwohl die App auf der Home-Seite startet. Der korrekte Tab 'Home' wird nun beim Start markiert.",
-    "Der Tab 'Home' wird im aktiven Zustand jetzt — wie alle anderen Tabs — mit einem weißen Hintergrund und dunkler, fetter Beschriftung dargestellt."
   ] }
 ];
 
@@ -2446,6 +2446,160 @@ function dTab(id,btn){
   document.querySelectorAll('.dt').forEach(function(b){b.classList.remove('on');});
   btn.classList.add('on');
 }
+
+// ─── Swipe-Gesten ──────────────────────────────────────────────────────────
+// 1) Auf Mannschafts-Detailseite: links/rechts wischen wechselt zwischen
+//    Tabs (Team → Kader → Spielplan → Tabelle).
+// 2) Vom linken Bildschirmrand nach rechts wischen ("Edge-Swipe") führt
+//    aus jeder Detail-Ansicht zurück zur vorherigen Seite.
+(function setupSwipeGestures(){
+  var DETAIL_TABS = [
+    { id: 'dt-team', sel: '.dt:nth-child(1)' },
+    { id: 'dt-kader', sel: '.dt:nth-child(2)' },
+    { id: 'dt-sp',    sel: '.dt:nth-child(3)' },
+    { id: 'dt-tab',   sel: '.dt:nth-child(4)' }
+  ];
+
+  function getActiveDetailTabIndex(){
+    for(var i = 0; i < DETAIL_TABS.length; i++){
+      var el = document.getElementById(DETAIL_TABS[i].id);
+      if(el && el.style.display !== 'none') return i;
+    }
+    return 0;
+  }
+
+  function switchDetailTabByIndex(idx){
+    if(idx < 0 || idx >= DETAIL_TABS.length) return;
+    var btns = document.querySelectorAll('#p-detail .dt');
+    if(!btns[idx]) return;
+    // Fade-Animation
+    var content = document.getElementById(DETAIL_TABS[getActiveDetailTabIndex()].id);
+    if(content){
+      content.style.transition = 'opacity 0.15s ease-out';
+      content.style.opacity = '0';
+      setTimeout(function(){
+        dTab(DETAIL_TABS[idx].id, btns[idx]);
+        var newContent = document.getElementById(DETAIL_TABS[idx].id);
+        if(newContent){
+          newContent.style.opacity = '0';
+          newContent.style.transition = 'opacity 0.15s ease-in';
+          // doppelter rAF damit transition läuft
+          requestAnimationFrame(function(){ requestAnimationFrame(function(){
+            newContent.style.opacity = '1';
+          }); });
+        }
+        // Zurücksetzen des alten
+        if(content) content.style.opacity = '';
+      }, 150);
+    } else {
+      dTab(DETAIL_TABS[idx].id, btns[idx]);
+    }
+  }
+
+  // Welche Detail-Page ist gerade aktiv?
+  function getActiveDetailPage(){
+    var pages = ['p-detail', 'p-newsdetail', 'p-about', 'p-updates'];
+    for(var i = 0; i < pages.length; i++){
+      var el = document.getElementById(pages[i]);
+      if(el && el.classList.contains('active')) return pages[i];
+    }
+    return null;
+  }
+
+  // Welche Zurück-Funktion gehört zur aktiven Page?
+  function goBackFromActivePage(){
+    var page = getActiveDetailPage();
+    if(!page) return false;
+    // Welche Back-Funktion?
+    if(page === 'p-detail' && typeof closeTeam === 'function'){ closeTeam(); return true; }
+    if(page === 'p-newsdetail'){
+      // Wir wissen nicht direkt, ob fromAllNews oder nicht.
+      // Strategie: schauen, welche Back-Funktion am <button.bk> hängt.
+      var bk = document.querySelector('#p-newsdetail .bk, #nhdr .bk');
+      if(bk){ bk.click(); return true; }
+      if(typeof closeNews === 'function'){ closeNews(); return true; }
+    }
+    if(page === 'p-about' && typeof closeAbout === 'function'){ closeAbout(); return true; }
+    if(page === 'p-updates' && typeof closeUpdates === 'function'){ closeUpdates(); return true; }
+    // Fallback: irgendeinen Zurück-Button auf der Seite klicken
+    var bk2 = document.querySelector('#' + page + ' .bk, .d-hdr .bk');
+    if(bk2){ bk2.click(); return true; }
+    return false;
+  }
+
+  // ─── Touch-Tracking ─────────────────────────────────────────
+  var startX = 0, startY = 0, startT = 0;
+  var fromLeftEdge = false;
+  var EDGE_PX = 30;          // Links-Rand-Zone für Zurück-Swipe
+  var MIN_DIST = 60;         // Mindest-Distanz für Auslösen
+  var MAX_VERTICAL = 60;     // Wenn Y-Bewegung größer → vertikales Scrollen, kein Swipe
+  var FAST_VELOCITY = 0.5;   // px/ms → schneller Wisch reicht mit weniger Strecke
+  var FAST_MIN_DIST = 30;
+
+  document.addEventListener('touchstart', function(e){
+    if(!e.touches || e.touches.length !== 1) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    startT = Date.now();
+    fromLeftEdge = startX <= EDGE_PX;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e){
+    if(!e.changedTouches || e.changedTouches.length !== 1) return;
+    var endX = e.changedTouches[0].clientX;
+    var endY = e.changedTouches[0].clientY;
+    var dx = endX - startX;
+    var dy = endY - startY;
+    var dt = Date.now() - startT;
+    var absX = Math.abs(dx);
+    var absY = Math.abs(dy);
+
+    // Vertikales Scrollen dominiert → ignorieren
+    if(absY > absX) return;
+    if(absY > MAX_VERTICAL && absY > absX * 0.7) return;
+
+    // Geschwindigkeit
+    var velocity = dt > 0 ? absX / dt : 0;
+    var qualified = absX >= MIN_DIST || (velocity >= FAST_VELOCITY && absX >= FAST_MIN_DIST);
+    if(!qualified) return;
+
+    // Bei Burger-Menü offen → nicht swipen, das hat eigene Logik
+    var burger = document.getElementById('burger-menu');
+    if(burger && burger.classList.contains('open')) return;
+
+    var activePage = getActiveDetailPage();
+    var swipeRight = dx > 0;
+    var swipeLeft  = dx < 0;
+
+    // ─── ZURÜCK-SWIPE: Edge-Swipe von links nach rechts ───
+    if(swipeRight && fromLeftEdge){
+      // In jeder Detail-Page: zurück
+      if(activePage){
+        goBackFromActivePage();
+        return;
+      }
+    }
+
+    // ─── TAB-SWIPE auf Mannschafts-Detail ───
+    if(activePage === 'p-detail'){
+      var idx = getActiveDetailTabIndex();
+      if(swipeLeft){
+        // Vorwärts: nächster Tab
+        if(idx < DETAIL_TABS.length - 1){
+          switchDetailTabByIndex(idx + 1);
+        }
+      } else if(swipeRight){
+        // Bei erstem Tab + Wisch rechts nicht vom Rand: zurück zur Übersicht
+        if(idx === 0){
+          if(typeof closeTeam === 'function') closeTeam();
+        } else {
+          switchDetailTabByIndex(idx - 1);
+        }
+      }
+    }
+  }, { passive: true });
+})();
+// ───────────────────────────────────────────────────────────────────────────
 
 // News werden geladen aus:
 //   1) data/news.json (manuell gepflegte News)

@@ -977,8 +977,8 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.7.8";
-const APP_BUILD_DATE = "11.05.2026";
+const APP_VERSION = "0.7.9";
+const APP_BUILD_DATE = "12.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
 // Wird im Burger-Menü unter "App-Updates" angezeigt und gibt der App-Banner-
@@ -986,6 +986,10 @@ const APP_BUILD_DATE = "11.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
+  { version: "0.7.9", date: "12.05.2026", points: [
+    "Beim Zurückwischen aus News, Updates oder „Über diese App\u201c schiebt die Seite jetzt sanft nach rechts raus, statt hart umzuschalten.",
+    "Die Slide-Animationen wurden insgesamt etwas länger gemacht, damit sie nicht zu zackig wirken."
+  ] },
   { version: "0.7.8", date: "12.05.2026", points: [
     "Tab-Wechsel auf Mannschaftsseiten haben jetzt eine sanfte Slide-Animation: der neue Tab schiebt sich von der Seite rein, egal ob per Wisch oder Klick."
   ] },
@@ -993,33 +997,30 @@ const UPDATE_HISTORY = [
     "Mannschaftsseiten kannst du jetzt durchwischen: links/rechts wechselt zwischen Team, Kader, Spielplan und Tabelle.",
     "Vom linken Rand nach rechts wischen geht zurück — funktioniert in News, Updates, „Über diese App\u201c und auf Mannschaftsseiten."
   ] },
-  { version: "0.7.6", date: "11.05.2026", points: [
+  { version: "0.7.6", date: "12.05.2026", points: [
     "Spielorte werden jetzt aus einem zentralen Hallen-Verzeichnis gepflegt. Auf der Spielplan-Seite erscheint die Halle damit auch bei Auswärtsspielen — nicht nur bei Heimspielen."
   ] },
-  { version: "0.7.5", date: "11.05.2026", points: [
+  { version: "0.7.5", date: "12.05.2026", points: [
     "Im Vereinsspielplan steht jetzt vor der Liga, welche TuS-Mannschaft gespielt hat (z.B. '1. Herren · Oberliga Hamburg'). So lässt sich auf einen Blick erkennen, zu welchem Team eine Spielkarte gehört."
   ] },
-  { version: "0.7.4", date: "11.05.2026", points: [
+  { version: "0.7.4", date: "12.05.2026", points: [
     "Zurückgezogene Mannschaften werden in der Tabelle jetzt korrekt mit 0 Punkten und 0:0 Toren am Ende geführt, ihre Spiele werden für alle Beteiligten aus der Wertung genommen.",
     "Unter der Tabelle erscheint ein kurzer Hinweis, welche Mannschaften zurückgezogen wurden."
   ] },
-  { version: "0.7.3", date: "11.05.2026", points: [
+  { version: "0.7.3", date: "12.05.2026", points: [
     "Im Teams-Bereich wird hinter der Liga jetzt automatisch der aktuelle Tabellenplatz angezeigt (z.B. 'Landesliga · Platz 3'), sobald für die Mannschaft Liga-Spiele gepflegt sind."
   ] },
-  { version: "0.7.2", date: "11.05.2026", points: [
+  { version: "0.7.2", date: "12.05.2026", points: [
     "Alle Mannschaften des Vereins sind jetzt im Teams-Bereich aufgelistet und einzeln anklickbar (1. bis 3. Herren, 1. und 2. Damen, alle Jugendmannschaften, Minis).",
     "Inhalte wie Spielpläne, Tabellen und Kader werden für die einzelnen Mannschaften nach und nach mit Leben gefüllt."
   ] },
-  { version: "0.7.1", date: "11.05.2026", points: [
+  { version: "0.7.1", date: "12.05.2026", points: [
     "Die Buttons 'Spielplan auf handball.net' und 'Tabelle auf handball.net' werden kompakter dargestellt.",
     "Hinweise auf handball.net als Datenquelle wurden entfernt, da Spielpläne und Tabellen jetzt direkt vom Verein gepflegt werden."
   ] },
-  { version: "0.7.0", date: "11.05.2026", points: [
+  { version: "0.7.0", date: "12.05.2026", points: [
     "Großer interner Umbau: Die App liest jetzt die Spiele aus der neuen Datenstruktur. Die Tabelle wird live aus den Spielergebnissen berechnet, statt sie separat zu pflegen.",
     "Aktuell ist nur die 1. Herren-Mannschaft auf die neue Struktur umgestellt. 1. Damen und Jugend-Mannschaften folgen in den nächsten Updates und sind temporär nicht verfügbar."
-  ] },
-  { version: "0.6.20", date: "09.05.2026", points: [
-    "Interne Verbesserungen, die die Pflege von News-Beiträgen einfacher machen. Für die Nutzung der App ändert sich nichts."
   ] }
 ];
 
@@ -2435,10 +2436,79 @@ function openTeam(teamId){
   document.getElementById('scroll').scrollTop=0;
 }
 function closeTeam(){
-  var h=document.getElementById('dhdr');if(h)h.remove();
-  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
-  document.getElementById('p-teams').classList.add('active');
-  showMain(true);
+  slideClosePage('p-detail', 'dhdr', 'p-teams', true);
+}
+
+// Generische Slide-Animation beim Schließen einer Detail-Seite.
+// pageId:       ID der zu schließenden Page (z.B. 'p-detail', 'p-newsdetail')
+// headerId:     ID des Detail-Headers (z.B. 'dhdr', 'nhdr', 'ahdr', 'uhdr')
+// targetPageId: ID der Page, zu der zurückgegangen wird
+// showMainNav:  ob die Hauptnavigation (showMain(true)) wieder eingeblendet werden soll
+function slideClosePage(pageId, headerId, targetPageId, showMainNav){
+  var page   = document.getElementById(pageId);
+  var header = document.getElementById(headerId);
+  if(!page){
+    if(header) header.remove();
+    document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+    document.getElementById(targetPageId).classList.add('active');
+    if(showMainNav) showMain(true);
+    return;
+  }
+
+  var scrollEl = document.getElementById('scroll') || document.body;
+  var rect = page.getBoundingClientRect();
+  var pageHeight = rect.height;
+  var scrollTop = scrollEl.scrollTop;
+
+  // Alte Page absolut positionieren, damit die Zielseite drunter erscheinen kann
+  page.style.position = 'absolute';
+  page.style.top = '0';
+  page.style.left = '0';
+  page.style.right = '0';
+  page.style.minHeight = pageHeight + 'px';
+  page.style.zIndex = '10';
+  page.style.background = 'inherit';
+
+  // Zielseite aktiv machen
+  document.getElementById(targetPageId).classList.add('active');
+  // Scroll auf 0 für die Zielseite (sonst springt sie auf alten Scroll-Stand)
+  // Außer für Teams-Übersicht, da soll der Scroll erhalten bleiben — daher pauschal scrollTop=0
+  // ist ok für unsere Fälle.
+
+  // Animation
+  page.style.transition = 'transform 0.38s ease-out';
+  page.style.willChange = 'transform';
+  if(header){
+    header.style.transition = 'transform 0.38s ease-out';
+    header.style.willChange = 'transform';
+  }
+
+  if(showMainNav) showMain(true);
+
+  // Start-Anim (doppelt-rAF damit transition greift)
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      page.style.transform = 'translateX(100%)';
+      if(header) header.style.transform = 'translateX(100%)';
+    });
+  });
+
+  // Cleanup nach Animation
+  setTimeout(function(){
+    if(header) header.remove();
+    page.classList.remove('active');
+    // Alle inline-Styles zurücknehmen
+    page.style.position = '';
+    page.style.top = '';
+    page.style.left = '';
+    page.style.right = '';
+    page.style.minHeight = '';
+    page.style.zIndex = '';
+    page.style.background = '';
+    page.style.transition = '';
+    page.style.transform = '';
+    page.style.willChange = '';
+  }, 400);
 }
 // Wrapper für Klick auf Tab-Buttons: berechnet Slide-Richtung automatisch
 // basierend auf der Position des Ziel-Tabs relativ zum aktiven Tab.
@@ -2520,8 +2590,8 @@ function dTab(id,btn,direction){
   // Force reflow, dann Transition starten
   requestAnimationFrame(function(){
     requestAnimationFrame(function(){
-      newEl.style.transition = 'transform 0.28s ease-out';
-      oldEl.style.transition = 'transform 0.28s ease-out';
+      newEl.style.transition = 'transform 0.38s ease-out';
+      oldEl.style.transition = 'transform 0.38s ease-out';
       newEl.style.transform = 'translateX(0)';
       oldEl.style.transform = 'translateX(' + toX + ')';
     });
@@ -2543,7 +2613,7 @@ function dTab(id,btn,direction){
     newEl.style.transition = '';
     newEl.style.willChange = '';
     parent.style.overflow = '';
-  }, 300);
+  }, 400);
 }
 
 // ─── Swipe-Gesten ──────────────────────────────────────────────────────────
@@ -2598,7 +2668,7 @@ function dTab(id,btn,direction){
       if(typeof closeNews === 'function'){ closeNews(); return true; }
     }
     if(page === 'p-about' && typeof closeAbout === 'function'){ closeAbout(); return true; }
-    if(page === 'p-updates' && typeof closeUpdates === 'function'){ closeUpdates(); return true; }
+    if(page === 'p-updates' && typeof closeUpdateHistory === 'function'){ closeUpdateHistory(); return true; }
     // Fallback: irgendeinen Zurück-Button auf der Seite klicken
     var bk2 = document.querySelector('#' + page + ' .bk, .d-hdr .bk');
     if(bk2){ bk2.click(); return true; }
@@ -3379,15 +3449,16 @@ function openNews(idx, fromAllNews){
   document.getElementById('scroll').scrollTop=0;
 }
 function closeNews(){
-  var h=document.getElementById('nhdr');if(h)h.remove();
-  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
-  document.getElementById('p-news').classList.add('active');
-  showMain(true);
+  slideClosePage('p-newsdetail', 'nhdr', 'p-news', true);
 }
 function closeNewsToAllNews(){
-  var h=document.getElementById('nhdr');if(h)h.remove();
   // Zurück zur Alle-News-Seite mit ihrem Header
-  openAllNews();
+  var h=document.getElementById('nhdr');
+  // Wir nutzen slideClose mit p-news als Ziel, dann öffnen wir die Alle-News-Übersicht
+  // Da openAllNews den nhdr selbst neu setzt, müssen wir hier die alte Animation kurz halten.
+  // Einfacher: erst zurück mit Slide, dann openAllNews aufrufen.
+  slideClosePage('p-newsdetail', 'nhdr', 'p-news', false);
+  setTimeout(function(){ openAllNews(); }, 400);
 }
 var newsCameFromAllNews = false;
 
@@ -3410,10 +3481,7 @@ function openAbout(){
   document.getElementById('scroll').scrollTop=0;
 }
 function closeAbout(){
-  var h=document.getElementById('ahdr');if(h)h.remove();
-  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
-  document.getElementById('p-news').classList.add('active');
-  showMain(true);
+  slideClosePage('p-about', 'ahdr', 'p-news', true);
 }
 
 // ── Debug-Screen (versteckt) ────────────────────────────────────────────────
@@ -3684,10 +3752,7 @@ function openUpdateHistory(scrollToCurrent){
 }
 
 function closeUpdateHistory(){
-  var h=document.getElementById('uhdr');if(h)h.remove();
-  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
-  document.getElementById('p-news').classList.add('active');
-  showMain(true);
+  slideClosePage('p-updates', 'uhdr', 'p-news', true);
 }
 
 // ── Update-Banner (schwebende Karte unten) ──────────────────────────────────

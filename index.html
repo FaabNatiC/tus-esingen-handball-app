@@ -826,10 +826,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <!-- TEAM DETAIL 1. HERREN -->
 <div class="page" id="p-detail">
   <div class="dtabs">
-    <button class="dt on" onclick="dTab('dt-team',this)">Team</button>
-    <button class="dt" onclick="dTab('dt-kader',this)">Kader</button>
-    <button class="dt" onclick="dTab('dt-sp',this)">Spielplan</button>
-    <button class="dt" onclick="dTab('dt-tab',this)">Tabelle</button>
+    <button class="dt on" onclick="dTabClick('dt-team',this,0)">Team</button>
+    <button class="dt" onclick="dTabClick('dt-kader',this,1)">Kader</button>
+    <button class="dt" onclick="dTabClick('dt-sp',this,2)">Spielplan</button>
+    <button class="dt" onclick="dTabClick('dt-tab',this,3)">Tabelle</button>
   </div>
   <div id="dt-team">
     <div class="sec">Trainer & Betreuerstab</div>
@@ -977,7 +977,7 @@ let currentTeam = '1-herren';
 const BASE_URL = "https://raw.githubusercontent.com/FaabNatiC/tus-esingen-handball-app/main";
 
 // ── App Version & Info (zentral pflegen) ────────────────────────────────────
-const APP_VERSION = "0.7.7";
+const APP_VERSION = "0.7.8";
 const APP_BUILD_DATE = "11.05.2026";
 
 // ── Update-Historie (max. 10 Einträge, neueste oben) ───────────────────────
@@ -986,6 +986,9 @@ const APP_BUILD_DATE = "11.05.2026";
 // "points" ist eine Liste von kurzen, vollständigen Sätzen, die als Bullets
 // dargestellt werden.
 const UPDATE_HISTORY = [
+  { version: "0.7.8", date: "12.05.2026", points: [
+    "Tab-Wechsel auf Mannschaftsseiten haben jetzt eine sanfte Slide-Animation: der neue Tab schiebt sich von der Seite rein, egal ob per Wisch oder Klick."
+  ] },
   { version: "0.7.7", date: "12.05.2026", points: [
     "Mannschaftsseiten kannst du jetzt durchwischen: links/rechts wechselt zwischen Team, Kader, Spielplan und Tabelle.",
     "Vom linken Rand nach rechts wischen geht zurück — funktioniert in News, Updates, „Über diese App\u201c und auf Mannschaftsseiten."
@@ -1017,9 +1020,6 @@ const UPDATE_HISTORY = [
   ] },
   { version: "0.6.20", date: "09.05.2026", points: [
     "Interne Verbesserungen, die die Pflege von News-Beiträgen einfacher machen. Für die Nutzung der App ändert sich nichts."
-  ] },
-  { version: "0.6.19", date: "08.05.2026", points: [
-    "Das TuS-Logo in der Menüleiste ist nun größer, wenn der 'Home'-Tab aktiv ist. Auf anderen Tabs wird es kleiner dargestellt — so wird der jeweils aktive Bereich klarer hervorgehoben."
   ] }
 ];
 
@@ -2440,11 +2440,110 @@ function closeTeam(){
   document.getElementById('p-teams').classList.add('active');
   showMain(true);
 }
-function dTab(id,btn){
-  ['dt-team','dt-kader','dt-sp','dt-tab'].forEach(function(x){document.getElementById(x).style.display='none';});
-  document.getElementById(id).style.display='block';
+// Wrapper für Klick auf Tab-Buttons: berechnet Slide-Richtung automatisch
+// basierend auf der Position des Ziel-Tabs relativ zum aktiven Tab.
+function dTabClick(id, btn, targetIdx){
+  var tabIds = ['dt-team','dt-kader','dt-sp','dt-tab'];
+  var currentIdx = 0;
+  for(var i = 0; i < tabIds.length; i++){
+    var el = document.getElementById(tabIds[i]);
+    if(el && el.style.display !== 'none'){ currentIdx = i; break; }
+  }
+  var direction;
+  if(targetIdx > currentIdx) direction = 'left';   // weiter rechts → neuer kommt von rechts
+  else if(targetIdx < currentIdx) direction = 'right'; // weiter links → neuer kommt von links
+  // gleicher Tab: kein Slide
+  dTab(id, btn, direction);
+}
+
+function dTab(id,btn,direction){
+  // direction: 'left' | 'right' | undefined (kein Slide bei undefined)
+  var tabIds = ['dt-team','dt-kader','dt-sp','dt-tab'];
+  var oldId = null;
+  tabIds.forEach(function(x){
+    var el = document.getElementById(x);
+    if(el && el.style.display !== 'none') oldId = x;
+  });
+
+  // Wenn kein Slide gewünscht oder gleicher Tab: einfach umschalten
+  if(!direction || oldId === id){
+    tabIds.forEach(function(x){document.getElementById(x).style.display='none';});
+    document.getElementById(id).style.display='block';
+    document.querySelectorAll('.dt').forEach(function(b){b.classList.remove('on');});
+    if(btn) btn.classList.add('on');
+    return;
+  }
+
+  // ─── Slide-Animation ───
+  var oldEl = document.getElementById(oldId);
+  var newEl = document.getElementById(id);
+  if(!oldEl || !newEl){
+    tabIds.forEach(function(x){document.getElementById(x).style.display='none';});
+    newEl.style.display='block';
+    document.querySelectorAll('.dt').forEach(function(b){b.classList.remove('on');});
+    if(btn) btn.classList.add('on');
+    return;
+  }
+
+  // direction === 'left' bedeutet: neuer Tab kommt von rechts rein,
+  // alter geht nach links raus. (Wisch von rechts nach links)
+  var fromX = (direction === 'left') ? '100%' : '-100%';
+  var toX   = (direction === 'left') ? '-100%' : '100%';
+
+  // Beide gleichzeitig sichtbar machen für die Animation
+  // Wrapper-Setup: Tabs in einen relativen Container packen
+  var parent = oldEl.parentNode;
+  if(getComputedStyle(parent).position === 'static'){
+    parent.style.position = 'relative';
+  }
+  parent.style.overflow = 'hidden';
+
+  // Neuer Tab: anfangs außerhalb, position absolute
+  newEl.style.display = 'block';
+  newEl.style.position = 'absolute';
+  newEl.style.top = '0';
+  newEl.style.left = '0';
+  newEl.style.right = '0';
+  newEl.style.transform = 'translateX(' + fromX + ')';
+  newEl.style.transition = 'none';
+  newEl.style.willChange = 'transform';
+
+  // Alter Tab: position relative bleibt, aber transform-fähig
+  oldEl.style.transform = 'translateX(0)';
+  oldEl.style.transition = 'none';
+  oldEl.style.willChange = 'transform';
+
+  // Tab-Buttons sofort umschalten
   document.querySelectorAll('.dt').forEach(function(b){b.classList.remove('on');});
-  btn.classList.add('on');
+  if(btn) btn.classList.add('on');
+
+  // Force reflow, dann Transition starten
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      newEl.style.transition = 'transform 0.28s ease-out';
+      oldEl.style.transition = 'transform 0.28s ease-out';
+      newEl.style.transform = 'translateX(0)';
+      oldEl.style.transform = 'translateX(' + toX + ')';
+    });
+  });
+
+  // Cleanup nach Animation
+  setTimeout(function(){
+    // Alter Tab: komplett aus dem DOM-Fluss raus, Reset
+    oldEl.style.display = 'none';
+    oldEl.style.transform = '';
+    oldEl.style.transition = '';
+    oldEl.style.willChange = '';
+    // Neuer Tab: zurück in normalen Fluss
+    newEl.style.position = '';
+    newEl.style.top = '';
+    newEl.style.left = '';
+    newEl.style.right = '';
+    newEl.style.transform = '';
+    newEl.style.transition = '';
+    newEl.style.willChange = '';
+    parent.style.overflow = '';
+  }, 300);
 }
 
 // ─── Swipe-Gesten ──────────────────────────────────────────────────────────
@@ -2468,32 +2567,11 @@ function dTab(id,btn){
     return 0;
   }
 
-  function switchDetailTabByIndex(idx){
+  function switchDetailTabByIndex(idx, direction){
     if(idx < 0 || idx >= DETAIL_TABS.length) return;
     var btns = document.querySelectorAll('#p-detail .dt');
     if(!btns[idx]) return;
-    // Fade-Animation
-    var content = document.getElementById(DETAIL_TABS[getActiveDetailTabIndex()].id);
-    if(content){
-      content.style.transition = 'opacity 0.15s ease-out';
-      content.style.opacity = '0';
-      setTimeout(function(){
-        dTab(DETAIL_TABS[idx].id, btns[idx]);
-        var newContent = document.getElementById(DETAIL_TABS[idx].id);
-        if(newContent){
-          newContent.style.opacity = '0';
-          newContent.style.transition = 'opacity 0.15s ease-in';
-          // doppelter rAF damit transition läuft
-          requestAnimationFrame(function(){ requestAnimationFrame(function(){
-            newContent.style.opacity = '1';
-          }); });
-        }
-        // Zurücksetzen des alten
-        if(content) content.style.opacity = '';
-      }, 150);
-    } else {
-      dTab(DETAIL_TABS[idx].id, btns[idx]);
-    }
+    dTab(DETAIL_TABS[idx].id, btns[idx], direction);
   }
 
   // Welche Detail-Page ist gerade aktiv?
@@ -2584,16 +2662,17 @@ function dTab(id,btn){
     if(activePage === 'p-detail'){
       var idx = getActiveDetailTabIndex();
       if(swipeLeft){
-        // Vorwärts: nächster Tab
+        // Vorwärts: nächster Tab (kommt von rechts rein)
         if(idx < DETAIL_TABS.length - 1){
-          switchDetailTabByIndex(idx + 1);
+          switchDetailTabByIndex(idx + 1, 'left');
         }
       } else if(swipeRight){
         // Bei erstem Tab + Wisch rechts nicht vom Rand: zurück zur Übersicht
         if(idx === 0){
           if(typeof closeTeam === 'function') closeTeam();
         } else {
-          switchDetailTabByIndex(idx - 1);
+          // Vorheriger Tab (kommt von links rein)
+          switchDetailTabByIndex(idx - 1, 'right');
         }
       }
     }
